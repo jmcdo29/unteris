@@ -34,6 +34,7 @@ export default class NavBar extends Vue {
         { link: '/about', text: 'About' },
         { link: '/uma', text: 'UMA' },
         { link: '/maps', text: 'Maps' },
+        { link: 'deities', text: 'Deities' },
       ],
     };
   }
