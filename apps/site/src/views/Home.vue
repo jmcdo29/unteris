@@ -7,14 +7,14 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import Component from 'vue-class-component'
+import Component from 'vue-class-component';
 import HelloPage from '../components/HelloWorld.vue';
 
 @Component({
   name: 'Home',
   components: {
-    HelloWorld: HelloPage
-  }
+    HelloWorld: HelloPage,
+  },
 })
 export default class HomePage extends Vue {}
 </script>

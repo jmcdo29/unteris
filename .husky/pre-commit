@@ -2,3 +2,4 @@
 . "$(dirname "$0")/_/husky.sh"
 
 node_modules/.bin/nx affected:lint
+node_modules/.bin/nx format:write
