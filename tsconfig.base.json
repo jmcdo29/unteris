@@ -13,7 +13,9 @@
     "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
+    "strict": true,
     "baseUrl": ".",
+    "strictPropertyInitialization": false,
     "paths": {}
   },
   "exclude": ["node_modules", "tmp"]
