@@ -18,3 +18,8 @@ import HelloPage from '../components/HelloWorld.vue';
 })
 export default class HomePage extends Vue {}
 </script>
+<style lang="scss" scoped>
+.home {
+  text-align: center;
+}
+</style>
