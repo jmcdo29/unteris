@@ -7,8 +7,13 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
+import Grid from './Grid.component.vue';
+
 @Component({
   name: 'Card',
+  components: {
+    Grid,
+  },
 })
 export default class CardComponent extends Vue {}
 </script>

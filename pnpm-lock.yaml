@@ -58,6 +58,7 @@ dependencies:
   reflect-metadata: 0.1.13
   rxjs: 7.5.2
   tslib: 2.3.1
+  vue: 2.6.14
 
 devDependencies:
   '@commitlint/cli': 16.1.0_@types+node@14.14.33
@@ -95,7 +96,6 @@ devDependencies:
   prettier: 2.5.1
   ts-jest: 27.0.5_d68acada37e9d278614dbb5f35cf5127
   typescript: 4.3.5
-  vue: 2.6.14
   vue-class-component: 7.2.6_vue@2.6.14
   vue-property-decorator: 9.1.2_cc5a81cd4d75b7f9736a3e9b263f47e5
   vue-router: 3.5.3
@@ -17172,7 +17172,7 @@ packages:
       {
         integrity: sha512-x2284lgYvjOMj3Za7kqzRcUSxBboHqtgRE2zlos1qWaOye5yUmHn42LB1250NJBLRwEcdrB0JRwyPTEPhfQjiQ==,
       }
-    dev: true
+    dev: false
 
   /w3c-hr-time/1.0.2:
     resolution:

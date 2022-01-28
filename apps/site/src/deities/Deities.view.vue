@@ -1,23 +1,25 @@
 <template>
   <div class="deities">
-    Search:
-    <input
-      @input="search"
-      v-model="searchVal"
-      placeholder="Search on partial name, domain, title, or symbol"
-    />
-    <div class="cards">
+    <Grid id="search-bar">
+      <div class="search">Search:</div>
+      <input
+        @input="search"
+        v-model="searchVal"
+        placeholder="Search on partial name, domain, title, or symbol"
+      />
+    </Grid>
+    <Grid columns="auto-fill" class="cards" columnSize="minMax(400px, 1fr)">
       <Card v-for="deity of deities" :key="deity.name">
         <DeityCard :deity="deity" />
       </Card>
-    </div>
+    </Grid>
   </div>
 </template>
 
 <script lang="ts">
+import { Card, Grid } from '@unteris/components';
 import { Component, Vue } from 'vue-property-decorator';
 
-import Card from '../common/Card.component.vue';
 import DeityCard from './DeityCard.component.vue';
 import type { Deity as DeityInterface } from './deity.interface';
 
@@ -32,6 +34,7 @@ interface DeitiesData {
   components: {
     DeityCard,
     Card,
+    Grid,
   },
 })
 export default class DeitiesPage extends Vue {
@@ -83,10 +86,10 @@ export default class DeitiesPage extends Vue {
         },
         {
           name: 'Lux',
-          title: 'God of hte Light',
+          title: 'God of the Light',
           alignment: 'CN',
           domain: ['Light'],
-          symbol: 'A Black Sun and White Moon',
+          symbol: 'A White Sun and Black Moon',
         },
         {
           name: 'Umbra',
@@ -120,7 +123,7 @@ export default class DeitiesPage extends Vue {
     const name = deity.name.toLowerCase();
     const { domain, title, symbol } = deity;
     return (
-      name.includes(this.searchVal) ||
+      name.includes(searchVal) ||
       domain.some((dom) => dom.toLowerCase().includes(searchVal)) ||
       [title, symbol].some((val) => val.toLowerCase().includes(searchVal))
     );
@@ -130,8 +133,17 @@ export default class DeitiesPage extends Vue {
 
 <style scoped lang="scss">
 .cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 0.25em;
+}
+.search {
+  grid-column: 9 / 10;
+  text-align: right;
+  padding-right: 1em;
+}
+input {
+  grid-column: 10 / 12;
+}
+#search-bar {
+  margin-bottom: 0.25em;
 }
 </style>

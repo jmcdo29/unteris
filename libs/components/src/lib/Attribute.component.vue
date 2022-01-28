@@ -1,16 +1,20 @@
 <template>
   <div class="attr">
-    <span class="name">{{ attribute.name }}:</span>
-    <span class="value">{{
-      Array.isArray(attribute.value)
-        ? attribute.value.join(', ')
-        : attribute.value
-    }}</span>
+    <Grid :columns="2">
+      <span class="name">{{ attribute.name }}:</span>
+      <span class="value">{{
+        Array.isArray(attribute.value)
+          ? attribute.value.join(', ')
+          : attribute.value
+      }}</span>
+    </Grid>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+
+import Grid from './Grid.component.vue';
 
 interface AttributeProps {
   name: string;
@@ -19,6 +23,7 @@ interface AttributeProps {
 
 @Component({
   name: 'Attribute',
+  components: { Grid },
 })
 export default class Attribute extends Vue {
   @Prop()
@@ -28,10 +33,9 @@ export default class Attribute extends Vue {
 
 <style scoped lang="scss">
 .attr {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
   margin-top: 0.2em;
-  span {
+  .name,
+  .value {
     text-align: center;
   }
 }

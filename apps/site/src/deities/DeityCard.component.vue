@@ -1,28 +1,31 @@
 <template>
   <div class="deity">
-    <div class="header">
-      <UnterisImage class="profile pic" url="Picture" />
-      <div class="profile info">
-        <h3>{{ deity.name }}</h3>
-        <h5>{{ deity.title }}</h5>
-      </div>
-    </div>
-    <div class="body">
-      <div class="attributes">
-        <Attribute :attribute="{ name: 'Alignment', value: deity.alignment }" />
-        <Attribute :attribute="{ name: 'Symbol', value: deity.symbol }" />
-        <Attribute :attribute="{ name: 'Domain', value: deity.domain }" />
-      </div>
-      <UnterisImage class="symbol" url="Symbol" />
-    </div>
+    <Grid :rows="2" :columns="1">
+      <Grid>
+        <UnterisImage class="profile pic" url="Picture" />
+        <Grid :rows="2" :columns="1" class="profile info">
+          <h3>{{ deity.name }}</h3>
+          <h5>{{ deity.title }}</h5>
+        </Grid>
+      </Grid>
+      <Grid class="body">
+        <Grid class="attributes" :columns="1" :rows="3">
+          <Attribute
+            :attribute="{ name: 'Alignment', value: deity.alignment }"
+          />
+          <Attribute :attribute="{ name: 'Symbol', value: deity.symbol }" />
+          <Attribute :attribute="{ name: 'Domain', value: deity.domain }" />
+        </Grid>
+        <UnterisImage class="symbol" url="Symbol" />
+      </Grid>
+    </Grid>
   </div>
 </template>
 
 <script lang="ts">
+import { Attribute, UnterisImage, Grid } from '@unteris/components';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
-import Attribute from '../common/Attribute.component.vue';
-import UnterisImage from '../common/UnterisImage.component.vue';
 import type { Deity } from './deity.interface';
 
 @Component({
@@ -30,6 +33,7 @@ import type { Deity } from './deity.interface';
   components: {
     Attribute,
     UnterisImage,
+    Grid,
   },
 })
 export default class DeityCardComponent extends Vue {
@@ -39,35 +43,22 @@ export default class DeityCardComponent extends Vue {
 </script>
 
 <style scoped lang="scss">
-.deity {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-}
-.header {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-}
 .profile {
   &.pic {
-    grid-column: 1 / 3;
+    grid-column: 1 / 5;
     background: lightgreen;
   }
   &.info {
-    grid-column: 3/ 7;
-    display: grid;
+    grid-column: 5/ 13;
   }
 }
 .body {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
   .symbol {
-    grid-column: 5/ 7;
+    grid-column: 9/ 13;
     background-color: lightblue;
   }
   .attributes {
-    display: grid;
-    grid-column: 1/ 5;
+    grid-column: 1/ 9;
   }
 }
 
