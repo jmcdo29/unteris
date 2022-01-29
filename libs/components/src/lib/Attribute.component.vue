@@ -1,20 +1,20 @@
 <template>
   <div class="attr">
-    <Grid :columns="2">
+    <BaseGrid :columns="2">
       <span class="name">{{ attribute.name }}:</span>
       <span class="value">{{
         Array.isArray(attribute.value)
           ? attribute.value.join(', ')
           : attribute.value
       }}</span>
-    </Grid>
+    </BaseGrid>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
-import Grid from './Grid.component.vue';
+import BaseGrid from './Grid.component.vue';
 
 interface AttributeProps {
   name: string;
@@ -22,10 +22,10 @@ interface AttributeProps {
 }
 
 @Component({
-  name: 'Attribute',
-  components: { Grid },
+  name: 'BaseAttribute',
+  components: { BaseGrid },
 })
-export default class Attribute extends Vue {
+export default class BaseAttribute extends Vue {
   @Prop()
   attribute: AttributeProps;
 }

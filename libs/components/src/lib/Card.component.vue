@@ -7,15 +7,10 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
-import Grid from './Grid.component.vue';
-
 @Component({
-  name: 'Card',
-  components: {
-    Grid,
-  },
+  name: 'BaseCard',
 })
-export default class CardComponent extends Vue {}
+export default class BaseCardComponent extends Vue {}
 </script>
 
 <style scoped lang="scss">

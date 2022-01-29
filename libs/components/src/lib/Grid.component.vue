@@ -13,9 +13,9 @@ interface StyleComponent {
 }
 
 @Component({
-  name: 'Grid',
+  name: 'BaseGrid',
 })
-export default class GridComponent extends Vue {
+export default class BaseGridComponent extends Vue {
   @Prop({ default: 12, type: [Number, String] })
   readonly columns: number | string;
 

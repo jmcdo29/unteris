@@ -1,29 +1,34 @@
 <template>
-  <div class="deity">
-    <Grid :rows="2" :columns="1">
-      <Grid>
+  <BaseCard>
+    <BaseGrid :rows="2" :columns="1">
+      <BaseGrid>
         <UnterisImage class="profile pic" url="Picture" />
-        <Grid :rows="2" :columns="1" class="profile info">
+        <BaseGrid :rows="2" :columns="1" class="profile info">
           <h3>{{ deity.name }}</h3>
           <h5>{{ deity.title }}</h5>
-        </Grid>
-      </Grid>
-      <Grid class="body">
-        <Grid class="attributes" :columns="1" :rows="3">
-          <Attribute
+        </BaseGrid>
+      </BaseGrid>
+      <BaseGrid class="body">
+        <BaseGrid class="attributes" :columns="1">
+          <BaseAttribute
             :attribute="{ name: 'Alignment', value: deity.alignment }"
           />
-          <Attribute :attribute="{ name: 'Symbol', value: deity.symbol }" />
-          <Attribute :attribute="{ name: 'Domain', value: deity.domain }" />
-        </Grid>
+          <BaseAttribute :attribute="{ name: 'Symbol', value: deity.symbol }" />
+          <BaseAttribute :attribute="{ name: 'Domain', value: deity.domain }" />
+        </BaseGrid>
         <UnterisImage class="symbol" url="Symbol" />
-      </Grid>
-    </Grid>
-  </div>
+      </BaseGrid>
+    </BaseGrid>
+  </BaseCard>
 </template>
 
 <script lang="ts">
-import { Attribute, UnterisImage, Grid } from '@unteris/components';
+import {
+  BaseAttribute,
+  UnterisImage,
+  BaseGrid,
+  BaseCard,
+} from '@unteris/components';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
 import type { Deity } from './deity.interface';
@@ -31,12 +36,13 @@ import type { Deity } from './deity.interface';
 @Component({
   name: 'DietyCard',
   components: {
-    Attribute,
+    BaseAttribute,
     UnterisImage,
-    Grid,
+    BaseGrid,
+    BaseCard,
   },
 })
-export default class DeityCardComponent extends Vue {
+export default class DeityBaseCardComponent extends Vue {
   @Prop()
   deity: Deity;
 }
