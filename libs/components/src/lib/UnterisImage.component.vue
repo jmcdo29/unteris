@@ -1,6 +1,6 @@
 <template>
   <div class="unteris image">
-    {{ url }}
+    <img :src="url" :alt="alt" />
   </div>
 </template>
 
@@ -13,12 +13,18 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 export default class UnterisImage extends Vue {
   @Prop()
   url: string;
+
+  @Prop()
+  alt: string;
 }
 </script>
 
 <style scoped lang="scss">
 .unteris {
-  padding-top: 30%;
   text-align: center;
+  img {
+    height: 100%;
+    width: 100%;
+  }
 }
 </style>

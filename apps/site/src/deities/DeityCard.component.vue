@@ -2,7 +2,11 @@
   <BaseCard>
     <BaseGrid :rows="2" :columns="1">
       <BaseGrid>
-        <UnterisImage class="profile pic" url="Picture" />
+        <UnterisImage
+          class="profile pic"
+          :url="`/${deity.name.replace(/\s/g, '_')}-headshot.png`"
+          :alt="`A headshot of the deity ${deity.name}`"
+        />
         <BaseGrid :rows="2" :columns="1" class="profile info">
           <h3>{{ deity.name }}</h3>
           <h5>{{ deity.title }}</h5>
@@ -16,7 +20,11 @@
           <BaseAttribute :attribute="{ name: 'Symbol', value: deity.symbol }" />
           <BaseAttribute :attribute="{ name: 'Domain', value: deity.domain }" />
         </BaseGrid>
-        <UnterisImage class="symbol" url="Symbol" />
+        <UnterisImage
+          class="symbol"
+          :url="`/${deity.name.replace(/\s/g, '_')}-headshot.png`"
+          :alt="`A headshot of ${deity.name}`"
+        />
       </BaseGrid>
     </BaseGrid>
   </BaseCard>
@@ -52,7 +60,6 @@ export default class DeityBaseCardComponent extends Vue {
 .profile {
   &.pic {
     grid-column: 1 / 5;
-    background: lightgreen;
   }
   &.info {
     grid-column: 5/ 13;
@@ -61,7 +68,6 @@ export default class DeityBaseCardComponent extends Vue {
 .body {
   .symbol {
     grid-column: 9/ 13;
-    background-color: lightblue;
   }
   .attributes {
     grid-column: 1/ 9;
