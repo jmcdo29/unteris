@@ -27,18 +27,8 @@
     ]
   },
   "projects": {
-    "components": {
-      "tags": []
-    },
     "server": {
       "tags": []
-    },
-    "site": {
-      "tags": []
-    },
-    "site-e2e": {
-      "tags": [],
-      "implicitDependencies": ["site"]
     }
   }
 }

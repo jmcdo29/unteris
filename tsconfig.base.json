@@ -16,9 +16,7 @@
     "strict": true,
     "baseUrl": ".",
     "strictPropertyInitialization": false,
-    "paths": {
-      "@unteris/components": ["libs/components/src/index.ts"]
-    }
+    "paths": {}
   },
   "exclude": ["node_modules", "tmp"]
 }
