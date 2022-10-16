@@ -7,13 +7,19 @@
       "projectType": "application",
       "targets": {
         "build": {
-          "executor": "@nrwl/node:build",
-          "outputs": ["{options.outputPath}"],
+          "executor": "@nrwl/webpack:webpack",
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/apps/server",
             "main": "apps/server/src/main.ts",
             "tsConfig": "apps/server/tsconfig.app.json",
-            "assets": ["apps/server/src/assets"]
+            "assets": [
+              "apps/server/src/assets"
+            ],
+            "target": "node",
+            "compiler": "tsc"
           },
           "configurations": {
             "production": {
@@ -30,31 +36,35 @@
           }
         },
         "serve": {
-          "executor": "@nrwl/node:execute",
+          "executor": "@nrwl/node:node",
           "options": {
             "buildTarget": "server:build"
           }
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
+          "outputs": [
+            "{options.outputFile}"
+          ],
           "options": {
-            "lintFilePatterns": ["apps/server/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/server/**/*.ts"
+            ]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/server"],
+          "outputs": [
+            "{workspaceRoot}/coverage/apps/server"
+          ],
           "options": {
-            "jestConfig": "apps/server/jest.config.js",
+            "jestConfig": "apps/server/jest.config.ts",
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     }
   },
-  "cli": {
-    "defaultCollection": "@nrwl/nest"
-  },
-  "defaultProject": "server"
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json"
 }
