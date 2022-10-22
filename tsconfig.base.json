@@ -16,7 +16,12 @@
     "strict": true,
     "baseUrl": ".",
     "strictPropertyInitialization": false,
-    "paths": {}
+    "paths": {},
+    "plugins": [
+      {
+        "name": "@angular/language-service"
+      }
+    ]
   },
   "exclude": ["node_modules", "tmp"]
 }

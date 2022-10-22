@@ -27,8 +27,8 @@ $dark-green-palette: (
     600: $light-primary-text,
     700: $light-primary-text,
     800: $light-primary-text,
-    900: $light-primary-text
-  )
+    900: $light-primary-text,
+  ),
 );
 
 $dark-purple-palette: (
@@ -52,8 +52,8 @@ $dark-purple-palette: (
     600: $light-primary-text,
     700: $light-primary-text,
     800: $light-primary-text,
-    900: $light-primary-text
-  )
+    900: $light-primary-text,
+  ),
 );
 
 $light-green-palette: (
@@ -77,8 +77,8 @@ $light-green-palette: (
     600: $dark-primary-text,
     700: $dark-primary-text,
     800: $dark-primary-text,
-    900: $dark-primary-text
-  )
+    900: $dark-primary-text,
+  ),
 );
 
 $light-purple-palette: (
@@ -102,8 +102,8 @@ $light-purple-palette: (
     600: $light-primary-text,
     700: $light-primary-text,
     800: $light-primary-text,
-    900: $light-primary-text
-  )
+    900: $light-primary-text,
+  ),
 );
 
 $light-primary: mat.define-palette($light-green-palette, 300, 100, 600);
@@ -112,25 +112,33 @@ $light-accent: mat.define-palette($light-purple-palette);
 $dark-primary: mat.define-palette($dark-green-palette, 700, 500, 900);
 $dark-accent: mat.define-palette($dark-purple-palette);
 
-$light-theme: mat.define-light-theme((
-  color: (
-    primary: $light-primary,
-    accent: $light-accent
+$light-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $light-primary,
+      accent: $light-accent,
+    ),
   )
-));
+);
 
-$dark-theme: mat.define-dark-theme((
-  color: (
-    primary: $dark-primary,
-    accent: $dark-accent
+$dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $dark-primary,
+      accent: $dark-accent,
+    ),
   )
-))
+);
 
-@include mat.core-theme($dark-theme);
-@include mat.button-theme($dark-theme);
+@include mat.all-component-themes($dark-theme);
 
-.light-theme {
-  @include mat.core-color($light-theme);
-  @include mat.button-color($light-theme);
+body {
+  background-color: #262626;
 }
 
+.light-theme {
+  @include mat.all-component-colors($light-theme);
+}
+body.light-theme {
+  background-color: #ffffff;
+}
