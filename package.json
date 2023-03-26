@@ -69,6 +69,7 @@
     "jsdom": "~20.0.3",
     "nx": "15.8.6",
     "prettier": "2.7.1",
+    "react-router-dom": "^6.9.0",
     "react-test-renderer": "18.2.0",
     "sass": "^1.55.0",
     "swc-loader": "0.1.15",

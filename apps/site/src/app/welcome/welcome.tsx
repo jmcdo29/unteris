@@ -12,10 +12,11 @@ const Descriptor = ({
 }): JSX.Element => {
   return (
     <Box
-      sx={{ gridColumn: 'span 2' }}
       padding={`${theme.spacing()} ${theme.spacing(2)}`}
       border={`2px solid ${theme.palette.primary[theme.palette.mode]}`}
       borderRadius={theme.shape.borderRadius}
+      margin={`0 ${theme.spacing(4)}`}
+      minWidth={theme.spacing(50)}
     >
       {children}
     </Box>
@@ -24,38 +25,51 @@ const Descriptor = ({
 
 export const Welcome = (): JSX.Element => {
   const theme = useTheme();
+  const opacityMod = theme.palette.mode === 'dark' ? '88' : '8';
   return (
-    <Grid sx={{ justifyItems: 'center', height: '40%', marginTop: '1em' }}>
+    <Box padding={`${theme.spacing(5)} 0`}>
+      <Grid sx={{ justifyItems: 'center', height: '40%' }}>
+        <Grid
+          sx={{
+            justifyItems: 'center',
+            width: '100%',
+            borderRadius: theme.shape.borderRadius,
+            background: ` linear-gradient(to right, ${
+              theme.palette.secondary[theme.palette.mode]
+            }, ${
+              theme.palette.background.default
+            }${opacityMod}), url(./vitoak.png)`,
+            backgroundRepeat: 'no-repeat, no-repeat',
+            backgroundPosition: 'left, right top 40%',
+            columnGap: theme.spacing(),
+            padding: `${theme.spacing(8)} ${theme.spacing(2)}`,
+            margin: `0 0 ${theme.spacing(2)}`,
+          }}
+          columns={6}
+        >
+          <Typography
+            variant="h2"
+            sx={{
+              gridColumn: '1 / 3',
+            }}
+            component="h1"
+          >
+            Welcome to Unteris
+          </Typography>
+          <Box
+            sx={{
+              gridColumn: '3/-1',
+            }}
+          ></Box>
+        </Grid>
+      </Grid>
       <Grid
         sx={{
-          gridColumn: '2 / -2',
-          justifyItems: 'center',
-          width: '100%',
-          borderRadius: '15px',
-          background: `linear-gradient(to right, ${
-            theme.palette.secondary[theme.palette.mode]
-          }, ${theme.palette.background.default})`,
-          padding: `${theme.spacing(8)} ${theme.spacing(2)}`,
-          rowGap: theme.spacing(2),
           columnGap: theme.spacing(),
+          justifyItems: 'center',
+          justifyContent: 'center',
         }}
-        columns={6}
       >
-        <Typography
-          variant="h2"
-          sx={{
-            gridColumn: '1 / 3',
-            // fontFamily: 'Cinzel Decorative',
-          }}
-          component="h1"
-        >
-          Welcome to Unteris
-        </Typography>
-        <Box
-          sx={{
-            gridColumn: '3/-1',
-          }}
-        ></Box>
         <Descriptor theme={theme}>
           Enter a land once torn apart by war and bloodshed, sewn back together
           with magic
@@ -68,6 +82,6 @@ export const Welcome = (): JSX.Element => {
           Forge a part of the legend that the land will tell in time
         </Descriptor>
       </Grid>
-    </Grid>
+    </Box>
   );
 };

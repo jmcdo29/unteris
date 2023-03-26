@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import Drawer from '@mui/material/Drawer';
 import ProfileIcon from '@mui/icons-material/AccountCircle';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Grid, ThemeSwitcher } from '@unteris/ui/components';
+import { Grid, StyledButton, ThemeSwitcher } from '@unteris/ui/components';
 import { useState } from 'react';
 
 export const NavBar = (props: {
@@ -19,7 +19,12 @@ export const NavBar = (props: {
             <MenuIcon />
           </Button>
         </Box>
-        <Box sx={{ gridColumn: 'span 9' }}></Box>
+        <Box>
+          <StyledButton href="/" variant="h2" fontSize="2em">
+            Unteris
+          </StyledButton>
+        </Box>
+        <Box sx={{ gridColumn: 'span 8' }}></Box>
         <ThemeSwitcher setTheme={props.setTheme} />
         <Box>
           <Button>
@@ -28,7 +33,9 @@ export const NavBar = (props: {
         </Box>
       </Grid>
       <Drawer open={showMenu} onClose={() => setShowMenu(false)}>
-        <Box>Drawer is showing</Box>
+        <StyledButton href="/history" onClick={() => setShowMenu(false)}>
+          History
+        </StyledButton>
       </Drawer>
     </>
   );

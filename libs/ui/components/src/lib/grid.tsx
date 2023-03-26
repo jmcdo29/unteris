@@ -4,23 +4,32 @@ import { ReactNode } from 'react';
 
 export interface GridProps {
   columns?: number;
-  rows?: number;
+  rows?: string;
   sx?: SxProps;
   children: ReactNode;
 }
 
 export const Grid = ({
   children,
-  columns = 12,
-  rows = 1,
+  columns,
+  rows = 'auto',
   sx = {},
 }: GridProps): JSX.Element => {
+  if (!children) {
+    throw new Error('Grid should be used with children');
+  }
+  if (Array.isArray(children) && !columns) {
+    columns = children.length;
+  }
+  if (typeof children === 'object' && !columns) {
+    columns = 1;
+  }
   return (
     <Box
       sx={{
         display: 'grid',
-        gridTemplateColumns: `repeat(${columns}, 1fr)`,
-        gridTemplateRows: `repeat(${rows}, 1fr)`,
+        gridTemplateColumns: `repeat(${columns ?? 12}, 1fr)`,
+        gridTemplateRows: rows,
         ...sx,
       }}
     >
