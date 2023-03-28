@@ -32,9 +32,19 @@ export const NavBar = (props: {
           </Button>
         </Box>
       </Grid>
-      <Drawer open={showMenu} onClose={() => setShowMenu(false)}>
+      <Drawer
+        open={showMenu}
+        onClose={() => setShowMenu(false)}
+        sx={{ alignItems: 'start' }}
+      >
+        <StyledButton href="/" onClick={() => setShowMenu(false)}>
+          Home
+        </StyledButton>
         <StyledButton href="/history" onClick={() => setShowMenu(false)}>
           History
+        </StyledButton>
+        <StyledButton href="/deities" onClick={() => setShowMenu(false)}>
+          Deities
         </StyledButton>
       </Drawer>
     </>

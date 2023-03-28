@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouteObject } from 'react-router-dom';
+import { DeityNav } from './deities/deities-nav';
 import { History } from './history/history';
 import { Root } from './root';
 
@@ -14,7 +15,11 @@ const routes = (setTheme: (theme: 'dark' | 'light') => void): RouteObject[] => {
 
         {
           path: '/history',
-          Component: History,
+          element: <History />,
+        },
+        {
+          path: '/deities',
+          element: <DeityNav />,
         },
       ],
     },

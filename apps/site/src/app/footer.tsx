@@ -1,4 +1,4 @@
-import { Box, Divider, Typography, useTheme } from '@mui/material';
+import { Box, Divider, useTheme } from '@mui/material';
 import Heart from '@mui/icons-material/Favorite';
 import { Grid, StyledLink } from '@unteris/ui/components';
 
@@ -15,12 +15,12 @@ export const Footer = (): JSX.Element => {
         columns={1}
         sx={{ justifyContent: 'center', justifyItems: 'center' }}
       >
-        <Typography variant="body1">
+        <div>
           Made with <Heart color="primary" display="inline-block" /> by&nbsp;
           <StyledLink href="https://github.com/jmcdo29" display="inline">
             Jay McDoniel
           </StyledLink>
-        </Typography>
+        </div>
       </Grid>
     </Box>
   );
