@@ -4,14 +4,13 @@ import { SyntheticEvent, useEffect, useState } from 'react';
 import { DeityPicker } from './diety-picker';
 
 export const DeityNav = (): JSX.Element => {
-  const [tabIndex, setTabIndex] = useState(0);
+  const [tabIndex, setTabIndex] = useState(-1);
   const [categories, setCategories] = useState<string[]>([]);
 
   useEffect(() => {
     const timeoutId = setTimeout(
       () =>
         setCategories([
-          'Divinity',
           'Empyrean Beings',
           'Empyrean Children',
           'Seelie Court',
@@ -63,11 +62,7 @@ export const DeityNav = (): JSX.Element => {
           key={index}
           gridColumn="span 10"
         >
-          {category === 'Divinity' ? (
-            <></>
-          ) : (
-            <DeityPicker category={category} />
-          )}
+          <DeityPicker category={category} />
         </TabPanel>
       ))}
     </Grid>

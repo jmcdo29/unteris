@@ -18,7 +18,7 @@ interface DeityPickerProps {
 }
 
 export const DeityPicker = (props: DeityPickerProps): JSX.Element => {
-  const [tabIndex, setTabIndex] = useState(0);
+  const [tabIndex, setTabIndex] = useState(-1);
   const [deities, setDeities] = useState<string[]>([]);
 
   const handleTabChange = (_event: SyntheticEvent, newIndex: number) => {

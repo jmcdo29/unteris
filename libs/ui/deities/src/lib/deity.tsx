@@ -1,16 +1,9 @@
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import { Grid } from '@unteris/ui/components';
 import { useEffect, useState } from 'react';
+import type { Deity as IDeity } from './deity.interface';
+import { DeityEditor } from './deity-editor';
+import { DeityViewer } from './deity-viewer';
 
-interface Deity {
-  name: string;
-  description: string;
-  imageUrl: string;
-  domains?: string[];
-}
-
-const deities: Record<string, Deity> = {
+const deities: Record<string, IDeity> = {
   Pomdra: {
     description:
       'The Empyrean Being who descended from the clouds and used their power to sew Unteris together as well as planted the Vitoak in the middle. They created the first Celestials to watch over the growth of the Vitoak.',
@@ -42,44 +35,29 @@ interface DeityProps {
 }
 
 export const Deity = (props: DeityProps): JSX.Element => {
-  const [deity, setDeity] = useState<Deity>();
+  const [deity, setDeity] = useState<IDeity>();
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     setTimeout(() => setDeity(deities[props.name]), 500);
   }, [setDeity]);
 
+  const updateDeity = (deity: IDeity) => {
+    deities[props.name] = deity;
+    setDeity(deity);
+  };
+
   if (!deity) {
     return <></>;
   }
 
-  return (
-    <Grid columns={12}>
-      <Box
-        sx={{
-          gridColumn: 'span 4',
-          paddingLeft: '1em',
-          display: 'grid',
-          gridColumnTemplate: 'fr',
-        }}
-      >
-        <Typography variant="h2">{props.name}</Typography>
-        <Typography variant="body1">{deity.description}</Typography>
-        {deity.domains?.length ? (
-          <Typography variant="body1">
-            Domains: {deity.domains?.join(', ')}
-          </Typography>
-        ) : (
-          <Box />
-        )}
-        <Box />
-      </Box>
-      <Box sx={{ gridColumn: 'span 8', maxHeight: '75vh', maxWidth: '100%' }}>
-        <img
-          src={deity.imageUrl}
-          alt={`${deity.name} image`}
-          style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-        />
-      </Box>
-    </Grid>
+  return isEditing ? (
+    <DeityEditor
+      deity={deity}
+      setDeity={updateDeity}
+      setIsEditing={setIsEditing}
+    />
+  ) : (
+    <DeityViewer deity={deity} setIsEditing={setIsEditing} />
   );
 };

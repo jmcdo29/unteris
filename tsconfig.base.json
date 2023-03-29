@@ -17,7 +17,9 @@
     "baseUrl": ".",
     "strictPropertyInitialization": false,
     "paths": {
-      "@unteris/ui/components": ["libs/ui/components/src/index.ts"]
+      "@unteris/ui/components": ["libs/ui/components/src/index.ts"],
+      "@unteris/ui/deities": ["libs/ui/deities/src/index.ts"],
+      "@unteris/ui/history": ["libs/ui/history/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
