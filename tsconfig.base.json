@@ -17,6 +17,7 @@
     "baseUrl": ".",
     "strictPropertyInitialization": false,
     "paths": {
+      "@unteris/db/migrations": ["libs/db/migrations/src/index.ts"],
       "@unteris/server/kysely": ["libs/server/kysely/src/index.ts"],
       "@unteris/ui/components": ["libs/ui/components/src/index.ts"],
       "@unteris/ui/deities": ["libs/ui/deities/src/index.ts"],

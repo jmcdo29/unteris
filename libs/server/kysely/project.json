@@ -37,5 +37,5 @@
       }
     }
   },
-  "tags": ["server", "database"]
+  "tags": ["server", "database", "cli"]
 }

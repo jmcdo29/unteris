@@ -1,0 +1,27 @@
+{
+  "name": "db-migrations",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/db/migrations/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/db/migrations",
+        "tsConfig": "libs/db/migrations/tsconfig.lib.json",
+        "packageJson": "libs/db/migrations/package.json",
+        "main": "libs/db/migrations/src/index.ts",
+        "assets": ["libs/db/migrations/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/db/migrations/**/*.ts"]
+      }
+    }
+  },
+  "tags": ["database", "dni"]
+}

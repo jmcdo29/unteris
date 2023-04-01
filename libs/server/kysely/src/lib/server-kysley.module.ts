@@ -1,5 +1,5 @@
-import { Module } from '@nestjs/common';
-import { Kysely, KyselyConfig, PostgresDialect } from 'kysely';
+import { Inject, Module } from '@nestjs/common';
+import { CamelCasePlugin, Kysely, KyselyConfig, PostgresDialect } from 'kysely';
 import { Pool } from 'pg';
 import {
   getKyselyConfigToken,
@@ -17,8 +17,11 @@ import {
             host: 'localhost',
             port: 5432,
             database: 'unteris',
+            user: 'postgres',
+            password: 'postgres',
           }),
         }),
+        plugins: [new CamelCasePlugin()],
       }),
     },
     {
@@ -31,4 +34,12 @@ import {
   ],
   exports: [getKyselyInstanceToken()],
 })
-export class KyselyModule {}
+export class KyselyModule {
+  constructor(
+    @Inject(getKyselyInstanceToken()) private readonly kysely: Kysely<any>
+  ) {}
+
+  async onModuleDestroy() {
+    await this.kysely.destroy();
+  }
+}
