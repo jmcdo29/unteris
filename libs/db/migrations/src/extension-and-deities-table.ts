@@ -64,7 +64,7 @@ LANGUAGE plpgsql
 VOLATILE;`.execute(db);
 
   await db.schema
-    .createTable('deity_categories')
+    .createTable('deity_category')
     .addColumn('id', 'text', (col) => col.defaultTo('ulid()').primaryKey())
     .addColumn('name', 'text', (col) => col.unique().notNull())
     .execute();
@@ -82,7 +82,7 @@ VOLATILE;`.execute(db);
     .addColumn('description', 'text', (col) => col.notNull())
     .addColumn('image_url', 'text')
     .addColumn('category', 'text', (col) =>
-      col.references('deity_categories.id').notNull()
+      col.references('deity_category.id').notNull()
     )
     .execute();
 
@@ -98,7 +98,7 @@ export const down = async (db: Kysely<any>) => {
   await db.schema.dropTable('deity_domains').execute();
   await db.schema.dropTable('deities').execute();
   await db.schema.dropTable('domains').execute();
-  await db.schema.dropTable('deity_categories').execute();
+  await db.schema.dropTable('deity_category').execute();
   await sql`DROP FUNCTION ulid;`.execute(db);
   await sql`DROP EXTENSION pgcrypto;`.execute(db);
 };

@@ -35,7 +35,7 @@ export class KyselyCliCommand extends CommandRunner {
             process.cwd(),
             'dist',
             'libs',
-            'server',
+            'db',
             'migrations',
             'src'
           ),
