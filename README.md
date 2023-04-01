@@ -4,87 +4,59 @@ This project was generated using [Nx](https://nx.dev).
 
 <p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
 
-🔎 **Smart, Extensible Build Framework**
+<p style="text-align: center;"><img src="./apps/site/public/vitoak.png" width="450"></p>
 
-## Adding capabilities to your workspace
+## Welcome to the World
 
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
+Unteris is a D&D Homebrew setting written and developed by my partner. All
+credit for information about the world goes to them. This repository is the
+website that I am working on for displaying the information they come up with
+to make it easier to track changes, and share the information with other
+players and Dungeon Masters as the campaign setting grows.
 
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
+## The (Code) Design
 
-Below are our core plugins:
+Currently, the front end is being written in React while using NestJS as the
+server side framework all withhin this wonderful Nx monorepo. nest-commander is
+being used as a CLI builder to integrate with Kysely to handle migrations via
+its own "application" in Nx's terms. Migrations are written to their own
+library directory, and all new react components go into separate libraries as
+well to help keep builds short making use of Nx's computational caching.
 
-- [React](https://reactjs.org)
-  - `npm install --save-dev @nrwl/react`
-- Web (no framework frontends)
-  - `npm install --save-dev @nrwl/web`
-- [Angular](https://angular.io)
-  - `npm install --save-dev @nrwl/angular`
-- [Nest](https://nestjs.com)
-  - `npm install --save-dev @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `npm install --save-dev @nrwl/express`
-- [Node](https://nodejs.org)
-  - `npm install --save-dev @nrwl/node`
+Eventually this will all be hosted on AWS as well.
 
-There are also many [community plugins](https://nx.dev/community) you could add.
+## Running Locally
 
-## Generate an application
+If you **really** can't wait to see what this is all doing you can follow th
+steps below
 
-Run `nx g @nrwl/react:app my-app` to generate an application.
+### Prereqs
 
-> You can use any of the plugins above to generate applications as well.
+1. NodeJS preferrably current (18 and above)
+2. A package manager, I use pnpm and do not guarantee yarn or npm will work the
+same
+3. Docker-compose
+4. Your own creativity when it comes to filling in the database as those seeds
+are not yet created
 
-When using Nx, you can create multiple applications and libraries in the same workspace.
+### Steps
 
-## Generate a library
+1. Clone the repo and move to the directory
+2. Run `docker compose up -d` to start the database
+3. Run `pnpm nx run kysely-cli:migrate` to build and run the migrations
+4. Run `pnpm nx run server:serve` to start the server on port 3333
+5. Run `pnpm nx run site:serve` to start the site on port 4200
 
-Run `nx g @nrwl/react:lib my-lib` to generate a library.
+> Note: technically the site and server aren't hooked together yet, but that's
+the next step
 
-> You can also use any of the plugins above to generate libraries as well.
+## Keep in Touch
 
-Libraries are shareable across libraries and applications. They can be imported from `@unteris/mylib`.
+I'll be working on this in the free time that I have, as I really want to see
+it all come together. Feel free to use this project as inspiration for your own
+or learn how I'm connecting Nx libraries and applications together. Otherwise,
+you can just watch the project and see what becomes of it. 
 
-## Development server
+Any major questions I guess you can raise an issue or [email me about it][email]
 
-Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `nx g @nrwl/react:component my-component --project=my-app` to generate a new component.
-
-## Build
-
-Run `nx build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `nx test my-app` to execute the unit tests via [Jest](https://jestjs.io).
-
-Run `nx affected:test` to execute the unit tests affected by a change.
-
-## Running end-to-end tests
-
-Run `ng e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
-
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
-
-## Understand your workspace
-
-Run `nx dep-graph` to see a diagram of the dependencies of your projects.
-
-## Further help
-
-Visit the [Nx Documentation](https://nx.dev) to learn more.
-
-## ☁ Nx Cloud
-
-### Distributed Computation Caching & Distributed Task Execution
-
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
-
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
-
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
-
-Visit [Nx Cloud](https://nx.app/) to learn more.
+[email]: mailto://me+unteris@jaymcdoniel.dev
