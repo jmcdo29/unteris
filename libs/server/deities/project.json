@@ -1,0 +1,16 @@
+{
+  "name": "server-deities",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/server/deities/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/server/deities/**/*.ts"]
+      }
+    }
+  },
+  "tags": ["server"]
+}
