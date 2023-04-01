@@ -34,10 +34,10 @@ steps below
 
 1. NodeJS preferrably current (18 and above)
 2. A package manager, I use pnpm and do not guarantee yarn or npm will work the
-same
+   same
 3. Docker-compose
 4. Your own creativity when it comes to filling in the database as those seeds
-are not yet created
+   are not yet created
 
 ### Steps
 
@@ -48,14 +48,14 @@ are not yet created
 5. Run `pnpm nx run site:serve` to start the site on port 4200
 
 > Note: technically the site and server aren't hooked together yet, but that's
-the next step
+> the next step
 
 ## Keep in Touch
 
 I'll be working on this in the free time that I have, as I really want to see
 it all come together. Feel free to use this project as inspiration for your own
 or learn how I'm connecting Nx libraries and applications together. Otherwise,
-you can just watch the project and see what becomes of it. 
+you can just watch the project and see what becomes of it.
 
 Any major questions I guess you can raise an issue or [email me about it][email]
 
