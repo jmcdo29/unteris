@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import EditIcon from '@mui/icons-material/Edit';
+// import Button from '@mui/material/Button';
+// import EditIcon from '@mui/icons-material/Edit';
 import Typography from '@mui/material/Typography';
 import { Grid } from '@unteris/ui/components';
 import { Deity } from './deity.interface';
@@ -12,8 +12,8 @@ interface DeityViewerProps {
 
 export const DeityViewer = ({
   deity,
-  setIsEditing,
-}: DeityViewerProps): JSX.Element => {
+}: // setIsEditing,
+DeityViewerProps): JSX.Element => {
   return (
     <Grid columns={12}>
       <Box
@@ -28,9 +28,9 @@ export const DeityViewer = ({
           <Typography variant="h2" fontSize="3.25rem">
             {deity.name}
 
-            <Button onClick={() => setIsEditing(true)}>
+            {/*<Button onClick={() => setIsEditing(true)}>
               <EditIcon />
-            </Button>
+            </Button>*/}
           </Typography>
         </Box>
         <Typography variant="body1">{deity.description}</Typography>

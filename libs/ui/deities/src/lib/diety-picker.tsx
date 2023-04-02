@@ -1,41 +1,33 @@
 import Tabs from '@mui/material/Tabs';
-import { Grid, a11yProps, Tab, TabPanel } from '@unteris/ui/components';
-import { SyntheticEvent, useState, useEffect } from 'react';
+import {
+  Grid,
+  a11yProps,
+  Tab,
+  TabPanel,
+  useFetchEffect,
+} from '@unteris/ui/components';
+import { SyntheticEvent, useState } from 'react';
 import { Deity } from './deity';
 
-const deitiesLists: Record<string, string[]> = {
-  'Empyrean Beings': ['Pomdra', 'Venlustel', 'Felvcor', 'Latubor'],
-  'Empyrean Children': [],
-  'Seelie Court': [],
-  'Unseelie Court': [],
-  Celestials: [],
-  Fiends: [],
-  Syrens: ['Ribbea', 'Medite', 'Abiansea', 'Erinse', 'Neromare'],
-};
-
 interface DeityPickerProps {
-  category: string;
+  category: { name: string; id: string };
 }
 
 export const DeityPicker = (props: DeityPickerProps): JSX.Element => {
   const [tabIndex, setTabIndex] = useState(-1);
-  const [deities, setDeities] = useState<string[]>([]);
+  const [deities, setDeities] = useState<Array<{ name: string; id: string }>>(
+    []
+  );
 
   const handleTabChange = (_event: SyntheticEvent, newIndex: number) => {
     setTabIndex(newIndex);
   };
 
-  useEffect(() => {
-    console.log('Rendering');
-    const timeoutId = setTimeout(
-      () => setDeities(deitiesLists[props.category]),
-      500
-    );
-    return () => {
-      clearTimeout(timeoutId);
-      setDeities([]);
-    };
-  }, [setDeities]);
+  useFetchEffect({
+    endpoint: `deities/category/${props.category.id}`,
+    setter: setDeities,
+    default: [],
+  });
 
   return (
     <Grid columns={12}>
@@ -53,7 +45,7 @@ export const DeityPicker = (props: DeityPickerProps): JSX.Element => {
         }}
       >
         {deities.map((deity, index) => (
-          <Tab label={deity} key={index} {...a11yProps(index)}></Tab>
+          <Tab label={deity.name} key={index} {...a11yProps(index)}></Tab>
         ))}
       </Tabs>
       {deities.map((deity, index) => (
@@ -63,7 +55,7 @@ export const DeityPicker = (props: DeityPickerProps): JSX.Element => {
           key={index}
           gridColumn="span 10"
         >
-          <Deity name={deity} />
+          <Deity deity={deity} />
         </TabPanel>
       ))}
     </Grid>
