@@ -22,7 +22,7 @@ import { SeedTypeQuestions } from './seeds/seed-type.questions';
       },
       interceptor: false,
     }),
-    OgmaModule.forFeature(KyselyCliCommand),
+    OgmaModule.forFeatures([KyselyCliCommand, SeedCommand]),
   ],
   controllers: [AppController],
   providers: [

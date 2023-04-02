@@ -15,6 +15,9 @@ async function bootstrap() {
   app.setGlobalPrefix(globalPrefix);
   app.useLogger(app.get(OgmaService));
   const port = process.env.PORT || 3333;
+  app.enableCors({
+    origin: ['http://localhost:4200'],
+  });
   await app.listen(port, () => {
     Logger.log('Listening at http://localhost:' + port + '/' + globalPrefix);
   });
