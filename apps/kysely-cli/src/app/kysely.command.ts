@@ -18,7 +18,7 @@ interface KyselyCliOptions {
 @Command({ name: 'migrate', options: { isDefault: true } })
 export class KyselyCliCommand extends CommandRunner {
   constructor(
-    @InjectKysely() private readonly kysely: Kysely<any>,
+    @InjectKysely() private readonly kysely: Kysely<unknown>,
     @OgmaLogger(KyselyCliCommand) private readonly logger: OgmaService
   ) {
     super();
