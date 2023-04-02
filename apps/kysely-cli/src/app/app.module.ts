@@ -7,6 +7,7 @@ import { AppService } from './app.service';
 import { KyselyCliCommand } from './kysely.command';
 import { SeedCommand } from './seed.command';
 import { DeityCategoryQuestions } from './seeds/deity-category.questions';
+import { DeityDomainQuestions } from './seeds/deity-domain.questions';
 import { DeityQuestions } from './seeds/deity.questions';
 import { DomainQuestions } from './seeds/domain.questions';
 import { RepeatQuestions } from './seeds/repeat.questions';
@@ -33,6 +34,7 @@ import { SeedTypeQuestions } from './seeds/seed-type.questions';
     DomainQuestions,
     SeedTypeQuestions,
     RepeatQuestions,
+    DeityDomainQuestions,
   ],
 })
 export class AppModule {}
