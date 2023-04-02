@@ -31,20 +31,18 @@ export class SeedCommand extends CommandRunner {
         throw new Error(`Table "${type}" is not a known database entity`);
       }
       const entityType: keyof Database = type;
-      const data = await this.inquirer.ask<
-        Insertable<Database[typeof entityType]>
-      >(entityType, {});
       switch (entityType) {
         case 'deityCategory':
-          await this.insertDeityCategory(
-            data as Insertable<DeityCategoryTable>
-          );
+          await this.insertDeityCategory();
           break;
         case 'deity':
-          await this.insertDeity(data as Insertable<DeityTable>);
+          await this.insertDeity();
           break;
         case 'domain':
-          await this.insertDomain(data as Insertable<DomainTable>);
+          await this.insertDomain();
+          break;
+        case 'deityDomain':
+          await this.insertDeityDomain();
           break;
         default:
           this.logger.log('This entity type is still being worked on');
@@ -57,7 +55,7 @@ export class SeedCommand extends CommandRunner {
         {}
       );
       if (doItAgain) {
-        await this.run([], {});
+        await this.run([]);
       }
     }
     return;
@@ -67,13 +65,16 @@ export class SeedCommand extends CommandRunner {
     return ['deity', 'deityCategory', 'domain', 'deityDomain'].includes(type);
   }
 
-  private async insertDeityCategory(
-    data: Insertable<DeityCategoryTable>
-  ): Promise<void> {
+  private async insertDeityCategory(): Promise<void> {
+    const data = await this.inquirer.ask<Insertable<DeityCategoryTable>>(
+      'deityCategory',
+      {}
+    );
     await this.db.insertInto('deityCategory').values([data]).execute();
   }
 
-  private async insertDeity(data: Insertable<DeityTable>): Promise<void> {
+  private async insertDeity(): Promise<void> {
+    const data = await this.inquirer.ask<Insertable<DeityTable>>('deity', {});
     if (this.idFieldIsULID(data.category)) {
       await this.db.insertInto('deity').values([data]).execute();
       return;
@@ -94,8 +95,37 @@ export class SeedCommand extends CommandRunner {
       .execute();
   }
 
-  private async insertDomain(data: Insertable<DomainTable>): Promise<void> {
+  private async insertDomain(): Promise<void> {
+    const data = await this.inquirer.ask<Insertable<DomainTable>>('domain', {});
     await this.db.insertInto('domain').values([data]).execute();
+  }
+
+  private async insertDeityDomain(): Promise<void> {
+    const data = await this.inquirer.ask<{
+      deityName: string;
+      domainName: string;
+    }>('deityDomain', {});
+    const { id: deityId } = await this.db
+      .selectFrom('deity')
+      .select('id')
+      .where('name', '=', data.deityName)
+      .executeTakeFirstOrThrow();
+    const { id: domainId } = await this.db
+      .selectFrom('domain')
+      .select('id')
+      .where('name', '=', data.domainName)
+      .executeTakeFirstOrThrow();
+    await this.db
+      .insertInto('deityDomain')
+      .values([{ deityId, domainId }])
+      .execute();
+    const { doItAgain } = await this.inquirer.ask<{ doItAgain: boolean }>(
+      'repeat',
+      {}
+    );
+    if (doItAgain) {
+      await this.insertDeityDomain();
+    }
   }
 
   private idFieldIsULID(value: string): boolean {
