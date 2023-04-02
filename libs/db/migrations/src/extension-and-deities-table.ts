@@ -65,19 +65,19 @@ VOLATILE;`.execute(db);
 
   await db.schema
     .createTable('deity_category')
-    .addColumn('id', 'text', (col) => col.defaultTo('ulid()').primaryKey())
+    .addColumn('id', 'text', (col) => col.defaultTo(sql`ulid()`).primaryKey())
     .addColumn('name', 'text', (col) => col.unique().notNull())
     .execute();
 
   await db.schema
-    .createTable('domains')
-    .addColumn('id', 'text', (col) => col.defaultTo('ulid').primaryKey())
+    .createTable('domain')
+    .addColumn('id', 'text', (col) => col.defaultTo(sql`ulid()`).primaryKey())
     .addColumn('name', 'text')
     .execute();
 
   await db.schema
-    .createTable('deities')
-    .addColumn('id', 'text', (col) => col.defaultTo('ulid()').primaryKey())
+    .createTable('deity')
+    .addColumn('id', 'text', (col) => col.defaultTo(sql`ulid()`).primaryKey())
     .addColumn('name', 'text', (col) => col.unique().notNull())
     .addColumn('description', 'text', (col) => col.notNull())
     .addColumn('image_url', 'text')
@@ -87,17 +87,17 @@ VOLATILE;`.execute(db);
     .execute();
 
   await db.schema
-    .createTable('deity_domains')
-    .addColumn('id', 'text', (col) => col.defaultTo('ulid()').primaryKey())
-    .addColumn('deity_id', 'text', (col) => col.references('deities.id'))
-    .addColumn('domain_id', 'text', (col) => col.references('domains.id'))
+    .createTable('deity_domain')
+    .addColumn('id', 'text', (col) => col.defaultTo(sql`ulid()`).primaryKey())
+    .addColumn('deity_id', 'text', (col) => col.references('deity.id'))
+    .addColumn('domain_id', 'text', (col) => col.references('domain.id'))
     .execute();
 };
 
 export const down = async (db: Kysely<any>) => {
-  await db.schema.dropTable('deity_domains').execute();
-  await db.schema.dropTable('deities').execute();
-  await db.schema.dropTable('domains').execute();
+  await db.schema.dropTable('deity_domain').execute();
+  await db.schema.dropTable('deity').execute();
+  await db.schema.dropTable('domain').execute();
   await db.schema.dropTable('deity_category').execute();
   await sql`DROP FUNCTION ulid;`.execute(db);
   await sql`DROP EXTENSION pgcrypto;`.execute(db);
