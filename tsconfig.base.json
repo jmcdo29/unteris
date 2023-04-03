@@ -18,6 +18,7 @@
     "strictPropertyInitialization": false,
     "paths": {
       "@unteris/db/migrations": ["libs/db/migrations/src/index.ts"],
+      "@unteris/server/config": ["libs/server/config/src/index.ts"],
       "@unteris/server/deities": ["libs/server/deities/src/index.ts"],
       "@unteris/server/kysely": ["libs/server/kysely/src/index.ts"],
       "@unteris/ui/components": ["libs/ui/components/src/index.ts"],
