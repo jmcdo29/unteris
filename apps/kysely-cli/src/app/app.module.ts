@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { OgmaModule } from '@ogma/nestjs-module';
+import { ServerDeitiesModule } from '@unteris/server/deities';
 import { KyselyModule } from '@unteris/server/kysely';
 
 import { AppController } from './app.controller';
@@ -23,6 +24,7 @@ import { SeedTypeQuestions } from './seeds/seed-type.questions';
       interceptor: false,
     }),
     OgmaModule.forFeatures([KyselyCliCommand, SeedCommand]),
+    ServerDeitiesModule,
   ],
   controllers: [AppController],
   providers: [
