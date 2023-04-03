@@ -1,9 +1,11 @@
-import { Question, QuestionSet } from 'nest-commander';
+import { ServerDeitiesService } from '@unteris/server/deities';
+import { ChoicesFor, Question, QuestionSet } from 'nest-commander';
 
 @QuestionSet({
   name: 'deity',
 })
 export class DeityQuestions {
+  constructor(private readonly deitiesService: ServerDeitiesService) {}
   @Question({
     message: 'What is the name of the deity?',
     name: 'name',
@@ -21,7 +23,7 @@ export class DeityQuestions {
   }
 
   @Question({
-    message: 'Where can the image for this dedity be found?',
+    message: 'Where can the image for this deity be found?',
     name: 'imageUrl',
   })
   parseImageUrl(imageUrl: string) {
@@ -31,8 +33,14 @@ export class DeityQuestions {
   @Question({
     message: 'What category does this deity belong to?',
     name: 'category',
+    type: 'list',
   })
   parseCategory(category: string) {
     return category;
+  }
+
+  @ChoicesFor({ name: 'category' })
+  async getDeityCategories() {
+    return this.deitiesService.getAllCategories();
   }
 }
