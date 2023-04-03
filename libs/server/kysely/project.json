@@ -4,17 +4,6 @@
   "sourceRoot": "libs/server/kysely/src",
   "projectType": "library",
   "targets": {
-    "build": {
-      "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/server/kysely",
-        "tsConfig": "libs/server/kysely/tsconfig.lib.json",
-        "packageJson": "libs/server/kysely/package.json",
-        "main": "libs/server/kysely/src/index.ts",
-        "assets": ["libs/server/kysely/*.md"]
-      }
-    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],

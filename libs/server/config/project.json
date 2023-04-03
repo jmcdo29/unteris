@@ -4,17 +4,6 @@
   "sourceRoot": "libs/server/config/src",
   "projectType": "library",
   "targets": {
-    "build": {
-      "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/server/config",
-        "tsConfig": "libs/server/config/tsconfig.lib.json",
-        "packageJson": "libs/server/config/package.json",
-        "main": "libs/server/config/src/index.ts",
-        "assets": ["libs/server/config/*.md"]
-      }
-    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
