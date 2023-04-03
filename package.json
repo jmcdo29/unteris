@@ -19,7 +19,6 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "~7.5.0",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
@@ -84,6 +83,7 @@
     "prettier": "2.7.1",
     "react-router-dom": "^6.9.0",
     "react-test-renderer": "18.2.0",
+    "rxjs": "~7.8.0",
     "sass": "^1.55.0",
     "swc-loader": "0.1.15",
     "ts-jest": "29.0.5",
@@ -93,6 +93,7 @@
     "vite-plugin-eslint": "^1.8.1",
     "vite-tsconfig-paths": "^4.0.2",
     "vitest": "^0.25.8",
-    "webpack": "^5.74.0"
+    "webpack": "^5.74.0",
+    "zod": "^3.21.4"
   }
 }

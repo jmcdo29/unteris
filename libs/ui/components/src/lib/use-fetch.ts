@@ -6,7 +6,7 @@ interface UseFetchEffectProps {
   default: any;
 }
 
-const baseUrl = 'http://localhost:3333/api';
+const baseUrl = import.meta.env.VITE_SERVER_URL;
 
 export const useFetchEffect = (props: UseFetchEffectProps) => {
   useEffect(() => {
