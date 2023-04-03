@@ -39,3 +39,5 @@ testem.log
 Thumbs.db
 
 .angular
+apps/site/public/*.png
+apps/site/public/*.jpg
