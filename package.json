@@ -6,7 +6,10 @@
     "start": "nx serve",
     "build": "nx build",
     "test": "nx test",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "docker:server": "docker build -t unteris-server:latest --target=server-prod .",
+    "docker:site": "docker build -t unteris-site:latest --target=site-prod .",
+    "docker:migrations": "docker build -t unteris-migrations:latest --target=migrations-prod ."
   },
   "private": true,
   "dependencies": {
