@@ -66,6 +66,28 @@
       "options": {
         "lintFilePatterns": ["apps/site/**/*.{ts,tsx,js,jsx}"]
       }
+    },
+    "package": {
+      "executor": "nx:run-commands",
+      "outputPath": ["docker/cache/site"],
+      "options": {
+        "commands": [
+          "docker buildx build -t unteris-site:latest --target=site-prod --cache-from type=local,src=docker/cache/site --cache-to type=local,dest=docker/cache/site --builder=container --load . "
+        ]
+      }
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "dependsOn": [
+        {
+          "projects": "self",
+          "target": "package"
+        }
+      ],
+      "options": {
+        "commands": ["docker push unteris-site"],
+        "parallel": false
+      }
     }
   },
   "tags": ["ui", "front-end", "react"]

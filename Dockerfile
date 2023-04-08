@@ -8,6 +8,7 @@ COPY package.json \
 	nx.json \
 	pnpm-lock.yaml \
 	./
+ENV CYPRESS_INSTALL_BINARY=0
 RUN pnpm i
 
 ################
