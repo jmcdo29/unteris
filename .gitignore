@@ -43,3 +43,4 @@ apps/site/public/*.png
 apps/site/public/*.jpg
 
 *.local
+*.production

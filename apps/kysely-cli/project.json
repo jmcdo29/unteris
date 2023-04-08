@@ -17,7 +17,8 @@
         "tsConfig": "apps/kysely-cli/tsconfig.app.json",
         "assets": ["apps/kysely-cli/src/assets"],
         "isolatedConfig": true,
-        "webpackConfig": "apps/kysely-cli/webpack.config.js"
+        "webpackConfig": "apps/kysely-cli/webpack.config.js",
+        "generatePackageJson": true
       },
       "configurations": {
         "development": {},

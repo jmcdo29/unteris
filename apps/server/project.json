@@ -20,6 +20,8 @@
           "optimization": true,
           "extractLicenses": true,
           "inspect": false,
+          "generatePackageJson": true,
+          "buildLibsFromSrc": true,
           "fileReplacements": [
             {
               "replace": "apps/server/src/environments/environment.ts",

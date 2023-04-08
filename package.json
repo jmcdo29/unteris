@@ -15,11 +15,19 @@
     "@nestjs/core": "^9.1.4",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/platform-fastify": "^9.1.4",
+    "@ogma/logger": "^2.5.0",
+    "@ogma/nestjs-module": "^4.2.2",
+    "@ogma/platform-express": "^4.0.1",
     "axios": "^1.0.0",
+    "kysely": "^0.24.2",
+    "nest-commander": "^3.6.1",
+    "pg": "^8.10.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "reflect-metadata": "^0.1.13",
-    "tslib": "^2.3.0"
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
@@ -45,9 +53,6 @@
     "@nrwl/vite": "15.8.6",
     "@nrwl/webpack": "15.8.6",
     "@nrwl/workspace": "15.8.6",
-    "@ogma/logger": "^2.5.0",
-    "@ogma/nestjs-module": "^4.2.2",
-    "@ogma/platform-express": "^4.0.1",
     "@swc/core": "^1.2.173",
     "@testing-library/react": "14.0.0",
     "@types/inquirer": "^8",
@@ -75,15 +80,11 @@
     "jest-environment-jsdom": "29.4.3",
     "jest-environment-node": "^29.4.1",
     "jsdom": "~20.0.3",
-    "kysely": "^0.24.2",
-    "nest-commander": "^3.6.1",
     "nest-commander-testing": "^3.1.0",
     "nx": "15.8.6",
-    "pg": "^8.10.0",
     "prettier": "2.7.1",
     "react-router-dom": "^6.9.0",
     "react-test-renderer": "18.2.0",
-    "rxjs": "~7.8.0",
     "sass": "^1.55.0",
     "swc-loader": "0.1.15",
     "ts-jest": "29.0.5",
@@ -93,7 +94,6 @@
     "vite-plugin-eslint": "^1.8.1",
     "vite-tsconfig-paths": "^4.0.2",
     "vitest": "^0.25.8",
-    "webpack": "^5.74.0",
-    "zod": "^3.21.4"
+    "webpack": "^5.74.0"
   }
 }
