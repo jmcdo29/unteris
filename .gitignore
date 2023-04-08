@@ -45,3 +45,4 @@ apps/site/public/*.jpg
 *.local
 *.production
 docker/
+!libs/docker/

@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "docker",
+  "version": "0.0.1",
+  "generators": {
+    "docker": {
+      "factory": "./src/generators/docker/generator",
+      "schema": "./src/generators/docker/schema.json",
+      "description": "docker generator"
+    }
+  }
+}
