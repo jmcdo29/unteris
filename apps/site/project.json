@@ -68,13 +68,9 @@
       }
     },
     "package": {
-      "executor": "nx:run-commands",
+      "executor": "@unteris/plugin/docker:build",
       "outputPath": ["docker/cache/site"],
-      "options": {
-        "commands": [
-          "docker buildx build -t unteris-site:latest --target=site-prod --cache-from type=local,src=docker/cache/site --cache-to type=local,dest=docker/cache/site --builder=container --load . "
-        ]
-      }
+      "options": {}
     },
     "publish": {
       "executor": "nx:run-commands",

@@ -92,12 +92,10 @@
       }
     },
     "package": {
-      "executor": "nx:run-commands",
+      "executor": "@unteris/plugin/docker:build",
       "outputPath": ["docker/cache/migrations"],
       "options": {
-        "commands": [
-          "docker buildx build -t unteris-migrations:latest --target=migrations-prod --cache-from type=local,src=docker/cache/migrations --cache-to type=local,dest=docker/cache/migrations --builder=container --load . "
-        ]
+        "imageName": "migrations"
       }
     },
     "publish": {
