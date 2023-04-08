@@ -90,6 +90,28 @@
           "codeCoverage": true
         }
       }
+    },
+    "package": {
+      "executor": "nx:run-commands",
+      "outputPath": ["docker/cache/migrations"],
+      "options": {
+        "commands": [
+          "docker buildx build -t unteris-migrations:latest --target=migrations-prod --cache-from type=local,src=docker/cache/migrations --cache-to type=local,dest=docker/cache/migrations --builder=container --load . "
+        ]
+      }
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "dependsOn": [
+        {
+          "projects": "self",
+          "target": "package"
+        }
+      ],
+      "options": {
+        "commands": ["docker push unteris-migrations"],
+        "parallel": false
+      }
     }
   },
   "tags": ["database", "cli"]

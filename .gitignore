@@ -44,3 +44,4 @@ apps/site/public/*.jpg
 
 *.local
 *.production
+docker/

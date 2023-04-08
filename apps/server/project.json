@@ -46,10 +46,32 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/apps/server"],
+      "outputPath": ["{workspaceRoot}/coverage/apps/server"],
       "options": {
         "jestConfig": "apps/server/jest.config.ts",
         "passWithNoTests": true
+      }
+    },
+    "package": {
+      "executor": "nx:run-commands",
+      "outputs": ["docker/cache/server"],
+      "options": {
+        "commands": [
+          "docker buildx build -t unteris-server:latest --target=server-prod --cache-from type=local,src=docker/cache/server --cache-to type=local,dest=docker/cache/server --builder=container --load ."
+        ]
+      }
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "dependsOn": [
+        {
+          "projects": "self",
+          "target": "package"
+        }
+      ],
+      "options": {
+        "commands": ["docker push unteris-server"],
+        "parallel": false
       }
     }
   },
