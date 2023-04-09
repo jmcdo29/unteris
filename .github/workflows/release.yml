@@ -28,7 +28,7 @@ jobs:
       - name: Setup Node.js 18.x
         uses: actions/setup-node@master
         with:
-        node-version: 18.x
+          node-version: 18.x
 
       - name: Install pnpm
         run: npm i -g pnpm@^8
@@ -49,14 +49,14 @@ jobs:
         id: changesets
         uses: changesets/action@master
         env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Login to Docker Hub
         if: steps.changesets.outputs.hasChangesets == 'false'
         uses: docker/login-action@v2
         with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_TOKEN }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
 
       - name: Publish
         if: steps.changesets.outputs.hasChangesets == 'false'
