@@ -39,12 +39,12 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Create Docker Buildx
-        shell: bash
-        run: docker buildx create --append --name container --driver=docker-container
+      # - name: Create Docker Buildx
+      #   shell: bash
+      #   run: docker buildx create --append --name container --driver=docker-container
 
       - name: Build Projects
-        run: pnpm nx run-many --target=package --parallel
+        run: pnpm nx run-many --target=package
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets
