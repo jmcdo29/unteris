@@ -55,13 +55,11 @@
     "package": {
       "executor": "@unteris/plugin/docker:build",
       "outputs": ["docker/cache/server"],
-      "options": {}
-    },
-    "publish": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": ["docker push jmcdo29/unteris-server"],
-        "parallel": false
+      "options": {},
+      "configurations": {
+        "ci": {
+          "publish": true
+        }
       }
     }
   },

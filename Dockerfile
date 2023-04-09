@@ -3,6 +3,7 @@ RUN npm i -g pnpm
 
 FROM node-base AS common
 WORKDIR /src
+RUN apk add python3 make gcc g++
 COPY package.json \
 	tsconfig* \
 	nx.json \

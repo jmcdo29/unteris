@@ -6,4 +6,5 @@ export interface BuildExecutorSchema {
   verbose?: boolean;
   builder?: string;
   dockerNamespace?: string;
+  publish?: boolean;
 } // eslint-disable-line

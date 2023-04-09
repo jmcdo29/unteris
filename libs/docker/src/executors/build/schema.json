@@ -33,6 +33,10 @@
     "dockerNamespace": {
       "type": "string",
       "description": "The namespace for the tag"
+    },
+    "publish": {
+      "type": "boolean",
+      "description": "If the container should be published on build"
     }
   },
   "required": []
