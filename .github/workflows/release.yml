@@ -39,11 +39,14 @@ jobs:
       - name: Set up Docker Buildx
         id: builder
         uses: docker/setup-buildx-action@v2
+        with:
+          append: |
+            name: container
 
       - name: Build Projects
         shell: bash
         run: |
-          pnpm nx run-many --target=packge --builder=${{ steps.builder.outputs.name }}
+          pnpm nx run-many --target=packge
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets
