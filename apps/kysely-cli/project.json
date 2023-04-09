@@ -101,7 +101,7 @@
     "publish": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["docker push unteris-migrations"],
+        "commands": ["docker push jmcdo29/unteris-migrations"],
         "parallel": false
       }
     }
