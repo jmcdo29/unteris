@@ -41,7 +41,7 @@ jobs:
         uses: docker/setup-buildx-action@v2
         with:
           append: |
-            name: container
+            - name: container
 
       - name: Build Projects
         shell: bash
