@@ -25,7 +25,7 @@ export default async function runExecutor(
   );
   const dockerNamespace = options.dockerNamespace ?? `jmcdo29`;
   const tag =
-    `${dockerNamespace}/` + options.tag ?? `${scope}-${project}:latest`;
+    `${dockerNamespace}/` + (options.tag ?? `${scope}-${project}:latest`);
   logger.verbose(`Using docker tag ${tag}`);
   const target = options.target ?? `${project}-prod`;
   logger.verbose(`Using dockerfile target ${target}`);
