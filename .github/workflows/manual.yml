@@ -1,0 +1,49 @@
+name: Manual Release
+
+on: workflow_dispatch
+
+env:
+  NX_RUN_GROUP: ${{ github.run_id }}
+  NX_CLOUD_DISTRIBUTED_EXECUTION: false
+  NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_TOKEN }}
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+
+      - name: Setup Node.js 18.x
+        uses: actions/setup-node@master
+        with:
+          node-version: 18.x
+
+      - name: Install pnpm
+        run: npm i -g pnpm@^8
+
+      - name: Install Dependencies
+        run: pnpm i --frozen-lockfile
+
+      - name: Set up Docker Buildx
+        id: builder
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Projects
+        shell: bash
+        run: |
+          pnpm nx run-many --target=package --builder=${{ steps.builder.outputs.name}} --parallel
+
+      - name: Docker List Images
+        shell: bash
+        run: docker image ls
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_NAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Publish
+        run: pnpm nx run-many --target=publish --parallel
