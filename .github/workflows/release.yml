@@ -45,7 +45,11 @@ jobs:
       #   run: docker buildx create --append --name container --driver=docker-container
 
       - name: Build Projects
-        run: pnpm nx run-many --target=package --args="--builder=${{ steps.builder.outputs.name }}"
+        shell: bash
+        run: |
+          pnpm nx run site:package --args="--builder=${{ steps.builder.outputs.name }}"
+          pnpm nx run server:package --args="--builder=${{ steps.builder.outputs.name }}"
+          pnpm nx run kysely-cli:package --args="--builder=${{ steps.builder.outputs.name }}"
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets
