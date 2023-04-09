@@ -41,6 +41,7 @@ jobs:
 
       - name: Create Docker Buildx
         run: scripts/setupDocker
+
       - name: Build Projects
         run: pnpm nx run-many --target=package --parallel
 
