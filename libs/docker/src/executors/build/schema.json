@@ -29,6 +29,10 @@
     "builder": {
       "type": "string",
       "description": "Docker buildx builder to use"
+    },
+    "dockerNamespace": {
+      "type": "string",
+      "description": "The namespace for the tag"
     }
   },
   "required": []

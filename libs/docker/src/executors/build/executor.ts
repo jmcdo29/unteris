@@ -23,7 +23,9 @@ export default async function runExecutor(
   logger.verbose(
     `Docker cache path was evaluated to ${cachePath}. This was automatically generated.`
   );
-  const tag = options.tag ?? `${scope}-${project}:latest`;
+  const dockerNamespace = options.dockerNamespace ?? `jmcdo29`;
+  const tag =
+    `${dockerNamespace}/` + options.tag ?? `${scope}-${project}:latest`;
   logger.verbose(`Using docker tag ${tag}`);
   const target = options.target ?? `${project}-prod`;
   logger.verbose(`Using dockerfile target ${target}`);
