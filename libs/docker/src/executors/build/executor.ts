@@ -31,7 +31,7 @@ export default async function runExecutor(
   logger.verbose(`Using dockerfile target ${target}`);
   const builder = options.builder ?? 'container';
   logger.verbose(`Using doocker builder ${builder}`);
-  const commandString = `docker buildx build -t ${tag} --cache-from type=local,src=${cachePath} --cache-to type=local,dest=${cachePath} --target=${target} --builder=${builder} --load .`;
+  const commandString = `docker buildx build -t ${tag} --cache-from type=local,src=${cachePath} --cache-to type=local,dest=${cachePath} --target=${target} --builder=${builder} --load --platform linux/arm64/v8,linux/amd64 .`;
   logger.log(style.blue.apply(`Executing "${commandString}"`));
   const { stderr } = await exec(commandString);
   logger.log(stderr);
