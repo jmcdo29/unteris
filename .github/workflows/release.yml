@@ -47,9 +47,9 @@ jobs:
       - name: Build Projects
         shell: bash
         run: |
-          pnpm nx run site:package --args="--builder=${{ steps.builder.outputs.name }}"
-          pnpm nx run server:package --args="--builder=${{ steps.builder.outputs.name }}"
-          pnpm nx run kysely-cli:package --args="--builder=${{ steps.builder.outputs.name }}"
+          pnpm nx run site:package --builder=${{ steps.builder.outputs.name }}
+          pnpm nx run server:package --builder=${{ steps.builder.outputs.name }}
+          pnpm nx run kysely-cli:package --builder=${{ steps.builder.outputs.name }}
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets

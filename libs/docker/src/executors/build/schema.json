@@ -25,6 +25,10 @@
     "verbose": {
       "type": "boolean",
       "description": "Printe decisions made along the way with the command at the end"
+    },
+    "builder": {
+      "type": "string",
+      "description": "Docker buildx builder to use"
     }
   },
   "required": []
