@@ -59,12 +59,6 @@
     },
     "publish": {
       "executor": "nx:run-commands",
-      "dependsOn": [
-        {
-          "projects": "self",
-          "target": "package"
-        }
-      ],
       "options": {
         "commands": ["docker push unteris-server"],
         "parallel": false
