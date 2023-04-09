@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@master
         with:
         # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
-        fetch-depth: 0
+          fetch-depth: 0
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v3
