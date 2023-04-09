@@ -19,7 +19,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@master
         with:
-        # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
+          # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
           fetch-depth: 0
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
@@ -40,16 +40,10 @@ jobs:
         id: builder
         uses: docker/setup-buildx-action@v2
 
-      # - name: Create Docker Buildx
-      #   shell: bash
-      #   run: docker buildx create --append --name container --driver=docker-container
-
       - name: Build Projects
         shell: bash
         run: |
-          pnpm nx run site:package --builder=${{ steps.builder.outputs.name }}
-          pnpm nx run server:package --builder=${{ steps.builder.outputs.name }}
-          pnpm nx run kysely-cli:package --builder=${{ steps.builder.outputs.name }}
+          pnpm nx run-many --target=packge --builder=${{ steps.builder.outputs.name }}
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets
@@ -57,11 +51,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Docker List Images
+        shell: bash
+        run: docker image ls
+
       - name: Login to Docker Hub
         if: steps.changesets.outputs.hasChangesets == 'false'
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
+          username: ${{ secrets.DOCKER_NAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
       - name: Publish
