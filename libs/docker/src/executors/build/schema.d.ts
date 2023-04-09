@@ -4,4 +4,5 @@ export interface BuildExecutorSchema {
   target?: string;
   cachePath?: string;
   verbose?: boolean;
+  builder?: string;
 } // eslint-disable-line
