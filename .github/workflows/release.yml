@@ -65,6 +65,6 @@ jobs:
       - name: Publish
         if: steps.changesets.outputs.hasChangesets == 'false'
         # You can do something when a publish should happen.
-        run: pnpm nx run-many --target=publish --parellel
+        run: pnpm nx run-many --target=publish --parallel
         env:
-          DOCKER_TOKEN: ${{ secrets.NPM_TOKEN }}
+          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
