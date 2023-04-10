@@ -38,7 +38,7 @@ export const Welcome = (): JSX.Element => {
               theme.palette.secondary[theme.palette.mode]
             }, ${
               theme.palette.background.default
-            }${opacityMod}), url(./vitoak.png)`,
+            }${opacityMod}), url(./images/vitoak.png)`,
             backgroundRepeat: 'no-repeat, no-repeat',
             backgroundPosition: 'left, right top 40%',
             columnGap: theme.spacing(),
