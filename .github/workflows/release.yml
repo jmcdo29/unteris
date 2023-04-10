@@ -58,10 +58,9 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_NAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
-      
+
       - name: Build Projects
         if: steps.changesets.outputs.hasChangesets == 'false'
         shell: bash
         run: |
           pnpm nx affected --target=package --configuration=ci --builder=${{ steps.builder.outputs.name}}
-

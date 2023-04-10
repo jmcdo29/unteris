@@ -6,6 +6,7 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { OgmaService } from '@ogma/nestjs-module';
+import { ServerConfigService } from '@unteris/server/config';
 
 import { AppModule } from './app/app.module';
 
@@ -14,9 +15,10 @@ async function bootstrap() {
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
   app.useLogger(app.get(OgmaService));
+  const config = app.get(ServerConfigService);
   const port = process.env.PORT || 3333;
   app.enableCors({
-    origin: ['http://localhost:4200'],
+    origin: [config.get('CORS')],
   });
   await app.listen(port, () => {
     Logger.log('Listening at http://localhost:' + port + '/' + globalPrefix);
