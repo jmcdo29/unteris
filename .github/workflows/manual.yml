@@ -44,4 +44,3 @@ jobs:
       - name: Docker List Images
         shell: bash
         run: docker image ls
-

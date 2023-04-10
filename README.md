@@ -4,7 +4,7 @@ This project was generated using [Nx](https://nx.dev).
 
 <p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
 
-<p style="text-align: center;"><img src="./apps/site/public/vitoak.png" width="450"></p>
+<p style="text-align: center;"><img src="./apps/site/public/imagesvitoak.png" width="450"></p>
 
 ## Welcome to the World
 
@@ -23,7 +23,7 @@ its own "application" in Nx's terms. Migrations are written to their own
 library directory, and all new react components go into separate libraries as
 well to help keep builds short making use of Nx's computational caching.
 
-Eventually this will all be hosted on AWS as well.
+Currently hosted via a banana pi in my office.
 
 ## Running Locally
 
@@ -46,9 +46,6 @@ steps below
 3. Run `pnpm nx run kysely-cli:migrate` to build and run the migrations
 4. Run `pnpm nx run server:serve` to start the server on port 3333
 5. Run `pnpm nx run site:serve` to start the site on port 4200
-
-> Note: technically the site and server aren't hooked together yet, but that's
-> the next step
 
 ## Keep in Touch
 
