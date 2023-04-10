@@ -18,9 +18,6 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@master
-        with:
-          # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
-          fetch-depth: 0
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v3
@@ -34,7 +31,7 @@ jobs:
         run: npm i -g pnpm@^8
 
       - name: Install Dependencies
-        run: pnpm i --frozen-lockfile=false
+        run: pnpm i --frozen-lockfile
 
       - name: Set up Docker Buildx
         id: builder
@@ -42,25 +39,18 @@ jobs:
         with:
           platforms: 'linux/amd64,linux/arm64/v8'
 
-      - name: Create Release Pull Request or Publish to npm
-        id: changesets
-        uses: changesets/action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Docker List Images
-        shell: bash
-        run: docker image ls
-
       - name: Login to Docker Hub
-        if: steps.changesets.outputs.hasChangesets == 'false'
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_NAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
       - name: Build Projects
-        if: steps.changesets.outputs.hasChangesets == 'false'
         shell: bash
         run: |
           pnpm nx affected --target=package --configuration=ci --builder=${{ steps.builder.outputs.name}}
+
+      - name: Docker List Images
+        shell: bash
+        run: docker image ls
+
