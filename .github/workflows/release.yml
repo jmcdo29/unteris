@@ -18,37 +18,23 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@master
+        with:
+          fetch-depth: 0
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v3
 
-      - name: Setup Node.js 18.x
-        uses: actions/setup-node@master
-        with:
-          node-version: 18.x
+      - name: Node/Pnpm Install
+        uses: ./.github/actions/install-node-pnpm.yml
 
-      - name: Install pnpm
-        run: npm i -g pnpm@^8
-
-      - name: Install Dependencies
-        run: pnpm i --frozen-lockfile
-
-      - name: Set up Docker Buildx
+      - name: Docker BuildX Install and Cache
         id: builder
-        uses: docker/setup-buildx-action@v2
-        with:
-          platforms: 'linux/amd64,linux/arm64/v8'
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_NAME }}
-          password: ${{ secrets.DOCKER_TOKEN }}
+        use: ./.github/actions/docker-with-cache.yml
 
       - name: Build Projects
         shell: bash
         run: |
-          pnpm nx affected --target=package --configuration=ci --builder=${{ steps.builder.outputs.name}}
+          pnpm nx affected --target=package --configuration=ci --builder=${{ steps.builder.outputs.builder}}
 
       - name: Docker List Images
         shell: bash

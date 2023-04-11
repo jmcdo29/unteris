@@ -1,0 +1,25 @@
+name: 'Install Node and Pnpm'
+description: 'Helper actiopn to install and use Node and Pnpm with a cached store'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Node.js 18.x
+      uses: actions/setup-node@master
+      with:
+        node-version: 18.x
+
+    - name: Install pnpm
+      run: npm i -g pnpm@^8
+
+    - name: Set pnpm store directory
+      run: pnpm config set store-dir ./tmp/store
+
+    - name: Cache pnpm store
+      use: actions/cache@v3
+      with:
+        path: ./tmp/store
+        key: pnpm-store-${{ hashFiles('./pnpm-lock.yaml') }}
+
+    - name: Install Dependencies
+      run: pnpm i
