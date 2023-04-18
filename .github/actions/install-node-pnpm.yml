@@ -16,7 +16,7 @@ runs:
       run: pnpm config set store-dir ./tmp/store
 
     - name: Cache pnpm store
-      use: actions/cache@v3
+      uses: actions/cache@v3
       with:
         path: ./tmp/store
         key: pnpm-store-${{ hashFiles('./pnpm-lock.yaml') }}

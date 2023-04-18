@@ -6,6 +6,7 @@ export interface DeityTable {
   description: string;
   imageUrl: string;
   category: string;
+  location_id: string;
 }
 
 export interface DeityDomainTable {
@@ -19,6 +20,12 @@ export interface DomainTable {
   name: string;
 }
 
+export interface LocationTable {
+  id: Generated<string>;
+  name: string;
+  description?: string;
+}
+
 export interface DeityCategoryTable {
   id: Generated<string>;
   name: string;
@@ -29,4 +36,5 @@ export interface Database {
   deityDomain: DeityDomainTable;
   deityCategory: DeityCategoryTable;
   domain: DomainTable;
+  location: LocationTable;
 }

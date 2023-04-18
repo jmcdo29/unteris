@@ -1,12 +1,3 @@
-# db-migrations
-
-This "library" is used by the kysely-cli to run migrations for the database on
-deploys to production. There is a watchman process watching for this image's
-updates.
-
-## Database Design
-
-```mermaid
 erDiagram
     DeityCategory ||--|{ Deity : "contains"
     Deity ||--|{ Deity_Domain : "belongs to"
@@ -39,5 +30,3 @@ erDiagram
         string description
     }
 
-
-```
