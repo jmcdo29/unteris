@@ -5,7 +5,9 @@ import {
   DeityTable,
   DomainTable,
   InjectKysely,
+  LocationTable,
 } from '@unteris/server/kysely';
+import { ServerLocationService } from '@unteris/server/location';
 import { Kysely, Insertable } from 'kysely';
 import { Command, CommandRunner, InquirerService } from 'nest-commander';
 
@@ -14,7 +16,8 @@ export class SeedCommand extends CommandRunner {
   constructor(
     private readonly inquirer: InquirerService,
     @InjectKysely() private readonly db: Kysely<Database>,
-    @OgmaLogger(SeedCommand) private readonly logger: OgmaService
+    @OgmaLogger(SeedCommand) private readonly logger: OgmaService,
+    private readonly locationService: ServerLocationService
   ) {
     super();
   }
@@ -44,6 +47,9 @@ export class SeedCommand extends CommandRunner {
         case 'deityDomain':
           await this.insertDeityDomain();
           break;
+        case 'location':
+          await this.insertLocation();
+          break;
         default:
           this.logger.log('This entity type is still being worked on');
       }
@@ -62,7 +68,13 @@ export class SeedCommand extends CommandRunner {
   }
 
   private typeIsKeyOfDatabase(type: string): type is keyof Database {
-    return ['deity', 'deityCategory', 'domain', 'deityDomain'].includes(type);
+    return [
+      'deity',
+      'deityCategory',
+      'domain',
+      'deityDomain',
+      'location',
+    ].includes(type);
   }
 
   private async insertDeityCategory(): Promise<void> {
@@ -74,7 +86,9 @@ export class SeedCommand extends CommandRunner {
   }
 
   private async insertDeity(): Promise<void> {
-    const data = await this.inquirer.ask<Insertable<DeityTable>>('deity', {});
+    const { askLocation: _askLocation, ...data } = await this.inquirer.ask<
+      Insertable<DeityTable> & { askLocation: boolean }
+    >('deity', {});
     if (this.idFieldIsULID(data.category)) {
       await this.db.insertInto('deity').values([data]).execute();
       return;
@@ -92,7 +106,15 @@ export class SeedCommand extends CommandRunner {
     await this.db
       .insertInto('deity')
       .values([{ ...data, category: category.id }])
-      .execute();
+      .executeTakeFirstOrThrow();
+  }
+
+  private async insertLocation(): Promise<void> {
+    const { addDescription: _addDescription, ...data } =
+      await this.inquirer.ask<
+        Insertable<LocationTable> & { addDescription: boolean }
+      >('location', {});
+    await this.locationService.createLocation(data);
   }
 
   private async insertDomain(): Promise<void> {

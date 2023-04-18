@@ -9,13 +9,17 @@ export const up = async (db: Kysely<any>) => {
     .execute();
   await db.schema
     .alterTable('deity')
-    .addColumn('location_id', 'text', (col) =>
-      col.references('location.ud').notNull().defaultTo('')
+    .addColumn('location', 'text', (col) =>
+      col.references('location.id').notNull().defaultTo('')
     )
     .execute();
 };
 
 export const down = async (db: Kysely<any>) => {
   await db.schema.alterTable('deity').dropColumn('location_id').execute();
+  await db.schema
+    .alterTable('deity')
+    .dropConstraint('deity_location_fkey')
+    .execute();
   await db.schema.dropTable('location').execute();
 };

@@ -23,5 +23,5 @@ export const useFetchEffect = (props: UseFetchEffectProps) => {
       ignore = true;
       props.setter(props.default);
     };
-  }, [props.setter]);
+  }, [props.setter, props.default]);
 };

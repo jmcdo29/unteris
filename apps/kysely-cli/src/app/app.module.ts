@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { OgmaModule } from '@ogma/nestjs-module';
 import { ServerDeitiesModule } from '@unteris/server/deities';
 import { KyselyModule } from '@unteris/server/kysely';
+import { ServerLocationModule } from '@unteris/server/location';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -11,6 +12,7 @@ import { DeityCategoryQuestions } from './seeds/deity-category.questions';
 import { DeityDomainQuestions } from './seeds/deity-domain.questions';
 import { DeityQuestions } from './seeds/deity.questions';
 import { DomainQuestions } from './seeds/domain.questions';
+import { LocationQuestins } from './seeds/location.question';
 import { RepeatQuestions } from './seeds/repeat.questions';
 import { SeedTypeQuestions } from './seeds/seed-type.questions';
 
@@ -25,6 +27,7 @@ import { SeedTypeQuestions } from './seeds/seed-type.questions';
     }),
     OgmaModule.forFeatures([KyselyCliCommand, SeedCommand]),
     ServerDeitiesModule,
+    ServerLocationModule,
   ],
   controllers: [AppController],
   providers: [
@@ -37,6 +40,7 @@ import { SeedTypeQuestions } from './seeds/seed-type.questions';
     SeedTypeQuestions,
     RepeatQuestions,
     DeityDomainQuestions,
+    LocationQuestins,
   ],
 })
 export class AppModule {}
