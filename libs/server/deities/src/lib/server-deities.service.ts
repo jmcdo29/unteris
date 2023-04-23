@@ -32,4 +32,14 @@ export class ServerDeitiesService {
       .where('id', '=', id)
       .executeTakeFirstOrThrow();
   }
+
+  async findDeitiesOfLocation(
+    location: string
+  ): Promise<Selectable<Pick<DeityTable, 'id' | 'name'>>[]> {
+    return this.db
+      .selectFrom('deity')
+      .select(['id', 'name'])
+      .where('location', '=', location)
+      .execute();
+  }
 }

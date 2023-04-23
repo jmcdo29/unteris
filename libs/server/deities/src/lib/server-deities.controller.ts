@@ -19,4 +19,9 @@ export class ServerDeitiesController {
   async getDeityById(@Param() { id }: { id: string }) {
     return this.serverDeitiesService.getDeityById(id);
   }
+
+  @Get('location/:location')
+  async getDeitiesByLocation(@Param() { location }: { location: string }) {
+    return this.serverDeitiesService.findDeitiesOfLocation(location);
+  }
 }
