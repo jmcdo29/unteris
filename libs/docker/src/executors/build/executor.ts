@@ -34,7 +34,13 @@ export default async function runExecutor(
   } .`;
   const [docker, ...args] = commandString.split(' ').filter((arg) => !!arg);
   logger.log(style.blue.apply(`Executing "${docker} ${args.join(' ')}"`));
-  const dockerCommand = spawn(docker, args, { stdio: 'inherit' });
+  const dockerCommand = spawn(docker, args);
+  dockerCommand.stdout.on('data', (chunk) => {
+    logger.debug(chunk.toString());
+  });
+  dockerCommand.stderr.on('data', (chunk) => {
+    logger.debug(chunk.toString());
+  });
   return new Promise((resolve) => {
     dockerCommand.on('close', (code) => {
       resolve({ success: code === 0 });
