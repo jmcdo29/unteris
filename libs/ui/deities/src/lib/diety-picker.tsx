@@ -10,7 +10,7 @@ import { SyntheticEvent, useState } from 'react';
 import { Deity } from './deity';
 
 interface DeityPickerProps {
-  category: { name: string; id: string };
+  location: { name: string; id: string };
 }
 
 export const DeityPicker = (props: DeityPickerProps): JSX.Element => {
@@ -24,7 +24,7 @@ export const DeityPicker = (props: DeityPickerProps): JSX.Element => {
   };
 
   useFetchEffect({
-    endpoint: `deities/category/${props.category.id}`,
+    endpoint: `deities/location/${props.location.id}`,
     setter: setDeities,
     default: [],
   });
