@@ -46,7 +46,7 @@ DeityViewerProps): JSX.Element => {
       <Box sx={{ gridColumn: 'span 8', maxHeight: '75vh', maxWidth: '100%' }}>
         <img
           src={deity.imageUrl}
-          alt={`${deity.name} image`}
+          alt={`${deity.name}`}
           style={{ width: '100%', height: '100%', objectFit: 'contain' }}
         />
       </Box>

@@ -8,7 +8,6 @@
     "build": {
       "executor": "@nrwl/webpack:webpack",
       "outputs": ["{options.outputPath}"],
-      "defaultConfiguration": "production",
       "options": {
         "target": "node",
         "compiler": "tsc",
@@ -27,7 +26,6 @@
     },
     "migrate": {
       "executor": "@nrwl/js:node",
-      "defaultConfiguration": "production",
       "options": {
         "buildTarget": "kysely-cli:build"
       },
@@ -36,8 +34,7 @@
           "buildTarget": "kysely-cli:build:development"
         },
         "production": {
-          "buildTarget": "kysely-cli:build:production",
-          "watch": false
+          "buildTarget": "kysely-cli:build:production"
         }
       },
       "dependsOn": [
@@ -49,18 +46,17 @@
     },
     "seed": {
       "executor": "@nrwl/js:node",
-      "defaultConfiguration": "production",
       "options": {
         "buildTarget": "kysely-cli:build",
-        "args": ["seed"]
+        "args": ["seed"],
+        "watch": false
       },
       "configurations": {
         "development": {
           "buildTarget": "kysely-cli:build:development"
         },
         "production": {
-          "buildTarget": "kysely-cli:build:production",
-          "watch": false
+          "buildTarget": "kysely-cli:build:production"
         }
       },
       "dependsOn": [

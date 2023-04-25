@@ -22,6 +22,7 @@
       "@unteris/server/config": ["libs/server/config/src/index.ts"],
       "@unteris/server/deities": ["libs/server/deities/src/index.ts"],
       "@unteris/server/kysely": ["libs/server/kysely/src/index.ts"],
+      "@unteris/server/location": ["libs/server/location/src/index.ts"],
       "@unteris/ui/components": ["libs/ui/components/src/index.ts"],
       "@unteris/ui/deities": ["libs/ui/deities/src/index.ts"],
       "@unteris/ui/history": ["libs/ui/history/src/index.ts"]

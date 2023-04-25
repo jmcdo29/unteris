@@ -23,7 +23,7 @@ export const Deity = (props: DeityProps): JSX.Element => {
   };
 
   if (!deity) {
-    return <></>;
+    return <div />;
   }
 
   return isEditing ? (

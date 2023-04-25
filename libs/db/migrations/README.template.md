@@ -7,6 +7,8 @@ updates.
 ## Database Design
 
 ```mermaid
+%%diagram.mmd
+
 erDiagram
     DeityCategory ||--|{ Deity : "contains"
     Deity ||--|{ Deity_Domain : "belongs to"

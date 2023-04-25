@@ -11,13 +11,13 @@ import { DeityPicker } from './diety-picker';
 
 export const DeityNav = (): JSX.Element => {
   const [tabIndex, setTabIndex] = useState(-1);
-  const [categories, setCategories] = useState<
+  const [locations, setLocations] = useState<
     Array<{ name: string; id: string }>
   >([]);
 
   useFetchEffect({
-    endpoint: 'deities/categories',
-    setter: setCategories,
+    endpoint: 'locations',
+    setter: setLocations,
     default: [],
   });
 
@@ -31,7 +31,7 @@ export const DeityNav = (): JSX.Element => {
         orientation="vertical"
         value={tabIndex}
         onChange={handleTabChange}
-        aria-label="vertical deity category tab picker"
+        aria-label="vertical deity location tab picker"
         sx={{
           borderRight: 1,
           borderColor: 'divider',
@@ -40,18 +40,18 @@ export const DeityNav = (): JSX.Element => {
           overflow: 'unset',
         }}
       >
-        {categories.map((category, index) => (
-          <Tab {...a11yProps(index)} label={category.name} key={category.id} />
+        {locations.map((location, index) => (
+          <Tab {...a11yProps(index)} label={location.name} key={location.id} />
         ))}
       </Tabs>
-      {categories.map((category, index) => (
+      {locations.map((location, index) => (
         <TabPanel
           value={tabIndex}
           index={index}
           key={index}
           gridColumn="span 10"
         >
-          <DeityPicker category={category} />
+          <DeityPicker location={location} />
         </TabPanel>
       ))}
     </Grid>
