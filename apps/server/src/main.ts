@@ -5,6 +5,7 @@
 
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { ExpressAdapter } from '@nestjs/platform-express';
 import { OgmaService } from '@ogma/nestjs-module';
 import { ServerConfigService } from '@unteris/server/config';
 
@@ -20,6 +21,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [config.get('CORS')],
   });
+  app.getHttpAdapter().getInstance().set('trust proxy', true);
   await app.listen(port, () => {
     Logger.log('Listening at http://localhost:' + port + '/' + globalPrefix);
   });
