@@ -7,19 +7,23 @@ export const up = async (db: Kysely<any>) => {
     .addColumn('name', 'text', (col) => col.notNull())
     .addColumn('description', 'text')
     .execute();
+  const [{ id }] = await db
+    .insertInto('location')
+    .values({
+      name: '',
+      description: 'Used for holding default deity locations',
+    })
+    .returning('id')
+    .execute();
   await db.schema
     .alterTable('deity')
     .addColumn('location', 'text', (col) =>
-      col.references('location.id').notNull().defaultTo('')
+      col.references('location.id').notNull().defaultTo(id)
     )
     .execute();
 };
 
 export const down = async (db: Kysely<any>) => {
-  await db.schema.alterTable('deity').dropColumn('location_id').execute();
-  await db.schema
-    .alterTable('deity')
-    .dropConstraint('deity_location_fkey')
-    .execute();
+  await db.schema.alterTable('deity').dropColumn('location').execute();
   await db.schema.dropTable('location').execute();
 };

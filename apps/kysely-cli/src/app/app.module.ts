@@ -22,6 +22,7 @@ import { SeedTypeQuestions } from './seeds/seed-type.questions';
     OgmaModule.forRoot({
       service: {
         application: 'Kysely CLI',
+        logLevel: 'DEBUG',
       },
       interceptor: false,
     }),
