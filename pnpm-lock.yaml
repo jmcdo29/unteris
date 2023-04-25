@@ -25,6 +25,9 @@ dependencies:
   '@ogma/platform-express':
     specifier: ^4.0.1
     version: 4.0.1(@nestjs/platform-express@9.3.12)(@ogma/nestjs-module@4.2.2)
+  '@ogma/styler':
+    specifier: ^1.0.0
+    version: 1.0.0
   '@swc/helpers':
     specifier: ~0.4.11
     version: 0.4.14
@@ -138,9 +141,6 @@ devDependencies:
   '@nrwl/workspace':
     specifier: 15.9.2
     version: 15.9.2(@swc-node/register@1.4.2)(@swc/core@1.3.41)
-  '@ogma/styler':
-    specifier: ^1.0.0
-    version: 1.0.0
   '@swc-node/register':
     specifier: ^1.4.2
     version: 1.4.2(@swc/core@1.3.41)
@@ -4844,6 +4844,7 @@ packages:
 
   /@ogma/common@1.0.0:
     resolution: {integrity: sha512-IXvSnXbXccpxJR+UbN2fxp30R/44VFpx/T0ungb1PMwLa9BLmtbeQIXqc9TR11gRaDNY0e78tqVckau8oyXK0A==}
+    dev: false
 
   /@ogma/logger@2.5.0:
     resolution: {integrity: sha512-Uhn7MbDimmuFg5usKk7Drhrl98R7qTdl2HmhzWbY7+1qbc5N44V+Nwjm+vtgNhJPaBVS6t5GQiIo09xjsUraFA==}
@@ -4882,6 +4883,7 @@ packages:
     resolution: {integrity: sha512-Twtijg2eUS4HEPyic0FEpkdJgRtLSvVow/3gmLsMkyU+GhSm80PnRlc6q1N1rmf1EQhuwGZLKhS30sYIuFV38A==}
     dependencies:
       '@ogma/common': 1.0.0
+    dev: false
 
   /@parcel/watcher@2.0.4:
     resolution: {integrity: sha512-cTDi+FUDBIUOBKEtj+nhiJ71AZVlkAsQFuGQTun5tV9mwQBQgZvhCzG+URPQc8myeN32yRVZEfVAPCs1RW+Jvg==}
