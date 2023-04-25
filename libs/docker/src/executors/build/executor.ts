@@ -36,10 +36,10 @@ export default async function runExecutor(
   logger.log(style.blue.apply(`Executing "${docker} ${args.join(' ')}"`));
   const dockerCommand = spawn(docker, args);
   dockerCommand.stdout.on('data', (chunk) => {
-    logger.debug(chunk.toString());
+    logger.log(chunk.toString());
   });
   dockerCommand.stderr.on('data', (chunk) => {
-    logger.debug(chunk.toString());
+    logger.log(chunk.toString());
   });
   return new Promise((resolve) => {
     dockerCommand.on('close', (code) => {
