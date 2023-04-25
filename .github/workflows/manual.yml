@@ -16,11 +16,11 @@ jobs:
         uses: actions/checkout@master
 
       - name: Node/Pnpm Install
-        uses: ./.github/actions/install-node-pnpm.yml
+        uses: ./.github/actions/install-node-pnpm
 
       - name: Docker BuildX Install and Cache
         id: builder
-        uses: ./.github/actions/docker-with-cache.yml
+        uses: ./.github/actions/docker-with-cache
 
       - name: Build Projects
         shell: bash
