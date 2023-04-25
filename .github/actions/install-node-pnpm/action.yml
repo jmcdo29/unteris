@@ -10,9 +10,11 @@ runs:
         node-version: 18.x
 
     - name: Install pnpm
+      shell: bash
       run: npm i -g pnpm@^8
 
     - name: Set pnpm store directory
+      shell: bash
       run: pnpm config set store-dir ./tmp/store
 
     - name: Cache pnpm store
@@ -22,4 +24,5 @@ runs:
         key: pnpm-store-${{ hashFiles('./pnpm-lock.yaml') }}
 
     - name: Install Dependencies
+      shell: bash
       run: pnpm i
