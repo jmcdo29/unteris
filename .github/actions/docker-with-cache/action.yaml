@@ -31,4 +31,4 @@ runs:
       uses: actions/cache@v3
       with:
         path: ./docker
-        key: docker-cache-${{ hashfiles(Dockerfile) }}
+        key: docker-cache-${{ hashfiles('./Dockerfile') }}
