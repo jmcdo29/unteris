@@ -1,11 +1,8 @@
 import { ExecutorContext } from '@nrwl/devkit';
 import { Ogma } from '@ogma/logger';
 import { style } from '@ogma/styler';
-import { exec as callbackExec } from 'child_process';
-import { promisify } from 'util';
+import { spawn } from 'child_process';
 import { BuildExecutorSchema } from './schema';
-
-const exec = promisify(callbackExec);
 
 export default async function runExecutor(
   options: BuildExecutorSchema,
@@ -35,11 +32,12 @@ export default async function runExecutor(
   const commandString = `docker buildx build -t ${tag} --cache-from type=local,src=${cachePath} --cache-to type=local,dest=${cachePath} --target=${target} --builder=${builder} --platform linux/arm64/v8,linux/amd64 ${
     publish ? '--push' : ''
   } .`;
-  logger.log(style.blue.apply(`Executing "${commandString}"`));
-  const { stderr } = await exec(commandString);
-  logger.log(stderr);
-  const success = !!stderr;
-  return {
-    success,
-  };
+  const [docker, ...args] = commandString.split(' ').filter((arg) => !!arg);
+  logger.log(style.blue.apply(`Executing "${docker} ${args.join(' ')}"`));
+  const dockerCommand = spawn(docker, args, { stdio: 'inherit' });
+  return new Promise((resolve) => {
+    dockerCommand.on('close', (code) => {
+      resolve({ success: code === 0 });
+    });
+  });
 }

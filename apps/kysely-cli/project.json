@@ -27,7 +27,8 @@
     "migrate": {
       "executor": "@nrwl/js:node",
       "options": {
-        "buildTarget": "kysely-cli:build"
+        "buildTarget": "kysely-cli:build",
+        "watch": false
       },
       "configurations": {
         "development": {
