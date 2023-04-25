@@ -30,6 +30,9 @@ jobs:
       - name: Docker BuildX Install and Cache
         id: builder
         uses: ./.github/actions/docker-with-cache
+        with:
+          DOCKER_NAME: ${{ secrets.DOCKER_NAME }}
+          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
 
       - name: Build Projects
         shell: bash
