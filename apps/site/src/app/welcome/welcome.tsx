@@ -1,6 +1,6 @@
 import { Theme, Typography, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
-import { Grid } from '@unteris/ui/components';
+import Grid from '@mui/material/Unstable_Grid2';
 import { ReactNode } from 'react';
 
 const Descriptor = ({
@@ -11,15 +11,16 @@ const Descriptor = ({
   children: ReactNode;
 }): JSX.Element => {
   return (
-    <Box
-      padding={`${theme.spacing()} ${theme.spacing(2)}`}
-      border={`2px solid ${theme.palette.primary[theme.palette.mode]}`}
-      borderRadius={theme.shape.borderRadius}
-      margin={`0 ${theme.spacing(4)}`}
-      minWidth={theme.spacing(50)}
-    >
-      {children}
-    </Box>
+    <Grid xs={12} md={4}>
+      <Box
+        padding={`${theme.spacing()} ${theme.spacing(2)}`}
+        border={`2px solid ${theme.palette.primary[theme.palette.mode]}`}
+        borderRadius={theme.shape.borderRadius}
+        sx={{ minHeight: '4em' }}
+      >
+        {children}
+      </Box>
+    </Grid>
   );
 };
 
@@ -30,6 +31,7 @@ export const Welcome = (): JSX.Element => {
     <Box padding={`${theme.spacing(5)} 0`}>
       <Grid sx={{ justifyItems: 'center', height: '40%' }}>
         <Grid
+          container={true}
           sx={{
             justifyItems: 'center',
             width: '100%',
@@ -41,34 +43,25 @@ export const Welcome = (): JSX.Element => {
             }${opacityMod}), url(./images/vitoak.png)`,
             backgroundRepeat: 'no-repeat, no-repeat',
             backgroundPosition: 'left, right top 40%',
-            columnGap: theme.spacing(),
             padding: `${theme.spacing(8)} ${theme.spacing(2)}`,
             margin: `0 0 ${theme.spacing(2)}`,
           }}
-          columns={6}
+          spacing={theme.spacing()}
         >
-          <Typography
-            variant="h2"
-            sx={{
-              gridColumn: '1 / 3',
-            }}
-            component="h1"
-          >
-            Welcome to Unteris
-          </Typography>
-          <Box
-            sx={{
-              gridColumn: '3/-1',
-            }}
-          ></Box>
+          <Grid xs={12} md={3}>
+            <Typography variant="h2" component="h1">
+              Welcome to Unteris
+            </Typography>
+          </Grid>
         </Grid>
       </Grid>
       <Grid
+        spacing={theme.spacing()}
         sx={{
-          columnGap: theme.spacing(),
           justifyItems: 'center',
           justifyContent: 'center',
         }}
+        container={true}
       >
         <Descriptor theme={theme}>
           Enter a land once torn apart by war and bloodshed, sewn back together
