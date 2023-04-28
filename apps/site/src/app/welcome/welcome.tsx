@@ -56,7 +56,7 @@ export const Welcome = (): JSX.Element => {
         </Grid>
       </Grid>
       <Grid
-        spacing={theme.spacing()}
+        spacing={theme.spacing(2)}
         sx={{
           justifyItems: 'center',
           justifyContent: 'center',
