@@ -1,4 +1,4 @@
-import Box from '@mui/material/Box';
+import Grid from '@mui/material/Unstable_Grid2';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
@@ -16,7 +16,7 @@ export const ThemeSwitcher = ({
 
   const isDarkMode = theme.palette.mode === 'dark';
   return (
-    <Box>
+    <Grid xs={1} md={1}>
       <Tooltip
         title={`Turn ${isDarkMode ? 'on' : 'off'} the lights`}
         enterDelay={1000}
@@ -25,6 +25,6 @@ export const ThemeSwitcher = ({
           {isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
         </Button>
       </Tooltip>
-    </Box>
+    </Grid>
   );
 };

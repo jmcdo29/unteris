@@ -57,7 +57,13 @@ export const History = (): JSX.Element => {
         new land.
       </HistoryBlurb>
       <Grid sx={{ justifyItems: 'center' }}>
-        <img src="images/unteris_map.jpg" alt="Unteris Map" width="80%" />
+        <a
+          href="images/unteris_map.jpg"
+          target="_blank"
+          style={{ padding: '0 10%' }}
+        >
+          <img src="images/unteris_map.jpg" alt="Unteris Map" width="100%" />
+        </a>
       </Grid>
     </>
   );

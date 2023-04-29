@@ -1,16 +1,9 @@
-import Tabs from '@mui/material/Tabs';
-import {
-  Grid,
-  Tab,
-  TabPanel,
-  a11yProps,
-  useFetchEffect,
-} from '@unteris/ui/components';
+import { useFetchEffect, TabsWithPanel } from '@unteris/ui/components';
 import { SyntheticEvent, useState } from 'react';
 import { DeityPicker } from './diety-picker';
 
 export const DeityNav = (): JSX.Element => {
-  const [tabIndex, setTabIndex] = useState(-1);
+  const [tabIndex, setTabIndex] = useState(0);
   const [locations, setLocations] = useState<
     Array<{ name: string; id: string }>
   >([]);
@@ -26,34 +19,14 @@ export const DeityNav = (): JSX.Element => {
   };
 
   return (
-    <Grid columns={12}>
-      <Tabs
-        orientation="vertical"
-        value={tabIndex}
-        onChange={handleTabChange}
-        aria-label="vertical deity location tab picker"
-        sx={{
-          borderRight: 1,
-          borderColor: 'divider',
-          alignItems: 'start',
-          gridColumn: 'span 2',
-          overflow: 'unset',
-        }}
-      >
-        {locations.map((location, index) => (
-          <Tab {...a11yProps(index)} label={location.name} key={location.id} />
-        ))}
-      </Tabs>
-      {locations.map((location, index) => (
-        <TabPanel
-          value={tabIndex}
-          index={index}
-          key={index}
-          gridColumn="span 10"
-        >
-          <DeityPicker location={location} />
-        </TabPanel>
-      ))}
-    </Grid>
+    <TabsWithPanel
+      ariaLabel="deity location tab picker"
+      tabIndex={tabIndex}
+      handleTabChange={handleTabChange}
+      tabElements={locations}
+      tabPanelContent={(location) => {
+        return <DeityPicker location={location} />;
+      }}
+    />
   );
 };
