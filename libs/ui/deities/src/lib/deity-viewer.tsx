@@ -1,8 +1,8 @@
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Unstable_Grid2';
 // import Button from '@mui/material/Button';
 // import EditIcon from '@mui/icons-material/Edit';
 import Typography from '@mui/material/Typography';
-import { Grid } from '@unteris/ui/components';
 import { Deity } from './deity.interface';
 
 interface DeityViewerProps {
@@ -15,16 +15,9 @@ export const DeityViewer = ({
 }: // setIsEditing,
 DeityViewerProps): JSX.Element => {
   return (
-    <Grid columns={12}>
-      <Box
-        sx={{
-          gridColumn: 'span 4',
-          paddingLeft: '1em',
-          display: 'grid',
-          gridColumnTemplate: 'fr',
-        }}
-      >
-        <Box>
+    <Grid container={true}>
+      <Grid container={true} direction="column" xs={12} md={6}>
+        <Grid alignSelf="center">
           <Typography variant="h2" fontSize="3.25rem">
             {deity.name}
 
@@ -32,24 +25,36 @@ DeityViewerProps): JSX.Element => {
               <EditIcon />
             </Button>*/}
           </Typography>
-        </Box>
-        <Typography variant="body1">{deity.description}</Typography>
-        {deity.domains?.length ? (
-          <Typography variant="body1">
-            Domains: {deity.domains?.join(', ')}
-          </Typography>
-        ) : (
-          <Box />
-        )}
+        </Grid>
+        <Grid>
+          <Typography variant="body1">{deity.description}</Typography>
+        </Grid>
+        <Grid>
+          {deity.domains?.length ? (
+            <Typography variant="body1">
+              Domains: {deity.domains?.join(', ')}
+            </Typography>
+          ) : (
+            <Box />
+          )}
+        </Grid>
         <Box />
-      </Box>
-      <Box sx={{ gridColumn: 'span 8', maxHeight: '75vh', maxWidth: '100%' }}>
-        <img
-          src={deity.imageUrl}
-          alt={`${deity.name}`}
-          style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-        />
-      </Box>
+      </Grid>
+      <Grid md={6} xs={12}>
+        <Box>
+          <img
+            src={deity.imageUrl}
+            alt={`${deity.name}`}
+            style={{
+              width: '100%',
+              height: '100%',
+              maxHeight: '600px',
+              objectFit: 'contain',
+              padding: '0 1em',
+            }}
+          />
+        </Box>
+      </Grid>
     </Grid>
   );
 };
