@@ -3,6 +3,7 @@ import { OgmaModule } from '@ogma/nestjs-module';
 import { ServerDeitiesModule } from '@unteris/server/deities';
 import { KyselyModule } from '@unteris/server/kysely';
 import { ServerLocationModule } from '@unteris/server/location';
+import { ServerLoggingModule } from '@unteris/server/logging';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -19,13 +20,7 @@ import { SeedTypeQuestions } from './seeds/seed-type.questions';
 @Module({
   imports: [
     KyselyModule,
-    OgmaModule.forRoot({
-      service: {
-        application: 'Kysely CLI',
-        logLevel: 'DEBUG',
-      },
-      interceptor: false,
-    }),
+    ServerLoggingModule.forApplication('Kysely CLI', 'DEBUG'),
     OgmaModule.forFeatures([KyselyCliCommand, SeedCommand]),
     ServerDeitiesModule,
     ServerLocationModule,

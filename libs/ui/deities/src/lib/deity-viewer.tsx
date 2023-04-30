@@ -4,6 +4,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 // import EditIcon from '@mui/icons-material/Edit';
 import Typography from '@mui/material/Typography';
 import { Deity } from './deity.interface';
+import { Image } from '@unteris/ui/components';
 
 interface DeityViewerProps {
   deity: Deity;
@@ -41,19 +42,7 @@ DeityViewerProps): JSX.Element => {
         <Box />
       </Grid>
       <Grid md={6} xs={12}>
-        <Box>
-          <img
-            src={deity.imageUrl}
-            alt={`${deity.name}`}
-            style={{
-              width: '100%',
-              height: '100%',
-              maxHeight: '600px',
-              objectFit: 'contain',
-              padding: '0 1em',
-            }}
-          />
-        </Box>
+        <Image src={deity.imageUrl} alt={deity.name} />
       </Grid>
     </Grid>
   );
