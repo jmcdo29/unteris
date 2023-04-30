@@ -29,6 +29,7 @@ FROM node-base AS server-prod
 WORKDIR /src
 COPY --from=server-build /src/dist/apps/server ./
 RUN pnpm i
+ENV NODE_ENV=production
 CMD ["node", "main.js"]
 
 ####################
@@ -50,6 +51,7 @@ WORKDIR /src
 COPY --from=migrations-build /src/dist ./dist
 RUN cp ./dist/apps/kysely-cli/package.json ./package.json
 RUN pnpm i
+ENV NODE_ENV=production
 CMD ["node", "dist/apps/kysely-cli/main", "migrate"]
 
 ##############
