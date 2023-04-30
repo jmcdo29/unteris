@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material';
-import { Grid } from '@unteris/ui/components';
+import { Grid, Image } from '@unteris/ui/components';
 import { ReactNode } from 'react';
 
 const HistoryBlurb = ({ children }: { children: ReactNode }): JSX.Element => (
@@ -57,13 +57,11 @@ export const History = (): JSX.Element => {
         new land.
       </HistoryBlurb>
       <Grid sx={{ justifyItems: 'center' }}>
-        <a
-          href="images/unteris_map.jpg"
-          target="_blank"
-          style={{ padding: '0 10%' }}
-        >
-          <img src="images/unteris_map.jpg" alt="Unteris Map" width="100%" />
-        </a>
+        <Image
+          src="/images/unteris_map.jpg"
+          alt="Unteris Map"
+          style={{ maxHeight: 'unset' }}
+        />
       </Grid>
     </>
   );
