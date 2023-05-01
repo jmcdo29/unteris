@@ -7,8 +7,6 @@ import {
   ServerConfigModule,
   ServerConfigService,
 } from '@unteris/server/config';
-import { StreamService } from './stream.service';
-import { StreamModule } from './stream/stream.module';
 
 @Module({
   imports: [],
@@ -30,25 +28,18 @@ export class ServerLoggingModule {
       module: ServerLoggingModule,
       imports: [
         OgmaModule.forRootAsync({
-          imports: [StreamModule, ServerConfigModule],
-          useFactory: (
-            streamService: StreamService,
-            config: ServerConfigService
-          ) => ({
+          imports: [ServerConfigModule],
+          useFactory: (config: ServerConfigService) => ({
             service: {
               application: app,
               logLevel: logLevel,
               json: config.get('NODE_ENV') === 'production',
-              stream:
-                config.get('NODE_ENV') === 'production'
-                  ? streamService.getStream()
-                  : (process.stdout as { write: (message: unknown) => void }),
             },
             interceptor: {
               http: ExpressParser,
             },
           }),
-          inject: [StreamService, ServerConfigService],
+          inject: [ServerConfigService],
         }),
       ],
     };
