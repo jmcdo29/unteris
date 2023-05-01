@@ -1,0 +1,52 @@
+version: '3'
+name: unteris
+
+services:
+  site:
+    image: jmcdo29/unteris-site
+    ports:
+      - '8080:80'
+    volumes:
+      - './images:/usr/share/caddy/images'
+    labels:
+      - 'com.centurylinklabs.watchtower.enable=true'
+  server:
+    image: jmcdo29/unteris-server
+    logging:
+      driver: local
+    env_file: .env
+    environment:
+      DATABASE_HOST: postgres
+    volumes:
+      - './images:/src/images'
+    ports:
+      - '3333:3333'
+    depends_on:
+      - postgres
+    labels:
+      - 'com.centurylinklabs.watchtower.enable=true'
+  migrations:
+    image: jmcdo29/unteris-migrations
+    env_file: .env
+    environment:
+      DATABASE_HOST: postgres
+    logging:
+      driver: local
+    depends_on:
+      - postgres
+    labels:
+      - 'com.centurylinklabs.watchtower.enable=true'
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+    command: '--include-stopped --revive-stopped --schedule "0 0 * * * *" --label-enable'
+  postgres:
+    image: postgres
+    env_file: .env
+    ports:
+      - '5433:5432'
+    environment:
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_DB: ${DATABASE_NAME}
