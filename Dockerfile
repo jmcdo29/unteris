@@ -1,5 +1,6 @@
 FROM node:18.15-alpine AS node-base
 RUN npm i -g pnpm
+RUN apk add dumb-init
 
 FROM node-base AS common
 WORKDIR /src
@@ -26,11 +27,12 @@ RUN pnpm nx run server:build:production
 ################
 
 FROM node-base AS server-prod
+USER node
 WORKDIR /src
-COPY --from=server-build /src/dist/apps/server ./
-RUN pnpm i
+COPY --from=server-build --chown=node:node /src/dist/apps/server ./
 ENV NODE_ENV=production
-CMD ["node", "main.js"]
+RUN pnpm i
+CMD ["dumb-init", "node", "main.js"]
 
 ####################
 # MIGRATIONS BUILD #
@@ -47,12 +49,13 @@ RUN pnpm nx run kysely-cli:build:production
 ####################
 
 FROM node-base AS migrations-prod
+USER node
 WORKDIR /src
-COPY --from=migrations-build /src/dist ./dist
+COPY --from=migrations-build --chown=node:node /src/dist ./dist
 RUN cp ./dist/apps/kysely-cli/package.json ./package.json
-RUN pnpm i
 ENV NODE_ENV=production
-CMD ["node", "dist/apps/kysely-cli/main", "migrate"]
+RUN pnpm i
+CMD ["dumb-init", "node", "dist/apps/kysely-cli/main", "migrate"]
 
 ##############
 # SITE BUILD #
