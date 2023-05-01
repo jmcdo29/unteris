@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { createWriteStream, WriteStream } from 'fs';
+import { createWriteStream, mkdirSync, statSync, WriteStream } from 'fs';
+import { join } from 'path';
 
 @Injectable()
 export class StreamService {
@@ -8,7 +9,7 @@ export class StreamService {
 
   constructor() {
     this.filePath = this.generateFilePath();
-    this.stream = createWriteStream(this.filePath, { flags: 'a' });
+    this.stream = this.createStream();
   }
 
   getStream() {
@@ -16,7 +17,7 @@ export class StreamService {
     if (newPath !== this.filePath) {
       this.stream.close();
       this.filePath = newPath;
-      this.stream = createWriteStream(this.filePath);
+      this.stream = this.createStream();
     }
     return this.stream;
   }
@@ -26,5 +27,16 @@ export class StreamService {
     return `${date.getUTCFullYear()}-${
       date.getMonth() + 1
     }-${date.getDate()}-unteris.log`;
+  }
+
+  private createStream(): WriteStream {
+    try {
+      statSync(join(process.cwd(), 'logs'));
+    } catch {
+      mkdirSync(join(process.cwd(), 'logs'));
+    }
+    return createWriteStream(join(process.cwd(), 'logs', this.filePath), {
+      flags: 'a',
+    });
   }
 }
