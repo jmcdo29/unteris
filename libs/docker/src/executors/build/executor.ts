@@ -1,4 +1,4 @@
-import { ExecutorContext } from '@nrwl/devkit';
+import { ExecutorContext } from '@nx/devkit';
 import { Ogma } from '@ogma/logger';
 import { style } from '@ogma/styler';
 import { spawn } from 'child_process';
