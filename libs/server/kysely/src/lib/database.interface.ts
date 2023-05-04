@@ -9,12 +9,6 @@ import { Generated } from 'kysely';
 
 type GeneratedId<T> = Omit<T, 'id'> & { id: Generated<string> };
 
-export interface DeityDomainTable {
-  id: Generated<string>;
-  deityId: string;
-  domainId: string;
-}
-
 export interface Database {
   deity: GeneratedId<Deity>;
   deityDomain: GeneratedId<DeityDomain>;

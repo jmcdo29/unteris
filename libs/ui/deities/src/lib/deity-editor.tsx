@@ -2,7 +2,7 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { Grid } from '@unteris/ui/components';
-import { Deity } from './deity.interface';
+import { Deity } from '@unteris/shared/types';
 import { ChangeEvent } from 'react';
 import { useTheme } from '@mui/material';
 
@@ -66,14 +66,14 @@ export const DeityEditor = (props: DeityEditorProps): JSX.Element => {
           onChange={handleChange}
           inputProps={{ 'data-fieldId': 'description' }}
         />
-        <TextField
+        {/* <TextField
           label="Domains"
           defaultValue={props.deity.domains?.join(',') ?? ''}
           id="deity-domains"
           variant="standard"
           onChange={handleChange}
           inputProps={{ 'data-fieldId': 'domains' }}
-        />
+        />*/}
         <Grid columns={2} sx={{ columnGap: theme.spacing(2) }}>
           <Button variant="outlined" onClick={cancelChanges}>
             Cancel

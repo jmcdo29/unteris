@@ -1,14 +1,15 @@
+import { Deity as IDeity, Location } from '@unteris/shared/types';
 import { TabsWithPanel, useFetchEffect } from '@unteris/ui/components';
 import { SyntheticEvent, useState } from 'react';
 import { Deity } from './deity';
 
 interface DeityPickerProps {
-  location: { name: string; id: string };
+  location: Location;
 }
 
 export const DeityPicker = (props: DeityPickerProps): JSX.Element => {
   const [tabIndex, setTabIndex] = useState(-1);
-  const [deities, setDeities] = useState<Array<{ name: string; id: string }>>(
+  const [deities, setDeities] = useState<Array<Pick<IDeity, 'id' | 'name'>>>(
     []
   );
 

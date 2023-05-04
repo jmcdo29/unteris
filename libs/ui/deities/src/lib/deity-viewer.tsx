@@ -3,7 +3,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 // import Button from '@mui/material/Button';
 // import EditIcon from '@mui/icons-material/Edit';
 import Typography from '@mui/material/Typography';
-import { Deity } from './deity.interface';
+import { Deity } from '@unteris/shared/types';
 import { Image } from '@unteris/ui/components';
 
 interface DeityViewerProps {
@@ -30,7 +30,7 @@ DeityViewerProps): JSX.Element => {
         <Grid>
           <Typography variant="body1">{deity.description}</Typography>
         </Grid>
-        <Grid>
+        {/*<Grid>
           {deity.domains?.length ? (
             <Typography variant="body1">
               Domains: {deity.domains?.join(', ')}
@@ -38,7 +38,7 @@ DeityViewerProps): JSX.Element => {
           ) : (
             <Box />
           )}
-        </Grid>
+        </Grid>*/}
         <Box />
       </Grid>
       <Grid md={6} xs={12}>

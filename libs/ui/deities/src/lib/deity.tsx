@@ -1,13 +1,13 @@
 import Box from '@mui/material/Box';
 import { useState } from 'react';
 import { useFetchEffect } from '@unteris/ui/components';
-import type { Deity as IDeity } from './deity.interface';
+import { Deity as IDeity } from '@unteris/shared/types';
 import { DeityEditor } from './deity-editor';
 import { DeityViewer } from './deity-viewer';
 import { useMediaQuery } from '@mui/material';
 
 interface DeityProps {
-  deity: { id: string; name: string };
+  deity: Pick<IDeity, 'id' | 'name'>;
 }
 
 export const Deity = (props: DeityProps): JSX.Element => {
