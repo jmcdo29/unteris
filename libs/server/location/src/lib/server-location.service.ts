@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Database, InjectKysely, LocationTable } from '@unteris/server/kysely';
+import { Database, InjectKysely } from '@unteris/server/kysely';
+import { Location } from '@unteris/shared/types';
 import { Insertable, Kysely, Selectable } from 'kysely';
 
 @Injectable()
@@ -11,8 +12,8 @@ export class ServerLocationService {
   }
 
   async createLocation(
-    location: Insertable<LocationTable>
-  ): Promise<Selectable<LocationTable>> {
+    location: Insertable<Location>
+  ): Promise<Selectable<Location>> {
     const result = await this.db
       .insertInto('location')
       .values(location)
