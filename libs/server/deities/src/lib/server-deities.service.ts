@@ -1,23 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import {
-  Database,
-  DeityCategoryTable,
-  DeityTable,
-  InjectKysely,
-} from '@unteris/server/kysely';
+import { Database, InjectKysely } from '@unteris/server/kysely';
+import { Deity } from '@unteris/shared/types';
 import { Kysely, Selectable } from 'kysely';
 
 @Injectable()
 export class ServerDeitiesService {
   constructor(@InjectKysely() private readonly db: Kysely<Database>) {}
 
-  async getAllCategories(): Promise<Selectable<DeityCategoryTable>[]> {
-    return this.db.selectFrom('deityCategory').select(['id', 'name']).execute();
-  }
-
   async findDeitiesOfCategory(
     category: string
-  ): Promise<Selectable<Pick<DeityTable, 'id' | 'name'>>[]> {
+  ): Promise<Selectable<Pick<Deity, 'id' | 'name'>>[]> {
     return this.db
       .selectFrom('deity')
       .select(['id', 'name'])
@@ -25,7 +17,7 @@ export class ServerDeitiesService {
       .execute();
   }
 
-  async getDeityById(id: string): Promise<Selectable<DeityTable>> {
+  async getDeityById(id: string): Promise<Selectable<Deity>> {
     return this.db
       .selectFrom('deity')
       .selectAll()
@@ -35,7 +27,7 @@ export class ServerDeitiesService {
 
   async findDeitiesOfLocation(
     location: string
-  ): Promise<Selectable<Pick<DeityTable, 'id' | 'name'>>[]> {
+  ): Promise<Selectable<Pick<Deity, 'id' | 'name'>>[]> {
     return this.db
       .selectFrom('deity')
       .select(['id', 'name'])

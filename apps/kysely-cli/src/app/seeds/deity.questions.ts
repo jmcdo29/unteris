@@ -1,7 +1,8 @@
-import { ServerDeitiesService } from '@unteris/server/deities';
-import { LocationTable } from '@unteris/server/kysely';
+import { Location } from '@unteris/shared/types';
 import { ServerLocationService } from '@unteris/server/location';
 import { ChoicesFor, Question, QuestionSet, WhenFor } from 'nest-commander';
+import { Database, InjectKysely } from '@unteris/server/kysely';
+import { Kysely } from 'kysely';
 
 @QuestionSet({
   name: 'deity',
@@ -9,8 +10,8 @@ import { ChoicesFor, Question, QuestionSet, WhenFor } from 'nest-commander';
 export class DeityQuestions {
   private askLocation = false;
   constructor(
-    private readonly deitiesService: ServerDeitiesService,
-    private readonly locationsService: ServerLocationService
+    private readonly locationsService: ServerLocationService,
+    @InjectKysely() private readonly db: Kysely<Database>
   ) {}
   @Question({
     message: 'What is the name of the deity?',
@@ -61,7 +62,7 @@ export class DeityQuestions {
     name: 'location',
     type: 'list',
   })
-  parseLocation(location: LocationTable) {
+  parseLocation(location: Location) {
     console.log(location);
     return location;
   }
@@ -82,6 +83,11 @@ export class DeityQuestions {
 
   @ChoicesFor({ name: 'category' })
   async getDeityCategories() {
-    return this.deitiesService.getAllCategories();
+    return (
+      await this.db.selectFrom('deityCategory').select(['id', 'name']).execute()
+    ).map((category) => ({
+      name: category.name,
+      value: category.id,
+    }));
   }
 }

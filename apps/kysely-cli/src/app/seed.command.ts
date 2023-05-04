@@ -1,13 +1,7 @@
 import { OgmaLogger, OgmaService } from '@ogma/nestjs-module';
-import {
-  Database,
-  DeityCategoryTable,
-  DeityTable,
-  DomainTable,
-  InjectKysely,
-  LocationTable,
-} from '@unteris/server/kysely';
+import { Database, InjectKysely } from '@unteris/server/kysely';
 import { ServerLocationService } from '@unteris/server/location';
+import { Deity, DeityCategory, Domain, Location } from '@unteris/shared/types';
 import { Kysely, Insertable } from 'kysely';
 import { Command, CommandRunner, InquirerService } from 'nest-commander';
 
@@ -78,7 +72,7 @@ export class SeedCommand extends CommandRunner {
   }
 
   private async insertDeityCategory(): Promise<void> {
-    const data = await this.inquirer.ask<Insertable<DeityCategoryTable>>(
+    const data = await this.inquirer.ask<Insertable<DeityCategory>>(
       'deityCategory',
       {}
     );
@@ -87,7 +81,7 @@ export class SeedCommand extends CommandRunner {
 
   private async insertDeity(): Promise<void> {
     const { askLocation: _askLocation, ...data } = await this.inquirer.ask<
-      Insertable<DeityTable> & { askLocation: boolean }
+      Insertable<Deity> & { askLocation: boolean } & { category: string }
     >('deity', {});
     if (this.idFieldIsULID(data.category)) {
       await this.db.insertInto('deity').values([data]).execute();
@@ -112,13 +106,13 @@ export class SeedCommand extends CommandRunner {
   private async insertLocation(): Promise<void> {
     const { addDescription: _addDescription, ...data } =
       await this.inquirer.ask<
-        Insertable<LocationTable> & { addDescription: boolean }
+        Insertable<Location> & { addDescription: boolean }
       >('location', {});
     await this.locationService.createLocation(data);
   }
 
   private async insertDomain(): Promise<void> {
-    const data = await this.inquirer.ask<Insertable<DomainTable>>('domain', {});
+    const data = await this.inquirer.ask<Insertable<Domain>>('domain', {});
     await this.db.insertInto('domain').values([data]).execute();
   }
 
