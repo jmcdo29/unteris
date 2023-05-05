@@ -20,6 +20,7 @@ RUN pnpm i
 FROM common AS server-build
 COPY apps/server ./apps/server/
 COPY libs/server ./libs/server/
+COPY libs/shared ./libs/shared/
 RUN pnpm nx run server:build:production
 
 ################
@@ -42,6 +43,7 @@ FROM common AS migrations-build
 COPY apps/kysely-cli ./apps/kysely-cli
 COPY libs/server ./libs/server
 COPY libs/db ./libs/db
+COPY libs/shared ./libs/shared/
 RUN pnpm nx run kysely-cli:build:production
 
 ####################
@@ -65,6 +67,7 @@ FROM common AS site-build
 WORKDIR /src
 COPY apps/site ./apps/site
 COPY libs/ui ./libs/ui
+COPY libs/shared ./libs/shared/
 RUN VITE_SERVER_URL="https://api.unteris.com" pnpm nx run site:build:production
 
 ##############
