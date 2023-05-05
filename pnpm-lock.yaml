@@ -264,6 +264,9 @@ devDependencies:
   typescript:
     specifier: 4.9.5
     version: 4.9.5
+  ulid:
+    specifier: ^2.3.0
+    version: 2.3.0
   vite:
     specifier: ^4.0.1
     version: 4.2.0(@types/node@18.14.2)(less@4.1.3)(sass@1.55.0)(stylus@0.55.0)
@@ -13535,6 +13538,11 @@ packages:
   /typescript@4.9.5:
     resolution: {integrity: sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==}
     engines: {node: '>=4.2.0'}
+    hasBin: true
+    dev: true
+
+  /ulid@2.3.0:
+    resolution: {integrity: sha512-keqHubrlpvT6G2wH0OEfSW4mquYRcbe/J8NMmveoQOjUqmo+hXtO+ORCpWhdbZ7k72UtY61BL7haGxW6enBnjw==}
     hasBin: true
     dev: true
 

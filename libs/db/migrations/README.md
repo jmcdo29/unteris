@@ -20,14 +20,15 @@ erDiagram
         string name
         string id
         string description
-        string imageUrl
-        string category_id
-        string location_id
+        string image_url
+        string category
+        string location
     }
     Domain {
         string name
         string id
         string description
+        string type
     }
     Deity_Domain {
         string deity_id
