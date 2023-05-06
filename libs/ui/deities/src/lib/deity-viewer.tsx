@@ -5,6 +5,8 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 import { Deity } from '@unteris/shared/types';
 import { Image } from '@unteris/ui/components';
+import { useTheme } from '@mui/material';
+import { DeityDomains } from './deity-domains';
 
 interface DeityViewerProps {
   deity: Deity;
@@ -15,9 +17,16 @@ export const DeityViewer = ({
   deity,
 }: // setIsEditing,
 DeityViewerProps): JSX.Element => {
+  const theme = useTheme();
   return (
     <Grid container={true}>
-      <Grid container={true} direction="column" xs={12} md={6}>
+      <Grid
+        container={true}
+        direction="column"
+        xs={12}
+        md={6}
+        rowGap={theme.spacing(3)}
+      >
         <Grid alignSelf="center">
           <Typography variant="h2" fontSize="3.25rem">
             {deity.name}
@@ -30,15 +39,9 @@ DeityViewerProps): JSX.Element => {
         <Grid>
           <Typography variant="body1">{deity.description}</Typography>
         </Grid>
-        {/*<Grid>
-          {deity.domains?.length ? (
-            <Typography variant="body1">
-              Domains: {deity.domains?.join(', ')}
-            </Typography>
-          ) : (
-            <Box />
-          )}
-        </Grid>*/}
+        <Grid>
+          <DeityDomains deity={deity} />
+        </Grid>
         <Box />
       </Grid>
       <Grid md={6} xs={12}>
