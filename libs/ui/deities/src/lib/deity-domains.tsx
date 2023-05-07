@@ -14,11 +14,17 @@ const filterDomains = (
     .map((dom) => ({ id: dom.id, name: dom.name }));
 };
 
+const titles: Record<DomainType['type'], string> = {
+  cleric: 'Cleric Domains',
+  druid: 'Druidic Circles',
+  warlock: 'Warlock Pacts',
+};
+
 const Domain = ({
   type,
   domains,
 }: {
-  type: string;
+  type: DomainType['type'];
   domains: Omit<DomainType, 'type'>[];
 }) => {
   const theme = useTheme();
@@ -28,7 +34,7 @@ const Domain = ({
   return (
     <Box margin={theme.spacing(1, 0)}>
       <Typography variant="body2" fontSize="1.5em">
-        {type}
+        {titles[type]}
       </Typography>
       {domains.map((d) => d.name).join(', ')}
     </Box>
@@ -44,9 +50,6 @@ export const DeityDomains = ({ deity }: { deity: Deity }): JSX.Element => {
   }
   return (
     <Box>
-      <Typography variant="h2" component="h3" fontSize="2em">
-        Domains
-      </Typography>
       <Domain type="cleric" domains={clericDomains} />
       <Domain type="druid" domains={druidDomains} />
       <Domain type="warlock" domains={warlockDomains} />
