@@ -82,7 +82,7 @@ const deities = {
   Branok: {
     warlock: ['archfey'],
   },
-  Ciaradh: {
+  Cairadh: {
     warlock: ['archfey'],
   },
   'Lady Daeris': {
