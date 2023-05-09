@@ -10,5 +10,6 @@ export const Config = z.object({
     .optional(z.string().transform((val) => Number.parseInt(val, 10)))
     .default('3333'),
   CORS: z.optional(z.string()).default('http://localhost:4200'),
+  REDIS_URL: z.string(),
   NODE_ENV: z.enum(['development', 'production']),
 });
