@@ -7,7 +7,7 @@ services:
     ports:
       - '8080:80'
     volumes:
-      - './images:/usr/share/caddy/images'
+      - './images:/src/images'
     labels:
       - 'com.centurylinklabs.watchtower.enable=true'
   server:

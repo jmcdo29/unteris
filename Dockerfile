@@ -82,4 +82,6 @@ RUN VITE_SERVER_URL="https://api.unteris.com" pnpm nx run site:build:production
 
 FROM caddy:2.6.4-alpine as site-prod
 WORKDIR /src
-COPY --from=site-build /src/dist/apps/site/ /usr/share/caddy
+COPY --from=site-build /src/dist/apps/site/ ./dist/apps/site
+COPY Caddyfile ./Caddyfile
+RUN ["caddy", "run", "--config", "Caddyfile"]
