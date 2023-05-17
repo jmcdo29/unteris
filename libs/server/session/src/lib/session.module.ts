@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ServerConfigModule } from '@unteris/server/config';
 import { ServerRedisModule } from '@unteris/server/redis';
+import { ServerTokenModule } from '@unteris/server/token';
 import { ServerSessionService } from './session.service';
 
 @Module({
-  imports: [ServerRedisModule, ServerConfigModule],
+  imports: [ServerRedisModule, ServerConfigModule, ServerTokenModule],
   controllers: [],
   providers: [ServerSessionService],
   exports: [],

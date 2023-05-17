@@ -9,7 +9,7 @@ export class ServerTokenService {
         if (err) {
           return reject(err);
         }
-        return resolve(key.export().toString('hex'));
+        return resolve(key.export().toString('base64url'));
       });
     });
   }
