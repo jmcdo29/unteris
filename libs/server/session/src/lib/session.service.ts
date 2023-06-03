@@ -1,8 +1,13 @@
-import { Injectable } from '@nestjs/common';
-import { ServerTokenService } from '@unteris/server/token';
-import { InjectRedisInstance } from '@unteris/server/redis';
-import { RedisClientType } from 'redis';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { ServerConfigService } from '@unteris/server/config';
+import { InjectRedisInstance } from '@unteris/server/redis';
+import { ServerTokenService } from '@unteris/server/token';
+import { RedisClientType } from 'redis';
+import {
+  RefreshSessionData,
+  SavedSessionData,
+  SessionData,
+} from './session.interface';
 
 @Injectable()
 export class ServerSessionService {
@@ -12,10 +17,12 @@ export class ServerSessionService {
     private readonly config: ServerConfigService
   ) {}
 
-  async createSession(): Promise<{ id: string; refreshId: string }> {
+  async createSession(
+    sessionData: SessionData = { user: {}, csrf: '' }
+  ): Promise<{ id: string; refreshId: string }> {
     const sessionToken = await this.tokenService.generateToken(128);
     const refreshToken = await this.tokenService.generateToken(256);
-    await this.redis.set(sessionToken, '{}', {
+    await this.redis.set(sessionToken, JSON.stringify(sessionData), {
       EX: this.config.get('SESSION_EXPIRES_IN'),
     });
     await this.redis.set(refreshToken, sessionToken, {
@@ -24,14 +31,33 @@ export class ServerSessionService {
     return { id: sessionToken, refreshId: refreshToken };
   }
 
+  async getSession(sessionId: string): Promise<SavedSessionData | object> {
+    return JSON.parse((await this.redis.get(sessionId)) ?? '{}');
+  }
+
   async updateSession(
     sessionId: string,
-    sessionData: Record<string, any>
+    sessionData: SessionData | RefreshSessionData
   ): Promise<void> {
-    const session = JSON.parse((await this.redis.get(sessionId)) ?? '{}');
+    const session = await this.getSession(sessionId);
+    if (!this.isSavedSession(session)) {
+      throw new ForbiddenException();
+    }
     await this.redis.set(
       sessionId,
       JSON.stringify({ ...session, ...sessionData })
     );
+  }
+
+  private isSavedSession<T extends object = SavedSessionData>(
+    sessionObject: T | object
+  ): sessionObject is T {
+    return Object.keys(sessionObject).length !== 0;
+  }
+
+  isSession(
+    sessionData: SavedSessionData | object
+  ): sessionData is SessionData {
+    return 'user' in sessionData && 'csrf' in sessionData;
   }
 }

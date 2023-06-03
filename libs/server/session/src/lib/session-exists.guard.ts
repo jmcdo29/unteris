@@ -1,0 +1,58 @@
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { ServerConfigService } from '@unteris/server/config';
+import { NestCookieRequest, Cookie } from 'nest-cookies';
+import { SessionData } from './session.interface';
+import { ServerSessionService } from './session.service';
+
+/**
+ * This is  less of a guard and more of a middleware as it will always return
+ * true, but it's useful to ensure that the sesssion does indeed exist and the
+ * proper values are available via the cookies/session
+ **/
+@Injectable()
+export class SessionExistsGuard implements CanActivate {
+  constructor(
+    private readonly sessionService: ServerSessionService,
+    private readonly config: ServerConfigService
+  ) {}
+
+  async canActivate(context: ExecutionContext) {
+    const req = context
+      .switchToHttp()
+      .getRequest<NestCookieRequest<{ session?: SessionData }>>();
+    const { sessionId } = req.cookies;
+    const session = await this.sessionService.getSession(sessionId);
+    if (!this.sessionService.isSession(session)) {
+      const newSession: SessionData = { user: {}, csrf: '' };
+      const { id, refreshId } = await this.sessionService.createSession(
+        newSession
+      );
+      req._cookies.push(this.createCookie({ name: 'session', value: id }));
+      req._cookies.push(
+        this.createCookie({ name: 'refresh', value: refreshId })
+      );
+      req.session = newSession;
+    }
+    return true;
+  }
+
+  private createCookie({
+    name,
+    value,
+  }: {
+    name: 'session' | 'refresh';
+    value: string | number;
+  }): Cookie {
+    return {
+      name: `${name}Id`,
+      value,
+      options: {
+        maxAge: this.config.get(
+          `${name.toUpperCase() as Uppercase<typeof name>}_EXPIRES_IN`
+        ),
+        secure: this.config.get('NODE_ENV') === 'production',
+        httpOnly: true,
+      },
+    };
+  }
+}

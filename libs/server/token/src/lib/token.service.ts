@@ -3,7 +3,7 @@ import { generateKey } from 'crypto';
 
 @Injectable()
 export class ServerTokenService {
-  async generateToken(length: number): Promise<string> {
+  async generateToken(length: 128 | 192 | 256): Promise<string> {
     return new Promise((resolve, reject) => {
       generateKey('aes', { length }, (err, key) => {
         if (err) {
