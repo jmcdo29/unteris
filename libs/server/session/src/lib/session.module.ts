@@ -8,6 +8,6 @@ import { ServerSessionService } from './session.service';
   imports: [ServerRedisModule, ServerConfigModule, ServerTokenModule],
   controllers: [],
   providers: [ServerSessionService],
-  exports: [],
+  exports: [ServerSessionService],
 })
 export class ServerSessionModule {}

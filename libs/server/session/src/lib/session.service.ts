@@ -31,13 +31,16 @@ export class ServerSessionService {
     return { id: sessionToken, refreshId: refreshToken };
   }
 
-  async getSession(sessionId: string): Promise<SavedSessionData | object> {
+  async getSession(sessionId?: string): Promise<SavedSessionData | object> {
+    if (!sessionId) {
+      return {};
+    }
     return JSON.parse((await this.redis.get(sessionId)) ?? '{}');
   }
 
   async updateSession(
     sessionId: string,
-    sessionData: SessionData | RefreshSessionData
+    sessionData: Partial<SessionData | RefreshSessionData>
   ): Promise<void> {
     const session = await this.getSession(sessionId);
     if (!this.isSavedSession(session)) {

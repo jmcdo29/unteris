@@ -19,7 +19,9 @@ export class SessionExistsGuard implements CanActivate {
   async canActivate(context: ExecutionContext) {
     const req = context
       .switchToHttp()
-      .getRequest<NestCookieRequest<{ session?: SessionData }>>();
+      .getRequest<
+        NestCookieRequest<{ session?: SessionData & { id: string } }>
+      >();
     const { sessionId } = req.cookies;
     const session = await this.sessionService.getSession(sessionId);
     if (!this.sessionService.isSession(session)) {
@@ -31,7 +33,9 @@ export class SessionExistsGuard implements CanActivate {
       req._cookies.push(
         this.createCookie({ name: 'refresh', value: refreshId })
       );
-      req.session = newSession;
+      req.session = { ...newSession, id };
+    } else {
+      req.session = { ...session, id: sessionId };
     }
     return true;
   }
