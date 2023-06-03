@@ -1,6 +1,5 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { ServerConfigService } from '@unteris/server/config';
-import { NestCookieRequest, Cookie } from 'nest-cookies';
+import { NestCookieRequest } from 'nest-cookies';
 import { SessionData } from './session.interface';
 import { ServerSessionService } from './session.service';
 
@@ -11,10 +10,7 @@ import { ServerSessionService } from './session.service';
  **/
 @Injectable()
 export class SessionExistsGuard implements CanActivate {
-  constructor(
-    private readonly sessionService: ServerSessionService,
-    private readonly config: ServerConfigService
-  ) {}
+  constructor(private readonly sessionService: ServerSessionService) {}
 
   async canActivate(context: ExecutionContext) {
     const req = context
@@ -29,34 +25,16 @@ export class SessionExistsGuard implements CanActivate {
       const { id, refreshId } = await this.sessionService.createSession(
         newSession
       );
-      req._cookies.push(this.createCookie({ name: 'session', value: id }));
       req._cookies.push(
-        this.createCookie({ name: 'refresh', value: refreshId })
+        this.sessionService.createCookie({ name: 'session', value: id })
+      );
+      req._cookies.push(
+        this.sessionService.createCookie({ name: 'refresh', value: refreshId })
       );
       req.session = { ...newSession, id };
     } else {
       req.session = { ...session, id: sessionId };
     }
     return true;
-  }
-
-  private createCookie({
-    name,
-    value,
-  }: {
-    name: 'session' | 'refresh';
-    value: string | number;
-  }): Cookie {
-    return {
-      name: `${name}Id`,
-      value,
-      options: {
-        maxAge: this.config.get(
-          `${name.toUpperCase() as Uppercase<typeof name>}_EXPIRES_IN`
-        ),
-        secure: this.config.get('NODE_ENV') === 'production',
-        httpOnly: true,
-      },
-    };
   }
 }
