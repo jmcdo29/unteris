@@ -68,7 +68,7 @@ export class KyselyCliCommand extends CommandRunner {
         throw new Error(migrationErrors.join('\n'));
       }
     } catch (err) {
-      this.logger.error(err);
+      this.logger.printError(err as Error);
     } finally {
       this.logger.log('Migrations Finished');
     }
