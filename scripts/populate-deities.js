@@ -124,7 +124,7 @@ const deities = [
     name: 'Ordin',
     description:
       'Chaos and Thought were born first from Latubor and soon after came Ordin, the embodiment of Order.',
-    imageUrl: 'orign.png',
+    imageUrl: 'ordin.png',
     category: child,
     location: arboria,
   },
@@ -271,7 +271,7 @@ const deities = [
     name: 'Krypta Vatcher',
     description:
       'Someone had to keep the darkness and undead in check. Krypta Vatcher walked out of the shadows with chains ready to detain any deemed necessary.',
-    imageUrl: 'krypte_vatcher.png',
+    imageUrl: 'krypta_vatcher.png',
     category: shadow,
     location: shadowfell,
   },
