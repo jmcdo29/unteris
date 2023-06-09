@@ -1,0 +1,69 @@
+{
+  "name": "server-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/server-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "NODE_ENV=development node -r @swc/register apps/server-e2e/src/main.ts"
+      }
+    },
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/apps/server-e2e",
+        "format": ["cjs"],
+        "bundle": false,
+        "main": "apps/server-e2e/src/main.ts",
+        "tsConfig": "apps/server-e2e/tsconfig.app.json",
+        "assets": ["apps/server-e2e/src/assets"],
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "server-e2e:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "server-e2e:build:development"
+        },
+        "production": {
+          "buildTarget": "server-e2e:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/server-e2e/**/*.ts"]
+      }
+    }
+  },
+  "tags": ["server", "e2e", "test"]
+}

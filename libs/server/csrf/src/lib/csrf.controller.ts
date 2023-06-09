@@ -8,8 +8,10 @@ export class ServerCsrfController {
   @Get()
   async getCsrfToken(
     @Req() { session }: { session: { id: string } }
-  ): Promise<string> {
-    return this.serverCsrfService.generateToken(session.id);
+  ): Promise<{ csrfToken: string }> {
+    return {
+      csrfToken: await this.serverCsrfService.generateToken(session.id),
+    };
   }
 
   @Post('verify')
