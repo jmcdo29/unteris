@@ -50,7 +50,6 @@
     "@nestjs/testing": "^9.1.4",
     "@nx/cypress": "16.0.3",
     "@nx/devkit": "16.0.3",
-    "@nx/esbuild": "16.0.3",
     "@nx/eslint-plugin": "16.0.3",
     "@nx/jest": "16.0.3",
     "@nx/js": "16.0.3",
