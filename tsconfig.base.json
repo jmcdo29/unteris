@@ -26,6 +26,7 @@
       "@unteris/server/location": ["libs/server/location/src/index.ts"],
       "@unteris/server/logging": ["libs/server/logging/src/index.ts"],
       "@unteris/server/redis": ["libs/server/redis/src/index.ts"],
+      "@unteris/server/root": ["libs/server/root/src/index.ts"],
       "@unteris/server/session": ["libs/server/session/src/index.ts"],
       "@unteris/server/token": ["libs/server/token/src/index.ts"],
       "@unteris/shared/types": ["libs/shared/types/src/index.ts"],
