@@ -83,4 +83,4 @@ FROM caddy:2.6.4-alpine as site-prod
 WORKDIR /src
 COPY --from=site-build /src/dist/apps/site/ ./dist/apps/site
 COPY Caddyfile ./Caddyfile
-RUN ["caddy", "run", "--config", "Caddyfile"]
+CMD ["caddy", "run", "--config", "Caddyfile"]
