@@ -1,14 +1,15 @@
-FROM node:18.15-alpine AS node-base
-RUN npm i -g pnpm && \
-	apk add --no-cache dumb-init=1.2.5-r2
+FROM node:20.2-alpine3.18 AS node-base
+RUN npm i -g pnpm@8.6.1 && \
+	apk add --no-cache \
+	dumb-init=1.2.5-r2
 
 FROM node-base AS common
 WORKDIR /src
-RUN apk add  --no-cache \
-	python3=3.10.11-r0\
-	make=4.3-r1 \
-	gcc=12.2.1_git20220924-r4 \
-	g++=12.2.1_git20220924-r4
+RUN apk add --no-cache \
+	python3 \
+	make \
+	gcc \
+	g++
 COPY package.json \
 	tsconfig* \
 	nx.json \
@@ -37,7 +38,6 @@ WORKDIR /src
 COPY --from=server-build --chown=node:node /src/dist/apps/server ./
 ENV NODE_ENV=production
 RUN pnpm i
-RUN pnpx node-prune
 CMD ["dumb-init", "node", "main.js"]
 
 ####################
@@ -62,7 +62,6 @@ COPY --from=migrations-build --chown=node:node /src/dist ./dist
 RUN cp ./dist/apps/kysely-cli/package.json ./package.json
 ENV NODE_ENV=production
 RUN pnpm i
-RUN pnpx node-prune
 CMD ["dumb-init", "node", "dist/apps/kysely-cli/main", "migrate"]
 
 ##############
