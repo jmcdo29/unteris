@@ -1,18 +1,11 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
-
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { ExpressAdapter } from '@nestjs/platform-express';
 import { OgmaService } from '@ogma/nestjs-module';
 import { ServerConfigService } from '@unteris/server/config';
-
-import { AppModule } from './app/app.module';
+import { RootModule } from '@unteris/server/root';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { bufferLogs: true });
+  const app = await NestFactory.create(RootModule, { bufferLogs: true });
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
   app.useLogger(app.get(OgmaService));

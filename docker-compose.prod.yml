@@ -7,7 +7,7 @@ services:
     ports:
       - '8080:80'
     volumes:
-      - './images:/usr/share/caddy/images'
+      - './images:/src/images'
     labels:
       - 'com.centurylinklabs.watchtower.enable=true'
   server:
@@ -50,3 +50,10 @@ services:
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_DB: ${DATABASE_NAME}
+  redis:
+    image: redis
+    ports:
+      - '6380:6379'
+    volumes:
+      - './redis.conf:/usr/local/etc/redis/redis.conf'
+    command: redis-server /usr/local/etc/redis/redis.conf

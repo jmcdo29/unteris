@@ -46,3 +46,4 @@ apps/site/public/images
 docker/
 !libs/docker/
 *.log
+dump

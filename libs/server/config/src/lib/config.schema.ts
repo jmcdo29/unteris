@@ -1,5 +1,8 @@
 import { z } from 'zod';
 
+const hourInSeconds = 60 * 60;
+const dayInSeconds = hourInSeconds * 24;
+
 export const Config = z.object({
   DATABASE_USER: z.string(),
   DATABASE_PASSWORD: z.string(),
@@ -10,5 +13,11 @@ export const Config = z.object({
     .optional(z.string().transform((val) => Number.parseInt(val, 10)))
     .default('3333'),
   CORS: z.optional(z.string()).default('http://localhost:4200'),
+  REDIS_URL: z.string(),
   NODE_ENV: z.enum(['development', 'production']),
+  SESSION_EXPIRES_IN: z.number().optional().default(hourInSeconds),
+  REFRESH_EXPIRES_IN: z
+    .number()
+    .optional()
+    .default(7 * dayInSeconds),
 });
