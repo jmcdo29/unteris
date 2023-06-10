@@ -61,7 +61,8 @@
     "@nx/nest": {
       "library": {
         "simpleName": true,
-        "directory": "server"
+        "directory": "server",
+        "unitTestRunner": "none"
       }
     }
   }
