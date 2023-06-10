@@ -12,6 +12,7 @@ erDiagram
     Deity ||--|{ Deity_Domain : "belongs to"
     Domain ||--|{ Deity_Domain : "belongs to"
     Deity ||--|| Location : "resides in"
+    Race ||--|{ Racial_Ability : "belongs to"
     DeityCategory {
         string name
         string id
@@ -39,6 +40,21 @@ erDiagram
         string name
         string description
     }
-
+    Race {
+        string id
+        string name
+        string description
+        string age_description
+        string size_description
+        string type
+        integer speed
+        string known_languages
+    }
+    Racial_Ability {
+        string id
+        string race_id
+        string name
+        string description
+    }
 
 ```
