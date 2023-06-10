@@ -25,6 +25,7 @@
       "@unteris/server/kysely": ["libs/server/kysely/src/index.ts"],
       "@unteris/server/location": ["libs/server/location/src/index.ts"],
       "@unteris/server/logging": ["libs/server/logging/src/index.ts"],
+      "@unteris/server/race": ["libs/server/race/src/index.ts"],
       "@unteris/server/redis": ["libs/server/redis/src/index.ts"],
       "@unteris/server/root": ["libs/server/root/src/index.ts"],
       "@unteris/server/session": ["libs/server/session/src/index.ts"],
