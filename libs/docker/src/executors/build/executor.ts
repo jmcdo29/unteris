@@ -21,6 +21,7 @@ export default async function runExecutor(
     `Docker cache path was evaluated to ${cachePath}. This was automatically generated.`
   );
   const gCommit =
+    process.env.GITHUB_SHA ??
     process.env.NX_HEAD ??
     execSync('git log -n 1 --format="%h"').toString().replace('\n', '');
   logger.verbose(`Git Commit was determined to be ${gCommit}`);
