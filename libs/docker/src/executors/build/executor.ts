@@ -20,9 +20,10 @@ export default async function runExecutor(
   logger.verbose(
     `Docker cache path was evaluated to ${cachePath}. This was automatically generated.`
   );
-  const gCommit = execSync('git log -n 1 --format="%h"')
-    .toString()
-    .replace('\n', '');
+  const gCommit =
+    process.env.NX_HEAD ??
+    execSync('git log -n 1 --format="%h"').toString().replace('\n', '');
+  logger.verbose(`Git Commit was determined to be ${gCommit}`);
   const dockerNamespace = options.dockerNamespace ?? `jmcdo29`;
   const tagPrefix = options.tag ?? `${scope}-${project}:latest`;
   const tags = [
