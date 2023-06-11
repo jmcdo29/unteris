@@ -33,7 +33,8 @@
       "@unteris/shared/types": ["libs/shared/types/src/index.ts"],
       "@unteris/ui/components": ["libs/ui/components/src/index.ts"],
       "@unteris/ui/deities": ["libs/ui/deities/src/index.ts"],
-      "@unteris/ui/history": ["libs/ui/history/src/index.ts"]
+      "@unteris/ui/history": ["libs/ui/history/src/index.ts"],
+      "@unteris/ui/race": ["libs/ui/race/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
