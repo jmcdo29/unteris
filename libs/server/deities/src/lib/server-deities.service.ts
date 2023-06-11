@@ -13,6 +13,7 @@ export class ServerDeitiesService {
     return this.db
       .selectFrom('deity')
       .select(['id', 'name'])
+      .orderBy('id', 'asc')
       .where('category', '=', category)
       .execute();
   }
@@ -66,6 +67,7 @@ export class ServerDeitiesService {
     return this.db
       .selectFrom('deity')
       .select(['id', 'name'])
+      .orderBy('id', 'asc')
       .where('location', '=', location)
       .execute();
   }
