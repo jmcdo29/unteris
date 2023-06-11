@@ -25,6 +25,7 @@
       "@unteris/server/kysely": ["libs/server/kysely/src/index.ts"],
       "@unteris/server/location": ["libs/server/location/src/index.ts"],
       "@unteris/server/logging": ["libs/server/logging/src/index.ts"],
+      "@unteris/server/race": ["libs/server/race/src/index.ts"],
       "@unteris/server/redis": ["libs/server/redis/src/index.ts"],
       "@unteris/server/root": ["libs/server/root/src/index.ts"],
       "@unteris/server/session": ["libs/server/session/src/index.ts"],
@@ -32,7 +33,8 @@
       "@unteris/shared/types": ["libs/shared/types/src/index.ts"],
       "@unteris/ui/components": ["libs/ui/components/src/index.ts"],
       "@unteris/ui/deities": ["libs/ui/deities/src/index.ts"],
-      "@unteris/ui/history": ["libs/ui/history/src/index.ts"]
+      "@unteris/ui/history": ["libs/ui/history/src/index.ts"],
+      "@unteris/ui/race": ["libs/ui/race/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

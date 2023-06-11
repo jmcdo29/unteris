@@ -1,4 +1,3 @@
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Drawer from '@mui/material/Drawer';
 import ProfileIcon from '@mui/icons-material/AccountCircle';
@@ -46,6 +45,9 @@ export const NavBar = (props: {
         </StyledButton>
         <StyledButton href="/deities" onClick={() => setShowMenu(false)}>
           Deities
+        </StyledButton>
+        <StyledButton href="/races" onClick={() => setShowMenu(false)}>
+          races
         </StyledButton>
       </Drawer>
     </>

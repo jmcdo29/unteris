@@ -55,13 +55,16 @@
       "library": {
         "style": "scss",
         "linter": "eslint",
-        "unitTestRunner": "vitest"
+        "unitTestRunner": "vitest",
+        "directory": "ui",
+        "bundler": "none"
       }
     },
     "@nx/nest": {
       "library": {
         "simpleName": true,
-        "directory": "server"
+        "directory": "server",
+        "unitTestRunner": "none"
       }
     }
   }
