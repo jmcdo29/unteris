@@ -11,7 +11,11 @@ export class ServerRaceService {
   ) {}
 
   async getRaces(): Promise<Array<Pick<Race, 'id' | 'name'>>> {
-    return this.db.selectFrom('race').select(['id', 'name']).execute();
+    return this.db
+      .selectFrom('race')
+      .select(['id', 'name'])
+      .orderBy('name', 'asc')
+      .execute();
   }
 
   async getRaceWithAbilities(id: string): Promise<RaceWithAbilities> {
