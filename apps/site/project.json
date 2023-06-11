@@ -70,7 +70,9 @@
     "package": {
       "executor": "@unteris/plugin/docker:build",
       "outputPath": ["docker/cache/site"],
-      "options": {},
+      "options": {
+        "verbose": true
+      },
       "configurations": {
         "ci": {
           "publish": true
