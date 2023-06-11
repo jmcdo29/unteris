@@ -10,6 +10,7 @@ env:
   NX_RUN_GROUP: ${{ github.run_id }}
   NX_CLOUD_DISTRIBUTED_EXECUTION: false
   NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_TOKEN }}
+  CYPRESS_INSTALL_BINARY: 0
 
 jobs:
   release:
