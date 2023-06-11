@@ -55,7 +55,9 @@
       "library": {
         "style": "scss",
         "linter": "eslint",
-        "unitTestRunner": "vitest"
+        "unitTestRunner": "vitest",
+        "directory": "ui",
+        "bundler": "none"
       }
     },
     "@nx/nest": {
