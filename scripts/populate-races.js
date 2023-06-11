@@ -38,7 +38,7 @@ const races = [
           'From a young age, Naga learn to forage for themselves, either through hunting game or by foraging for food. You are Proficient in the Survival Skill',
       },
     ],
-    languages: 'You can speak, read and write Common, and Nagan.',
+    languages: 'You can speak, read and write Common and Nagan.',
   },
   {
     name: 'Siren',
@@ -102,7 +102,7 @@ const races = [
       },
     ],
     languages:
-      'You can speak, read and write in Common, and one other language of your choice.',
+      'You can speak, read and write Common and one other language of your choice.',
   },
   {
     name: 'Kitsune',
