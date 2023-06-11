@@ -5,6 +5,7 @@ import { ServerCsrfModule } from '@unteris/server/csrf';
 import { ServerDeitiesModule } from '@unteris/server/deities';
 import { ServerLocationModule } from '@unteris/server/location';
 import { ServerLoggingModule } from '@unteris/server/logging';
+import { ServerRaceModule } from '@unteris/server/race';
 import {
   ServerSessionModule,
   SessionExistsGuard,
@@ -23,6 +24,7 @@ import { AppService } from './app.service';
     ServerCsrfModule,
     ServerSessionModule,
     ServerConfigModule,
+    ServerRaceModule,
   ],
   controllers: [AppController],
   providers: [

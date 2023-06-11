@@ -4,6 +4,8 @@ import {
   DeityCategory,
   Domain,
   DeityDomain,
+  Race,
+  RacialAbility,
 } from '@unteris/shared/types';
 import { Generated } from 'kysely';
 
@@ -15,4 +17,6 @@ export interface Database {
   deityCategory: GeneratedId<DeityCategory>;
   domain: GeneratedId<Domain>;
   location: GeneratedId<Location>;
+  race: GeneratedId<Race>;
+  racialAbility: GeneratedId<RacialAbility>;
 }
