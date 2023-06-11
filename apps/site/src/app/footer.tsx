@@ -4,6 +4,7 @@ import { Grid, StyledLink } from '@unteris/ui/components';
 
 export const Footer = (): JSX.Element => {
   const theme = useTheme();
+  const color = theme.palette.mode === 'dark' ? 'primary' : 'secondary';
   return (
     <Box
       sx={{
@@ -16,8 +17,12 @@ export const Footer = (): JSX.Element => {
         sx={{ justifyContent: 'center', justifyItems: 'center' }}
       >
         <div>
-          Made with <Heart color="primary" display="inline-block" /> by&nbsp;
-          <StyledLink href="https://github.com/jmcdo29" display="inline">
+          Made with <Heart color={color} display="inline-block" /> by&nbsp;
+          <StyledLink
+            href="https://github.com/jmcdo29"
+            display="inline"
+            color={color}
+          >
             Jay McDoniel
           </StyledLink>
         </div>

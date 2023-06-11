@@ -15,7 +15,7 @@ export const NavBar = (props: {
     <>
       <Grid container={true} columns={{ xs: 4, md: 12 }}>
         <Grid md={1}>
-          <Button onClick={() => setShowMenu(!showMenu)}>
+          <Button onClick={() => setShowMenu(!showMenu)} aria-label="Menu">
             <MenuIcon />
           </Button>
         </Grid>
@@ -27,7 +27,7 @@ export const NavBar = (props: {
         <Grid xs={0} md={8}></Grid>
         <ThemeSwitcher setTheme={props.setTheme} />
         <Grid md={1}>
-          <Button>
+          <Button aria-label="Profile">
             <ProfileIcon />
           </Button>
         </Grid>
