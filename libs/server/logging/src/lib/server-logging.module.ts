@@ -1,5 +1,5 @@
 import { DynamicModule, Module } from '@nestjs/common';
-import { APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { OgmaOptions } from '@ogma/logger';
 import { OgmaModule, OgmaInterceptor } from '@ogma/nestjs-module';
 import { ExpressParser } from '@ogma/platform-express';
@@ -7,6 +7,7 @@ import {
   ServerConfigModule,
   ServerConfigService,
 } from '@unteris/server/config';
+import { BaseFilter } from './catch-all.filter';
 
 @Module({
   imports: [],
@@ -15,6 +16,10 @@ import {
     {
       provide: APP_INTERCEPTOR,
       useClass: OgmaInterceptor,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: BaseFilter,
     },
   ],
   exports: [],
@@ -30,18 +35,14 @@ export class ServerLoggingModule {
         OgmaModule.forRootAsync({
           imports: [ServerConfigModule],
           useFactory: (config: ServerConfigService) => ({
-            service: {
-              application: app,
-              logLevel: logLevel,
-              json: config.get('NODE_ENV') === 'production',
-            },
-            interceptor: {
-              http: ExpressParser,
-            },
+            application: app,
+            logLevel: logLevel,
+            json: config.get('NODE_ENV') === 'production',
           }),
           inject: [ServerConfigService],
         }),
       ],
+      providers: [ExpressParser],
     };
   }
 }
