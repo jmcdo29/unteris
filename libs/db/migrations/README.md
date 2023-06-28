@@ -13,6 +13,8 @@ erDiagram
     Domain ||--|{ Deity_Domain : "belongs to"
     Deity ||--|| Location : "resides in"
     Race ||--|{ Racial_Ability : "belongs to"
+    User_Account ||--|{ Login_Method : "can have"
+    User_Account || --|{ User_Permission : "should have"
     DeityCategory {
         string name
         string id
@@ -55,6 +57,23 @@ erDiagram
         string race_id
         string name
         string description
+    }
+    User_Account {
+        string id
+        string name
+        string email
+        boolean isVerified
+        string photo_url
+    }
+    User_Permission {
+        string id
+        string user_id
+        string role
+    }
+    Login_Method {
+        string id
+        string user_id
+        string name
     }
 
 ```

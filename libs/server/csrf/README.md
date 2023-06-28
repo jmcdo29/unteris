@@ -17,4 +17,4 @@ flowchart TD
     D -->|No| E((Error))
     C --> G[Creaet CSRF token]
     G -->|Send CSRF as response| A
-  ```
+```

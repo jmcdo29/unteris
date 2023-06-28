@@ -56,4 +56,4 @@ you can just watch the project and see what becomes of it.
 
 Any major questions I guess you can raise an issue or [email me about it][email]
 
-[email]: mailto://me+unteris@jaymcdoniel.dev
+[email]: mailto://dev@unteris.com
