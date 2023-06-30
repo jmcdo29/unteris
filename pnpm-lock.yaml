@@ -21,8 +21,8 @@ dependencies:
     specifier: ^10.0.0
     version: 10.0.0(@nestjs/common@10.0.0)(@nestjs/core@10.0.0)
   '@ogma/logger':
-    specifier: ^3.0.0
-    version: 3.0.0
+    specifier: ^3.1.1
+    version: 3.1.1
   '@ogma/nestjs-module':
     specifier: ^5.0.1
     version: 5.0.1(@nestjs/common@10.0.0)(@nestjs/core@10.0.0)(reflect-metadata@0.1.13)(rxjs@7.8.0)
@@ -4348,8 +4348,8 @@ packages:
     resolution: {integrity: sha512-y2GHkT4t3B9CoI7ELfgZXeMHiiOC/X4XvdeqYLbP5A3keop7fANzjd5pQdtyYQvdQ0lPzcHJiMvOGkIINZHZHQ==}
     dev: false
 
-  /@ogma/logger@3.0.0:
-    resolution: {integrity: sha512-j1TfLIR/j/GmsCvWYUcbX7ztX9sGuWgIJk/MkBBcPod4aNyBzVhPn2hjLhi+D20uwqruczaQOIvUQgO0gZ4Ukg==}
+  /@ogma/logger@3.1.1:
+    resolution: {integrity: sha512-87LtQBXvEsSwJLFQmgHksLfLMnIyCIauTtGvkFY5o7a3Tf9R/ZTk5ErzgC9LfU3Y4s5bFzltomoSOJePKLB2KQ==}
     engines: {node: '>=10'}
     dependencies:
       '@ogma/common': 1.2.0
@@ -4369,7 +4369,7 @@ packages:
     dependencies:
       '@nestjs/common': 10.0.0(reflect-metadata@0.1.13)(rxjs@7.8.0)
       '@nestjs/core': 10.0.0(@nestjs/common@10.0.0)(@nestjs/platform-express@10.0.0)(reflect-metadata@0.1.13)(rxjs@7.8.0)
-      '@ogma/logger': 3.0.0
+      '@ogma/logger': 3.1.1
       '@ogma/styler': 1.0.1
       reflect-metadata: 0.1.13
       rxjs: 7.8.0
