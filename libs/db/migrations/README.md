@@ -14,14 +14,16 @@ erDiagram
     Deity ||--|| Location : "resides in"
     Race ||--|{ Racial_Ability : "belongs to"
     User_Account ||--|{ Login_Method : "can have"
+    Local_Login |o --|| Login_Method : "is a"
     User_Account || --|{ User_Permission : "should have"
+    Role || --|{ User_Permission : "relates_to"
     DeityCategory {
         string name
-        string id
+        ulid id
     }
     Deity {
         string name
-        string id
+        ulid id
         string description
         string image_url
         string category
@@ -29,21 +31,21 @@ erDiagram
     }
     Domain {
         string name
-        string id
+        ulid id
         string description
         string type
     }
     Deity_Domain {
-        string deity_id
-        string domain_id
+        ulid deity_id
+        ulid domain_id
     }
     Location {
-        string id
+        ulid id
         string name
         string description
     }
     Race {
-        string id
+        ulid id
         string name
         string description
         string age_description
@@ -53,26 +55,38 @@ erDiagram
         string known_languages
     }
     Racial_Ability {
-        string id
-        string race_id
+        ulid id
+        ulid race_id
         string name
         string description
     }
     User_Account {
-        string id
+        ulid id
         string name
         string email
         boolean isVerified
         string photo_url
     }
     User_Permission {
-        string id
-        string user_id
-        string role
+        ulid id
+        ulid user_id
+        ulid role_id
     }
     Login_Method {
-        string id
-        string user_id
+        ulid id
+        ulid user_id
+        string name
+    }
+    Local_Login {
+        ulid id
+        string email
+        string password
+        ulid login_method_id
+        timestamp last_used
+        int attempts
+    }
+    Role {
+        ulid id
         string name
     }
 
