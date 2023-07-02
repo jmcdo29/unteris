@@ -1,27 +1,16 @@
 import { DynamicModule, Module } from '@nestjs/common';
-import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { OgmaOptions } from '@ogma/logger';
-import { OgmaModule, OgmaInterceptor } from '@ogma/nestjs-module';
+import { OgmaModule } from '@ogma/nestjs-module';
 import { ExpressParser } from '@ogma/platform-express';
 import {
   ServerConfigModule,
   ServerConfigService,
 } from '@unteris/server/config';
-import { BaseFilter } from './catch-all.filter';
 
 @Module({
   imports: [],
   controllers: [],
-  providers: [
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: OgmaInterceptor,
-    },
-    {
-      provide: APP_FILTER,
-      useClass: BaseFilter,
-    },
-  ],
+  providers: [],
   exports: [],
 })
 export class ServerLoggingModule {
