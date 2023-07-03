@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { OgmaInterceptor } from '@ogma/nestjs-module';
 import { ServerConfigModule } from '@unteris/server/config';
 import { ServerCsrfModule } from '@unteris/server/csrf';
@@ -7,10 +7,12 @@ import { ServerDeitiesModule } from '@unteris/server/deities';
 import { ServerLocationModule } from '@unteris/server/location';
 import { ServerLoggingModule } from '@unteris/server/logging';
 import { ServerRaceModule } from '@unteris/server/race';
+import { ServerSecurityModule } from '@unteris/server/security';
 import {
   ServerSessionModule,
   SessionExistsGuard,
 } from '@unteris/server/session';
+import { ZodValidationPipe } from '@unteris/server/zod-pipe';
 import { CookieModule, CookiesInterceptor } from 'nest-cookies';
 
 import { AppController } from './app.controller';
@@ -27,6 +29,7 @@ import { BaseFilter } from './catch-all.filter';
     ServerSessionModule,
     ServerConfigModule,
     ServerRaceModule,
+    ServerSecurityModule,
   ],
   controllers: [AppController],
   providers: [
@@ -46,6 +49,10 @@ import { BaseFilter } from './catch-all.filter';
     {
       provide: APP_FILTER,
       useClass: BaseFilter,
+    },
+    {
+      provide: APP_PIPE,
+      useClass: ZodValidationPipe,
     },
   ],
 })
