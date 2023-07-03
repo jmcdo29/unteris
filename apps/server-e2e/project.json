@@ -16,7 +16,17 @@
       "options": {
         //  "config": "./apps/server-e2e/vite.config.ts"
       },
-      "dependsOn": ["wait-for-docker"]
+      "dependsOn": [
+        {
+          "projects": ["kysely-cli"],
+          "target": "migrate-e2e",
+          "params": "forward"
+        },
+        {
+          "projects": "self",
+          "target": "wait-for-docker"
+        }
+      ]
     },
     "wait-for-docker": {
       "executor": "nx:run-commands",
