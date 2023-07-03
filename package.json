@@ -101,6 +101,7 @@
     "nx": "16.0.3",
     "nx-cloud": "16.0.5",
     "pactum": "^3.4.1",
+    "pactum-matchers": "^1.1.5",
     "prettier": "2.7.1",
     "react-router-dom": "^6.9.0",
     "react-test-renderer": "18.2.0",

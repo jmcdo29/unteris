@@ -30,6 +30,7 @@
       "@unteris/server/root": ["libs/server/root/src/index.ts"],
       "@unteris/server/session": ["libs/server/session/src/index.ts"],
       "@unteris/server/token": ["libs/server/token/src/index.ts"],
+      "@unteris/shared/base32": ["libs/shared/base32/src/index.ts"],
       "@unteris/shared/types": ["libs/shared/types/src/index.ts"],
       "@unteris/ui/components": ["libs/ui/components/src/index.ts"],
       "@unteris/ui/deities": ["libs/ui/deities/src/index.ts"],

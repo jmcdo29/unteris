@@ -265,6 +265,9 @@ devDependencies:
   pactum:
     specifier: ^3.4.1
     version: 3.4.1
+  pactum-matchers:
+    specifier: ^1.1.5
+    version: 1.1.5
   prettier:
     specifier: 2.7.1
     version: 2.7.1
