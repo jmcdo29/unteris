@@ -4,7 +4,7 @@ export const UserAccountSchema = z.object({
   id: z.string().ulid(),
   name: z.string(),
   email: z.string().email(),
-  isVerifified: z.boolean(),
+  isVerified: z.boolean(),
   photoUrl: z.string().url().optional(),
 });
 
