@@ -6,6 +6,11 @@ import {
   DeityDomain,
   Race,
   RacialAbility,
+  UserPermission,
+  UserAccount,
+  LocalLogin,
+  LoginMethod,
+  Role,
 } from '@unteris/shared/types';
 import { Generated } from 'kysely';
 
@@ -19,4 +24,9 @@ export interface Database {
   location: GeneratedId<Location>;
   race: GeneratedId<Race>;
   racialAbility: GeneratedId<RacialAbility>;
+  userPermission: GeneratedId<UserPermission>;
+  userAccount: GeneratedId<UserAccount>;
+  localLogin: GeneratedId<LocalLogin>;
+  loginMethod: GeneratedId<LoginMethod>;
+  role: GeneratedId<Role>;
 }
