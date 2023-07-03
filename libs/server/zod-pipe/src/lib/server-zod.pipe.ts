@@ -14,6 +14,6 @@ export class ZodValidationPipe {
     if (!result.success) {
       throw new BadRequestException(result.error);
     }
-    return result.data;
+    return { data: result.data };
   }
 }
