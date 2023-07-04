@@ -53,11 +53,13 @@ export class ServerSecurityService {
     return { success: true, id: createdUser.id };
   }
 
-  async logUserIn(userLogin: LoginBody): Promise<{ success: boolean }> {
-    console.log(userLogin);
+  async logUserIn(
+    userLogin: LoginBody,
+    sessionId: string
+  ): Promise<{ success: boolean }> {
     const user = await this.db
       .selectFrom('userAccount as ua')
-      .innerJoin('loginMethod as lm', 'lm.userId', 'id')
+      .innerJoin('loginMethod as lm', 'lm.userId', 'ua.id')
       .innerJoin('localLogin as ll', 'loginMethodId', 'lm.id')
       .select(['ua.email', 'll.password'])
       .where('ua.email', '=', userLogin.email)
@@ -68,7 +70,7 @@ export class ServerSecurityService {
     ) {
       throw new UnauthorizedException('Invalid username or password');
     }
-    await this.sessionService.updateSession('', {
+    await this.sessionService.updateSession(sessionId, {
       user: { email: user.email },
     });
     return { success: true };

@@ -18,30 +18,24 @@
       },
       "dependsOn": [
         {
+          "projects": "self",
+          "target": "start-docker"
+        },
+        {
           "projects": ["kysely-cli"],
           "target": "migrate-e2e",
           "params": "forward"
-        },
-        {
-          "projects": "self",
-          "target": "wait-for-docker"
         }
       ]
-    },
-    "wait-for-docker": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": [
-          "while ! nc -q0 localhost 6379 < /dev/null > /dev/null 2>&1; do sleep 10; done",
-          "while ! nc -q0 localhost 5432 < /dev/null > /dev/null 2>&1; do sleep 10; done"
-        ]
-      },
-      "dependsOn": ["start-docker"]
     },
     "start-docker": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["docker compose -f docker-compose.test.yml up -d"]
+        "commands": [
+          "docker compose -f docker-compose.test.yml up -d",
+          "while ! nc -q0 localhost 26379 < /dev/null > /dev/null 2>&1; do sleep 10; done",
+          "while ! nc -q0 localhost 25432 < /dev/null > /dev/null 2>&1; do sleep 10; done"
+        ]
       }
     },
     "lint": {

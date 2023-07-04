@@ -12,16 +12,14 @@ export class ServerSecurityController {
     @Body() body: SignupBody,
     @Session() session: { id: string & SavedSessionData }
   ) {
-    console.log(session);
     return this.serverSecurityService.signUpLocal(body.data, session.id);
   }
 
   @Post('login')
   async login(
     @Body() body: LoginBodyDto,
-    @Session() session: SavedSessionData
+    @Session() session: { id: string & SavedSessionData }
   ) {
-    console.log(session);
-    return this.serverSecurityService.logUserIn(body.data);
+    return this.serverSecurityService.logUserIn(body.data, session.id);
   }
 }
