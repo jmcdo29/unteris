@@ -19,14 +19,16 @@
       "dependsOn": [
         {
           "projects": "self",
-          "target": "start-docker"
-        },
-        {
-          "projects": ["kysely-cli"],
-          "target": "migrate-e2e",
-          "params": "forward"
+          "target": "run-migrations"
         }
       ]
+    },
+    "run-migrations": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm nx run kysely-cli:migrate-e2e"
+      },
+      "dependsOn": ["start-docker"]
     },
     "start-docker": {
       "executor": "nx:run-commands",
