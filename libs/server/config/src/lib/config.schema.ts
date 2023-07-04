@@ -14,7 +14,7 @@ export const Config = z.object({
     .default('3333'),
   CORS: z.optional(z.string()).default('http://localhost:4200'),
   REDIS_URL: z.string(),
-  NODE_ENV: z.enum(['development', 'production']),
+  NODE_ENV: z.enum(['development', 'production', 'test']),
   SESSION_EXPIRES_IN: z.number().optional().default(hourInSeconds),
   REFRESH_EXPIRES_IN: z
     .number()

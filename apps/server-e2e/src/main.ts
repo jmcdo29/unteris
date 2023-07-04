@@ -1,28 +1,29 @@
 import { INestApplication } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { OgmaService } from '@ogma/nestjs-module';
+import { getKyselyInstanceToken } from '@unteris/server/kysely';
 import { RootModule } from '@unteris/server/root';
-import { request, spec } from 'pactum';
-import { suite } from 'uvu';
-import { csrfTests } from './tests/csrf';
+import { request } from 'pactum';
+import { describe, beforeAll, beforeEach } from 'vitest';
+import { DbContext } from './interfaces/test-context.interface';
+import { csrfTest } from './tests/csrf';
+import { signUpAndLoginTests } from './tests/signup-and-login';
 
-type UvuContext = { app: INestApplication };
-
-const ApplicationE2E = suite<UvuContext>('Unteris E2E test suite');
-
-ApplicationE2E.before(async (context) => {
-  const app = await NestFactory.create(RootModule, { bufferLogs: true });
-  app.useLogger(app.get(OgmaService));
-  await app.listen(0);
-  const reqURL = await app.getUrl();
-  request.setBaseUrl(reqURL.replace('[::1]', 'localhost'));
-  context.app = app;
+describe('Unteris E2E test suite', () => {
+  let app: INestApplication;
+  beforeAll(async () => {
+    app = await NestFactory.create(RootModule, { bufferLogs: true });
+    app.useLogger(app.get(OgmaService));
+    await app.listen(0);
+    const reqURL = await app.getUrl();
+    request.setBaseUrl(reqURL.replace('[::1]', 'localhost'));
+    return async () => {
+      await app.close();
+    };
+  });
+  beforeEach<DbContext>((context) => {
+    context.db = app.get(getKyselyInstanceToken(), { strict: false });
+  });
+  csrfTest();
+  signUpAndLoginTests();
 });
-
-ApplicationE2E.after(async ({ app }) => {
-  await app.close();
-});
-
-ApplicationE2E('CSRF Testing', csrfTests);
-
-ApplicationE2E.run();

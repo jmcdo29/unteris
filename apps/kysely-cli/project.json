@@ -45,6 +45,27 @@
         }
       ]
     },
+    "migrate-e2e": {
+      "executor": "@nx/js:node",
+      "options": {
+        "buildTarget": "kysely-cli:build",
+        "watch": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "kysely-cli:build:development"
+        },
+        "production": {
+          "buildTarget": "kysely-cli:build:production"
+        }
+      },
+      "dependsOn": [
+        {
+          "target": "build",
+          "dependencies": true
+        }
+      ]
+    },
     "seed": {
       "executor": "@nx/js:node",
       "options": {

@@ -24,8 +24,70 @@ jobs:
       parallel-commands: |
         pnpm exec nx-cloud record -- pnpm exec nx format:check
       parallel-commands-on-agents: |
-        pnpm exec nx affected --target=lint --parallel=3
-        pnpm exec nx affected --target=build --parallel=3
+        pnpm exec nx affected -t lint build --parallel=3
+
+  e2e:
+    name: E2E Tests
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_USER: postgres
+      DATABASE_PORT: 25432
+      DATABASE_NAME: test
+      DATABASE_PASSWORD: postgres
+      DATABASE_HOST: localhost
+      REDIS_URL: redis://localhost:26379
+      NODE_ENV: development
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Setup Nx SHAs
+        uses: nrwl/nx-set-shas@v3
+
+      - name: Install PNPM
+        shell: bash
+        run: npm i -g pnpm
+
+      - name: Print node/npm/yarn versions
+        id: versions
+        run: |
+          node_ver=$( node --version )
+          pnpm_ver=$( pnpm --version || true )
+
+          echo "Node: ${node_ver:1}"
+          if [[ $pnpm_ver != '' ]]; then echo "PNPM: $pnpm_ver"; fi
+
+          echo "node_version=${node_ver:1}" >> $GITHUB_OUTPUT
+
+      - name: Get pnpm cache directory path
+        id: pnpm-cache-dir-path
+        run: echo "dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Use the node_modules cache if available
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ steps.versions.outputs.node_version }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ steps.versions.outputs.node_version }}-
+
+      - name: Use the Cypress Cache if available
+        uses: actions/cache@v3
+        with:
+          path: ./.cache/Cypress
+          key: ${{ runner.os }}-node-${{ steps.versions.outputs.node_version }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ steps.versions.outputs.node_version }}-
+
+      - name: Install Deps
+        shell: bash
+        run: pnpm i
+
+      - name: Run E2E Tests
+        shell: bash
+        run: pnpm exec nx affected -t e2e --parallel --configuration=ci
+        continue-on-error: true
 
   agents:
     name: Nx Cloud - Agents

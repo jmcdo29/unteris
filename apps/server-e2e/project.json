@@ -7,12 +7,36 @@
     "e2e": {
       "executor": "nx:run-commands",
       "options": {
+        "commands": ["docker compose -f docker-compose.test.yml down"]
+      },
+      "dependsOn": ["run-tests"]
+    },
+    "run-tests": {
+      "executor": "@nx/vite:test",
+      "options": {
+        //  "config": "./apps/server-e2e/vite.config.ts"
+      },
+      "dependsOn": [
+        {
+          "projects": "self",
+          "target": "run-migrations"
+        }
+      ]
+    },
+    "run-migrations": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm nx run kysely-cli:migrate-e2e"
+      },
+      "dependsOn": ["start-docker"]
+    },
+    "start-docker": {
+      "executor": "nx:run-commands",
+      "options": {
         "commands": [
           "docker compose -f docker-compose.test.yml up -d",
-          "while ! nc -q0 localhost 6379 < /dev/null > /dev/null 2>&1; do sleep 10; done",
-          "while ! nc -q0 localhost 5432 < /dev/null > /dev/null 2>&1; do sleep 10; done",
-          "NODE_ENV=development node -r @swc/register apps/server-e2e/src/main.ts",
-          "docker compose -f docker-compose.test.yml down"
+          "while ! nc -q0 localhost 26379 < /dev/null > /dev/null 2>&1; do sleep 10; done",
+          "while ! nc -q0 localhost 25432 < /dev/null > /dev/null 2>&1; do sleep 10; done"
         ]
       }
     },

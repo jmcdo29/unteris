@@ -1,7 +1,7 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-node_modules/.bin/nx affected:lint
+node_modules/.bin/nx affected:lint --parallel
 node_modules/.bin/nx format:write
 if git diff --cached --name-only | grep -Eq \(diagram\.mmd\|migrations\/README\); then
   node_modules/.bin/embedme --stdout --strip-embed-comment libs/db/migrations/README.template.md > libs/db/migrations/README.md
