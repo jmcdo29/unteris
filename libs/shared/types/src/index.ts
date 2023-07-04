@@ -11,3 +11,4 @@ export * from './lib/race-with-abilities';
 export * from './lib/role';
 export * from './lib/user-account';
 export * from './lib/user-permission';
+export * from './lib/auth';
