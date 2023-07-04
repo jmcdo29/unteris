@@ -31,11 +31,11 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DATABASE_USER: postgres
-      DATABASE_PORT: 5432
+      DATABASE_PORT: 25432
       DATABASE_NAME: test
       DATABASE_PASSWORD: postgres
       DATABASE_HOST: localhost
-      REDIS_URL: redis://localhost:6379
+      REDIS_URL: redis://localhost:26379
       NODE_ENV: development
     steps:
       - name: Checkout Repo
