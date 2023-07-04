@@ -1,4 +1,5 @@
 import { Controller, Get, Param } from '@nestjs/common';
+import { IdParamDto } from './models/id-param.dto';
 import { ServerRaceService } from './race.service';
 
 @Controller('race')
@@ -11,7 +12,7 @@ export class ServerRaceController {
   }
 
   @Get(':id')
-  async getRaceWithAbilities(@Param() { id }: { id: string }) {
-    return this.serverRaceService.getRaceWithAbilities(id);
+  async getRaceWithAbilities(@Param() param: IdParamDto) {
+    return this.serverRaceService.getRaceWithAbilities(param.data.id);
   }
 }
