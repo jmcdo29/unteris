@@ -13,7 +13,7 @@
         "tsConfig": "apps/server/tsconfig.app.json",
         "assets": ["apps/server/src/assets"],
         "target": "node",
-        "compiler": "tsc"
+        "compiler": "swc"
       },
       "configurations": {
         "production": {
