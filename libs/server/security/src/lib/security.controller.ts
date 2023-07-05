@@ -1,6 +1,6 @@
 import { Body, Controller, Post, Session } from '@nestjs/common';
 import { SavedSessionData } from '@unteris/server/session';
-import { LoginBodyDto, SignupBody } from '@unteris/shared/types';
+import { LoginBodyDto, SignupBody } from './models';
 import { ServerSecurityService } from './security.service';
 
 @Controller('auth')
