@@ -1,12 +1,16 @@
 import { Race as RaceType } from '@unteris/shared/types';
 import { useFetchEffect, TabsWithPanel } from '@unteris/ui/components';
-import { SyntheticEvent, useState } from 'react';
+import { atom, useAtom } from 'jotai';
+import { SyntheticEvent } from 'react';
 
 import { Race } from './race';
 
+const indexAtom = atom(0);
+const racesAtom = atom<RaceType[]>([]);
+
 export const UiRace = (): JSX.Element => {
-  const [tabIndex, setTabIndex] = useState(0);
-  const [races, setRaces] = useState<RaceType[]>([]);
+  const [tabIndex, setTabIndex] = useAtom(indexAtom);
+  const [races, setRaces] = useAtom(racesAtom);
 
   useFetchEffect({
     endpoint: 'race',

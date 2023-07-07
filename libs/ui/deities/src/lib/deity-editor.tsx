@@ -5,14 +5,16 @@ import { Grid } from '@unteris/ui/components';
 import { Deity } from '@unteris/shared/types';
 import { ChangeEvent } from 'react';
 import { useTheme } from '@mui/material';
+import { useSetAtom } from 'jotai';
+import { editingAtom } from './atoms';
 
 interface DeityEditorProps {
   deity: Deity;
   setDeity: (deity: Deity) => void;
-  setIsEditing: (isEditing: boolean) => void;
 }
 
 export const DeityEditor = (props: DeityEditorProps): JSX.Element => {
+  const setIsEditing = useSetAtom(editingAtom);
   const theme = useTheme();
   const deityCopy = { ...props.deity };
   const handleChange = (
@@ -32,11 +34,11 @@ export const DeityEditor = (props: DeityEditorProps): JSX.Element => {
         : (e.target.value as any);
   };
   const saveChanges = () => {
-    props.setIsEditing(false);
+    setIsEditing(false);
     props.setDeity(deityCopy);
   };
   const cancelChanges = () => {
-    props.setIsEditing(false);
+    setIsEditing(false);
   };
   return (
     <Grid columns={12}>

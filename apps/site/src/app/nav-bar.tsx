@@ -4,12 +4,12 @@ import ProfileIcon from '@mui/icons-material/AccountCircle';
 import MenuIcon from '@mui/icons-material/Menu';
 import Grid from '@mui/material/Unstable_Grid2';
 import { StyledButton, ThemeSwitcher } from '@unteris/ui/components';
-import { useState } from 'react';
+import { atom, useAtom } from 'jotai';
 
-export const NavBar = (props: {
-  setTheme: (theme: 'dark' | 'light') => void;
-}): JSX.Element => {
-  const [showMenu, setShowMenu] = useState(false);
+const menuAtom = atom(false);
+
+export const NavBar = (): JSX.Element => {
+  const [showMenu, setShowMenu] = useAtom(menuAtom);
 
   return (
     <>
@@ -25,7 +25,7 @@ export const NavBar = (props: {
           </StyledButton>
         </Grid>
         <Grid xs={0} md={8}></Grid>
-        <ThemeSwitcher setTheme={props.setTheme} />
+        <ThemeSwitcher />
         <Grid md={1}>
           <Button aria-label="Profile">
             <ProfileIcon />

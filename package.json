@@ -25,6 +25,7 @@
     "@swc/helpers": "0.5.1",
     "argon2": "^0.30.3",
     "axios": "^1.0.0",
+    "jotai": "^2.2.2",
     "kysely": "^0.24.2",
     "nest-commander": "^3.9.0",
     "nest-cookies": "^1.3.0",

@@ -1,11 +1,15 @@
 import { Location } from '@unteris/shared/types';
 import { useFetchEffect, TabsWithPanel } from '@unteris/ui/components';
-import { SyntheticEvent, useState } from 'react';
+import { atom, useAtom } from 'jotai';
+import { SyntheticEvent } from 'react';
 import { DeityPicker } from './diety-picker';
 
+const indexAtom = atom(0);
+const locationsAtom = atom<Location[]>([]);
+
 export const DeityNav = (): JSX.Element => {
-  const [tabIndex, setTabIndex] = useState(0);
-  const [locations, setLocations] = useState<Location[]>([]);
+  const [tabIndex, setTabIndex] = useAtom(indexAtom);
+  const [locations, setLocations] = useAtom(locationsAtom);
 
   useFetchEffect({
     endpoint: 'locations',

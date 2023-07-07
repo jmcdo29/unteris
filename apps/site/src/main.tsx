@@ -1,3 +1,4 @@
+import { Provider as AtomProvider } from 'jotai';
 import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 
@@ -8,6 +9,8 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <StrictMode>
-    <App />
+    <AtomProvider>
+      <App />
+    </AtomProvider>
   </StrictMode>
 );

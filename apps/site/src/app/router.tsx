@@ -6,11 +6,11 @@ import { Root } from './root';
 
 import { Welcome } from './welcome/welcome';
 
-const routes = (setTheme: (theme: 'dark' | 'light') => void): RouteObject[] => {
+const routes = (): RouteObject[] => {
   return [
     {
       path: '/',
-      element: <Root setTheme={setTheme} />,
+      element: <Root />,
       children: [
         { index: true, element: <Welcome /> },
 
@@ -31,5 +31,4 @@ const routes = (setTheme: (theme: 'dark' | 'light') => void): RouteObject[] => {
   ];
 };
 
-export const router = (setTheme: (theme: 'dark' | 'light') => void) =>
-  createBrowserRouter(routes(setTheme));
+export const router = () => createBrowserRouter(routes());

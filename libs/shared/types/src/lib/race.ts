@@ -8,7 +8,7 @@ export const RaceSchema = z.object({
   sizeDescription: z.string(),
   type: z.string(),
   speed: z.number(),
-  knownLaguages: z.string(),
+  knownLanguages: z.string(),
 });
 
 export type Race = z.infer<typeof RaceSchema>;

@@ -5,7 +5,6 @@ import { RaceWithAbilities } from '@unteris/shared/types';
 
 interface RaceViewerProps {
   race: RaceWithAbilities;
-  setIsEditing: (isEditing: boolean) => void;
 }
 
 interface RaceDetailProps {

@@ -35,6 +35,7 @@
       "@unteris/server/zod-pipe": ["libs/server/zod-pipe/src/index.ts"],
       "@unteris/shared/base32": ["libs/shared/base32/src/index.ts"],
       "@unteris/shared/types": ["libs/shared/types/src/index.ts"],
+      "@unteris/ui/atoms": ["libs/ui/atoms/src/index.ts"],
       "@unteris/ui/components": ["libs/ui/components/src/index.ts"],
       "@unteris/ui/deities": ["libs/ui/deities/src/index.ts"],
       "@unteris/ui/history": ["libs/ui/history/src/index.ts"],
