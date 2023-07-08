@@ -1,10 +1,10 @@
-import { useAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { forwardRef, useMemo } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CssBaseline from '@mui/material/CssBaseline';
 import { LinkProps } from '@mui/material/Link';
-import { themeAtom } from '@unteris/ui/atoms';
+import { csrfAtom, themeAtom } from '@unteris/ui/atoms';
 import {
   Link as RouterLink,
   LinkProps as RouterLinkProps,
@@ -12,10 +12,20 @@ import {
 } from 'react-router-dom';
 
 import { router } from './router';
+import { useFetchEffect } from '@unteris/ui/components';
 
 export function App() {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const [chosenTheme] = useAtom(themeAtom);
+  const setCsrfToken = useSetAtom(csrfAtom);
+  const setCsrfFromResponse = (data?: { csrfToken: string | undefined }) => {
+    setCsrfToken(data?.csrfToken ?? '');
+  };
+  useFetchEffect({
+    endpoint: 'csrf',
+    setter: setCsrfFromResponse,
+    default: undefined,
+  });
   const LinkBehavior = forwardRef<
     HTMLAnchorElement,
     Omit<RouterLinkProps, 'to'> & { href: RouterLinkProps['to'] }
