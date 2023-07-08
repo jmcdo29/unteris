@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import { LoginBody } from '@unteris/shared/types';
+import { LoginBody, LoginResponse } from '@unteris/shared/types';
 import { csrfAtom, userAtom } from '@unteris/ui/atoms';
 import { Grid, postFetch } from '@unteris/ui/components';
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
@@ -16,7 +16,7 @@ export const Login = (): JSX.Element => {
   const navigate = useNavigate();
 
   const login = async () => {
-    const res = await postFetch<{ id: string; displayName: string }>({
+    const res = await postFetch<LoginResponse>({
       endpoint: 'auth/login',
       body: loginUser,
       csrfToken,

@@ -1,5 +1,5 @@
 import Button from '@mui/material/Button';
-import { isLoggingInAtom } from './login-or-register.atom';
+import { isLoggingInAtom } from './auth.atoms';
 import { Login } from './login';
 import { Register } from './register';
 import { useAtom } from 'jotai';

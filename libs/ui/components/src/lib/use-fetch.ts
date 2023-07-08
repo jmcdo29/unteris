@@ -12,7 +12,9 @@ export const useFetchEffect = (props: UseFetchEffectProps) => {
   useEffect(() => {
     let ignore = false;
     const getFetchReq = async () => {
-      const req = await fetch(`${baseUrl}/${props.endpoint}`);
+      const req = await fetch(`${baseUrl}/${props.endpoint}`, {
+        credentials: 'include',
+      });
       const data = await req.json();
       if (!ignore) {
         props.setter(data);
@@ -39,9 +41,10 @@ export const postFetch = async <T extends Record<string, any>>(
   const res = await fetch(`${baseUrl}/${props.endpoint}`, {
     method: 'POST',
     body: JSON.stringify(props.body),
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
-      'X-UNTERIS-CSRF-TOKEN': props.csrfToken,
+      'x-unteris-csrf-protection': props.csrfToken,
       ...props.headers,
     },
   });

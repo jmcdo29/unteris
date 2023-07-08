@@ -92,17 +92,20 @@ export class ServerSessionService {
     value: string | number;
     options?: Cookie['options'];
   }): Cookie {
-    return {
+    const cookie = {
       name: `${name}Id`,
       value,
       options: {
         maxAge: this.config.get(
           `${name.toUpperCase() as Uppercase<typeof name>}_EXPIRES_IN`
         ),
-        secure: this.config.get('NODE_ENV') === 'production',
         httpOnly: true,
         ...options,
       },
     };
+    if (this.config.get('NODE_ENV') === 'production') {
+      cookie.options.secure = true;
+    }
+    return cookie;
   }
 }

@@ -5,12 +5,16 @@ import {
 } from '@nestjs/common';
 import { ServerHashService } from '@unteris/server/hash';
 import { Database, InjectKysely } from '@unteris/server/kysely';
-import { ServerSessionService } from '@unteris/server/session';
+import {
+  SavedSessionData,
+  ServerSessionService,
+} from '@unteris/server/session';
 import {
   UserAccount,
   LoginMethod,
   LoginBody,
   SignupUser,
+  LoginResponse,
 } from '@unteris/shared/types';
 import { Kysely } from 'kysely';
 
@@ -56,12 +60,12 @@ export class ServerSecurityService {
   async logUserIn(
     userLogin: LoginBody,
     sessionId: string
-  ): Promise<{ success: boolean }> {
+  ): Promise<LoginResponse> {
     const user = await this.db
       .selectFrom('userAccount as ua')
       .innerJoin('loginMethod as lm', 'lm.userId', 'ua.id')
       .innerJoin('localLogin as ll', 'loginMethodId', 'lm.id')
-      .select(['ua.email', 'll.password'])
+      .select(['ua.email', 'll.password', 'ua.name', 'ua.id'])
       .where('ua.email', '=', userLogin.email)
       .executeTakeFirst();
     if (
@@ -73,7 +77,11 @@ export class ServerSecurityService {
     await this.sessionService.updateSession(sessionId, {
       user: { email: user.email },
     });
-    return { success: true };
+    return { success: true, displayName: user.name, id: user.id };
+  }
+
+  async logout(session: { id: string & SavedSessionData }): Promise<void> {
+    await this.sessionService.updateSession(session.id, { user: {} });
   }
 
   private async creatLoginMethod(
