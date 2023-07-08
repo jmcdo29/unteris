@@ -1,4 +1,9 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { ServerConfigService } from '@unteris/server/config';
 import { InjectRedisInstance } from '@unteris/server/redis';
 import { ServerTokenService } from '@unteris/server/token';
@@ -26,14 +31,12 @@ export class ServerSessionService {
     return this.tokenService.generateToken(256);
   }
 
-  async createSession(
+  async createFullSession(
     sessionData: SessionData = { user: {}, csrf: '' }
   ): Promise<{ id: string; refreshId: string }> {
     const sessionToken = await this.createSessionId();
     const refreshToken = await this.createRefreshId();
-    await this.redis.set(sessionToken, JSON.stringify(sessionData), {
-      EX: this.config.get('SESSION_EXPIRES_IN'),
-    });
+    await this.createSession(sessionData, sessionToken);
     await this.redis.set(
       refreshToken,
       JSON.stringify({ sessionId: sessionToken }),
@@ -44,10 +47,20 @@ export class ServerSessionService {
     return { id: sessionToken, refreshId: refreshToken };
   }
 
-  async getSession(sessionId?: string): Promise<SavedSessionData | object> {
+  async createSession(
+    sessionData: SessionData = { user: {}, csrf: '' },
+    sessionId?: string
+  ): Promise<{ id: string }> {
     if (!sessionId) {
-      return {};
+      sessionId = await this.createSessionId();
     }
+    await this.redis.set(sessionId, JSON.stringify(sessionData), {
+      EX: this.config.get('SESSION_EXPIRES_IN'),
+    });
+    return { id: sessionId };
+  }
+
+  async getSession(sessionId: string): Promise<SavedSessionData> {
     return JSON.parse((await this.redis.get(sessionId)) ?? '{}');
   }
 
@@ -100,6 +113,7 @@ export class ServerSessionService {
           `${name.toUpperCase() as Uppercase<typeof name>}_EXPIRES_IN`
         ),
         httpOnly: true,
+        path: '/api',
         ...options,
       },
     };
