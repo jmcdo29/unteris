@@ -25,3 +25,25 @@ export const useFetchEffect = (props: UseFetchEffectProps) => {
     };
   }, [props.setter]);
 };
+
+interface PostFetchProps {
+  endpoint: string;
+  body: Record<string, any>;
+  csrfToken: string;
+  headers?: Record<string, string>;
+}
+
+export const postFetch = async <T extends Record<string, any>>(
+  props: PostFetchProps
+): Promise<T> => {
+  const res = await fetch(`${baseUrl}/${props.endpoint}`, {
+    method: 'POST',
+    body: JSON.stringify(props.body),
+    headers: {
+      'Content-Type': 'application/json',
+      'X-UNTERIS-CSRF-TOKEN': props.csrfToken,
+      ...props.headers,
+    },
+  });
+  return res.json();
+};

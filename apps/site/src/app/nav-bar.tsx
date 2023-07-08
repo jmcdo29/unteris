@@ -27,7 +27,7 @@ export const NavBar = (): JSX.Element => {
         <Grid xs={0} md={8}></Grid>
         <ThemeSwitcher />
         <Grid md={1}>
-          <Button aria-label="Profile">
+          <Button aria-label="Profile" href="/login">
             <ProfileIcon />
           </Button>
         </Grid>
