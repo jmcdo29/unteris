@@ -8,3 +8,6 @@ export * from './lib/a11y.props';
 export * from './lib/use-fetch';
 export * from './lib/tabs-with-panel';
 export * from './lib/image';
+export * from './lib/password';
+export * from './lib/text-input';
+export * from './lib/form-control';
