@@ -50,6 +50,12 @@ export const Register = (): JSX.Element => {
       email: newUser.email,
       displayName: newUser.name,
     });
+    setNewUser({
+      email: '',
+      password: '',
+      name: '',
+      confirmationPassword: '',
+    });
     navigate('/');
   };
   return (

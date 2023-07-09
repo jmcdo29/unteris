@@ -26,6 +26,7 @@ export const Login = (): JSX.Element => {
       email: loginUser.email,
       displayName: res.displayName,
     });
+    setLoginUser({ email: '', password: '' });
     navigate('/');
   };
   return (

@@ -1,7 +1,8 @@
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { userAtom } from '@unteris/ui/atoms';
-import { useSetAtom } from 'jotai';
+import { csrfAtom, userAtom } from '@unteris/ui/atoms';
+import { postFetch } from '@unteris/ui/components';
+import { useAtomValue, useSetAtom } from 'jotai';
 
 interface UserProps {
   user: {
@@ -11,7 +12,13 @@ interface UserProps {
 
 export const User = (props: UserProps): JSX.Element => {
   const setUser = useSetAtom(userAtom);
-  const logout = () => {
+  const csrfToken = useAtomValue(csrfAtom);
+  const logout = async () => {
+    await postFetch({
+      endpoint: 'auth/logout',
+      body: {},
+      csrfToken,
+    });
     setUser({ id: '', email: '', displayName: '' });
   };
   return (
