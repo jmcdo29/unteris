@@ -1,8 +1,16 @@
-import { Body, Controller, Post, Session, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Req,
+  Session,
+  UseGuards,
+} from '@nestjs/common';
 import { SavedSessionData } from '@unteris/server/session';
 import { CsrfGuard } from '@unteris/server/csrf';
 import { LoginBodyDto, SignupBody } from './models';
 import { ServerSecurityService } from './security.service';
+import { NestCookieRequest } from 'nest-cookies';
 
 @UseGuards(CsrfGuard)
 @Controller('auth')
@@ -26,8 +34,9 @@ export class ServerSecurityController {
   }
 
   @Post('logout')
-  async loguot(@Session() session: { id: string & SavedSessionData }) {
-    await this.serverSecurityService.logout(session);
+  async loguot(@Req() { cookies }: NestCookieRequest<Record<string, any>>) {
+    const { sessionId } = cookies;
+    await this.serverSecurityService.logout(sessionId);
     return { success: true };
   }
 }

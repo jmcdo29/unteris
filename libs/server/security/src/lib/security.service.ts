@@ -5,10 +5,7 @@ import {
 } from '@nestjs/common';
 import { ServerHashService } from '@unteris/server/hash';
 import { Database, InjectKysely } from '@unteris/server/kysely';
-import {
-  SavedSessionData,
-  ServerSessionService,
-} from '@unteris/server/session';
+import { ServerSessionService } from '@unteris/server/session';
 import {
   UserAccount,
   LoginMethod,
@@ -80,8 +77,8 @@ export class ServerSecurityService {
     return { success: true, displayName: user.name, id: user.id };
   }
 
-  async logout(session: { id: string & SavedSessionData }): Promise<void> {
-    await this.sessionService.updateSession(session.id, { user: {} });
+  async logout(sessionId: string): Promise<void> {
+    await this.sessionService.updateSession(sessionId, { user: {} });
   }
 
   private async creatLoginMethod(
