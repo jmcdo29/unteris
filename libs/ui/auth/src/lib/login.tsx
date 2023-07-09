@@ -1,9 +1,13 @@
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
 import { LoginBody, LoginResponse } from '@unteris/shared/types';
 import { csrfAtom, userAtom } from '@unteris/ui/atoms';
-import { Grid, postFetch } from '@unteris/ui/components';
+import {
+  Grid,
+  PasswordInput,
+  postFetch,
+  TextInput,
+} from '@unteris/ui/components';
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useNavigate } from 'react-router-dom';
 
@@ -34,28 +38,26 @@ export const Login = (): JSX.Element => {
       <Typography variant="h2" fontSize={'2em'}>
         User Login
       </Typography>
-      <TextField
+      <TextInput
         value={loginUser.email}
         aria-label="email"
         label="Email"
         type="email"
-        variant="standard"
         required={true}
-        onChange={(e) => setLoginUser({ ...loginUser, email: e.target.value })}
+        onUpdate={(e) => setLoginUser({ ...loginUser, email: e.target.value })}
       />
-      <TextField
+      <PasswordInput
         value={loginUser.password}
         aria-label="password"
         label="Password"
-        variant="standard"
-        type="password"
-        required={true}
-        onChange={(e) =>
+        isSignup={false}
+        onUpdate={(e) =>
           setLoginUser({ ...loginUser, password: e.target.value })
         }
-        onBlur={(e) => setLoginUser({ ...loginUser, password: e.target.value })}
       />
-      <Button onClick={login}>Log In</Button>
+      <Button onClick={login} color="secondary" variant="contained">
+        Log In
+      </Button>
     </Grid>
   );
 };

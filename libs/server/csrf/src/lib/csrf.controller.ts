@@ -9,7 +9,6 @@ export class ServerCsrfController {
   async getCsrfToken(
     @Req() { session }: { session: { id: string } }
   ): Promise<{ csrfToken: string }> {
-    console.log(session);
     return {
       csrfToken: await this.serverCsrfService.generateToken(session.id),
     };
