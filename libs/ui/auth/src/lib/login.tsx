@@ -10,28 +10,36 @@ import {
 } from '@unteris/ui/components';
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useNavigate } from 'react-router-dom';
+import { authErrorAtom, displayErrorAtom } from './auth.atoms';
 
 const loginUserAtom = atom<LoginBody>({ email: '', password: '' });
 
 export const Login = (): JSX.Element => {
   const [loginUser, setLoginUser] = useAtom(loginUserAtom);
+  const setAuthError = useSetAtom(authErrorAtom);
+  const setDisplayError = useSetAtom(displayErrorAtom);
   const setUser = useSetAtom(userAtom);
   const csrfToken = useAtomValue(csrfAtom);
   const navigate = useNavigate();
 
   const login = async () => {
-    const res = await postFetch<LoginResponse>({
-      endpoint: 'auth/login',
-      body: loginUser,
-      csrfToken,
-    });
-    setUser({
-      id: res.id,
-      email: loginUser.email,
-      displayName: res.displayName,
-    });
-    setLoginUser({ email: '', password: '' });
-    navigate('/');
+    try {
+      const res = await postFetch<LoginResponse>({
+        endpoint: 'auth/login',
+        body: loginUser,
+        csrfToken,
+      });
+      setUser({
+        id: res.id,
+        email: loginUser.email,
+        displayName: res.displayName,
+      });
+      setLoginUser({ email: '', password: '' });
+      navigate('/');
+    } catch (e) {
+      setAuthError(e instanceof Error ? e.message : e);
+      setDisplayError(true);
+    }
   };
   return (
     <Grid columns={1}>

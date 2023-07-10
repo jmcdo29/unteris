@@ -10,6 +10,7 @@ import {
 } from '@unteris/ui/components';
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useNavigate } from 'react-router-dom';
+import { authErrorAtom, displayErrorAtom } from './auth.atoms';
 
 const newUserAtom = atom<SignupUser>({
   email: '',
@@ -19,6 +20,8 @@ const newUserAtom = atom<SignupUser>({
 
 export const Register = (): JSX.Element => {
   const setUser = useSetAtom(userAtom);
+  const setAuthError = useSetAtom(authErrorAtom);
+  const setDisplayError = useSetAtom(displayErrorAtom);
   const [newUser, setNewUser] = useAtom(newUserAtom);
   const csrfToken = useAtomValue(csrfAtom);
   const navigate = useNavigate();
@@ -28,22 +31,27 @@ export const Register = (): JSX.Element => {
       setNewUser({ ...newUser, [field]: e.target.value });
     };
   const submit = async () => {
-    const res = await postFetch<{ id: string }>({
-      csrfToken,
-      endpoint: 'auth/signup',
-      body: newUser,
-    });
-    setUser({
-      id: res.id,
-      email: newUser.email,
-      displayName: newUser.name,
-    });
-    setNewUser({
-      email: '',
-      password: '',
-      name: '',
-    });
-    navigate('/');
+    try {
+      const res = await postFetch<{ id: string }>({
+        csrfToken,
+        endpoint: 'auth/signup',
+        body: newUser,
+      });
+      setUser({
+        id: res.id,
+        email: newUser.email,
+        displayName: newUser.name,
+      });
+      setNewUser({
+        email: '',
+        password: '',
+        name: '',
+      });
+      navigate('/');
+    } catch (e) {
+      setAuthError(e instanceof Error ? e.message : e);
+      setDisplayError(true);
+    }
   };
   return (
     <Grid columns={1}>

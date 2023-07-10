@@ -21,14 +21,14 @@ dependencies:
     specifier: ^10.0.0
     version: 10.0.0(@nestjs/common@10.0.0)(@nestjs/core@10.0.0)
   '@ogma/logger':
-    specifier: ^3.1.1
-    version: 3.1.1
+    specifier: ^3.1.2
+    version: 3.1.2
   '@ogma/nestjs-module':
-    specifier: ^5.0.1
-    version: 5.0.1(@nestjs/common@10.0.0)(@nestjs/core@10.0.0)(reflect-metadata@0.1.13)(rxjs@7.8.0)
+    specifier: ^5.1.1
+    version: 5.1.1(@nestjs/common@10.0.0)(@nestjs/core@10.0.0)(reflect-metadata@0.1.13)(rxjs@7.8.0)
   '@ogma/platform-express':
     specifier: ^5.0.1
-    version: 5.0.1(@nestjs/platform-express@10.0.0)(@ogma/nestjs-module@5.0.1)
+    version: 5.0.1(@nestjs/platform-express@10.0.0)(@ogma/nestjs-module@5.1.1)
   '@ogma/styler':
     specifier: ^1.0.1
     version: 1.0.1
@@ -5362,8 +5362,8 @@ packages:
     resolution: {integrity: sha512-y2GHkT4t3B9CoI7ELfgZXeMHiiOC/X4XvdeqYLbP5A3keop7fANzjd5pQdtyYQvdQ0lPzcHJiMvOGkIINZHZHQ==}
     dev: false
 
-  /@ogma/logger@3.1.1:
-    resolution: {integrity: sha512-87LtQBXvEsSwJLFQmgHksLfLMnIyCIauTtGvkFY5o7a3Tf9R/ZTk5ErzgC9LfU3Y4s5bFzltomoSOJePKLB2KQ==}
+  /@ogma/logger@3.1.2:
+    resolution: {integrity: sha512-F/KuVwhIGYhD7GkVXLxstsQMH+r9ZnzMd1Lu5puau+Yk2DQS/v4x4OQ4ecZbnaI5rxzuzI4kFa8XXvS0RIET7Q==}
     engines: {node: '>=10'}
     dependencies:
       '@ogma/common': 1.2.0
@@ -5373,8 +5373,8 @@ packages:
       sonic-boom: 3.3.0
     dev: false
 
-  /@ogma/nestjs-module@5.0.1(@nestjs/common@10.0.0)(@nestjs/core@10.0.0)(reflect-metadata@0.1.13)(rxjs@7.8.0):
-    resolution: {integrity: sha512-hHkD8i22JkYfsRWd7KF3vW7yDOvdB3AUExnlorobE5c23NUiPBSO9nl/CIp9ookSEiAxSgK0EOLtEEzT9pxtgQ==}
+  /@ogma/nestjs-module@5.1.1(@nestjs/common@10.0.0)(@nestjs/core@10.0.0)(reflect-metadata@0.1.13)(rxjs@7.8.0):
+    resolution: {integrity: sha512-iuIsK9cg9duGLl9PEDMZndNsrgkL+H9mEu2t7kZ/FF2T0QSm8jzK/Bwz12C9OA0GX7X/gwp882trkBsg4dhdoA==}
     peerDependencies:
       '@nestjs/common': ^9.0.0 || ^10.0.0
       '@nestjs/core': ^9.0.0 || ^10.0.0
@@ -5383,20 +5383,20 @@ packages:
     dependencies:
       '@nestjs/common': 10.0.0(reflect-metadata@0.1.13)(rxjs@7.8.0)
       '@nestjs/core': 10.0.0(@nestjs/common@10.0.0)(@nestjs/platform-express@10.0.0)(reflect-metadata@0.1.13)(rxjs@7.8.0)
-      '@ogma/logger': 3.1.1
+      '@ogma/logger': 3.1.2
       '@ogma/styler': 1.0.1
       reflect-metadata: 0.1.13
       rxjs: 7.8.0
     dev: false
 
-  /@ogma/platform-express@5.0.1(@nestjs/platform-express@10.0.0)(@ogma/nestjs-module@5.0.1):
+  /@ogma/platform-express@5.0.1(@nestjs/platform-express@10.0.0)(@ogma/nestjs-module@5.1.1):
     resolution: {integrity: sha512-/iUGwvQ88eNYhhwcFPkXe+g1rWjkV2zLYGdXEkcEMRs53oYE8gG+KFsOd0KmIiAFQ9pUnyyrLZzsktKsc7ryxw==}
     peerDependencies:
       '@nestjs/platform-express': ^9.0.0 || ^10.0.0
       '@ogma/nestjs-module': ^5.0.1
     dependencies:
       '@nestjs/platform-express': 10.0.0(@nestjs/common@10.0.0)(@nestjs/core@10.0.0)
-      '@ogma/nestjs-module': 5.0.1(@nestjs/common@10.0.0)(@nestjs/core@10.0.0)(reflect-metadata@0.1.13)(rxjs@7.8.0)
+      '@ogma/nestjs-module': 5.1.1(@nestjs/common@10.0.0)(@nestjs/core@10.0.0)(reflect-metadata@0.1.13)(rxjs@7.8.0)
     dev: false
 
   /@ogma/styler@1.0.1:

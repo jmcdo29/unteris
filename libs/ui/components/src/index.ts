@@ -11,3 +11,4 @@ export * from './lib/image';
 export * from './lib/password';
 export * from './lib/text-input';
 export * from './lib/form-control';
+export * from './lib/error-disaply';
