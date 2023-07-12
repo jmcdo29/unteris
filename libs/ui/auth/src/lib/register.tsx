@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography';
 import { SignupUser } from '@unteris/shared/types';
 import { csrfAtom, userAtom } from '@unteris/ui/atoms';
 import {
+  convertUnknownErrorToDisplayError,
   Grid,
   PasswordInput,
   postFetch,
@@ -49,7 +50,7 @@ export const Register = (): JSX.Element => {
       });
       navigate('/');
     } catch (e) {
-      setAuthError(e instanceof Error ? e.message : e);
+      setAuthError(convertUnknownErrorToDisplayError(e, 'Registration Error'));
       setDisplayError(true);
     }
   };

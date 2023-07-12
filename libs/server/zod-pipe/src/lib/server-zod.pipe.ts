@@ -12,8 +12,9 @@ export class ZodValidationPipe {
       metadata.metatype! as unknown as typeof ZodDtoClass;
     const result = schemaClass.schema.safeParse(value);
     if (!result.success) {
-      throw new BadRequestException(
-        result.error.errors.map((err) => {
+      throw new BadRequestException({
+        type: 'Validation',
+        message: result.error.errors.map((err) => {
           const path = err.path[0];
           const mappedErr = {
             path,
@@ -23,8 +24,9 @@ export class ZodValidationPipe {
             case 'invalid_string':
               if (err.validation === 'email') {
                 mappedErr.message = `${path} is not a valid email`;
+              } else {
+                mappedErr.message = `${path} is an invalid string`;
               }
-              mappedErr.message = `${path} is an invalid string`;
               break;
             case 'too_small':
               mappedErr.message = `${path} should be at least ${err.minimum} characters`;
@@ -33,8 +35,8 @@ export class ZodValidationPipe {
               mappedErr.message = 'Hey dev! Add this case:\n' + err.message;
           }
           return mappedErr;
-        })
-      );
+        }),
+      });
     }
     return { data: result.data };
   }

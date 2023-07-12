@@ -45,6 +45,9 @@ export function App() {
           secondary: {
             main: '#a337bc',
           },
+          error: {
+            main: '#e58093',
+          },
         },
         typography: {
           h2: {
