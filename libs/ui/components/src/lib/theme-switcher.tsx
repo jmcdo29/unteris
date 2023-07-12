@@ -1,20 +1,15 @@
+import { useAtom } from 'jotai';
 import Grid from '@mui/material/Unstable_Grid2';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
-import { useTheme } from '@mui/material/styles';
+import { themeAtom } from '@unteris/ui/atoms';
 
-interface ThemeSwitcherProps {
-  setTheme: (theme: 'dark' | 'light') => void;
-}
+export const ThemeSwitcher = (): JSX.Element => {
+  const [currentTheme, setTheme] = useAtom(themeAtom);
 
-export const ThemeSwitcher = ({
-  setTheme,
-}: ThemeSwitcherProps): JSX.Element => {
-  const theme = useTheme();
-
-  const isDarkMode = theme.palette.mode === 'dark';
+  const isDarkMode = currentTheme === 'dark';
   return (
     <Grid xs={1} md={1}>
       <Tooltip

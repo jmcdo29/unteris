@@ -10,7 +10,6 @@ import { DeityDomains } from './deity-domains';
 
 interface DeityViewerProps {
   deity: Deity;
-  setIsEditing: (isEditing: boolean) => void;
 }
 
 export const DeityViewer = ({

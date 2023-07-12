@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouteObject } from 'react-router-dom';
+import { UiAuth } from '@unteris/ui/auth';
 import { DeityNav } from '@unteris/ui/deities';
 import { History } from '@unteris/ui/history';
 import { UiRace } from '@unteris/ui/race';
@@ -6,11 +7,11 @@ import { Root } from './root';
 
 import { Welcome } from './welcome/welcome';
 
-const routes = (setTheme: (theme: 'dark' | 'light') => void): RouteObject[] => {
+const routes = (): RouteObject[] => {
   return [
     {
       path: '/',
-      element: <Root setTheme={setTheme} />,
+      element: <Root />,
       children: [
         { index: true, element: <Welcome /> },
 
@@ -26,10 +27,13 @@ const routes = (setTheme: (theme: 'dark' | 'light') => void): RouteObject[] => {
           path: '/races',
           element: <UiRace />,
         },
+        {
+          path: '/login',
+          element: <UiAuth />,
+        },
       ],
     },
   ];
 };
 
-export const router = (setTheme: (theme: 'dark' | 'light') => void) =>
-  createBrowserRouter(routes(setTheme));
+export const router = () => createBrowserRouter(routes());

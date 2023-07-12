@@ -1,17 +1,19 @@
 import { Deity as IDeity, Location } from '@unteris/shared/types';
 import { TabsWithPanel, useFetchEffect } from '@unteris/ui/components';
-import { SyntheticEvent, useState } from 'react';
+import { atom, useAtom } from 'jotai';
+import { SyntheticEvent } from 'react';
 import { Deity } from './deity';
 
 interface DeityPickerProps {
   location: Location;
 }
 
+const indexAtom = atom(-1);
+const deitiesAtom = atom<Array<Pick<IDeity, 'id' | 'name'>>>([]);
+
 export const DeityPicker = (props: DeityPickerProps): JSX.Element => {
-  const [tabIndex, setTabIndex] = useState(-1);
-  const [deities, setDeities] = useState<Array<Pick<IDeity, 'id' | 'name'>>>(
-    []
-  );
+  const [tabIndex, setTabIndex] = useAtom(indexAtom);
+  const [deities, setDeities] = useAtom(deitiesAtom);
 
   const handleTabChange = (_event: SyntheticEvent, newIndex: number) => {
     setTabIndex(newIndex);

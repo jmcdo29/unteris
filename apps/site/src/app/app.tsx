@@ -1,8 +1,10 @@
-import { forwardRef, useMemo, useState } from 'react';
+import { useAtom, useSetAtom } from 'jotai';
+import { forwardRef, useMemo } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CssBaseline from '@mui/material/CssBaseline';
 import { LinkProps } from '@mui/material/Link';
+import { csrfAtom, themeAtom } from '@unteris/ui/atoms';
 import {
   Link as RouterLink,
   LinkProps as RouterLinkProps,
@@ -10,12 +12,20 @@ import {
 } from 'react-router-dom';
 
 import { router } from './router';
+import { useFetchEffect } from '@unteris/ui/components';
 
 export function App() {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-  const [chosenTheme, setChosenTheme] = useState<'light' | 'dark'>(
-    prefersDarkMode ? 'dark' : 'light'
-  );
+  const [chosenTheme] = useAtom(themeAtom);
+  const setCsrfToken = useSetAtom(csrfAtom);
+  const setCsrfFromResponse = (data?: { csrfToken: string | undefined }) => {
+    setCsrfToken(data?.csrfToken ?? '');
+  };
+  useFetchEffect({
+    endpoint: 'csrf',
+    setter: setCsrfFromResponse,
+    default: undefined,
+  });
   const LinkBehavior = forwardRef<
     HTMLAnchorElement,
     Omit<RouterLinkProps, 'to'> & { href: RouterLinkProps['to'] }
@@ -34,6 +44,9 @@ export function App() {
           },
           secondary: {
             main: '#a337bc',
+          },
+          error: {
+            main: '#e58093',
           },
         },
         typography: {
@@ -62,7 +75,7 @@ export function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <RouterProvider router={router(setChosenTheme)} />
+      <RouterProvider router={router()} />
     </ThemeProvider>
   );
 }

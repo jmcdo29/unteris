@@ -11,6 +11,7 @@ import {
   LoginMethod,
   LoginBody,
   SignupUser,
+  LoginResponse,
 } from '@unteris/shared/types';
 import { Kysely } from 'kysely';
 
@@ -32,9 +33,12 @@ export class ServerSecurityService {
       .where('email', '=', newUser.email)
       .executeTakeFirst();
     if (existingAccount) {
-      throw new BadRequestException(
-        `Email ${newUser.email} is already taken. Did you mean to login?`
-      );
+      throw new BadRequestException({
+        type: 'Authentication',
+        message: [
+          `Email ${newUser.email} is already taken. Did you mean to login?`,
+        ],
+      });
     }
     const createdUser = await this.db
       .insertInto('userAccount')
@@ -56,24 +60,31 @@ export class ServerSecurityService {
   async logUserIn(
     userLogin: LoginBody,
     sessionId: string
-  ): Promise<{ success: boolean }> {
+  ): Promise<LoginResponse> {
     const user = await this.db
       .selectFrom('userAccount as ua')
       .innerJoin('loginMethod as lm', 'lm.userId', 'ua.id')
       .innerJoin('localLogin as ll', 'loginMethodId', 'lm.id')
-      .select(['ua.email', 'll.password'])
+      .select(['ua.email', 'll.password', 'ua.name', 'ua.id'])
       .where('ua.email', '=', userLogin.email)
       .executeTakeFirst();
     if (
       !user ||
       !(await this.hashService.verify(userLogin.password, user.password))
     ) {
-      throw new UnauthorizedException('Invalid username or password');
+      throw new UnauthorizedException({
+        type: 'Authentication',
+        message: ['Invalid username or password'],
+      });
     }
     await this.sessionService.updateSession(sessionId, {
       user: { email: user.email },
     });
-    return { success: true };
+    return { success: true, displayName: user.name, id: user.id };
+  }
+
+  async logout(sessionId: string): Promise<void> {
+    await this.sessionService.updateSession(sessionId, { user: {} });
   }
 
   private async creatLoginMethod(

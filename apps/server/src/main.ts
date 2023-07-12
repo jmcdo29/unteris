@@ -13,6 +13,7 @@ async function bootstrap() {
   const port = process.env.PORT || 3333;
   app.enableCors({
     origin: [config.get('CORS')],
+    credentials: true,
   });
   app.getHttpAdapter().getInstance().set('trust proxy', true);
   await app.listen(port, () => {
