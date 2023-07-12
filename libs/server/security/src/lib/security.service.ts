@@ -33,9 +33,12 @@ export class ServerSecurityService {
       .where('email', '=', newUser.email)
       .executeTakeFirst();
     if (existingAccount) {
-      throw new BadRequestException(
-        `Email ${newUser.email} is already taken. Did you mean to login?`
-      );
+      throw new BadRequestException({
+        type: 'Authentication',
+        message: [
+          `Email ${newUser.email} is already taken. Did you mean to login?`,
+        ],
+      });
     }
     const createdUser = await this.db
       .insertInto('userAccount')
@@ -69,7 +72,10 @@ export class ServerSecurityService {
       !user ||
       !(await this.hashService.verify(userLogin.password, user.password))
     ) {
-      throw new UnauthorizedException('Invalid username or password');
+      throw new UnauthorizedException({
+        type: 'Authentication',
+        message: ['Invalid username or password'],
+      });
     }
     await this.sessionService.updateSession(sessionId, {
       user: { email: user.email },
