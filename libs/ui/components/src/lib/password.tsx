@@ -20,7 +20,6 @@ interface PasswordProps {
   placeholder?: string;
   label?: string;
   value: string;
-  showError?: boolean;
   isSignup: boolean;
 }
 
