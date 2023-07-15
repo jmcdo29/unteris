@@ -4,6 +4,7 @@ import { OgmaInterceptor } from '@ogma/nestjs-module';
 import { ServerConfigModule } from '@unteris/server/config';
 import { ServerCsrfModule } from '@unteris/server/csrf';
 import { ServerDeitiesModule } from '@unteris/server/deities';
+import { ServerEmailModule } from '@unteris/server/email';
 import { ServerLocationModule } from '@unteris/server/location';
 import { ServerLoggingModule } from '@unteris/server/logging';
 import { ServerRaceModule } from '@unteris/server/race';
@@ -30,6 +31,7 @@ import { BaseFilter } from './catch-all.filter';
     ServerConfigModule,
     ServerRaceModule,
     ServerSecurityModule,
+    ServerEmailModule,
   ],
   controllers: [AppController],
   providers: [

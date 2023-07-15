@@ -20,4 +20,7 @@ export const Config = z.object({
     .number()
     .optional()
     .default(7 * dayInSeconds),
+  NOREPLY_EMAIL: z.string().email().optional(),
+  SMTP_PASS: z.string().optional(),
+  SMTP_HOST: z.string().optional(),
 });
