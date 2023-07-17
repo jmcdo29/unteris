@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ServerConfigService } from '@unteris/server/config';
 import { Transporter } from 'nodemailer';
-import { VerificationEmail } from './email.constants';
+import { verificationEmail } from './email.constants';
 import { InjectEmailTransport } from './email.decorators';
 
 @Injectable()
@@ -20,11 +20,10 @@ export class ServerEmailService {
       from: 'No Reply <no-reply@unteris.com>',
       subject: 'Email verification',
       to: email,
-      html: VerificationEmail(
+      html: verificationEmail(
         username,
-        email,
         verificationToken,
-        this.configService.getServerHost()
+        this.configService.get('CORS')
       ),
     });
   }

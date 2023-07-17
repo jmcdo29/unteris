@@ -17,10 +17,4 @@ export class ServerConfigService {
   ): z.infer<typeof Config>[T] {
     return this.config[key];
   }
-
-  getServerHost(): string {
-    return this.config.NODE_ENV === 'production'
-      ? 'https://unteris.com'
-      : 'http://localhost:3333';
-  }
 }
