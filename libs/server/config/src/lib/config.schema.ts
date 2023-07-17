@@ -3,7 +3,21 @@ import { z } from 'zod';
 const hourInSeconds = 60 * 60;
 const dayInSeconds = hourInSeconds * 24;
 
-export const Config = z.object({
+const prodConfig = z.object({
+  NODE_ENV: z.literal('production'),
+  NOREPLY_EMAIL: z.string().email(),
+  SMTP_PASS: z.string(),
+  SMTP_HOST: z.string(),
+});
+
+const devConfig = z.object({
+  NODE_ENV: z.enum(['development', 'test']),
+  NOREPLY_EMAIL: z.string().email().optional(),
+  SMTP_PASS: z.string().optional(),
+  SMTP_HOST: z.string().optional(),
+});
+
+const commonConfig = z.object({
   DATABASE_USER: z.string(),
   DATABASE_PASSWORD: z.string(),
   DATABASE_PORT: z.string().transform((val) => Number.parseInt(val)),
@@ -20,7 +34,8 @@ export const Config = z.object({
     .number()
     .optional()
     .default(7 * dayInSeconds),
-  NOREPLY_EMAIL: z.string().email().optional(),
-  SMTP_PASS: z.string().optional(),
-  SMTP_HOST: z.string().optional(),
 });
+export const Config = z.intersection(
+  commonConfig,
+  z.discriminatedUnion('NODE_ENV', [prodConfig, devConfig])
+);

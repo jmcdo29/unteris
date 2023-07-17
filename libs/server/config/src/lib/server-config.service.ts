@@ -10,14 +10,6 @@ export class ServerConfigService {
 
   constructor(@Inject(SCHEMA) schema: typeof Config) {
     this.config = schema.parse(process.env);
-    if (this.config.NODE_ENV === 'production') {
-      schema.required({
-        NOREPLY_EMAIL: true,
-        SMTP_HOST: true,
-        SMTP_PASS: true,
-      });
-      this.config = schema.parse(this.config);
-    }
   }
 
   get<T extends keyof z.infer<typeof Config>>(
