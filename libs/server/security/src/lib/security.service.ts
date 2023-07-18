@@ -3,9 +3,12 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
+import { OgmaLogger, OgmaService } from '@ogma/nestjs-module';
+import { ServerEmailService } from '@unteris/server/email';
 import { ServerHashService } from '@unteris/server/hash';
 import { Database, InjectKysely } from '@unteris/server/kysely';
 import { ServerSessionService } from '@unteris/server/session';
+import { ServerTokenService } from '@unteris/server/token';
 import {
   UserAccount,
   LoginMethod,
@@ -20,7 +23,10 @@ export class ServerSecurityService {
   constructor(
     @InjectKysely() private readonly db: Kysely<Database>,
     private readonly sessionService: ServerSessionService,
-    private readonly hashService: ServerHashService
+    private readonly hashService: ServerHashService,
+    private readonly emailService: ServerEmailService,
+    private readonly tokenService: ServerTokenService,
+    @OgmaLogger(ServerSecurityService) private readonly logger: OgmaService
   ) {}
 
   async signUpLocal(
@@ -54,7 +60,39 @@ export class ServerSecurityService {
     this.sessionService.updateSession(sessionId, {
       user: { email: newUser.email },
     });
+    void this.sendEmailVerification({
+      id: createdUser.id,
+      name: newUser.name,
+      email: newUser.email,
+    });
     return { success: true, id: createdUser.id };
+  }
+
+  private async sendEmailVerification(
+    user: Pick<UserAccount, 'id' | 'email' | 'name'>
+  ): Promise<void> {
+    try {
+      const verificationToken = await this.tokenService.generateToken(192);
+      await this.db
+        .insertInto('verificationToken')
+        .values({
+          type: 'verification',
+          userId: user.id,
+          token: verificationToken,
+        })
+        .execute();
+      await this.emailService.sendVerificationEmail(
+        user.name,
+        user.email,
+        verificationToken
+      );
+    } catch (err) {
+      if (err instanceof Error) {
+        this.logger.printError(err);
+      } else {
+        this.logger.error(err);
+      }
+    }
   }
 
   async logUserIn(
