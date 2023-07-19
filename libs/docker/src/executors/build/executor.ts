@@ -8,6 +8,9 @@ export default async function runExecutor(
   options: BuildExecutorSchema,
   context: ExecutorContext
 ) {
+  console.log(
+    context.projectsConfigurations!.projects[context.projectName!].root
+  );
   return new Promise((resolve, reject) => {
     const project = options.imageName ?? context.projectName;
     const logger = new Ogma({
@@ -39,7 +42,14 @@ export default async function runExecutor(
       const builder = options.builder ?? 'container';
       logger.verbose(`Using doocker builder ${builder}`);
       const publish = options.publish ?? false;
-      const commandString = `docker buildx build ${tags
+      const path =
+        options.path ??
+        `${
+          context.projectsConfigurations!.projects[context.projectName!].root
+        }/Dockerfile`;
+      const commandString = `docker buildx build ${
+        path ? '-f ' + path + ' ' : ''
+      }${tags
         .map((t) => `-t ${t}`)
         .join(
           ' '

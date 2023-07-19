@@ -17,6 +17,10 @@
       "type": "string",
       "description": "The target of the dockerfile to use"
     },
+    "path": {
+      "type": "string",
+      "description": "The path to the dockerfile to make use of"
+    },
     "cachePath": {
       "type": "string",
       "description": "The cache path to read from and write to"

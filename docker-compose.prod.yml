@@ -42,7 +42,7 @@ services:
       - '/var/run/docker.sock:/var/run/docker.sock'
     command: '--include-stopped --revive-stopped --schedule "0 0 * * * *" --label-enable'
   postgres:
-    image: postgres
+    image: jmcdo29/unteris-postgres
     env_file: .env
     ports:
       - '5433:5432'
