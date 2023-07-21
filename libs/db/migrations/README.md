@@ -37,6 +37,7 @@ erDiagram
         string type
     }
     Deity_Domain {
+        ulid id
         ulid deity_id
         ulid domain_id
     }
