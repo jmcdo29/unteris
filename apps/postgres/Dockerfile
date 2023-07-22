@@ -18,4 +18,6 @@ ENV PATH=/home/postgres/.cargo/bin:$PATH
 
 RUN chown postgres:postgres /home/postgres
 
+COPY apps/postgres/postgresql.conf /etc/postgresql/postgresql.conf
+
 USER postgres

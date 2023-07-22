@@ -11,7 +11,7 @@
       "executor": "@unteris/plugin/docker:build",
       "outputs": ["docker/cache/postgres"],
       "opitons": {},
-      "inputs": ["{projectRoot}/Dockerfile"],
+      "inputs": ["{projectRoot}/Dockerfile", "{projectRoot}/postgresql.conf"],
 
       "configurations": {
         "ci": {

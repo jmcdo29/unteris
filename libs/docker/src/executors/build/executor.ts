@@ -8,9 +8,6 @@ export default async function runExecutor(
   options: BuildExecutorSchema,
   context: ExecutorContext
 ) {
-  console.log(
-    context.projectsConfigurations!.projects[context.projectName!].root
-  );
   return new Promise((resolve, reject) => {
     const project = options.imageName ?? context.projectName;
     const logger = new Ogma({
