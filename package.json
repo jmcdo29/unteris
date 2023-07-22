@@ -11,6 +11,13 @@
     "docker:site": "docker build -t unteris-site:latest --target=site-prod .",
     "docker:migrations": "docker build -t unteris-migrations:latest --target=migrations-prod ."
   },
+  "volta": {
+    "node": "20.5.0"
+  },
+  "engines": {
+    "node": "20.5.0",
+    "pnpm": "8.6.9"
+  },
   "private": true,
   "dependencies": {
     "@commitlint/config-conventional": "^17.1.0",
