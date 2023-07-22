@@ -4,7 +4,6 @@ export const VerificationTokenSchmea = z.object({
   id: z.string().ulid(),
   token: z.string(),
   userId: z.string().ulid(),
-  expiresAt: z.date(),
   type: z.enum(['verification', 'reset']),
 });
 

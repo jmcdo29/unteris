@@ -105,12 +105,29 @@ export const up = async (db: Kysely<any>): Promise<void> => {
     .alterTable('local_login')
     .dropConstraint('local_login_login_method_id_fkey')
     .execute();
+  await db.schema
+    .alterTable('verification_token')
+    .dropConstraint('verification_token_user_id_fkey')
+    .execute();
+  await migrateTableColumnToUlid(db, 'verification_token', 'id', true);
+  await migrateTableColumnToUlid(db, 'verification_token', 'user_id');
   await migrateTableColumnToUlid(db, 'role', 'id', true);
   await migrateTableColumnToUlid(db, 'local_login', 'id', true);
   await migrateTableColumnToUlid(db, 'local_login', 'login_method_id');
   await migrateTableColumnToUlid(db, 'login_method', 'id', true);
   await migrateTableColumnToUlid(db, 'login_method', 'user_id');
   await migrateTableColumnToUlid(db, 'user_account', 'id', true);
+  await recreateForeignKey(
+    db,
+    'verification_token',
+    'user_id',
+    'user_account',
+    'id'
+  );
+  await db.schema
+    .alterTable('verification_token')
+    .dropColumn('expires_at')
+    .execute();
   await migrateTableColumnToUlid(db, 'user_permission', 'id', true);
   await migrateTableColumnToUlid(db, 'user_permission', 'user_id');
   await migrateTableColumnToUlid(db, 'user_permission', 'role_id');
