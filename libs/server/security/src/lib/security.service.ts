@@ -6,38 +6,34 @@ import {
 import { OgmaLogger, OgmaService } from '@ogma/nestjs-module';
 import { ServerEmailService } from '@unteris/server/email';
 import { ServerHashService } from '@unteris/server/hash';
-import { Database, InjectKysely } from '@unteris/server/kysely';
 import { ServerSessionService } from '@unteris/server/session';
 import { ServerTokenService } from '@unteris/server/token';
 import {
   UserAccount,
-  LoginMethod,
   LoginBody,
   SignupUser,
   LoginResponse,
 } from '@unteris/shared/types';
-import { Kysely } from 'kysely';
+import { SecurityRepo } from './security.repository';
 
 @Injectable()
 export class ServerSecurityService {
   constructor(
-    @InjectKysely() private readonly db: Kysely<Database>,
     private readonly sessionService: ServerSessionService,
     private readonly hashService: ServerHashService,
     private readonly emailService: ServerEmailService,
     private readonly tokenService: ServerTokenService,
-    @OgmaLogger(ServerSecurityService) private readonly logger: OgmaService
+    @OgmaLogger(ServerSecurityService) private readonly logger: OgmaService,
+    private readonly securityRepo: SecurityRepo
   ) {}
 
   async signUpLocal(
     newUser: SignupUser,
     sessionId: string
   ): Promise<{ success: boolean; id: UserAccount['id'] }> {
-    const existingAccount = await this.db
-      .selectFrom('userAccount')
-      .select(['id'])
-      .where('email', '=', newUser.email)
-      .executeTakeFirst();
+    const existingAccount = await this.securityRepo.findUserByEmail(
+      newUser.email
+    );
     if (existingAccount) {
       throw new BadRequestException({
         type: 'Authentication',
@@ -46,17 +42,15 @@ export class ServerSecurityService {
         ],
       });
     }
-    const createdUser = await this.db
-      .insertInto('userAccount')
-      .values({
-        email: newUser.email,
-        name: newUser.name,
-        isVerified: false,
-      })
-      .returning(['id'])
-      .executeTakeFirstOrThrow();
-    await this.creatLoginMethod(createdUser.id, 'local');
-    await this.createLocalLogin(createdUser.id, newUser.password);
+    const createdUser = await this.securityRepo.createUserRecord(newUser);
+    const loginMethod = await this.securityRepo.createLoginMethodRecord(
+      createdUser.id,
+      'local'
+    );
+    await this.securityRepo.createLocalLoginRecord(
+      newUser.password,
+      loginMethod.id
+    );
     this.sessionService.updateSession(sessionId, {
       user: { email: newUser.email },
     });
@@ -73,14 +67,10 @@ export class ServerSecurityService {
   ): Promise<void> {
     try {
       const verificationToken = await this.tokenService.generateToken(192);
-      await this.db
-        .insertInto('verificationToken')
-        .values({
-          type: 'verification',
-          userId: user.id,
-          token: verificationToken,
-        })
-        .execute();
+      await this.securityRepo.createUserVerificationRecord(
+        user.id,
+        verificationToken
+      );
       await this.emailService.sendVerificationEmail(
         user.name,
         user.email,
@@ -99,13 +89,9 @@ export class ServerSecurityService {
     userLogin: LoginBody,
     sessionId: string
   ): Promise<LoginResponse> {
-    const user = await this.db
-      .selectFrom('userAccount as ua')
-      .innerJoin('loginMethod as lm', 'lm.userId', 'ua.id')
-      .innerJoin('localLogin as ll', 'loginMethodId', 'lm.id')
-      .select(['ua.email', 'll.password', 'ua.name', 'ua.id'])
-      .where('ua.email', '=', userLogin.email)
-      .executeTakeFirst();
+    const user = await this.securityRepo.findUserWithLocalLogin(
+      userLogin.email
+    );
     if (
       !user ||
       !(await this.hashService.verify(userLogin.password, user.password))
@@ -125,32 +111,10 @@ export class ServerSecurityService {
     await this.sessionService.updateSession(sessionId, { user: {} });
   }
 
-  private async creatLoginMethod(
-    userId: string,
-    type: LoginMethod['name']
-  ): Promise<void> {
-    await this.db
-      .insertInto('loginMethod')
-      .values({ userId, name: type })
-      .executeTakeFirst();
-  }
-
-  private async createLocalLogin(
-    userId: string,
-    password: string
-  ): Promise<void> {
-    password = await this.hashService.hash(password);
-    await this.db
-      .insertInto('localLogin')
-      .values(({ selectFrom }) => ({
-        password: password,
-        loginMethodId: selectFrom('loginMethod')
-          .select(['id'])
-          .where('userId', '=', userId)
-          .where('name', '=', 'local')
-          .limit(1),
-        attempts: 0,
-      }))
-      .executeTakeFirst();
+  async verifyUserRecord(
+    verificationToken: string
+  ): Promise<{ success: boolean }> {
+    await this.securityRepo.setUserRecordAsActive(verificationToken);
+    return { success: true };
   }
 }

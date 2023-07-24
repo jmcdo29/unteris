@@ -1,7 +1,9 @@
 import {
   Body,
   Controller,
+  Get,
   Post,
+  Query,
   Req,
   Session,
   UseGuards,
@@ -11,6 +13,7 @@ import { CsrfGuard } from '@unteris/server/csrf';
 import { LoginBodyDto, SignupBody } from './models';
 import { ServerSecurityService } from './security.service';
 import { NestCookieRequest } from 'nest-cookies';
+import { TokenVerificationData } from './models/token-verification-query.dto';
 
 @UseGuards(CsrfGuard)
 @Controller('auth')
@@ -38,5 +41,14 @@ export class ServerSecurityController {
     const { sessionId } = cookies;
     await this.serverSecurityService.logout(sessionId);
     return { success: true };
+  }
+
+  @Get('verify-email')
+  async verifyEmailByToken(
+    @Query() query: TokenVerificationData
+  ): Promise<{ success: boolean }> {
+    return this.serverSecurityService.verifyUserRecord(
+      query.data.verificationToken
+    );
   }
 }

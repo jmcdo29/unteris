@@ -7,6 +7,7 @@ import { KyselyModule } from '@unteris/server/kysely';
 import { ServerSessionModule } from '@unteris/server/session';
 import { ServerTokenModule } from '@unteris/server/token';
 import { ServerSecurityController } from './security.controller';
+import { SecurityRepo } from './security.repository';
 import { ServerSecurityService } from './security.service';
 
 @Module({
@@ -20,7 +21,7 @@ import { ServerSecurityService } from './security.service';
     OgmaModule.forFeature(ServerSecurityService),
   ],
   controllers: [ServerSecurityController],
-  providers: [ServerSecurityService],
+  providers: [ServerSecurityService, SecurityRepo],
   exports: [ServerSecurityService],
 })
 export class ServerSecurityModule {}

@@ -9,7 +9,7 @@ export const verificationEmail = (
   verificationCode: string,
   unterisServer: string
 ) => {
-  const link = `${unterisServer}/api/security/verify-email?token=${verificationCode}`;
+  const link = `${unterisServer}/auth/verify-email?token=${verificationCode}`;
   return `<html>
 <body>
   <h3>Welcome ${username}!</h3>
