@@ -45,14 +45,14 @@ dependencies:
     specifier: ^2.2.2
     version: 2.2.2(react@18.2.0)
   kysely:
-    specifier: ^0.24.2
-    version: 0.24.2
+    specifier: ^0.26.1
+    version: 0.26.1
   nest-commander:
     specifier: ^3.9.0
     version: 3.9.0(@nestjs/common@10.0.0)(@nestjs/core@10.0.0)(@types/inquirer@8.1.0)
   nest-cookies:
-    specifier: ^1.3.0
-    version: 1.3.0(@nestjs/common@10.0.0)
+    specifier: ^1.5.1
+    version: 1.5.1(@nestjs/common@10.0.0)
   nodemailer:
     specifier: ^6.9.3
     version: 6.9.3
@@ -11705,8 +11705,8 @@ packages:
     engines: {node: '>= 8'}
     dev: true
 
-  /kysely@0.24.2:
-    resolution: {integrity: sha512-+7eaTJNUYm2yRq1x+lEOZc+78TO35dTZ9b0dh49+Z9CTt2byMSbMiOKpwPlOyCAaHD4kILkAYWYZNywFlmBwRA==}
+  /kysely@0.26.1:
+    resolution: {integrity: sha512-FVRomkdZofBu3O8SiwAOXrwbhPZZr8mBN5ZeUWyprH29jzvy6Inzqbd0IMmGxpd4rcOCL9HyyBNWBa8FBqDAdg==}
     engines: {node: '>=14.0.0'}
     dev: false
 
@@ -12366,8 +12366,8 @@ packages:
       cosmiconfig: 8.2.0
       inquirer: 8.2.5
 
-  /nest-cookies@1.3.0(@nestjs/common@10.0.0):
-    resolution: {integrity: sha512-RecKyiJb/GFMKnETX/E+JtMdVIQ694xf6Sv25iyHHPcQWYU1j4dWO9p6XuEGDkpEZ5oyzvx+R+gFgmFQcCv4xw==}
+  /nest-cookies@1.5.1(@nestjs/common@10.0.0):
+    resolution: {integrity: sha512-j4OndV1wxvSjR+L6AxqilTeM2UtCiA2W0FA6BfvaKqrGofdU5yjbt9TnGvridWOp9A3FSOMMhoYCJj08Bb+eFg==}
     peerDependencies:
       '@nestjs/common': '>=7.0.0'
     dependencies:
@@ -13567,6 +13567,7 @@ packages:
 
   /prr@1.0.1:
     resolution: {integrity: sha512-yPw4Sng1gWghHQWj0B3ZggWUm4qVbPwPFcRG8KyxiU7J2OHFSoEHKS+EZ3fv5l1t9CyCiop6l/ZYeWbrgoQejw==}
+    requiresBuild: true
     dev: true
     optional: true
 
