@@ -12,7 +12,7 @@ import { SavedSessionData } from '@unteris/server/session';
 import { CsrfGuard } from '@unteris/server/csrf';
 import { LoginBodyDto, SignupBody } from './models';
 import { ServerSecurityService } from './security.service';
-import { NestCookieRequest } from 'nest-cookies';
+import { Cookies } from 'nest-cookies';
 import { TokenVerificationData } from './models/token-verification-query.dto';
 
 @UseGuards(CsrfGuard)
@@ -37,7 +37,7 @@ export class ServerSecurityController {
   }
 
   @Post('logout')
-  async loguot(@Req() { cookies }: NestCookieRequest<Record<string, any>>) {
+  async loguot(@Cookies() cookies: Record<string, string>) {
     const { sessionId } = cookies;
     await this.serverSecurityService.logout(sessionId);
     return { success: true };
