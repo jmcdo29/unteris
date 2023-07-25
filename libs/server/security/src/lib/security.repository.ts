@@ -104,4 +104,30 @@ export class SecurityRepo {
       .where('id', '=', verificationRecord.userId)
       .executeTakeFirstOrThrow();
   }
+
+  async createUserPasswordResetRecord(
+    userId: string,
+    token: string
+  ): Promise<void> {
+    await this.db
+      .insertInto('verificationToken')
+      .values({
+        userId,
+        token,
+        type: 'reset',
+      })
+      .executeTakeFirstOrThrow();
+  }
+
+  async findUserByResetToken(
+    resetToken: string
+  ): Promise<Pick<UserAccount, 'id' | 'email'>> {
+    return this.db
+      .selectFrom('userAccount as u')
+      .select(['u.id', 'u.email'])
+      .innerJoin('verificationToken as vt', 'vt.userId', 'u.id')
+      .where(sql`vt.id::timestamp`, '>', sql`CURRENT TIMESTAMP - '1 day'`)
+      .where('vt.token', '=', resetToken)
+      .executeTakeFirstOrThrow();
+  }
 }

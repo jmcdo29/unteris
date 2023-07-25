@@ -13,6 +13,7 @@ import {
   LoginBody,
   SignupUser,
   LoginResponse,
+  PasswordReset,
 } from '@unteris/shared/types';
 import { SecurityRepo } from './security.repository';
 
@@ -116,5 +117,20 @@ export class ServerSecurityService {
   ): Promise<{ success: boolean }> {
     await this.securityRepo.setUserRecordAsActive(verificationToken);
     return { success: true };
+  }
+
+  async createPasswordResetToken({ email }: PasswordReset): Promise<void> {
+    const user = await this.securityRepo.findUserByEmail(email);
+    if (!user) {
+      throw new BadRequestException({
+        type: 'Unknown Email',
+        message: [
+          `No user with email ${email} was found. Perhaps you'd like to sign up?`,
+        ],
+      });
+    }
+    const resetToken = await this.tokenService.generateToken(256);
+    await this.securityRepo.createUserPasswordResetRecord(user.id, resetToken);
+    await this.emailService.sendPasswordResetEmail(email, resetToken);
   }
 }

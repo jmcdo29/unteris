@@ -4,7 +4,6 @@ import {
   Get,
   Post,
   Query,
-  Req,
   Session,
   UseGuards,
 } from '@nestjs/common';
@@ -14,6 +13,7 @@ import { LoginBodyDto, SignupBody } from './models';
 import { ServerSecurityService } from './security.service';
 import { Cookies } from 'nest-cookies';
 import { TokenVerificationData } from './models/token-verification-query.dto';
+import { PasswordResetDto } from './models/password-reset.dto';
 
 @UseGuards(CsrfGuard)
 @Controller('auth')
@@ -50,5 +50,13 @@ export class ServerSecurityController {
     return this.serverSecurityService.verifyUserRecord(
       query.data.verificationToken
     );
+  }
+
+  @Post('password-reset')
+  async startUserPasswordReset(
+    @Body() body: PasswordResetDto
+  ): Promise<{ success: boolean }> {
+    await this.serverSecurityService.createPasswordResetToken(body.data);
+    return { success: true };
   }
 }

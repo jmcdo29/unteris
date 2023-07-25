@@ -27,4 +27,16 @@ export class ServerEmailService {
       ),
     });
   }
+
+  async sendPasswordResetEmail(
+    email: string,
+    resetToken: string
+  ): Promise<void> {
+    await this.transport.sendMail({
+      from: 'No reply <no-reply@unteris.com>',
+      subject: 'Reset Password',
+      to: email,
+      html: '',
+    });
+  }
 }
