@@ -1,7 +1,8 @@
 import { z } from 'zod';
 
 export const PasswordResetSchema = z.object({
-  email: z.string().email(),
+  resetToken: z.string().length(43),
+  password: z.string(),
 });
 
 export type PasswordReset = z.infer<typeof PasswordResetSchema>;

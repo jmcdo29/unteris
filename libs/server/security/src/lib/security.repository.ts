@@ -130,4 +130,21 @@ export class SecurityRepo {
       .where('vt.token', '=', resetToken)
       .executeTakeFirstOrThrow();
   }
+
+  async updateUserPassword(userId: string, password: string): Promise<void> {
+    await this.db
+      .updateTable('localLogin')
+      .set({ password })
+      .where((eb) => {
+        return eb(
+          'loginMethodId',
+          '=',
+          eb
+            .selectFrom('loginMethod')
+            .select(['id'])
+            .where('userId', '=', userId)
+        );
+      })
+      .executeTakeFirstOrThrow();
+  }
 }

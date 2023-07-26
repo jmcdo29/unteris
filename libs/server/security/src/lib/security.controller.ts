@@ -13,6 +13,7 @@ import { LoginBodyDto, SignupBody } from './models';
 import { ServerSecurityService } from './security.service';
 import { Cookies } from 'nest-cookies';
 import { TokenVerificationData } from './models/token-verification-query.dto';
+import { PasswordResetRequestDto } from './models/password-reset-request.dto';
 import { PasswordResetDto } from './models/password-reset.dto';
 
 @UseGuards(CsrfGuard)
@@ -52,11 +53,19 @@ export class ServerSecurityController {
     );
   }
 
-  @Post('password-reset')
+  @Post('password-reset-request')
   async startUserPasswordReset(
-    @Body() body: PasswordResetDto
+    @Body() body: PasswordResetRequestDto
   ): Promise<{ success: boolean }> {
     await this.serverSecurityService.createPasswordResetToken(body.data);
+    return { success: true };
+  }
+
+  @Post('password-reset')
+  async resetUserPasswordFromToken(
+    @Body() body: PasswordResetDto
+  ): Promise<{ success: boolean }> {
+    await this.serverSecurityService.resetUserPassword(body.data);
     return { success: true };
   }
 }

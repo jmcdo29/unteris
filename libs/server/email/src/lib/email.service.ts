@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ServerConfigService } from '@unteris/server/config';
 import { Transporter } from 'nodemailer';
-import { verificationEmail } from './email.constants';
+import { passwordResetEmail, verificationEmail } from './email.constants';
 import { InjectEmailTransport } from './email.decorators';
 
 @Injectable()
@@ -36,7 +36,7 @@ export class ServerEmailService {
       from: 'No reply <no-reply@unteris.com>',
       subject: 'Reset Password',
       to: email,
-      html: '',
+      html: passwordResetEmail(resetToken, this.configService.get('CORS')),
     });
   }
 }

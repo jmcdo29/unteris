@@ -13,6 +13,7 @@ import {
   LoginBody,
   SignupUser,
   LoginResponse,
+  PasswordResetRequest,
   PasswordReset,
 } from '@unteris/shared/types';
 import { SecurityRepo } from './security.repository';
@@ -119,7 +120,9 @@ export class ServerSecurityService {
     return { success: true };
   }
 
-  async createPasswordResetToken({ email }: PasswordReset): Promise<void> {
+  async createPasswordResetToken({
+    email,
+  }: PasswordResetRequest): Promise<void> {
     const user = await this.securityRepo.findUserByEmail(email);
     if (!user) {
       throw new BadRequestException({
@@ -132,5 +135,16 @@ export class ServerSecurityService {
     const resetToken = await this.tokenService.generateToken(256);
     await this.securityRepo.createUserPasswordResetRecord(user.id, resetToken);
     await this.emailService.sendPasswordResetEmail(email, resetToken);
+  }
+
+  async resetUserPassword({
+    resetToken,
+    password,
+  }: PasswordReset): Promise<void> {
+    const user = await this.securityRepo.findUserByResetToken(resetToken);
+    await this.securityRepo.updateUserPassword(
+      user.id,
+      await this.hashService.hash(password)
+    );
   }
 }

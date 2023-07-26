@@ -29,3 +29,27 @@ export const verificationEmail = (
 </html>
 `;
 };
+
+export const passwordResetEmail = (
+  resetToken: string,
+  unterisServer: string
+): string => {
+  const link = `${unterisServer}/reset-password?resetToken=${resetToken}`;
+  return `<html>
+<body>
+  <h3>Password Reset</h3>
+  <div>
+    <p>We've received your request to be able to resett your password.</p>
+    <p>Please <a href=${link}>click here</a> to reset your password.</p>
+    <p>If the above link doesn't work, copy and paste this into your browser:</p>
+    <p>${link}</p>
+    <p>This link will expire in one hour.</p>
+    <p>If you did not request to reset your password, you should be able to ignore this email.</p>
+  </div>
+  <div>
+    <p>Thank you from the Unteris team</p>
+  </div>  
+</body>    
+</html>
+`;
+};
