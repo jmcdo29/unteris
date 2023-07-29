@@ -9,21 +9,15 @@ import {
   postFetch,
   TextInput,
 } from '@unteris/ui/components';
-import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useNavigate } from 'react-router-dom';
-import { authErrorAtom, displayErrorAtom } from './auth.atoms';
-
-const newUserAtom = atom<SignupUser>({
-  email: '',
-  password: '',
-  name: '',
-});
+import { authErrorAtom, displayErrorAtom, authUserAtom } from './auth.atoms';
 
 export const Register = (): JSX.Element => {
   const setUser = useSetAtom(userAtom);
   const setAuthError = useSetAtom(authErrorAtom);
   const setDisplayError = useSetAtom(displayErrorAtom);
-  const [newUser, setNewUser] = useAtom(newUserAtom);
+  const [newUser, setNewUser] = useAtom(authUserAtom);
   const csrfToken = useAtomValue(csrfAtom);
   const navigate = useNavigate();
   const updateField =
