@@ -1,10 +1,9 @@
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import { LoginResponse } from '@unteris/shared/types';
 import { csrfAtom, userAtom } from '@unteris/ui/atoms';
 import {
+  ActionButton,
   convertUnknownErrorToDisplayError,
-  Grid,
+  Heading,
   PasswordInput,
   postFetch,
   TextInput,
@@ -44,10 +43,8 @@ export const Login = (): JSX.Element => {
     }
   };
   return (
-    <Grid columns={1}>
-      <Typography variant="h2" fontSize={'2em'}>
-        User Login
-      </Typography>
+    <>
+      <Heading text="Login" />
       <TextInput
         value={loginUser.email}
         aria-label="email"
@@ -65,9 +62,7 @@ export const Login = (): JSX.Element => {
           setLoginUser({ ...loginUser, password: e.target.value })
         }
       />
-      <Button onClick={login} color="secondary" variant="contained">
-        Log In
-      </Button>
-    </Grid>
+      <ActionButton action={login} text="Log In" />
+    </>
   );
 };

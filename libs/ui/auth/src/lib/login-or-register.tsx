@@ -8,7 +8,7 @@ import {
 import { Login } from './login';
 import { Register } from './register';
 import { useAtom, useAtomValue } from 'jotai';
-import { ErrorDisplay } from '@unteris/ui/components';
+import { ErrorDisplay, Grid } from '@unteris/ui/components';
 import { ForgotPassword } from './forgot-password';
 
 export const LoginOrRegister = (): JSX.Element => {
@@ -24,13 +24,15 @@ export const LoginOrRegister = (): JSX.Element => {
           errorToDisplay={authErrors}
         />
       )}
-      {forgotPassword ? (
-        <ForgotPassword />
-      ) : isLoggingIn ? (
-        <Login />
-      ) : (
-        <Register />
-      )}
+      <Grid columns={1}>
+        {forgotPassword ? (
+          <ForgotPassword />
+        ) : isLoggingIn ? (
+          <Login />
+        ) : (
+          <Register />
+        )}
+      </Grid>
       <Button onClick={() => setIsLoggingIn(!isLoggingIn)}>
         Switch to {isLoggingIn ? 'register' : 'login'}.
       </Button>

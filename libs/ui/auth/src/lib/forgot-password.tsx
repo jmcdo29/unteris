@@ -1,9 +1,8 @@
-import { Button } from '@mui/material';
-import Typography from '@mui/material/Typography';
 import { csrfAtom } from '@unteris/ui/atoms';
 import {
+  ActionButton,
   convertUnknownErrorToDisplayError,
-  Grid,
+  Heading,
   postFetch,
   TextInput,
 } from '@unteris/ui/components';
@@ -32,10 +31,8 @@ export const ForgotPassword = (): JSX.Element => {
     }
   };
   return (
-    <Grid columns={1}>
-      <Typography variant="h2" fontSize={'2em'}>
-        Forgot Password?
-      </Typography>
+    <>
+      <Heading text="Forgot Password?" />
       <TextInput
         value={loginUser.email}
         aria-label="email"
@@ -46,9 +43,7 @@ export const ForgotPassword = (): JSX.Element => {
           setLoginUser({ password: '', email: e.target.value, name: '' })
         }
       />
-      <Button onClick={sendResetRequest} color="secondary" variant="contained">
-        Reset Password
-      </Button>
-    </Grid>
+      <ActionButton action={sendResetRequest} text="Reset Password" />
+    </>
   );
 };

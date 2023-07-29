@@ -1,10 +1,9 @@
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import { SignupUser } from '@unteris/shared/types';
 import { csrfAtom, userAtom } from '@unteris/ui/atoms';
 import {
+  ActionButton,
   convertUnknownErrorToDisplayError,
-  Grid,
+  Heading,
   PasswordInput,
   postFetch,
   TextInput,
@@ -49,10 +48,8 @@ export const Register = (): JSX.Element => {
     }
   };
   return (
-    <Grid columns={1}>
-      <Typography variant="h2" fontSize={'2em'}>
-        User Registration
-      </Typography>
+    <>
+      <Heading text="Register" />
       <TextInput
         value={newUser.email}
         label="Email"
@@ -71,9 +68,7 @@ export const Register = (): JSX.Element => {
         onUpdate={updateField('password')}
         isSignup={true}
       />
-      <Button onClick={submit} color="secondary" variant="contained">
-        Register
-      </Button>
-    </Grid>
+      <ActionButton action={submit} text="Register" />
+    </>
   );
 };
