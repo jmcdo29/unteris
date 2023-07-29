@@ -49,16 +49,39 @@ export class SecurityRepo {
     email: string
   ): Promise<
     | (Pick<UserAccount, 'id' | 'name' | 'email'> &
-        Pick<LocalLogin, 'password'>)
+        Pick<LocalLogin, 'password' | 'attempts'> & { localLoginId: string })
     | undefined
   > {
     return this.db
       .selectFrom('userAccount as ua')
       .innerJoin('loginMethod as lm', 'lm.userId', 'ua.id')
       .innerJoin('localLogin as ll', 'loginMethodId', 'lm.id')
-      .select(['ua.email', 'll.password', 'ua.name', 'ua.id'])
+      .select([
+        'ua.email',
+        'ua.name',
+        'ua.id',
+        'll.password',
+        'll.attempts',
+        'll.id as localLoginId',
+      ])
       .where('ua.email', '=', email)
       .executeTakeFirst();
+  }
+
+  async incrementLoginAttemptsByLocalLoginId(id: string): Promise<void> {
+    await this.db
+      .updateTable('localLogin')
+      .set((eb) => ({ attempts: eb('attempts', '+', 1) }))
+      .where('id', '=', id)
+      .execute();
+  }
+
+  async clearLoginAttemptsByLocalLoginId(id: string): Promise<void> {
+    await this.db
+      .updateTable('localLogin')
+      .set({ attempts: 0 })
+      .where('id', '=', id)
+      .execute();
   }
 
   async createLoginMethodRecord(

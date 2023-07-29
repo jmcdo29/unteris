@@ -94,10 +94,19 @@ export class ServerSecurityService {
     const user = await this.securityRepo.findUserWithLocalLogin(
       userLogin.email
     );
+    if (!user || user.attempts >= 5) {
+      throw new UnauthorizedException({
+        type: 'AttemptLimit',
+        message: ['Too many login attempts. Try again later.'],
+      });
+    }
     if (
       !user ||
       !(await this.hashService.verify(userLogin.password, user.password))
     ) {
+      void this.securityRepo.incrementLoginAttemptsByLocalLoginId(
+        user.localLoginId
+      );
       throw new UnauthorizedException({
         type: 'Authentication',
         message: ['Invalid username or password'],
@@ -106,6 +115,7 @@ export class ServerSecurityService {
     await this.sessionService.updateSession(sessionId, {
       user: { email: user.email },
     });
+    void this.securityRepo.clearLoginAttemptsByLocalLoginId(user.localLoginId);
     return { success: true, displayName: user.name, id: user.id };
   }
 
