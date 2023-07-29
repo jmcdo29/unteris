@@ -33,44 +33,51 @@ import {
         config: ServerConfigService,
         logger: OgmaService
       ): KyselyConfig => {
-        const dbConfig = {
-          dialect: new PostgresDialect({
-            pool: new Pool({
-              host: config.get('DATABASE_HOST'),
-              port: config.get('DATABASE_PORT'),
-              database: config.get('DATABASE_NAME'),
-              user: config.get('DATABASE_USER'),
-              password: config.get('DATABASE_PASSWORD'),
+        try {
+          const dbConfig = {
+            dialect: new PostgresDialect({
+              pool: new Pool({
+                host: config.get('DATABASE_HOST'),
+                port: config.get('DATABASE_PORT'),
+                database: config.get('DATABASE_NAME'),
+                user: config.get('DATABASE_USER'),
+                password: config.get('DATABASE_PASSWORD'),
+              }),
             }),
-          }),
-          log: (event: LogEvent) => {
-            logger.verbose({
-              message: 'Running Query',
-              query: event.query.query,
-              parameters: event.query.parameters,
-              raw: event.query.sql,
-            });
-            if (event.level === 'query') {
+            log: (event: LogEvent) => {
               logger.verbose({
-                message: 'Query Timing',
-                duration: event.queryDurationMillis,
+                message: 'Running Query',
+                query: event.query.query,
+                parameters: event.query.parameters,
+                raw: event.query.sql,
               });
-            }
-            if (event.level === 'error') {
-              logger.error({
-                message: 'Error running query',
-                error: event.error,
-              });
-            }
-          },
-          plugins: [new CamelCasePlugin()],
-        };
-        logger.debug(
-          `Connectinig to database ${style.blue.apply(
-            config.get('DATABASE_NAME')
-          )} on host ${style.magenta.apply(config.get('DATABASE_HOST'))}`
-        );
-        return dbConfig;
+              if (event.level === 'query') {
+                logger.verbose({
+                  message: 'Query Timing',
+                  duration: event.queryDurationMillis,
+                });
+              }
+              if (event.level === 'error') {
+                logger.error({
+                  message: 'Error running query',
+                  error: event.error,
+                });
+              }
+            },
+            plugins: [new CamelCasePlugin()],
+          };
+          logger.debug(
+            `Connectinig to database ${style.blue.apply(
+              config.get('DATABASE_NAME')
+            )} on host ${style.magenta.apply(config.get('DATABASE_HOST'))}`
+          );
+          return dbConfig;
+        } catch (e) {
+          if (e instanceof Error) {
+            logger.printError(e);
+          }
+          throw e;
+        }
       },
     },
     {

@@ -1,9 +1,14 @@
 import { Module, OnModuleDestroy } from '@nestjs/common';
 import {
+  createProviderToken,
+  OgmaModule,
+  OgmaService,
+} from '@ogma/nestjs-module';
+import {
   ServerConfigModule,
   ServerConfigService,
 } from '@unteris/server/config';
-import { createClient, RedisClientType } from 'redis';
+import { createClient, RedisClientOptions, RedisClientType } from 'redis';
 
 import {
   getInstanceToken,
@@ -12,7 +17,7 @@ import {
 } from './redis.constants';
 
 @Module({
-  imports: [ServerConfigModule],
+  imports: [ServerConfigModule, OgmaModule.forFeature('Redis')],
   controllers: [],
   providers: [
     {
@@ -24,12 +29,19 @@ import {
     },
     {
       provide: getInstanceToken(),
-      useFactory: async (options) => {
-        const redis = createClient(options);
-        await redis.connect();
-        return redis;
+      useFactory: async (options: RedisClientOptions, logger: OgmaService) => {
+        try {
+          const redis = createClient(options);
+          await redis.connect();
+          return redis;
+        } catch (e) {
+          if (e instanceof Error) {
+            logger.printError(e);
+          }
+          throw e;
+        }
       },
-      inject: [getOptionsToken()],
+      inject: [getOptionsToken(), createProviderToken('Redis')],
     },
   ],
   exports: [getInstanceToken()],
