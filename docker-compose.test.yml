@@ -2,7 +2,9 @@ version: '3'
 name: unteris-e2e
 services:
   postgres:
-    image: postgres
+    build:
+      context: .
+      dockerfile: apps/postgres/Dockerfile
     ports:
       - '25432:5432'
     environment:
