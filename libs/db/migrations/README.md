@@ -14,9 +14,10 @@ erDiagram
     Deity ||--|| Location : "resides in"
     Race ||--|{ Racial_Ability : "belongs to"
     User_Account ||--|{ Login_Method : "can have"
-    Local_Login |o --|| Login_Method : "is a"
-    User_Account || --|{ User_Permission : "should have"
-    Role || --|{ User_Permission : "relates_to"
+    Local_Login |o--|| Login_Method : "is a"
+    User_Account ||--|{ User_Permission : "should have"
+    Verification_Token ||--|| User_Account : "relates to"
+    Role ||--|{ User_Permission : "relates_to"
     DeityCategory {
         string name
         ulid id
@@ -36,6 +37,7 @@ erDiagram
         string type
     }
     Deity_Domain {
+        ulid id
         ulid deity_id
         ulid domain_id
     }
@@ -87,6 +89,12 @@ erDiagram
     Role {
         ulid id
         string name
+    }
+    Verification_Token {
+        ulid id
+        string token
+        ulid user_id
+        string type
     }
 
 ```

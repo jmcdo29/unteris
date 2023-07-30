@@ -28,6 +28,17 @@ export const useFetchEffect = (props: UseFetchEffectProps) => {
   }, [props.setter]);
 };
 
+interface GetFetchProps {
+  endpoint: string;
+}
+
+export const getFetch = async (props: GetFetchProps) => {
+  const res = await fetch(`${baseUrl}/${props.endpoint}`, {
+    credentials: 'include',
+  });
+  return res.json();
+};
+
 const refreshCsrfToken = async () => {
   const res = await fetch(`${baseUrl}/session/refresh`, {
     credentials: 'include',

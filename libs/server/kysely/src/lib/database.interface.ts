@@ -11,6 +11,7 @@ import {
   LocalLogin,
   LoginMethod,
   Role,
+  VerificationToken,
 } from '@unteris/shared/types';
 import { Generated } from 'kysely';
 
@@ -29,4 +30,7 @@ export interface Database {
   localLogin: GeneratedId<LocalLogin>;
   loginMethod: GeneratedId<LoginMethod>;
   role: GeneratedId<Role>;
+  verificationToken: Omit<GeneratedId<VerificationToken>, 'expiresAt'> & {
+    expiresAt: Generated<Date>;
+  };
 }

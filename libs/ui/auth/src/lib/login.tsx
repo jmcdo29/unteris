@@ -1,22 +1,19 @@
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import { LoginBody, LoginResponse } from '@unteris/shared/types';
+import { LoginResponse } from '@unteris/shared/types';
 import { csrfAtom, userAtom } from '@unteris/ui/atoms';
 import {
+  ActionButton,
   convertUnknownErrorToDisplayError,
-  Grid,
+  Heading,
   PasswordInput,
   postFetch,
   TextInput,
 } from '@unteris/ui/components';
-import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useNavigate } from 'react-router-dom';
-import { authErrorAtom, displayErrorAtom } from './auth.atoms';
-
-const loginUserAtom = atom<LoginBody>({ email: '', password: '' });
+import { authErrorAtom, displayErrorAtom, authUserAtom } from './auth.atoms';
 
 export const Login = (): JSX.Element => {
-  const [loginUser, setLoginUser] = useAtom(loginUserAtom);
+  const [loginUser, setLoginUser] = useAtom(authUserAtom);
   const setAuthError = useSetAtom(authErrorAtom);
   const setDisplayError = useSetAtom(displayErrorAtom);
   const setUser = useSetAtom(userAtom);
@@ -27,7 +24,10 @@ export const Login = (): JSX.Element => {
     try {
       const res = await postFetch<LoginResponse>({
         endpoint: 'auth/login',
-        body: loginUser,
+        body: {
+          email: loginUser.email,
+          password: loginUser.password,
+        },
         csrfToken,
       });
       setUser({
@@ -35,7 +35,7 @@ export const Login = (): JSX.Element => {
         email: loginUser.email,
         displayName: res.displayName,
       });
-      setLoginUser({ email: '', password: '' });
+      setLoginUser({ email: '', password: '', name: '' });
       navigate('/');
     } catch (e) {
       setAuthError(convertUnknownErrorToDisplayError(e, 'Sign In Error'));
@@ -43,10 +43,8 @@ export const Login = (): JSX.Element => {
     }
   };
   return (
-    <Grid columns={1}>
-      <Typography variant="h2" fontSize={'2em'}>
-        User Login
-      </Typography>
+    <>
+      <Heading text="Login" />
       <TextInput
         value={loginUser.email}
         aria-label="email"
@@ -64,9 +62,7 @@ export const Login = (): JSX.Element => {
           setLoginUser({ ...loginUser, password: e.target.value })
         }
       />
-      <Button onClick={login} color="secondary" variant="contained">
-        Log In
-      </Button>
-    </Grid>
+      <ActionButton action={login} text="Log In" />
+    </>
   );
 };

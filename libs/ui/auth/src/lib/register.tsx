@@ -1,29 +1,22 @@
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import { SignupUser } from '@unteris/shared/types';
 import { csrfAtom, userAtom } from '@unteris/ui/atoms';
 import {
+  ActionButton,
   convertUnknownErrorToDisplayError,
-  Grid,
+  Heading,
   PasswordInput,
   postFetch,
   TextInput,
 } from '@unteris/ui/components';
-import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useNavigate } from 'react-router-dom';
-import { authErrorAtom, displayErrorAtom } from './auth.atoms';
-
-const newUserAtom = atom<SignupUser>({
-  email: '',
-  password: '',
-  name: '',
-});
+import { authErrorAtom, displayErrorAtom, authUserAtom } from './auth.atoms';
 
 export const Register = (): JSX.Element => {
   const setUser = useSetAtom(userAtom);
   const setAuthError = useSetAtom(authErrorAtom);
   const setDisplayError = useSetAtom(displayErrorAtom);
-  const [newUser, setNewUser] = useAtom(newUserAtom);
+  const [newUser, setNewUser] = useAtom(authUserAtom);
   const csrfToken = useAtomValue(csrfAtom);
   const navigate = useNavigate();
   const updateField =
@@ -55,10 +48,8 @@ export const Register = (): JSX.Element => {
     }
   };
   return (
-    <Grid columns={1}>
-      <Typography variant="h2" fontSize={'2em'}>
-        User Registration
-      </Typography>
+    <>
+      <Heading text="Register" />
       <TextInput
         value={newUser.email}
         label="Email"
@@ -77,9 +68,7 @@ export const Register = (): JSX.Element => {
         onUpdate={updateField('password')}
         isSignup={true}
       />
-      <Button onClick={submit} color="secondary" variant="contained">
-        Register
-      </Button>
-    </Grid>
+      <ActionButton action={submit} text="Register" />
+    </>
   );
 };

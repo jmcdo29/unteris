@@ -43,7 +43,7 @@ apps/site/public/images
 
 *.local
 *.production
-docker/
+docker/*
 !libs/docker/
 *.log
 dump

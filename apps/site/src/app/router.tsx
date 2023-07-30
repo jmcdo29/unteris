@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouteObject } from 'react-router-dom';
-import { UiAuth } from '@unteris/ui/auth';
+import { EmailVerification, UiAuth, User } from '@unteris/ui/auth';
 import { DeityNav } from '@unteris/ui/deities';
 import { History } from '@unteris/ui/history';
 import { UiRace } from '@unteris/ui/race';
@@ -30,6 +30,14 @@ const routes = (): RouteObject[] => {
         {
           path: '/login',
           element: <UiAuth />,
+        },
+        {
+          path: '/verify',
+          element: <EmailVerification />,
+        },
+        {
+          path: '/me',
+          element: <User />,
         },
       ],
     },

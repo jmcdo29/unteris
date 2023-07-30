@@ -39,7 +39,14 @@ export default async function runExecutor(
       const builder = options.builder ?? 'container';
       logger.verbose(`Using doocker builder ${builder}`);
       const publish = options.publish ?? false;
-      const commandString = `docker buildx build ${tags
+      const path =
+        options.path ??
+        `${
+          context.projectsConfigurations!.projects[context.projectName!].root
+        }/Dockerfile`;
+      const commandString = `docker buildx build ${
+        path ? '-f ' + path + ' ' : ''
+      }${tags
         .map((t) => `-t ${t}`)
         .join(
           ' '
