@@ -16,7 +16,7 @@
   },
   "engines": {
     "node": "20.5.0",
-    "pnpm": "8.6.10"
+    "pnpm": "8.6.11"
   },
   "private": true,
   "dependencies": {
