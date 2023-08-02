@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Session, UseGuards } from '@nestjs/common';
+import { UnterisSession } from '@unteris/server/common';
 import { CsrfGuard } from './csrf.guard';
 import { ServerCsrfService } from './csrf.service';
 
@@ -7,7 +8,7 @@ export class ServerCsrfController {
   constructor(private serverCsrfService: ServerCsrfService) {}
   @Get()
   async getCsrfToken(
-    @Req() { session }: { session: { id: string } }
+    @Session() session: UnterisSession
   ): Promise<{ csrfToken: string }> {
     return {
       csrfToken: await this.serverCsrfService.generateToken(session.id),

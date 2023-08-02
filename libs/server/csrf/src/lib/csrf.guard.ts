@@ -1,7 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { csrfHeader } from '@unteris/server/common';
 import { ServerCsrfService } from './csrf.service';
-
-const csrfHeader = 'x-unteris-csrf-protection';
 
 @Injectable()
 export class CsrfGuard implements CanActivate {

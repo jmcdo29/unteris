@@ -1,5 +1,5 @@
 import { Controller, Get, Req, UseGuards } from '@nestjs/common';
-import { RefreshRequest } from '@unteris/server/common';
+import { RefreshRequest, UnterisCookies } from '@unteris/server/common';
 import { Cookie, Cookies, NewCookies } from 'nest-cookies';
 import { RefreshSessionGuard } from './refresh-session.guard';
 import { SkipSessionCheck } from './session.decorator';
@@ -12,7 +12,7 @@ export class SessionController {
   @UseGuards(RefreshSessionGuard)
   @SkipSessionCheck()
   async refreshSession(
-    @Cookies() cookies: Record<string, string>,
+    @Cookies() cookies: UnterisCookies,
     @NewCookies() newCookies: Cookie[],
     @Req()
     { oldSession }: RefreshRequest
@@ -20,7 +20,7 @@ export class SessionController {
     const { refreshId } = cookies;
     const sessionId = await this.sessionService.createSessionId();
     await this.sessionService.createSession(oldSession, sessionId);
-    await this.sessionService.updateSession(refreshId, { sessionId });
+    await this.sessionService.updateSession(refreshId!, { sessionId });
     newCookies.push(
       this.sessionService.createCookie({
         name: 'session',

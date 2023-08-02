@@ -13,7 +13,9 @@ export class RefreshSessionGuard implements CanActivate {
       .getRequest<NestCookieRequest<RefreshRequest>>();
     const { cookies } = req;
     const { refreshId } = cookies;
-    const refreshSessionData = await this.sessionService.getSession(refreshId);
+    const refreshSessionData = await this.sessionService.getSession<'refresh'>(
+      refreshId
+    );
     if (!this.sessionService.isRefreshData(refreshSessionData)) {
       return false;
     }
