@@ -1,19 +1,14 @@
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import {
-  BadRequestException,
-  ForbiddenException,
-  Injectable,
-  InternalServerErrorException,
-} from '@nestjs/common';
+  RefreshSessionData,
+  SavedSessionData,
+  SessionData,
+} from '@unteris/server/common';
 import { ServerConfigService } from '@unteris/server/config';
 import { InjectRedisInstance } from '@unteris/server/redis';
 import { ServerTokenService } from '@unteris/server/token';
 import { Cookie } from 'nest-cookies';
 import { RedisClientType } from 'redis';
-import {
-  RefreshSessionData,
-  SavedSessionData,
-  SessionData,
-} from './session.interface';
 
 @Injectable()
 export class ServerSessionService {
@@ -60,7 +55,9 @@ export class ServerSessionService {
     return { id: sessionId };
   }
 
-  async getSession(sessionId: string): Promise<SavedSessionData> {
+  async getSession<T extends 'session' | 'refresh' = 'session'>(
+    sessionId: string
+  ): Promise<T extends 'session' ? SessionData : RefreshSessionData> {
     return JSON.parse((await this.redis.get(sessionId)) ?? '{}');
   }
 

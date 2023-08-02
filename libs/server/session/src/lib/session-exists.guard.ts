@@ -1,8 +1,8 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+import { SessionData } from '@unteris/server/common';
 import { NestCookieRequest } from 'nest-cookies';
 import { SKIP_SESSION_LOGGED_IN_CHECK } from './session.decorator';
-import { SessionData } from './session.interface';
 import { ServerSessionService } from './session.service';
 
 /**

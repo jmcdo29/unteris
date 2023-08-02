@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { RefreshRequest } from '@unteris/server/common';
 import { NestCookieRequest } from 'nest-cookies';
-import { SavedSessionData } from './session.interface';
 import { ServerSessionService } from './session.service';
 
 @Injectable()
@@ -10,7 +10,7 @@ export class RefreshSessionGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const req = context
       .switchToHttp()
-      .getRequest<NestCookieRequest<{ oldSession: SavedSessionData }>>();
+      .getRequest<NestCookieRequest<RefreshRequest>>();
     const { cookies } = req;
     const { refreshId } = cookies;
     const refreshSessionData = await this.sessionService.getSession(refreshId);
