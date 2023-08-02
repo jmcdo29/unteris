@@ -30,16 +30,14 @@ import {
     {
       provide: getInstanceToken(),
       useFactory: async (options: RedisClientOptions, logger: OgmaService) => {
-        try {
-          const redis = createClient(options);
-          await redis.connect();
-          return redis;
-        } catch (e) {
-          if (e instanceof Error) {
-            logger.printError(e);
+        const redis = createClient(options);
+        redis.once('error', (err) => {
+          if (err instanceof Error) {
+            logger.printError(err);
           }
-          throw e;
-        }
+        });
+        await redis.connect();
+        return redis;
       },
       inject: [getOptionsToken(), createProviderToken('Redis')],
     },
