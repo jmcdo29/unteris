@@ -20,7 +20,9 @@ export class SessionController {
     const { refreshId } = cookies;
     const sessionId = await this.sessionService.createSessionId();
     await this.sessionService.createSession(oldSession, sessionId);
-    await this.sessionService.updateSession(refreshId!, { sessionId });
+    await this.sessionService.updateSession<'refresh'>(refreshId!, {
+      sessionId,
+    });
     newCookies.push(
       this.sessionService.createCookie({
         name: 'session',

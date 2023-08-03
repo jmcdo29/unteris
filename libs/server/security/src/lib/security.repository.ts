@@ -22,6 +22,14 @@ export class SecurityRepo {
       .executeTakeFirst();
   }
 
+  async findUserById(id: string): Promise<UserAccount> {
+    return await this.db
+      .selectFrom('userAccount')
+      .selectAll()
+      .where('id', '=', id)
+      .executeTakeFirstOrThrow();
+  }
+
   async createUserRecord(user: SignupUser): Promise<Pick<UserAccount, 'id'>> {
     return this.db
       .insertInto('userAccount')

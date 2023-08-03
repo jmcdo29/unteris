@@ -54,7 +54,7 @@ export class ServerSecurityService {
       loginMethod.id
     );
     this.sessionService.updateSession(sessionId, {
-      user: { email: newUser.email },
+      user: { email: newUser.email, id: createdUser.id },
     });
     void this.sendEmailVerification({
       id: createdUser.id,
@@ -113,7 +113,7 @@ export class ServerSecurityService {
       });
     }
     await this.sessionService.updateSession(sessionId, {
-      user: { email: user.email },
+      user: { email: user.email, id: user.id },
     });
     void this.securityRepo.clearLoginAttemptsByLocalLoginId(user.localLoginId);
     return { success: true, displayName: user.name, id: user.id };
@@ -156,5 +156,9 @@ export class ServerSecurityService {
       user.id,
       await this.hashService.hash(password)
     );
+  }
+
+  async getUserById(id: string): Promise<UserAccount> {
+    return await this.securityRepo.findUserById(id);
   }
 }

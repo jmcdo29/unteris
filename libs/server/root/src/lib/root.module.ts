@@ -8,7 +8,10 @@ import { ServerEmailModule } from '@unteris/server/email';
 import { ServerLocationModule } from '@unteris/server/location';
 import { ServerLoggingModule } from '@unteris/server/logging';
 import { ServerRaceModule } from '@unteris/server/race';
-import { ServerSecurityModule } from '@unteris/server/security';
+import {
+  IsLoggedInGuard,
+  ServerSecurityModule,
+} from '@unteris/server/security';
 import {
   ServerSessionModule,
   SessionExistsGuard,
@@ -39,6 +42,10 @@ import { BaseFilter } from './catch-all.filter';
     {
       provide: APP_GUARD,
       useClass: SessionExistsGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: IsLoggedInGuard,
     },
     {
       provide: APP_INTERCEPTOR,
