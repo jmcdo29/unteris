@@ -61,9 +61,9 @@ export class ServerSessionService {
     return JSON.parse((await this.redis.get(sessionId)) ?? '{}');
   }
 
-  async updateSession(
+  async updateSession<T extends 'session' | 'refresh' = 'session'>(
     sessionId: string,
-    sessionData: Partial<SessionData | RefreshSessionData>
+    sessionData: Partial<T extends 'session' ? SessionData : RefreshSessionData>
   ): Promise<void> {
     const session = await this.getSession(sessionId);
     if (!this.isSavedSession(session)) {

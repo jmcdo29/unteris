@@ -5,7 +5,12 @@ const SessionIdSchema = z.object({
 });
 
 export const SessionDataSchema = z.object({
-  user: z.object({}).passthrough(),
+  user: z
+    .object({
+      email: z.string().email().optional(),
+      id: z.string().ulid().optional(),
+    })
+    .passthrough(),
   csrf: z.string(),
 });
 

@@ -1,10 +1,12 @@
 import { Controller, Get, Param } from '@nestjs/common';
+import { SkipSessionCheck } from '@unteris/server/session';
 import { CategoryParamDto } from './models/category-param.dto';
 import { IdParamDto } from './models/id-param.dto';
 import { LocationParamDto } from './models/location-param.dto';
 import { ServerDeitiesService } from './server-deities.service';
 
 @Controller('deities')
+@SkipSessionCheck()
 export class ServerDeitiesController {
   constructor(private serverDeitiesService: ServerDeitiesService) {}
 

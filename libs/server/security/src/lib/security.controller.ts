@@ -4,6 +4,7 @@ import {
   Get,
   Post,
   Query,
+  Req,
   Session,
   UseGuards,
 } from '@nestjs/common';
@@ -15,9 +16,12 @@ import { Cookies } from 'nest-cookies';
 import { TokenVerificationData } from './models/token-verification-query.dto';
 import { PasswordResetRequestDto } from './models/password-reset-request.dto';
 import { PasswordResetDto } from './models/password-reset.dto';
+import { UserAccount } from '@unteris/shared/types';
+import { SkipSessionCheck } from '@unteris/server/session';
 
 @UseGuards(CsrfGuard)
 @Controller('auth')
+@SkipSessionCheck()
 export class ServerSecurityController {
   constructor(private serverSecurityService: ServerSecurityService) {}
 
@@ -39,6 +43,7 @@ export class ServerSecurityController {
   }
 
   @Get('verify-email')
+  @SkipSessionCheck(false)
   async verifyEmailByToken(
     @Query() query: TokenVerificationData
   ): Promise<{ success: boolean }> {
@@ -61,5 +66,11 @@ export class ServerSecurityController {
   ): Promise<{ success: boolean }> {
     await this.serverSecurityService.resetUserPassword(body.data);
     return { success: true };
+  }
+
+  @Get('me')
+  @SkipSessionCheck(false)
+  async getMe(@Req() { user }: { user: UserAccount }) {
+    return user;
   }
 }
