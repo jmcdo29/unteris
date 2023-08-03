@@ -120,6 +120,6 @@
     "vite-plugin-node": "^3.0.2",
     "vite-tsconfig-paths": "^4.0.7",
     "vitest": "^0.32.2",
-    "webpack": "^5.74.0"
+    "webpack": "^5.76.0"
   }
 }
