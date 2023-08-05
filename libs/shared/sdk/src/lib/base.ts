@@ -7,22 +7,30 @@ import {
 } from '@unteris/shared/types';
 import { method, RouteToType, SdkGeneric } from './routes-with-types';
 
-export class Sdk<T extends SdkGeneric = RouteToType> {
+export class FetchError extends Error {
+  data: Response;
+  constructor(message: string, data: Response) {
+    super(message);
+    this.data = data;
+  }
+}
+
+abstract class SdkBase<T extends SdkGeneric = RouteToType> {
   private csrfToken = '';
   constructor(private readonly baseUrl: string) {}
 
-  setCsrfToken(token: string): typeof this {
+  setCsrfToken(token: string): SdkBase<T> {
     this.csrfToken = token;
     return this;
   }
 
-  private async request<E extends keyof T[method] = keyof T[method]>(config: {
+  protected async request<E extends keyof T[method] = keyof T[method]>(config: {
     endpoint: E;
     method: method;
     headers: Record<string, string>;
     body?: T[method][E][1];
   }): Promise<T[method][E][0]> {
-    const res = await fetch(`${this.baseUrl}/${config.endpoint.toString()}`, {
+    const reqConfig: RequestInit = {
       method: config.method.toString().toUpperCase(),
       headers: {
         [csrfHeader]: this.csrfToken,
@@ -31,22 +39,28 @@ export class Sdk<T extends SdkGeneric = RouteToType> {
       },
       credentials: 'include',
       mode: 'cors',
-      body: JSON.stringify(config.body ?? {}),
-    });
+    };
+    if (config.method !== 'get') {
+      reqConfig.body = JSON.stringify(config.body);
+    }
+    const res = await fetch(
+      `${this.baseUrl}/${config.endpoint.toString()}`,
+      reqConfig
+    );
     if (!res.ok) {
-      throw new Error('Error durng request');
+      throw new FetchError('Error durng request', res);
     }
     return res.json();
   }
 
-  protected get<E extends keyof T['get']>(
+  get<E extends keyof T['get']>(
     endpoint: E,
     config: Record<string, string> = {}
   ): Promise<T['get'][E][0]> {
     return this.request({ endpoint, method: 'get', headers: config });
   }
 
-  protected post<E extends keyof T['post']>(
+  post<E extends keyof T['post']>(
     endpoint: E,
     body: T['post'][E][1],
     config: Record<string, string> = {}
@@ -54,7 +68,7 @@ export class Sdk<T extends SdkGeneric = RouteToType> {
     return this.request({ endpoint, method: 'post', headers: config, body });
   }
 
-  protected patch<E extends keyof T['patch']>(
+  patch<E extends keyof T['patch']>(
     endpoint: E,
     body: T['patch'][E][1],
     config: Record<string, string> = {}
@@ -62,7 +76,7 @@ export class Sdk<T extends SdkGeneric = RouteToType> {
     return this.request({ endpoint, method: 'patch', headers: config, body });
   }
 
-  protected put<E extends keyof T['put']>(
+  put<E extends keyof T['put']>(
     endpoint: E,
     body: T['put'][E][1],
     config: Record<string, string> = {}
@@ -70,12 +84,36 @@ export class Sdk<T extends SdkGeneric = RouteToType> {
     return this.request({ endpoint, method: 'put', headers: config, body });
   }
 
-  protected delete<E extends keyof T['delete']>(
+  delete<E extends keyof T['delete']>(
     endpoint: E,
     body: T['delete'][E][1],
     config: Record<string, string> = {}
   ): Promise<T['delete'][E][0]> {
     return this.request({ endpoint, method: 'delete', headers: config, body });
+  }
+}
+
+export class Sdk extends SdkBase {
+  override async request<
+    E extends keyof RouteToType[method] = keyof RouteToType[method]
+  >(config: {
+    endpoint: E;
+    method: method;
+    headers: Record<string, string>;
+    body?: RouteToType[method][E][1];
+  }): Promise<RouteToType[method][E][0]> {
+    try {
+      return await super.request(config);
+    } catch (e) {
+      if (e instanceof FetchError) {
+        if (e.data.status === 403) {
+          const csrf = await this.getCsrfToken();
+          this.setCsrfToken(csrf.csrfToken);
+          return await this.request(config);
+        }
+      }
+      throw e;
+    }
   }
 
   async getCsrfToken() {
@@ -87,7 +125,7 @@ export class Sdk<T extends SdkGeneric = RouteToType> {
   }
 
   async verifyEmail(token: string) {
-    return this.get(`auth/verify-email?verificaitonToken=${token}`);
+    return this.get(`auth/verify-email?verificationToken=${token}`);
   }
 
   async getRaces() {
@@ -119,7 +157,7 @@ export class Sdk<T extends SdkGeneric = RouteToType> {
   }
 
   async verifyCsrf() {
-    return this.post('csrf/verfy', undefined);
+    return this.post('csrf/verify', undefined);
   }
 
   async signup(body: SignupUser) {
