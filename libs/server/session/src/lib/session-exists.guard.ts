@@ -1,8 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
 import { SessionData } from '@unteris/server/common';
 import { NestCookieRequest } from 'nest-cookies';
-import { SKIP_SESSION_LOGGED_IN_CHECK } from './session.decorator';
 import { ServerSessionService } from './session.service';
 
 /**
@@ -12,20 +10,9 @@ import { ServerSessionService } from './session.service';
  **/
 @Injectable()
 export class SessionExistsGuard implements CanActivate {
-  constructor(
-    private readonly sessionService: ServerSessionService,
-    private readonly reflector: Reflector
-  ) {}
+  constructor(private readonly sessionService: ServerSessionService) {}
 
   async canActivate(context: ExecutionContext) {
-    if (
-      this.reflector.getAllAndOverride(SKIP_SESSION_LOGGED_IN_CHECK, [
-        context.getClass(),
-        context.getHandler(),
-      ])
-    ) {
-      return true;
-    }
     const req = context
       .switchToHttp()
       .getRequest<

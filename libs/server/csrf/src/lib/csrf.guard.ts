@@ -1,5 +1,5 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { csrfHeader } from '@unteris/server/common';
+import { csrfHeader } from '@unteris/shared/types';
 import { ServerCsrfService } from './csrf.service';
 
 @Injectable()
