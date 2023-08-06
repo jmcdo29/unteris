@@ -1,10 +1,7 @@
 import { TabbedNavigator } from '@unteris/ui/components';
-import { atom } from 'jotai';
 import { Suspense } from 'react';
-import { deitiesForLocaitonAtom, deityIdAtom } from './atoms';
+import { deitiesForLocaitonAtom, deityIndexAtom } from './atoms';
 import { Deity } from './deity';
-
-const indexAtom = atom(-1);
 
 export const DeityPicker = (): JSX.Element => {
   return (
@@ -12,8 +9,7 @@ export const DeityPicker = (): JSX.Element => {
       <TabbedNavigator
         label="homebrew deity tab picker"
         resourceAtom={deitiesForLocaitonAtom}
-        idAtom={deityIdAtom}
-        indexAtom={indexAtom}
+        indexAtom={deityIndexAtom}
         tabPanelContent={() => <Deity />}
         indicator="secondary"
       />

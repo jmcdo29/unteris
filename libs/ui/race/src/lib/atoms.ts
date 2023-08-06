@@ -4,7 +4,16 @@ import { atom } from 'jotai';
 
 export const editingAtom = atom<boolean>(false);
 
-export const raceIdAtom = atom<string>('');
+export const raceIndexAtom = atom(0);
+
+export const raceIdAtom = atom<Promise<string>>(async (get) => {
+  const races = await get(racesAtom);
+  const raceIndex = get(raceIndexAtom);
+  if (!races.length || raceIndex === -1) {
+    return '';
+  }
+  return races[raceIndex].id;
+});
 
 export const racesAtom = atom<Promise<Pick<Race, 'id' | 'name'>[]>>(
   async () => {
@@ -14,12 +23,11 @@ export const racesAtom = atom<Promise<Pick<Race, 'id' | 'name'>[]>>(
 
 export const raceAtom = atom<Promise<RaceWithAbilities | undefined>>(
   async (get) => {
-    const raceId = get(raceIdAtom);
+    const raceId = await get(raceIdAtom);
     if (!raceId) {
       return;
     }
-    const data = await sdk.getRaceById(get(raceIdAtom).toString());
-    console.log(data);
+    const data = await sdk.getRaceById(raceId);
     return data;
   }
 );

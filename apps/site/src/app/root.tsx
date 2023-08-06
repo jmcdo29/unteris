@@ -10,7 +10,6 @@ export const Root = ({
   children?: React.ReactNode;
 }): JSX.Element => {
   const theme = useTheme();
-  console.log(children);
   return (
     <>
       <NavBar />
