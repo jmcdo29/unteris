@@ -1,36 +1,31 @@
-import { Race as RaceType } from '@unteris/shared/types';
-import { useFetchEffect, TabsWithPanel } from '@unteris/ui/components';
-import { atom, useAtom } from 'jotai';
-import { SyntheticEvent } from 'react';
+import { TabsWithPanel } from '@unteris/ui/components';
+import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { Suspense, SyntheticEvent } from 'react';
+import { racesAtom, raceIdAtom } from './atoms';
 
 import { Race } from './race';
 
 const indexAtom = atom(0);
-const racesAtom = atom<RaceType[]>([]);
 
 export const UiRace = (): JSX.Element => {
   const [tabIndex, setTabIndex] = useAtom(indexAtom);
-  const [races, setRaces] = useAtom(racesAtom);
-
-  useFetchEffect({
-    endpoint: 'race',
-    setter: setRaces,
-    default: [],
-  });
+  const races = useAtomValue(racesAtom);
+  const setRaceId = useSetAtom(raceIdAtom);
 
   const handleTabChange = (_event: SyntheticEvent, newIndex: number) => {
     setTabIndex(newIndex);
+    setRaceId(races[newIndex].id);
   };
 
   return (
-    <TabsWithPanel
-      ariaLabel="homebrew race tab picker"
-      tabIndex={tabIndex}
-      handleTabChange={handleTabChange}
-      tabElements={races}
-      tabPanelContent={(race) => {
-        return <Race race={race} />;
-      }}
-    />
+    <Suspense>
+      <TabsWithPanel
+        ariaLabel="homebrew race tab picker"
+        tabIndex={tabIndex}
+        handleTabChange={handleTabChange}
+        tabElements={races}
+        tabPanelContent={() => <Race />}
+      />
+    </Suspense>
   );
 };
