@@ -1,5 +1,5 @@
 import { Link, useTheme } from '@mui/material';
-import { getFetch, Grid, Heading } from '@unteris/ui/components';
+import { Grid, Heading, sdk } from '@unteris/ui/components';
 import { atom, useAtomValue, useSetAtom } from 'jotai';
 import { Suspense } from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -10,7 +10,7 @@ const verifiedEmailStateAtom = atom(async (get) => {
   if (!token) {
     return false;
   }
-  const res = await getFetch({ endpoint: `auth/verify-email?token=${token}` });
+  const res = await sdk.verifyEmail(token);
   if (res.success) {
     return true;
   } else {

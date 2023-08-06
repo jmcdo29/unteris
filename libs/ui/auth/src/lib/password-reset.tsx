@@ -1,11 +1,10 @@
 import { PasswordReset as PasswordResetBody } from '@unteris/shared/types';
-import { csrfAtom } from '@unteris/ui/atoms';
 import {
   ActionButton,
   Grid,
   Heading,
   PasswordInput,
-  postFetch,
+  sdk,
 } from '@unteris/ui/components';
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -22,16 +21,11 @@ export const PasswordReset = (): JSX.Element => {
   const setToken = useSetAtom(tokenAtom);
   const passwordResetBody = useAtomValue(passwordResetAtom);
   const [password, setPassword] = useAtom(passwordAtom);
-  const csrfToken = useAtomValue(csrfAtom);
   const navigate = useNavigate();
 
   setToken(queryParams.get('resetToken'));
   const submit = async () => {
-    const res = await postFetch({
-      endpoint: 'auth/password-reset',
-      body: passwordResetBody,
-      csrfToken,
-    });
+    const res = await sdk.passwordReset(passwordResetBody);
     navigate('/login');
   };
   return (

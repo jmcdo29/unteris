@@ -1,29 +1,17 @@
 import Box from '@mui/material/Box';
 import { useMediaQuery } from '@mui/material';
-import { Race as IRace, RaceWithAbilities } from '@unteris/shared/types';
-import { useFetchEffect } from '@unteris/ui/components';
-import { atom, useAtom, useAtomValue } from 'jotai';
+import { Race as IRace } from '@unteris/shared/types';
+import { useAtomValue } from 'jotai';
 
-import { editingAtom } from './atoms';
+import { editingAtom, raceAtom } from './atoms';
 import { RaceViewer } from './race-viewer';
 import { RaceEditor } from './race-editor';
+import { Suspense } from 'react';
 
-interface RaceProps {
-  race: Pick<IRace, 'id' | 'name'>;
-}
-
-const raceAtom = atom<RaceWithAbilities | undefined>(undefined);
-
-export const Race = (props: RaceProps): JSX.Element => {
+export const Race = (): JSX.Element => {
   const isWideEnough = useMediaQuery('(min-width:600px)');
-  const [race, setRace] = useAtom(raceAtom);
+  const race = useAtomValue(raceAtom);
   const isEditing = useAtomValue(editingAtom);
-
-  useFetchEffect({
-    endpoint: `race/${props.race.id}`,
-    default: undefined,
-    setter: setRace,
-  });
 
   const updateRace = (_race: IRace) => {
     /* this is where I'll call back to the server to save */
@@ -34,12 +22,14 @@ export const Race = (props: RaceProps): JSX.Element => {
   }
 
   return (
-    <Box padding={`${!isWideEnough ? '1em' : '0'} 1em`}>
-      {isEditing ? (
-        <RaceEditor race={race} setRace={updateRace} />
-      ) : (
-        <RaceViewer race={race} />
-      )}
-    </Box>
+    <Suspense>
+      <Box padding={`${!isWideEnough ? '1em' : '0'} 1em`}>
+        {isEditing ? (
+          <RaceEditor race={race} setRace={updateRace} />
+        ) : (
+          <RaceViewer race={race} />
+        )}
+      </Box>
+    </Suspense>
   );
 };

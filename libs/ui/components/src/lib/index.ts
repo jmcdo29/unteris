@@ -10,6 +10,7 @@ export * from './password';
 export * from './styled-link';
 export * from './tab-panel';
 export * from './tab';
+export * from './tabbed-navigator';
 export * from './tabs-with-panel';
 export * from './text-input';
 export * from './theme-switcher';

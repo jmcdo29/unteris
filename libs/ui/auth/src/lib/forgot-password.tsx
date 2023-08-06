@@ -1,28 +1,20 @@
-import { csrfAtom } from '@unteris/ui/atoms';
 import {
   ActionButton,
   convertUnknownErrorToDisplayError,
   Heading,
-  postFetch,
+  sdk,
   TextInput,
 } from '@unteris/ui/components';
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { authErrorAtom, displayErrorAtom, authUserAtom } from './auth.atoms';
 
 export const ForgotPassword = (): JSX.Element => {
   const [loginUser, setLoginUser] = useAtom(authUserAtom);
-  const csrfToken = useAtomValue(csrfAtom);
   const setAuthError = useSetAtom(authErrorAtom);
   const setDisplayError = useSetAtom(displayErrorAtom);
   const sendResetRequest = async () => {
     try {
-      const res = await postFetch({
-        endpoint: 'auth/reset-password',
-        body: {
-          email: loginUser.email,
-        },
-        csrfToken,
-      });
+      const res = await sdk.passwordResetRequest({ email: loginUser.email });
     } catch (e) {
       setAuthError(
         convertUnknownErrorToDisplayError(e, 'Reset Password Error')

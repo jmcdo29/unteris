@@ -1,14 +1,13 @@
-import { LoginResponse } from '@unteris/shared/types';
-import { csrfAtom, userAtom } from '@unteris/ui/atoms';
+import { userAtom } from '@unteris/ui/atoms';
 import {
   ActionButton,
   convertUnknownErrorToDisplayError,
   Heading,
   PasswordInput,
-  postFetch,
+  sdk,
   TextInput,
 } from '@unteris/ui/components';
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { useNavigate } from 'react-router-dom';
 import { authErrorAtom, displayErrorAtom, authUserAtom } from './auth.atoms';
 
@@ -17,18 +16,13 @@ export const Login = (): JSX.Element => {
   const setAuthError = useSetAtom(authErrorAtom);
   const setDisplayError = useSetAtom(displayErrorAtom);
   const setUser = useSetAtom(userAtom);
-  const csrfToken = useAtomValue(csrfAtom);
   const navigate = useNavigate();
 
   const login = async () => {
     try {
-      const res = await postFetch<LoginResponse>({
-        endpoint: 'auth/login',
-        body: {
-          email: loginUser.email,
-          password: loginUser.password,
-        },
-        csrfToken,
+      const res = await sdk.login({
+        email: loginUser.email,
+        password: loginUser.password,
       });
       setUser({
         id: res.id,

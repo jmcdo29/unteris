@@ -1,7 +1,7 @@
 import { useMediaQuery } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import Tabs from '@mui/material/Tabs';
-import { SyntheticEvent } from 'react';
+import { Suspense, SyntheticEvent } from 'react';
 import { a11yProps } from './a11y.props';
 import { Tab } from './tab';
 import { TabPanel } from './tab-panel';
@@ -45,7 +45,7 @@ export const TabsWithPanel = (props: TabsWithPanelProps): JSX.Element => {
       </Tabs>
       {props.tabElements.map((tab, index) => (
         <TabPanel value={props.tabIndex} index={index} key={index}>
-          {props.tabPanelContent(tab)}
+          <Suspense>{props.tabPanelContent(tab)}</Suspense>
         </TabPanel>
       ))}
     </Grid>

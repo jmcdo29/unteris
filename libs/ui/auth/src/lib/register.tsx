@@ -1,14 +1,14 @@
 import { SignupUser } from '@unteris/shared/types';
-import { csrfAtom, userAtom } from '@unteris/ui/atoms';
+import { userAtom } from '@unteris/ui/atoms';
 import {
   ActionButton,
   convertUnknownErrorToDisplayError,
   Heading,
   PasswordInput,
-  postFetch,
+  sdk,
   TextInput,
 } from '@unteris/ui/components';
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { useNavigate } from 'react-router-dom';
 import { authErrorAtom, displayErrorAtom, authUserAtom } from './auth.atoms';
 
@@ -17,7 +17,6 @@ export const Register = (): JSX.Element => {
   const setAuthError = useSetAtom(authErrorAtom);
   const setDisplayError = useSetAtom(displayErrorAtom);
   const [newUser, setNewUser] = useAtom(authUserAtom);
-  const csrfToken = useAtomValue(csrfAtom);
   const navigate = useNavigate();
   const updateField =
     (field: keyof SignupUser) =>
@@ -26,11 +25,7 @@ export const Register = (): JSX.Element => {
     };
   const submit = async () => {
     try {
-      const res = await postFetch<{ id: string }>({
-        csrfToken,
-        endpoint: 'auth/signup',
-        body: newUser,
-      });
+      const res = await sdk.signup(newUser);
       setUser({
         id: res.id,
         email: newUser.email,
