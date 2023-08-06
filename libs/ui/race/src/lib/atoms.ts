@@ -4,7 +4,7 @@ import { atom } from 'jotai';
 
 export const editingAtom = atom<boolean>(false);
 
-export const raceIdAtom = atom<string | number>('');
+export const raceIdAtom = atom<string>('');
 
 export const racesAtom = atom<Promise<Pick<Race, 'id' | 'name'>[]>>(
   async () => {
