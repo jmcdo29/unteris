@@ -1,11 +1,4 @@
-import {
-  atom,
-  Atom,
-  PrimitiveAtom,
-  useAtom,
-  useAtomValue,
-  useSetAtom,
-} from 'jotai';
+import { Atom, PrimitiveAtom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { Suspense, SyntheticEvent } from 'react';
 import { TabsWithPanel } from './tabs-with-panel';
 
