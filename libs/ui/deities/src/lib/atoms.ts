@@ -31,22 +31,22 @@ export const deitiesForLocaitonAtom = atom<
   return sdk.getDeitiesByLocation(locationId);
 });
 
-const lastKnownLocationIndexAtom = atom(0);
-
-const primitiveDeityIndex = atom(0);
+const primitiveDeityIndex = atom({ deityIndex: 0, lastKnownLocationIndex: 0 });
 export const deityIndexAtom = atom(
   (get) => {
     const locationIndex = get(locationIndexAtom);
-    const lastKnownLocationIndex = get(lastKnownLocationIndexAtom);
-    if (locationIndex !== lastKnownLocationIndex) {
+    const deityIndicies = get(primitiveDeityIndex);
+    if (locationIndex !== deityIndicies.lastKnownLocationIndex) {
       return 0;
     }
-    const val = get(primitiveDeityIndex);
-    return val;
+    return deityIndicies.deityIndex;
   },
   (get, set, val: number) => {
-    set(lastKnownLocationIndexAtom, get(locationIndexAtom));
-    set(primitiveDeityIndex, val);
+    const locationIndex = get(locationIndexAtom);
+    set(primitiveDeityIndex, {
+      deityIndex: val,
+      lastKnownLocationIndex: locationIndex,
+    });
   }
 );
 
