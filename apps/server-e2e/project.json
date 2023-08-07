@@ -13,9 +13,7 @@
     },
     "run-tests": {
       "executor": "@nx/vite:test",
-      "options": {
-        //  "config": "./apps/server-e2e/vite.config.ts"
-      },
+      "options": {},
       "dependsOn": [
         {
           "projects": "self",

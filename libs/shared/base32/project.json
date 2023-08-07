@@ -13,7 +13,7 @@
     },
     "test": {
       "executor": "@nx/vite:test",
-      "outputs": ["coverage/libs/shared/base32"],
+      "outputs": ["{workspaceRoot}/coverage/libs/shared/base32"],
       "options": {
         "passWithNoTests": true,
         "reportsDirectory": "../../../coverage/libs/shared/base32"

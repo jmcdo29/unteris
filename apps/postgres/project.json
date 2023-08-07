@@ -9,10 +9,9 @@
     },
     "package": {
       "executor": "@unteris/plugin/docker:build",
-      "outputs": ["docker/cache/postgres"],
+      "outputs": ["{workspaceRoot}/docker/cache/postgres"],
       "opitons": {},
       "inputs": ["{projectRoot}/Dockerfile", "{projectRoot}/postgresql.conf"],
-
       "configurations": {
         "ci": {
           "publish": true

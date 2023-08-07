@@ -14,7 +14,7 @@
     },
     "test": {
       "executor": "@nx/vite:test",
-      "outputs": ["coverage/libs/ui/components"],
+      "outputs": ["{workspaceRoot}/coverage/libs/ui/components"],
       "options": {
         "passWithNoTests": true,
         "reportsDirectory": "../../../coverage/libs/ui/components"

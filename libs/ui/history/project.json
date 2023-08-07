@@ -14,7 +14,7 @@
     },
     "test": {
       "executor": "@nx/vite:test",
-      "outputs": ["coverage/libs/ui/history"],
+      "outputs": ["{workspaceRoot}/coverage/libs/ui/history"],
       "options": {
         "passWithNoTests": true,
         "reportsDirectory": "../../../coverage/libs/ui/history"

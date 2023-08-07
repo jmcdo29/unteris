@@ -12,7 +12,8 @@
         "tsConfig": "libs/db/migrations/tsconfig.lib.json",
         "packageJson": "libs/db/migrations/package.json",
         "main": "libs/db/migrations/src/index.ts",
-        "assets": ["libs/db/migrations/*.md"]
+        "assets": ["libs/db/migrations/*.md"],
+        "updateBuildableProjectDepsInPackageJson": true
       }
     },
     "lint": {

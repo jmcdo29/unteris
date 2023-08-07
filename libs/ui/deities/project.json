@@ -14,7 +14,7 @@
     },
     "test": {
       "executor": "@nx/vite:test",
-      "outputs": ["coverage/libs/ui/deities"],
+      "outputs": ["{workspaceRoot}/coverage/libs/ui/deities"],
       "options": {
         "passWithNoTests": true,
         "reportsDirectory": "../../../coverage/libs/ui/deities"

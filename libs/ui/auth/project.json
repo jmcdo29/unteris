@@ -14,7 +14,7 @@
     },
     "test": {
       "executor": "@nx/vite:test",
-      "outputs": ["coverage/libs/ui/auth"],
+      "outputs": ["{workspaceRoot}/coverage/libs/ui/auth"],
       "options": {
         "passWithNoTests": true,
         "reportsDirectory": "../../../coverage/libs/ui/auth"
