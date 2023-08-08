@@ -5,7 +5,7 @@ export const UserAccountSchema = z.object({
   name: z.string(),
   email: z.string().email(),
   isVerified: z.boolean(),
-  photoUrl: z.string().url().optional(),
+  imageId: z.string().url().optional(),
 });
 
 export type UserAccount = z.infer<typeof UserAccountSchema>;

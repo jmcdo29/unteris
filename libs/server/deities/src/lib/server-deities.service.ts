@@ -3,6 +3,8 @@ import { Database, InjectKysely } from '@unteris/server/kysely';
 import { Deity } from '@unteris/shared/types';
 import { Kysely } from 'kysely';
 
+type DeityReturn = Omit<Deity, 'imageId'> & { imageUrl: string | null };
+
 @Injectable()
 export class ServerDeitiesService {
   constructor(@InjectKysely() private readonly db: Kysely<Database>) {}
@@ -14,30 +16,31 @@ export class ServerDeitiesService {
       .selectFrom('deity')
       .select(['id', 'name'])
       .orderBy('id', 'asc')
-      .where('category', '=', category)
+      .where('categoryId', '=', category)
       .execute();
   }
 
-  async getDeityById(id: string): Promise<Deity> {
+  async getDeityById(id: string): Promise<DeityReturn> {
     const deityRecords = await this.db
       .selectFrom('deity')
       .leftJoin('deityDomain', 'deity.id', 'deityDomain.deityId')
       .leftJoin('domain', 'deityDomain.domainId', 'domain.id')
+      .leftJoin('image', 'imageId', 'image.id')
       .select([
         'deity.id as id',
         'deity.name as name',
-        'imageUrl',
         'description',
         'domain.name as domainName',
         'domain.type as domainType',
         'domain.id as domainId',
+        'image.originalUrl as imageUrl',
       ])
       .where('deity.id', '=', id)
       .execute();
     if (deityRecords.length === 0) {
       throw new BadRequestException(`No deity found with Id ${id}`);
     }
-    const deity: Deity = {
+    const deity: DeityReturn = {
       name: deityRecords[0].name,
       id,
       description: deityRecords[0].description,
@@ -68,7 +71,7 @@ export class ServerDeitiesService {
       .selectFrom('deity')
       .select(['id', 'name'])
       .orderBy('id', 'asc')
-      .where('location', '=', location)
+      .where('locationId', '=', location)
       .execute();
   }
 }

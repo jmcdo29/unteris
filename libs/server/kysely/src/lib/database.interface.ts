@@ -4,6 +4,7 @@ import {
   DeityCategory,
   Domain,
   DeityDomain,
+  Image,
   Race,
   RacialAbility,
   UserPermission,
@@ -33,4 +34,5 @@ export interface Database {
   verificationToken: Omit<GeneratedId<VerificationToken>, 'expiresAt'> & {
     expiresAt: Generated<Date>;
   };
+  image: GeneratedId<Image>;
 }

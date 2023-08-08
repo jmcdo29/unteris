@@ -15,3 +15,4 @@ export * from './lib/auth';
 export * from './lib/deities';
 export * from './lib/verification-token';
 export * from './lib/constants';
+export * from './lib/image';

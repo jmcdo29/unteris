@@ -5,9 +5,9 @@ export const DeitySchema = z.object({
   id: z.string().ulid(),
   name: z.string(),
   description: z.string(),
-  imageUrl: z.string(),
-  category: z.string().ulid().optional(),
-  location: z.string().ulid().optional(),
+  imageId: z.string(),
+  categoryId: z.string().ulid().optional(),
+  locationId: z.string().ulid().optional(),
   domain: z.array(DomainSchema).optional(),
 });
 

@@ -18,6 +18,8 @@ erDiagram
     User_Account ||--|{ User_Permission : "should have"
     Verification_Token ||--|| User_Account : "relates to"
     Role ||--|{ User_Permission : "relates_to"
+    User_Account ||--|| : "has an avatar"
+    Deity ||--|| Image : "has a portrait"
     DeityCategory {
         string name
         ulid id
@@ -26,9 +28,9 @@ erDiagram
         string name
         ulid id
         string description
-        string image_url
-        string category
-        string location
+        string image_id
+        string category_id
+        string location_id
     }
     Domain {
         string name
@@ -67,7 +69,7 @@ erDiagram
         string name
         string email
         boolean isVerified
-        string photo_url
+        string image_id
     }
     User_Permission {
         ulid id
@@ -95,6 +97,14 @@ erDiagram
         string token
         ulid user_id
         string type
+    }
+    Image {
+        ulid id
+        string type
+        string original_url
+        string small_url
+        string medium_url
+        string large_url
     }
 
 ```
