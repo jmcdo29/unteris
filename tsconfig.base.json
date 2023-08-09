@@ -25,6 +25,7 @@
       "@unteris/server/deities": ["libs/server/deities/src/index.ts"],
       "@unteris/server/email": ["libs/server/email/src/index.ts"],
       "@unteris/server/hash": ["libs/server/hash/src/index.ts"],
+      "@unteris/server/image-client": ["libs/server/image-client/src/index.ts"],
       "@unteris/server/kysely": ["libs/server/kysely/src/index.ts"],
       "@unteris/server/location": ["libs/server/location/src/index.ts"],
       "@unteris/server/logging": ["libs/server/logging/src/index.ts"],

@@ -17,12 +17,22 @@ const devConfig = z.object({
   SMTP_HOST: z.string().optional(),
 });
 
-const commonConfig = z.object({
+const dbConfig = z.object({
   DATABASE_USER: z.string(),
   DATABASE_PASSWORD: z.string(),
   DATABASE_PORT: z.string().transform((val) => Number.parseInt(val)),
   DATABASE_HOST: z.string(),
   DATABASE_NAME: z.string(),
+});
+
+const rabbitConfig = z.object({
+  RABBIT_USER: z.string(),
+  RABBIT_PASSWORD: z.string(),
+  RABBIT_HOST: z.string(),
+  RABBIT_PORT: z.string(),
+});
+
+const commonConfig = z.object({
   PORT: z
     .optional(z.string().transform((val) => Number.parseInt(val, 10)))
     .default('3333'),
@@ -36,6 +46,6 @@ const commonConfig = z.object({
     .default(7 * dayInSeconds),
 });
 export const Config = z.intersection(
-  commonConfig,
+  commonConfig.merge(dbConfig).merge(rabbitConfig),
   z.discriminatedUnion('NODE_ENV', [prodConfig, devConfig])
 );
