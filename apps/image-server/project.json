@@ -1,0 +1,51 @@
+{
+  "name": "image-server",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/image-server/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/image-server",
+        "main": "apps/image-server/src/main.ts",
+        "tsConfig": "apps/image-server/tsconfig.app.json",
+        "assets": ["apps/image-server/src/assets"],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/image-server/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "debug": false,
+        "buildTarget": "image-server:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "image-server:build:development"
+        },
+        "production": {
+          "buildTarget": "image-server:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/image-server/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}
