@@ -19,8 +19,19 @@
         "webpackConfig": "apps/image-server/webpack.config.js"
       },
       "configurations": {
-        "development": {},
-        "production": {}
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "generatePackageJson": true,
+          "buildLibsFromSrc": true,
+          "fileReplacements": [
+            {
+              "replace": "apps/image-server/src/environments/environment.ts",
+              "with": "apps/image-server/src/environments/environment.prod.ts"
+            }
+          ]
+        }
       }
     },
     "serve": {
@@ -44,6 +55,16 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["apps/image-server/**/*.ts"]
+      }
+    },
+    "package": {
+      "executor": "@unteris/plugin/docker:build",
+      "outputs": ["{workspaceRoot}/docker/cache/server"],
+      "options": {},
+      "configurations": {
+        "ci": {
+          "publish": true
+        }
       }
     }
   },
