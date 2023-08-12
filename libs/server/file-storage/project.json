@@ -1,0 +1,16 @@
+{
+  "name": "server-file-storage",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/server/file-storage/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/server/file-storage/**/*.ts"]
+      }
+    }
+  },
+  "tags": ["rmq", "storage", "server", "utility"]
+}

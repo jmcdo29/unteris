@@ -1,3 +1,4 @@
+import { join } from 'path';
 import { z } from 'zod';
 
 const hourInSeconds = 60 * 60;
@@ -8,6 +9,7 @@ const prodConfig = z.object({
   NOREPLY_EMAIL: z.string().email(),
   SMTP_PASS: z.string(),
   SMTP_HOST: z.string(),
+  FILE_PATH: z.string().optional().default(join(process.cwd(), 'images')),
 });
 
 const devConfig = z.object({
@@ -15,6 +17,10 @@ const devConfig = z.object({
   NOREPLY_EMAIL: z.string().email().optional(),
   SMTP_PASS: z.string().optional(),
   SMTP_HOST: z.string().optional(),
+  FILE_PATH: z
+    .string()
+    .optional()
+    .default(join(process.cwd(), 'apps', 'site', 'public', 'images')),
 });
 
 const dbConfig = z.object({
