@@ -1,4 +1,4 @@
-import { Kysely, sql } from 'kysely';
+import { ExpressionBuilder, Kysely, sql } from 'kysely';
 
 export const up = async (db: Kysely<any>) => {
   await db.schema
@@ -40,7 +40,7 @@ export const up = async (db: Kysely<any>) => {
     .execute();
   await db
     .updateTable('deity')
-    .set((eb) => ({
+    .set((eb: ExpressionBuilder<any, string>) => ({
       image_id: eb
         .selectFrom('image')
         .select('id')
@@ -50,7 +50,7 @@ export const up = async (db: Kysely<any>) => {
     .execute();
   await db
     .updateTable('user_account')
-    .set((eb) => ({
+    .set((eb: ExpressionBuilder<any, string>) => ({
       image_id: eb
         .selectFrom('image')
         .select('id')
