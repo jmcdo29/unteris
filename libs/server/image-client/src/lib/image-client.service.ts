@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientRMQ } from '@nestjs/microservices';
+import { PROCESS_IMAGE_EVENT } from '@unteris/shared/types';
 
 @Injectable()
 export class ServerImageClientService {
@@ -8,6 +9,6 @@ export class ServerImageClientService {
   ) {}
 
   sendImageIdForProcessing(id: string): void {
-    this.imageProxy.emit('PATTERN_GOES_HERE', { id });
+    this.imageProxy.emit(PROCESS_IMAGE_EVENT, { id });
   }
 }

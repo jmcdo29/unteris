@@ -35,7 +35,7 @@
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
       "options": {
-        "debug": false,
+        "inspect": false,
         "buildTarget": "server:build"
       },
       "configurations": {

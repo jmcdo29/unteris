@@ -4,7 +4,10 @@ import {
   ServerConfigService,
 } from '@unteris/server/config';
 import { ServerFileStorageService } from './file-storage.service';
-import { FILE_LOCAL_CONFIG_TOKEN } from './file-storage.constants';
+import {
+  FILE_LOCAL_CONFIG_TOKEN,
+  FILE_STORE_TOKEN,
+} from './file-storage.constants';
 import { LocalStoreConfig } from './file-manager.interface';
 import { LocalStore } from './local.store';
 
@@ -21,7 +24,10 @@ import { LocalStore } from './local.store';
         };
       },
     },
-    LocalStore,
+    {
+      provide: FILE_STORE_TOKEN,
+      useClass: LocalStore,
+    },
   ],
   exports: [ServerFileStorageService],
 })

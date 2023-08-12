@@ -1,16 +1,13 @@
 import { Module } from '@nestjs/common';
+import { ServerImageProcessingModule } from '@unteris/server/image-processing';
 import { KyselyModule } from '@unteris/server/kysely';
 import { ServerLoggingModule } from '@unteris/server/logging';
-
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 
 @Module({
   imports: [
     ServerLoggingModule.forApplication('Unteris Image', 'DEBUG'),
     KyselyModule,
+    ServerImageProcessingModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class ImageRootModule {}

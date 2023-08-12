@@ -38,7 +38,7 @@
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
       "options": {
-        "debug": false,
+        "inspect": false,
         "buildTarget": "image-server:build"
       },
       "configurations": {
