@@ -16,6 +16,7 @@
     "strict": true,
     "baseUrl": ".",
     "strictPropertyInitialization": false,
+    "esModuleInterop": true,
     "paths": {
       "@unteris/db/migrations": ["libs/db/migrations/src/index.ts"],
       "@unteris/plugin/docker": ["libs/docker/src/index.ts"],
