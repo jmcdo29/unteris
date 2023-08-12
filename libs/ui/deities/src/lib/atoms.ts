@@ -59,7 +59,9 @@ export const deityIdAtom = atom<Promise<string>>(async (get) => {
   return deities[deityIndex].id;
 });
 
-export const deityAtom = atom<Promise<Deity | undefined>>(async (get) => {
+export const deityAtom = atom<
+  Promise<(Omit<Deity, 'imageId'> & { imageUrl: string }) | undefined>
+>(async (get) => {
   const deityId = await get(deityIdAtom);
   if (!deityId) {
     return;

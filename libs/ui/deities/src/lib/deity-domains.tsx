@@ -6,7 +6,7 @@ import { Deity } from '@unteris/shared/types';
 type DomainType = Exclude<Deity['domain'], undefined>[number];
 
 const filterDomains = (
-  deity: Deity,
+  deity: Omit<Deity, 'imageId'>,
   domainType: DomainType['type']
 ): Omit<DomainType, 'type'>[] => {
   return (deity.domain ?? [])
@@ -41,7 +41,11 @@ const Domain = ({
   );
 };
 
-export const DeityDomains = ({ deity }: { deity: Deity }): JSX.Element => {
+export const DeityDomains = ({
+  deity,
+}: {
+  deity: Omit<Deity, 'imageId'>;
+}): JSX.Element => {
   const druidDomains = filterDomains(deity, 'druid');
   const warlockDomains = filterDomains(deity, 'warlock');
   const clericDomains = filterDomains(deity, 'cleric');
