@@ -1,9 +1,10 @@
 import { ExpressionBuilder, Kysely, sql } from 'kysely';
+import { kyselyUlid } from './ulid.sql';
 
 export const up = async (db: Kysely<any>) => {
   await db.schema
     .createTable('image')
-    .addColumn('id', sql`ulid`, (col) => col.defaultTo(sql`generate_ulid()`))
+    .addColumn('id', sql`ulid`, (col) => col.defaultTo(kyselyUlid()))
     .addColumn('type', 'text', (col) => col.notNull())
     .addColumn('original_url', 'text')
     .addColumn('small_url', 'text')

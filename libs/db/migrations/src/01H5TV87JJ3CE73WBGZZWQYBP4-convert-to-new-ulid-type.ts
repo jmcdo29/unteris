@@ -4,20 +4,21 @@ import {
   Kysely,
   sql,
 } from 'kysely';
+import { kyselyUlid } from './ulid.sql';
 
 const convertToUlid = (
   column: string
 ): [string, AlterColumnBuilderCallback] => [
   column,
   (col: AlterColumnBuilder) =>
-    col.setDataType(sql`ulid USING (${column}::ulid)`),
+    col.setDataType(sql`ulid USING (${sql.ref(column)}::ulid)`),
 ];
 
 const setUlidDefault = (
   column: string
 ): [string, AlterColumnBuilderCallback] => [
   column,
-  (col: AlterColumnBuilder) => col.setDefault(sql`gen_ulid()`),
+  (col: AlterColumnBuilder) => col.setDefault(kyselyUlid()),
 ];
 
 const migrateTableColumnToUlid = async (
@@ -28,6 +29,7 @@ const migrateTableColumnToUlid = async (
 ): Promise<void> => {
   let command = db.schema
     .alterTable(table)
+    .alterColumn(column, (col) => col.dropDefault())
     .alterColumn(...convertToUlid(column));
   if (setDefault) {
     command = command.alterColumn(...setUlidDefault(column));
