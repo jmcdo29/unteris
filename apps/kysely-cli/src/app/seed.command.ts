@@ -99,7 +99,7 @@ export class SeedCommand extends CommandRunner {
     }
     await this.db
       .insertInto('deity')
-      .values([{ ...data, category: category.id }])
+      .values([{ ...data, categoryId: category.id }])
       .executeTakeFirstOrThrow();
   }
 

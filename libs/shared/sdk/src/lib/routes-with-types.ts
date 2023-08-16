@@ -32,7 +32,9 @@ export type RouteToType = {
     'session/refresh': [{ success: boolean }];
     [key: `deities/category/${string}`]: [Array<Pick<Deity, 'id' | 'name'>>];
     [key: `deities/location/${string}`]: [Array<Pick<Deity, 'id' | 'name'>>];
-    [key: `deities/id/${string}`]: [Deity];
+    [key: `deities/id/${string}`]: [
+      Omit<Deity, 'imageId'> & { imageUrl: 'string' }
+    ];
     locations: [Array<Pick<Location, 'id' | 'name'>>];
   };
   post: {

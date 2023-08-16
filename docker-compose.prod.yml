@@ -23,6 +23,22 @@ services:
       - '3333:3333'
     depends_on:
       - postgres
+      - redis
+      - rabbit
+    labels:
+      - 'com.centurylinklabs.watchtower.enable=true'
+  image-server:
+    image: jmcdo29/unteris-image-server
+    logging:
+      driver: local
+    env_file: .env
+    environment:
+      DATABASE_HOST: postgres
+    volumes:
+      - './images:/src/images'
+    depends_on:
+      - postgres
+      - rabbit
     labels:
       - 'com.centurylinklabs.watchtower.enable=true'
   migrations:
@@ -57,3 +73,9 @@ services:
     volumes:
       - './redis.conf:/usr/local/etc/redis/redis.conf'
     command: redis-server /usr/local/etc/redis/redis.conf
+  rabbitmq:
+    image: rabbitmq
+    ports:
+      - '5672:5672'
+    volumes:
+      - './rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf'

@@ -1,3 +1,4 @@
+import { join } from 'path';
 import { z } from 'zod';
 
 const hourInSeconds = 60 * 60;
@@ -8,6 +9,7 @@ const prodConfig = z.object({
   NOREPLY_EMAIL: z.string().email(),
   SMTP_PASS: z.string(),
   SMTP_HOST: z.string(),
+  FILE_PATH: z.string().optional().default(join(process.cwd(), 'images')),
 });
 
 const devConfig = z.object({
@@ -15,14 +17,28 @@ const devConfig = z.object({
   NOREPLY_EMAIL: z.string().email().optional(),
   SMTP_PASS: z.string().optional(),
   SMTP_HOST: z.string().optional(),
+  FILE_PATH: z
+    .string()
+    .optional()
+    .default(join(process.cwd(), 'apps', 'site', 'public', 'images')),
 });
 
-const commonConfig = z.object({
+const dbConfig = z.object({
   DATABASE_USER: z.string(),
   DATABASE_PASSWORD: z.string(),
   DATABASE_PORT: z.string().transform((val) => Number.parseInt(val)),
   DATABASE_HOST: z.string(),
   DATABASE_NAME: z.string(),
+});
+
+const rabbitConfig = z.object({
+  RABBIT_USER: z.string(),
+  RABBIT_PASSWORD: z.string(),
+  RABBIT_HOST: z.string(),
+  RABBIT_PORT: z.string(),
+});
+
+const commonConfig = z.object({
   PORT: z
     .optional(z.string().transform((val) => Number.parseInt(val, 10)))
     .default('3333'),
@@ -36,6 +52,6 @@ const commonConfig = z.object({
     .default(7 * dayInSeconds),
 });
 export const Config = z.intersection(
-  commonConfig,
+  commonConfig.merge(dbConfig).merge(rabbitConfig),
   z.discriminatedUnion('NODE_ENV', [prodConfig, devConfig])
 );

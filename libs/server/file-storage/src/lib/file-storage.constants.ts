@@ -1,0 +1,5 @@
+export const FILE_STORE_TOKEN = Symbol('METADATA:FILE-STORE');
+
+export const FILE_LOCAL_CONFIG_TOKEN = Symbol(
+  'METADATA:LOCAL_FILE_STORE:CONFIG'
+);

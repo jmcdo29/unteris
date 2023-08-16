@@ -8,8 +8,10 @@ import { Image } from '@unteris/ui/components';
 import { useTheme } from '@mui/material';
 import { DeityDomains } from './deity-domains';
 
+type DeityReturn = Omit<Deity, 'imageId'> & { imageUrl: string };
+
 interface DeityViewerProps {
-  deity: Deity;
+  deity: DeityReturn;
 }
 
 export const DeityViewer = ({

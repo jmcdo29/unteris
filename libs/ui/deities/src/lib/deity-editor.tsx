@@ -8,9 +8,11 @@ import { useTheme } from '@mui/material';
 import { useSetAtom } from 'jotai';
 import { editingAtom } from './atoms';
 
+type DeityReturn = Omit<Deity, 'imageId'> & { imageUrl: string };
+
 interface DeityEditorProps {
-  deity: Deity;
-  setDeity: (deity: Deity) => void;
+  deity: DeityReturn;
+  setDeity: (deity: DeityReturn) => void;
 }
 
 export const DeityEditor = (props: DeityEditorProps): JSX.Element => {
@@ -28,7 +30,7 @@ export const DeityEditor = (props: DeityEditorProps): JSX.Element => {
       targetField: e.target.dataset.fieldid,
       value: e.target.value,
     });
-    deityCopy[targetField as keyof Deity] =
+    deityCopy[targetField as keyof DeityReturn] =
       targetField === 'domains'
         ? e.target.value.split(',')
         : (e.target.value as any);

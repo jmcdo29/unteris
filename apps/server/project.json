@@ -33,8 +33,18 @@
     },
     "serve": {
       "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
       "options": {
+        "inspect": false,
         "buildTarget": "server:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "server:build:development"
+        },
+        "production": {
+          "buildTarget": "server:build:production"
+        }
       }
     },
     "lint": {
