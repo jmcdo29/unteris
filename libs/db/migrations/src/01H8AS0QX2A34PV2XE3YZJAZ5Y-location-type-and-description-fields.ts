@@ -9,5 +9,9 @@ export const up = async (db: Kysely<any>) => {
 };
 
 export const down = async (db: Kysely<any>) => {
-  /* no op */
+  await db.schema
+    .alterTable('location')
+    .dropColumn('parent_id')
+    .dropColumn('type')
+    .execute();
 };
