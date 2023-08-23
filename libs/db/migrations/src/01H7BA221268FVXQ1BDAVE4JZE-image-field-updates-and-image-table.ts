@@ -4,7 +4,9 @@ import { kyselyUlid } from './ulid.sql';
 export const up = async (db: Kysely<any>) => {
   await db.schema
     .createTable('image')
-    .addColumn('id', sql`ulid`, (col) => col.defaultTo(kyselyUlid()))
+    .addColumn('id', sql`ulid`, (col) =>
+      col.defaultTo(kyselyUlid()).primaryKey()
+    )
     .addColumn('type', 'text', (col) => col.notNull())
     .addColumn('original_url', 'text')
     .addColumn('small_url', 'text')
@@ -32,7 +34,13 @@ export const up = async (db: Kysely<any>) => {
   await db.schema
     .alterTable('deity')
     .renameColumn('image_url', 'image_id')
+    .execute();
+  await db.schema
+    .alterTable('deity')
     .renameColumn('category', 'category_id')
+    .execute();
+  await db.schema
+    .alterTable('deity')
     .renameColumn('location', 'location_id')
     .execute();
   await db.schema
@@ -61,9 +69,21 @@ export const up = async (db: Kysely<any>) => {
     .execute();
   await db.schema
     .alterTable('deity')
+    .alterColumn('image_id', (col) =>
+      col.setDataType(sql`ulid USING (${sql.ref('image_id')}::ulid)`)
+    )
+    .execute();
+  await db.schema
+    .alterTable('deity')
     .addForeignKeyConstraint('deity_image_id_fkey', ['image_id'], 'image', [
       'id',
     ])
+    .execute();
+  await db.schema
+    .alterTable('user_account')
+    .alterColumn('image_id', (col) =>
+      col.setDataType(sql`ulid USING (${sql.ref('image_id')}::ulid)`)
+    )
     .execute();
   await db.schema
     .alterTable('user_account')

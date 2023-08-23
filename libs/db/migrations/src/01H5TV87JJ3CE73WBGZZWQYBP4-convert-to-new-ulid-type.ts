@@ -74,7 +74,7 @@ export const up = async (db: Kysely<any>): Promise<void> => {
     .dropConstraint('deity_category_fkey')
     .execute();
   await db.schema
-    .alterTable('detiy')
+    .alterTable('deity')
     .dropConstraint('deity_location_fkey')
     .execute();
   await migrateTableColumnToUlid(db, 'deity_category', 'id', true);
