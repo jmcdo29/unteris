@@ -1,10 +1,11 @@
-import { Kysely, sql } from 'kysely';
+import { Kysely } from 'kysely';
+import { kyselyUlid } from './ulid.sql';
 
 export const up = async (db: Kysely<any>) => {
   await db.schema
     .alterTable('location')
     .addColumn('type', 'text')
-    .addColumn('parent_id', sql`ulid`, (col) => col.references('location.id'))
+    .addColumn('parent_id', kyselyUlid, (col) => col.references('location.id'))
     .execute();
 };
 

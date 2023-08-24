@@ -1,11 +1,11 @@
 import { ExpressionBuilder, Kysely, sql } from 'kysely';
-import { kyselyUlid } from './ulid.sql';
+import { kyselyDefaultUlid, kyselyUlid } from './ulid.sql';
 
 export const up = async (db: Kysely<any>) => {
   await db.schema
     .createTable('image')
-    .addColumn('id', sql`ulid`, (col) =>
-      col.defaultTo(kyselyUlid()).primaryKey()
+    .addColumn('id', kyselyUlid, (col) =>
+      col.defaultTo(kyselyDefaultUlid()).primaryKey()
     )
     .addColumn('type', 'text', (col) => col.notNull())
     .addColumn('original_url', 'text')
