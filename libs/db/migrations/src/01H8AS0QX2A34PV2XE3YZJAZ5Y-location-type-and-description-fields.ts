@@ -7,6 +7,7 @@ export const up = async (db: Kysely<any>) => {
     .addColumn('type', 'text')
     .addColumn('parent_id', kyselyUlid, (col) => col.references('location.id'))
     .execute();
+  await db.updateTable('location').set({ type: 'plane' }).execute();
 };
 
 export const down = async (db: Kysely<any>) => {
