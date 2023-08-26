@@ -31,8 +31,12 @@ export class ZodValidationPipe {
             case 'too_small':
               mappedErr.message = `${path} should be at least ${err.minimum} characters`;
               break;
+            case 'invalid_enum_value':
+              mappedErr.message = err.message;
+              break;
             default:
-              mappedErr.message = 'Hey dev! Add this case:\n' + err.message;
+              mappedErr.message =
+                `Hey dev! Add this case: "${err.code}"\n` + err.message;
           }
           return mappedErr;
         }),
