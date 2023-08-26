@@ -4,6 +4,7 @@ import {
   SignupUser,
   PasswordResetRequest,
   PasswordReset,
+  Location,
 } from '@unteris/shared/types';
 import { method, RouteToType, SdkGeneric } from './routes-with-types';
 
@@ -152,8 +153,8 @@ export class Sdk extends SdkBase {
     return this.get(`deities/id/${id}`);
   }
 
-  async getLocations() {
-    return this.get('locations');
+  async getLocationsByType(type: Location['type']) {
+    return this.get(`locations?type=${type}`);
   }
 
   async verifyCsrf() {

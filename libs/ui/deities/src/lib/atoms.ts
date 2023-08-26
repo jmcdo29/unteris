@@ -6,7 +6,7 @@ export const editingAtom = atom(false);
 
 export const locationsAtom = atom<Promise<Pick<Location, 'id' | 'name'>[]>>(
   async () => {
-    return sdk.getLocations();
+    return sdk.getLocationsByType('plane');
   }
 );
 
