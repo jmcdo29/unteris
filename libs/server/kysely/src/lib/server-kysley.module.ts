@@ -34,6 +34,16 @@ import {
         logger: OgmaService
       ): KyselyConfig => {
         try {
+          logger.silly(
+            {
+              host: config.get('DATABASE_HOST'),
+              port: config.get('DATABASE_PORT'),
+              database: config.get('DATABASE_NAME'),
+              user: config.get('DATABASE_USER'),
+              password: config.get('DATABASE_PASSWORD'),
+            },
+            { context: 'PG Pool' }
+          );
           const dbConfig = {
             dialect: new PostgresDialect({
               pool: new Pool({

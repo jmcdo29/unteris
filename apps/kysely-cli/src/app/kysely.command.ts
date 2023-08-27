@@ -25,53 +25,54 @@ export class KyselyCliCommand extends CommandRunner {
   }
   async run(_inputs: string[], options: KyselyCliOptions) {
     this.logger.log('Starting Migrations');
-    try {
-      const migrator = new Migrator({
-        db: this.kysely,
-        provider: new FileMigrationProvider({
-          fs,
-          path,
-          migrationFolder: path.join(
-            process.cwd(),
-            'dist',
-            'libs',
-            'db',
-            'migrations',
-            'src'
-          ),
-        }),
-      });
-      let callMigration: Promise<MigrationResultSet>;
-      if (options.name) {
-        callMigration = migrator.migrateTo(options.name);
-      } else if (options.down) {
-        callMigration = migrator.migrateDown();
-      } else {
-        callMigration = migrator.migrateToLatest();
+    const migrator = new Migrator({
+      db: this.kysely,
+      provider: new FileMigrationProvider({
+        fs,
+        path,
+        migrationFolder: path.join(
+          process.cwd(),
+          'dist',
+          'libs',
+          'db',
+          'migrations',
+          'src'
+        ),
+      }),
+    });
+    let callMigration: Promise<MigrationResultSet>;
+    if (options.name) {
+      callMigration = migrator.migrateTo(options.name);
+    } else if (options.down) {
+      callMigration = migrator.migrateDown();
+    } else {
+      callMigration = migrator.migrateToLatest();
+    }
+    let migrationErrors: unknown[] = [];
+    const { results, error } = await callMigration;
+    migrationErrors.push(error);
+    results?.forEach((result) => {
+      if (result.status === 'Success') {
+        this.logger.log(
+          `Migration ${result.migrationName} successfully migrated ${result.direction}.`
+        );
+      } else if (result.status === 'Error') {
+        migrationErrors.push(
+          `Migration ${result.migrationName} encountered an error while migrating ${result.direction}`
+        );
       }
-      let migrationErrors: unknown[] = [];
-      const { results, error } = await callMigration;
-      migrationErrors.push(error);
-      results?.forEach((result) => {
-        if (result.status === 'Success') {
-          this.logger.log(
-            `Migration ${result.migrationName} successfully migrated ${result.direction}.`
-          );
-        } else if (result.status === 'Error') {
-          migrationErrors.push(
-            `Migration ${result.migrationName} encountered an error while migrating ${result.direction}`
-          );
+    });
+    migrationErrors = migrationErrors.filter((error) => !!error);
+    if (migrationErrors.length) {
+      migrationErrors.forEach((err) => {
+        if (err instanceof Error) {
+          this.logger.printError(err, { context: 'Migration Error' });
+        } else {
+          this.logger.error(err);
         }
       });
-      migrationErrors = migrationErrors.filter((error) => !!error);
-      if (migrationErrors.length) {
-        throw new Error(migrationErrors.join('\n'));
-      }
-    } catch (err) {
-      this.logger.printError(err as Error);
-    } finally {
-      this.logger.log('Migrations Finished');
     }
+    this.logger.log('Migrations Finished');
   }
 
   @Option({

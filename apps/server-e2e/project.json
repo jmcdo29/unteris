@@ -24,7 +24,8 @@
     "run-migrations": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "pnpm nx run kysely-cli:migrate-e2e"
+        "command": "pnpm nx run --verbose kysely-cli:e2e"
+        // "envFile": "apps/kysely-cli/.env.e2e"
       },
       "dependsOn": ["start-docker"]
     },
@@ -32,9 +33,11 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "docker compose -f docker-compose.test.yml up -d",
-          "while ! nc -q0 localhost 26379 < /dev/null > /dev/null 2>&1; do sleep 10; done",
-          "while ! nc -q0 localhost 25432 < /dev/null > /dev/null 2>&1; do sleep 10; done"
+          "docker compose -f docker-compose.test.yml up -d --build",
+          // "while ! nc -q0 localhost 26379 < /dev/null > /dev/null 2>&1; do sleep 10; done",
+          // "while ! nc -q0 localhost 25432 < /dev/null > /dev/null 2>&1; do sleep 10; done",
+          "while ! nc -q0 -z localhost 26379; do sleep 10; done",
+          "while ! nc -q0 -z localhost 25432; do sleep 10; done"
         ]
       }
     },
