@@ -1,24 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import { Database, InjectKysely } from '@unteris/server/kysely';
 import { Location } from '@unteris/shared/types';
-import { Insertable, Kysely, Selectable } from 'kysely';
+import { Insertable } from 'kysely';
+import { LocationRepository } from './location.repository';
 
 @Injectable()
 export class ServerLocationService {
-  constructor(@InjectKysely() private readonly db: Kysely<Database>) {}
+  constructor(private readonly locationRepo: LocationRepository) {}
 
-  async getLocations() {
-    return this.db.selectFrom('location').select(['id', 'name']).execute();
+  async getLocationsByType(
+    type: Location['type']
+  ): Promise<Pick<Location, 'id' | 'name'>[]> {
+    return this.locationRepo.getLocationsByType(type);
   }
 
-  async createLocation(
-    location: Insertable<Location>
-  ): Promise<Selectable<Location>> {
-    const result = await this.db
-      .insertInto('location')
-      .values(location)
-      .returningAll()
-      .executeTakeFirstOrThrow();
+  async createLocation(location: Insertable<Location>): Promise<Location> {
+    const result = this.locationRepo.createLocation(location);
     return result;
   }
 }

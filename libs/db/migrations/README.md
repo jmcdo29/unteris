@@ -18,8 +18,9 @@ erDiagram
     User_Account ||--|{ User_Permission : "should have"
     Verification_Token ||--|| User_Account : "relates to"
     Role ||--|{ User_Permission : "relates_to"
-    User_Account ||--|| : "has an avatar"
+    User_Account ||--|| Image : "has an avatar"
     Deity ||--|| Image : "has a portrait"
+    Location ||--|| Location : "can be in"
     DeityCategory {
         string name
         ulid id
@@ -47,6 +48,8 @@ erDiagram
         ulid id
         string name
         string description
+        string type
+        ulid parent_id
     }
     Race {
         ulid id

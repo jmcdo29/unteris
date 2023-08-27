@@ -4,7 +4,7 @@ import {
   Kysely,
   sql,
 } from 'kysely';
-import { kyselyUlid } from './ulid.sql';
+import { kyselyDefaultUlid } from './ulid.sql';
 
 const convertToUlid = (
   column: string
@@ -18,7 +18,7 @@ const setUlidDefault = (
   column: string
 ): [string, AlterColumnBuilderCallback] => [
   column,
-  (col: AlterColumnBuilder) => col.setDefault(kyselyUlid()),
+  (col: AlterColumnBuilder) => col.setDefault(kyselyDefaultUlid()),
 ];
 
 const migrateTableColumnToUlid = async (
@@ -74,7 +74,7 @@ export const up = async (db: Kysely<any>): Promise<void> => {
     .dropConstraint('deity_category_fkey')
     .execute();
   await db.schema
-    .alterTable('detiy')
+    .alterTable('deity')
     .dropConstraint('deity_location_fkey')
     .execute();
   await migrateTableColumnToUlid(db, 'deity_category', 'id', true);

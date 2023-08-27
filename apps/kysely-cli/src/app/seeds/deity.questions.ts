@@ -74,7 +74,7 @@ export class DeityQuestions {
 
   @ChoicesFor({ name: 'location' })
   async getLocationOptions() {
-    const locations = await this.locationsService.getLocations();
+    const locations = await this.locationsService.getLocationsByType('plane');
     return locations.map((location) => ({
       name: location.name,
       value: location.id,

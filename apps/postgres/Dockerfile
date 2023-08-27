@@ -8,8 +8,8 @@ RUN apt install -y --no-install-recommends curl ca-certificates
 
 RUN apt upgrade -y
 
-RUN curl -OJL https://github.com/pksunkara/pgx_ulid/releases/download/v0.1.1/pgx_ulid-v0.1.1-pg15-$(dpkg --print-architecture)-linux-gnu.deb && \
-  apt install ./pgx_ulid-v0.1.1-pg15-$(dpkg --print-architecture)-linux-gnu.deb
+RUN curl -OJL https://github.com/pksunkara/pgx_ulid/releases/download/v0.1.2/pgx_ulid-v0.1.2-pg15-$(dpkg --print-architecture)-linux-gnu.deb && \
+  apt install ./pgx_ulid-v0.1.2-pg15-$(dpkg --print-architecture)-linux-gnu.deb
 
 WORKDIR /home/postgres
 

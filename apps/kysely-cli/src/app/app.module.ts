@@ -20,7 +20,7 @@ import { SeedTypeQuestions } from './seeds/seed-type.questions';
 @Module({
   imports: [
     KyselyModule,
-    ServerLoggingModule.forApplication('Kysely CLI', 'DEBUG'),
+    ServerLoggingModule.forApplication('Kysely CLI', 'ALL'),
     OgmaModule.forFeatures([KyselyCliCommand, SeedCommand]),
     ServerDeitiesModule,
     ServerLocationModule,

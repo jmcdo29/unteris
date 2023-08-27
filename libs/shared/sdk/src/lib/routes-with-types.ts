@@ -35,8 +35,10 @@ export type RouteToType = {
     [key: `deities/id/${string}`]: [
       Omit<Deity, 'imageId'> & { imageUrl: 'string' }
     ];
-    locations: [Array<Pick<Location, 'id' | 'name'>>];
-  };
+  } & Record<
+    `locations?type=${Location['type']}`,
+    [Array<Pick<Location, 'id' | 'name'>>]
+  >;
   post: {
     'csrf/verify': [{ success: boolean }];
     'auth/signup': [{ success: boolean; id: UserAccount['id'] }, SignupUser];
