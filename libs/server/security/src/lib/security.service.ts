@@ -50,7 +50,7 @@ export class ServerSecurityService {
       'local'
     );
     await this.securityRepo.createLocalLoginRecord(
-      newUser.password,
+      await this.hashService.hash(newUser.password),
       loginMethod.id
     );
     this.sessionService.updateSession(sessionId, {
