@@ -11,7 +11,7 @@ export default async function runExecutor(
   return new Promise((resolve, reject) => {
     const project = options.imageName ?? context.projectName;
     const logger = new Ogma({
-      application: `Nx Docker Plguin - ${project}`,
+      application: `Nx Docker Plugin - ${project}`,
       logLevel: options?.verbose ? 'VERBOSE' : 'LOG',
     });
     try {
@@ -37,7 +37,7 @@ export default async function runExecutor(
       const target = options.target ?? `${project}-prod`;
       logger.verbose(`Using dockerfile target ${target}`);
       const builder = options.builder ?? 'container';
-      logger.verbose(`Using doocker builder ${builder}`);
+      logger.verbose(`Using docker builder ${builder}`);
       const publish = options.publish ?? false;
       const path =
         options.path ??
