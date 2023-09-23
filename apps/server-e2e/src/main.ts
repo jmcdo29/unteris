@@ -1,6 +1,7 @@
 import { INestApplication } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { OgmaService } from "@ogma/nestjs-module";
+import { getEmailInstanceToken } from "@unteris/server/email";
 import { getKyselyInstanceToken } from "@unteris/server/kysely";
 import { RootModule } from "@unteris/server/root";
 import { request } from "pactum";
@@ -8,7 +9,6 @@ import { beforeAll, beforeEach, describe } from "vitest";
 import { TestContext } from "./interfaces/test-context.interface";
 import { csrfTest } from "./tests/csrf";
 import { signUpAndLoginTests } from "./tests/signup-and-login";
-import { getEmailInstanceToken } from "@unteris/server/email";
 
 describe("Unteris E2E test suite", () => {
 	let app: INestApplication;
