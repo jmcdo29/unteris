@@ -17,6 +17,9 @@
 			"recommended": true,
 			"complexity": {
 				"noStaticOnlyClass": "off"
+			},
+			"suspicious": {
+				"noConsoleLog": "error"
 			}
 		}
 	},

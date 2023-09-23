@@ -63,7 +63,6 @@ export class DeityQuestions {
 		type: "list",
 	})
 	parseLocation(location: Location) {
-		console.log(location);
 		return location;
 	}
 

@@ -18,7 +18,6 @@ import { ServerEmailService } from "./email.service";
 		{
 			provide: EMAIL_CONFIG_TOKEN,
 			useFactory: (config: ServerConfigService) => {
-				console.log(config.get("NODE_ENV"));
 				if (config.get("NODE_ENV") === "test") {
 					return { jsonTransport: true };
 				}

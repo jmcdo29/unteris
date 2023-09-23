@@ -14,12 +14,13 @@ export default async function runExecutor(
 	options: LintExecutorSchema,
 	context: ExecutorContext,
 ) {
+	const logger = new Ogma({
+		application: "Rz Plugin - Biome",
+		context: context.projectName,
+		logLevel: options.verbose ? "ALL" : "INFO",
+		stream: { write: (message) => process.stdout.write(message as string) },
+	});
 	try {
-		const logger = new Ogma({
-			application: "Rz Plugin - Biome",
-			context: context.projectName,
-			logLevel: options.verbose ? "ALL" : "INFO",
-		});
 		const lintForProject = `${style.cyan.apply(
 			"nx-lint",
 		)} for the ${style.magenta.apply(context.projectName ?? "")} project`;
@@ -45,6 +46,7 @@ export default async function runExecutor(
 				args.push("--apply");
 			}
 		}
+		args.push("--colors=force");
 		const cachePath = join(
 			process.cwd(),
 			"tmp",
@@ -66,24 +68,71 @@ export default async function runExecutor(
 			);
 			const [biome, ...pnArgs] = command.split(" ");
 			const biomeCommand = spawn(biome, [...pnArgs, ...args, root]);
-			biomeCommand.stdout.on("data", (chunk) => {
-				logger.log(chunk.toString());
-				appendFileSync(lintCacheFile, chunk.toString());
-			});
+			// biome-ignore lint/suspicious/noControlCharactersInRegex: explicitly searching for escape characters
+			const SRGRegex = /\x1B\[\d\d?m/g;
+			// biome-ignore lint/suspicious/noControlCharactersInRegex: explicitly searching for escape characters
+			const linkRegex = /\x1B\]8;;.*\x1B\\/g;
+			// biome-ignore lint/suspicious/noControlCharactersInRegex: explicitly searching for escape characters
+			const linkEndRegex = /\x1B\]8;;\x1B\\/g;
+			const dataHandler = (dataArray: string[]) => (chunk: Buffer) => {
+				const chunkString = chunk.toString();
+				if (/(\w)+\.[tj]s/.test(chunkString)) {
+					dataArray.push(chunkString);
+				} else {
+					dataArray[dataArray.length - 1] += chunkString;
+				}
+			};
 
-			biomeCommand.stderr.on("data", (chunk) => {
-				logger.error(chunk.toString());
-				appendFileSync(errorCacheFile, chunk.toString());
+			const errorOutput: string[] = [];
+			const dataOutput: string[] = [];
+			biomeCommand.stdout.on("data", dataHandler(dataOutput));
+			biomeCommand.stdout.on("error", dataHandler(errorOutput));
+
+			biomeCommand.stderr.on("data", dataHandler(errorOutput));
+			biomeCommand.stderr.on("error", dataHandler(errorOutput));
+
+			biomeCommand.on("close", (code) => {
+				if (dataOutput.length) {
+					logger.log(`\n${dataOutput}`);
+					appendFileSync(
+						lintCacheFile,
+						dataOutput
+							.join("\n")
+							.replaceAll(SRGRegex, "")
+							.replaceAll(linkRegex, " ")
+							.replaceAll(linkEndRegex, ""),
+					);
+				}
+				if (errorOutput.length) {
+					logger.error(`\n${errorOutput.join("\n")}`);
+					appendFileSync(
+						errorCacheFile,
+						errorOutput
+							.join("\n")
+							.replaceAll(SRGRegex, "")
+							.replaceAll(linkRegex, " ")
+							.replaceAll(linkEndRegex, ""),
+					);
+				}
+				resolve({ success: code === 0 });
 			});
-			biomeCommand.on("close", (code) => resolve({ success: code === 0 }));
 			biomeCommand.on("error", (err) => {
+				logger.error(`\n${errorOutput}`);
+				appendFileSync(
+					errorCacheFile,
+					errorOutput
+						.join("\n")
+						.replaceAll(SRGRegex, "")
+						.replaceAll(linkRegex, " ")
+						.replaceAll(linkEndRegex, ""),
+				);
 				logger.printError(err);
 				resolve({ success: false });
 			});
 		});
 		return biomeRun;
 	} catch (err) {
-		console.error(err);
+		logger.error(err);
 		return { success: false };
 	}
 }

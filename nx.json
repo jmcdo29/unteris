@@ -24,7 +24,11 @@
 			"inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
 		},
 		"lint": {
-			"inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
+			"inputs": [
+				"default",
+				"{workspaceRoot}/biome.json",
+				"{workspaceRoot}/libs/rz/src/executors/lint/executor.ts"
+			]
 		},
 		"e2e": {
 			"inputs": ["default", "^production"]
