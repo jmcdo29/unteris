@@ -1,4 +1,4 @@
-import Typography from '@mui/material/Typography';
+import Typography from "@mui/material/Typography";
 
 interface HeadingProps {
 	fontSize?: string;
@@ -7,7 +7,7 @@ interface HeadingProps {
 
 export const Heading = (props: HeadingProps) => {
 	return (
-		<Typography variant='h2' fontSize={props.fontSize ?? '2em'}>
+		<Typography variant="h2" fontSize={props.fontSize ?? "2em"}>
 			{props.text}
 		</Typography>
 	);

@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { Database, InjectKysely } from '@unteris/server/kysely';
-import { Image } from '@unteris/shared/types';
-import { Kysely } from 'kysely';
+import { Injectable } from "@nestjs/common";
+import { Database, InjectKysely } from "@unteris/server/kysely";
+import { Image } from "@unteris/shared/types";
+import { Kysely } from "kysely";
 
 @Injectable()
 export class ImageRepo {
@@ -9,9 +9,9 @@ export class ImageRepo {
 
 	async getImageById(id: string): Promise<Image | undefined> {
 		return this.db
-			.selectFrom('image')
+			.selectFrom("image")
 			.selectAll()
-			.where('id', '=', id)
+			.where("id", "=", id)
 			.executeTakeFirst();
 	}
 
@@ -20,13 +20,13 @@ export class ImageRepo {
 		paths: { small: string; medium: string; large: string },
 	): Promise<void> {
 		await this.db
-			.updateTable('image')
+			.updateTable("image")
 			.set({
 				smallUrl: paths.small,
 				mediumUrl: paths.medium,
 				largeUrl: paths.large,
 			})
-			.where('id', '=', imageId)
+			.where("id", "=", imageId)
 			.execute();
 	}
 }

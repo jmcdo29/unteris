@@ -1,11 +1,11 @@
-import { OgmaLogger, OgmaService } from '@ogma/nestjs-module';
-import { Database, InjectKysely } from '@unteris/server/kysely';
-import { ServerLocationService } from '@unteris/server/location';
-import { Deity, DeityCategory, Domain, Location } from '@unteris/shared/types';
-import { Insertable, Kysely } from 'kysely';
-import { Command, CommandRunner, InquirerService } from 'nest-commander';
+import { OgmaLogger, OgmaService } from "@ogma/nestjs-module";
+import { Database, InjectKysely } from "@unteris/server/kysely";
+import { ServerLocationService } from "@unteris/server/location";
+import { Deity, DeityCategory, Domain, Location } from "@unteris/shared/types";
+import { Insertable, Kysely } from "kysely";
+import { Command, CommandRunner, InquirerService } from "nest-commander";
 
-@Command({ name: 'seed', arguments: '[type]' })
+@Command({ name: "seed", arguments: "[type]" })
 export class SeedCommand extends CommandRunner {
 	constructor(
 		private readonly inquirer: InquirerService,
@@ -20,7 +20,7 @@ export class SeedCommand extends CommandRunner {
 		try {
 			if (!type) {
 				({ type } = await this.inquirer.ask<{ type: keyof Database }>(
-					'seed-type',
+					"seed-type",
 					{},
 				));
 			}
@@ -29,29 +29,29 @@ export class SeedCommand extends CommandRunner {
 			}
 			const entityType: keyof Database = type;
 			switch (entityType) {
-				case 'deityCategory':
+				case "deityCategory":
 					await this.insertDeityCategory();
 					break;
-				case 'deity':
+				case "deity":
 					await this.insertDeity();
 					break;
-				case 'domain':
+				case "domain":
 					await this.insertDomain();
 					break;
-				case 'deityDomain':
+				case "deityDomain":
 					await this.insertDeityDomain();
 					break;
-				case 'location':
+				case "location":
 					await this.insertLocation();
 					break;
 				default:
-					this.logger.log('This entity type is still being worked on');
+					this.logger.log("This entity type is still being worked on");
 			}
 		} catch (err) {
 			this.logger.error(err);
 		} finally {
 			const { doItAgain } = await this.inquirer.ask<{ doItAgain: boolean }>(
-				'repeat',
+				"repeat",
 				{},
 			);
 			if (doItAgain) {
@@ -63,34 +63,34 @@ export class SeedCommand extends CommandRunner {
 
 	private typeIsKeyOfDatabase(type: string): type is keyof Database {
 		return [
-			'deity',
-			'deityCategory',
-			'domain',
-			'deityDomain',
-			'location',
+			"deity",
+			"deityCategory",
+			"domain",
+			"deityDomain",
+			"location",
 		].includes(type);
 	}
 
 	private async insertDeityCategory(): Promise<void> {
 		const data = await this.inquirer.ask<Insertable<DeityCategory>>(
-			'deityCategory',
+			"deityCategory",
 			{},
 		);
-		await this.db.insertInto('deityCategory').values([data]).execute();
+		await this.db.insertInto("deityCategory").values([data]).execute();
 	}
 
 	private async insertDeity(): Promise<void> {
 		const { askLocation: _askLocation, ...data } = await this.inquirer.ask<
 			Insertable<Deity> & { askLocation: boolean } & { category: string }
-		>('deity', {});
+		>("deity", {});
 		if (this.idFieldIsULID(data.category)) {
-			await this.db.insertInto('deity').values([data]).execute();
+			await this.db.insertInto("deity").values([data]).execute();
 			return;
 		}
 		const category = await this.db
-			.selectFrom('deityCategory')
-			.select('id')
-			.where('name', '=', data.category)
+			.selectFrom("deityCategory")
+			.select("id")
+			.where("name", "=", data.category)
 			.executeTakeFirst();
 		if (!category) {
 			throw new Error(
@@ -98,7 +98,7 @@ export class SeedCommand extends CommandRunner {
 			);
 		}
 		await this.db
-			.insertInto('deity')
+			.insertInto("deity")
 			.values([{ ...data, categoryId: category.id }])
 			.executeTakeFirstOrThrow();
 	}
@@ -107,36 +107,36 @@ export class SeedCommand extends CommandRunner {
 		const { addDescription: _addDescription, ...data } =
 			await this.inquirer.ask<
 				Insertable<Location> & { addDescription: boolean }
-			>('location', {});
+			>("location", {});
 		await this.locationService.createLocation(data);
 	}
 
 	private async insertDomain(): Promise<void> {
-		const data = await this.inquirer.ask<Insertable<Domain>>('domain', {});
-		await this.db.insertInto('domain').values([data]).execute();
+		const data = await this.inquirer.ask<Insertable<Domain>>("domain", {});
+		await this.db.insertInto("domain").values([data]).execute();
 	}
 
 	private async insertDeityDomain(): Promise<void> {
 		const data = await this.inquirer.ask<{
 			deityName: string;
 			domainName: string;
-		}>('deityDomain', {});
+		}>("deityDomain", {});
 		const { id: deityId } = await this.db
-			.selectFrom('deity')
-			.select('id')
-			.where('name', '=', data.deityName)
+			.selectFrom("deity")
+			.select("id")
+			.where("name", "=", data.deityName)
 			.executeTakeFirstOrThrow();
 		const { id: domainId } = await this.db
-			.selectFrom('domain')
-			.select('id')
-			.where('name', '=', data.domainName)
+			.selectFrom("domain")
+			.select("id")
+			.where("name", "=", data.domainName)
 			.executeTakeFirstOrThrow();
 		await this.db
-			.insertInto('deityDomain')
+			.insertInto("deityDomain")
 			.values([{ deityId, domainId }])
 			.execute();
 		const { doItAgain } = await this.inquirer.ask<{ doItAgain: boolean }>(
-			'repeat',
+			"repeat",
 			{},
 		);
 		if (doItAgain) {

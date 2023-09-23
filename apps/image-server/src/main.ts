@@ -1,9 +1,9 @@
-import { Logger } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
-import { Transport } from '@nestjs/microservices';
-import { OgmaService } from '@ogma/nestjs-module';
+import { Logger } from "@nestjs/common";
+import { NestFactory } from "@nestjs/core";
+import { Transport } from "@nestjs/microservices";
+import { OgmaService } from "@ogma/nestjs-module";
 
-import { ImageRootModule } from '@unteris/server/image-root';
+import { ImageRootModule } from "@unteris/server/image-root";
 
 async function bootstrap() {
 	const app = await NestFactory.createMicroservice(ImageRootModule, {
@@ -13,7 +13,7 @@ async function bootstrap() {
 			urls: [
 				`amqp://${process.env.RABBIT_USER}:${process.env.RABBIT_PASSWORD}@${process.env.RABBIT_HOST}:${process.env.RABBIT_PORT}`,
 			],
-			queue: '',
+			queue: "",
 			queueOptions: {
 				durable: true,
 			},
@@ -21,7 +21,7 @@ async function bootstrap() {
 	});
 	app.useLogger(app.get(OgmaService));
 	await app.listen();
-	Logger.log('🚀 Image Processing Server up and running!');
+	Logger.log("🚀 Image Processing Server up and running!");
 }
 
 bootstrap();

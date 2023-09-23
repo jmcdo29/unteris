@@ -13,10 +13,10 @@ import {
 	UserAccount,
 	UserPermission,
 	VerificationToken,
-} from '@unteris/shared/types';
-import { Generated } from 'kysely';
+} from "@unteris/shared/types";
+import { Generated } from "kysely";
 
-type GeneratedId<T> = Omit<T, 'id'> & { id: Generated<string> };
+type GeneratedId<T> = Omit<T, "id"> & { id: Generated<string> };
 
 export interface Database {
 	deity: GeneratedId<Deity>;
@@ -31,7 +31,7 @@ export interface Database {
 	localLogin: GeneratedId<LocalLogin>;
 	loginMethod: GeneratedId<LoginMethod>;
 	role: GeneratedId<Role>;
-	verificationToken: Omit<GeneratedId<VerificationToken>, 'expiresAt'> & {
+	verificationToken: Omit<GeneratedId<VerificationToken>, "expiresAt"> & {
 		expiresAt: Generated<Date>;
 	};
 	image: GeneratedId<Image>;

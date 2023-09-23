@@ -1,9 +1,9 @@
-import Button, { ButtonProps } from '@mui/material/Button';
-import Link, { LinkProps } from '@mui/material/Link';
-import Typography, { TypographyProps } from '@mui/material/Typography';
+import Button, { ButtonProps } from "@mui/material/Button";
+import Link, { LinkProps } from "@mui/material/Link";
+import Typography, { TypographyProps } from "@mui/material/Typography";
 
 const StyledButtonOrLinkInner = ({ children, ...props }: TypographyProps) => (
-	<Typography variant='body2' {...props}>
+	<Typography variant="body2" {...props}>
 		{children}
 	</Typography>
 );

@@ -1,8 +1,8 @@
-import { join } from 'path';
-import { Inject, Injectable } from '@nestjs/common';
-import { readFile, writeFile } from 'fs/promises';
-import { FileManager, LocalStoreConfig } from './file-manager.interface';
-import { FILE_LOCAL_CONFIG_TOKEN } from './file-storage.constants';
+import { join } from "path";
+import { Inject, Injectable } from "@nestjs/common";
+import { readFile, writeFile } from "fs/promises";
+import { FileManager, LocalStoreConfig } from "./file-manager.interface";
+import { FILE_LOCAL_CONFIG_TOKEN } from "./file-storage.constants";
 
 @Injectable()
 export class LocalStore implements FileManager {

@@ -1,4 +1,4 @@
-import { Sdk } from '@unteris/shared/sdk';
+import { Sdk } from "@unteris/shared/sdk";
 
 const baseUrl = import.meta.env.VITE_SERVER_URL;
 

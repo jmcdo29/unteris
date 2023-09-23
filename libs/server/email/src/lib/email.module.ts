@@ -1,15 +1,15 @@
-import { Module } from '@nestjs/common';
+import { Module } from "@nestjs/common";
 import {
 	ServerConfigModule,
 	ServerConfigService,
-} from '@unteris/server/config';
-import { TransportOptions, createTransport } from 'nodemailer';
+} from "@unteris/server/config";
+import { TransportOptions, createTransport } from "nodemailer";
 import {
 	EMAIL_CONFIG_TOKEN,
 	EMAIL_INSTANCE_TOKEN,
 	getEmailConfigToken,
-} from './email.constants';
-import { ServerEmailService } from './email.service';
+} from "./email.constants";
+import { ServerEmailService } from "./email.service";
 
 @Module({
 	imports: [ServerConfigModule],
@@ -19,10 +19,10 @@ import { ServerEmailService } from './email.service';
 			provide: EMAIL_CONFIG_TOKEN,
 			useFactory: (config: ServerConfigService) => ({
 				pool: true,
-				host: config.get('SMTP_HOST'),
+				host: config.get("SMTP_HOST"),
 				auth: {
-					user: config.get('NOREPLY_EMAIL'),
-					pass: config.get('SMTP_PASS'),
+					user: config.get("NOREPLY_EMAIL"),
+					pass: config.get("SMTP_PASS"),
 				},
 			}),
 			inject: [ServerConfigService],

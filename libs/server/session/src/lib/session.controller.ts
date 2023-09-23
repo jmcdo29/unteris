@@ -1,14 +1,14 @@
-import { Controller, Get, Req, UseGuards } from '@nestjs/common';
-import { RefreshRequest, UnterisCookies } from '@unteris/server/common';
-import { Cookie, Cookies, NewCookies } from 'nest-cookies';
-import { RefreshSessionGuard } from './refresh-session.guard';
-import { SkipSessionCheck } from './session.decorator';
-import { ServerSessionService } from './session.service';
+import { Controller, Get, Req, UseGuards } from "@nestjs/common";
+import { RefreshRequest, UnterisCookies } from "@unteris/server/common";
+import { Cookie, Cookies, NewCookies } from "nest-cookies";
+import { RefreshSessionGuard } from "./refresh-session.guard";
+import { SkipSessionCheck } from "./session.decorator";
+import { ServerSessionService } from "./session.service";
 
-@Controller('session')
+@Controller("session")
 export class SessionController {
 	constructor(private readonly sessionService: ServerSessionService) {}
-	@Get('refresh')
+	@Get("refresh")
 	@UseGuards(RefreshSessionGuard)
 	@SkipSessionCheck()
 	async refreshSession(
@@ -20,12 +20,12 @@ export class SessionController {
 		const { refreshId } = cookies;
 		const sessionId = await this.sessionService.createSessionId();
 		await this.sessionService.createSession(oldSession, sessionId);
-		await this.sessionService.updateSession<'refresh'>(refreshId ?? '', {
+		await this.sessionService.updateSession<"refresh">(refreshId ?? "", {
 			sessionId,
 		});
 		newCookies.push(
 			this.sessionService.createCookie({
-				name: 'session',
+				name: "session",
 				value: sessionId,
 			}),
 		);

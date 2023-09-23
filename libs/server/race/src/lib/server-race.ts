@@ -1,3 +1,3 @@
 export function serverRace(): string {
-	return 'server-race';
+	return "server-race";
 }

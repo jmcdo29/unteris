@@ -1,6 +1,6 @@
-import { WriteStream, createWriteStream, mkdirSync, statSync } from 'fs';
-import { join } from 'path';
-import { Injectable } from '@nestjs/common';
+import { WriteStream, createWriteStream, mkdirSync, statSync } from "fs";
+import { join } from "path";
+import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class StreamService {
@@ -31,12 +31,12 @@ export class StreamService {
 
 	private createStream(): WriteStream {
 		try {
-			statSync(join(process.cwd(), 'logs'));
+			statSync(join(process.cwd(), "logs"));
 		} catch {
-			mkdirSync(join(process.cwd(), 'logs'));
+			mkdirSync(join(process.cwd(), "logs"));
 		}
-		return createWriteStream(join(process.cwd(), 'logs', this.filePath), {
-			flags: 'a',
+		return createWriteStream(join(process.cwd(), "logs", this.filePath), {
+			flags: "a",
 		});
 	}
 }

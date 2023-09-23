@@ -1,5 +1,5 @@
-import { z } from 'zod';
-import { DomainSchema } from './domain';
+import { z } from "zod";
+import { DomainSchema } from "./domain";
 
 export const DeitySchema = z.object({
 	id: z.string().ulid(),

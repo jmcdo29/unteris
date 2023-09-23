@@ -1,7 +1,7 @@
-import { serverSession } from './server-session';
+import { serverSession } from "./server-session";
 
-describe('serverSession', () => {
-	it('should work', () => {
-		expect(serverSession()).toEqual('server-session');
+describe("serverSession", () => {
+	it("should work", () => {
+		expect(serverSession()).toEqual("server-session");
 	});
 });

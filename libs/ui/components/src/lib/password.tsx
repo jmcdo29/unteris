@@ -1,16 +1,16 @@
-import CapsLockIcon from '@mui/icons-material/KeyboardCapslock';
-import NumLockIcon from '@mui/icons-material/Numbers';
-import Show from '@mui/icons-material/Visibility';
-import DoNotShow from '@mui/icons-material/VisibilityOff';
-import { useTheme } from '@mui/material';
-import FormHelperText from '@mui/material/FormHelperText';
-import IconButton from '@mui/material/IconButton';
-import Input from '@mui/material/Input';
-import InputAdornment from '@mui/material/InputAdornment';
-import InputLabel from '@mui/material/InputLabel';
-import { atom, useAtom } from 'jotai';
-import { useMemo } from 'react';
-import { UFormControl } from './form-control';
+import CapsLockIcon from "@mui/icons-material/KeyboardCapslock";
+import NumLockIcon from "@mui/icons-material/Numbers";
+import Show from "@mui/icons-material/Visibility";
+import DoNotShow from "@mui/icons-material/VisibilityOff";
+import { useTheme } from "@mui/material";
+import FormHelperText from "@mui/material/FormHelperText";
+import IconButton from "@mui/material/IconButton";
+import Input from "@mui/material/Input";
+import InputAdornment from "@mui/material/InputAdornment";
+import InputLabel from "@mui/material/InputLabel";
+import { atom, useAtom } from "jotai";
+import { useMemo } from "react";
+import { UFormControl } from "./form-control";
 
 const capsLockAtom = atom(false);
 const numLockAtom = atom(false);
@@ -30,10 +30,10 @@ export const PasswordInput = (props: PasswordProps): JSX.Element => {
 	const [numLockActive, setNumLockActive] = useAtom(numLockAtom);
 	const [showPassword, setShowPassword] = useAtom(showPasswordAtom);
 	const toggleShowPassword = () => setShowPassword(!showPassword);
-	const label = props.label ?? 'Password';
+	const label = props.label ?? "Password";
 	const toggleLockKeys = (
 		e: React.KeyboardEvent,
-		key: 'CapsLock' | 'NumLock',
+		key: "CapsLock" | "NumLock",
 		currVal: boolean,
 		setVal: (val: boolean) => void,
 	) => {
@@ -44,8 +44,8 @@ export const PasswordInput = (props: PasswordProps): JSX.Element => {
 		}
 	};
 	const passwordInput = (e: React.KeyboardEvent) => {
-		toggleLockKeys(e, 'CapsLock', capsLockActive, setCapsLockActive);
-		toggleLockKeys(e, 'NumLock', numLockActive, setNumLockActive);
+		toggleLockKeys(e, "CapsLock", capsLockActive, setCapsLockActive);
+		toggleLockKeys(e, "NumLock", numLockActive, setNumLockActive);
 	};
 	return (
 		<UFormControl required>
@@ -55,16 +55,16 @@ export const PasswordInput = (props: PasswordProps): JSX.Element => {
 				id={label}
 				value={props.value}
 				aria-label={label}
-				type={showPassword ? 'text' : 'password'}
+				type={showPassword ? "text" : "password"}
 				onChange={props.onUpdate}
 				onBlur={props.onUpdate}
 				onKeyDown={passwordInput}
 				endAdornment={
-					<InputAdornment position='end'>
+					<InputAdornment position="end">
 						<IconButton
-							aria-label='toggle password visibility'
+							aria-label="toggle password visibility"
 							onClick={toggleShowPassword}
-							edge='end'
+							edge="end"
 						>
 							{showPassword ? <DoNotShow /> : <Show />}
 						</IconButton>

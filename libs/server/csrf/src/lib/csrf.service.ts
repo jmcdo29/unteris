@@ -1,6 +1,6 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
-import { ServerSessionService } from '@unteris/server/session';
-import { ServerTokenService } from '@unteris/server/token';
+import { ForbiddenException, Injectable } from "@nestjs/common";
+import { ServerSessionService } from "@unteris/server/session";
+import { ServerTokenService } from "@unteris/server/token";
 
 @Injectable()
 export class ServerCsrfService {
@@ -25,7 +25,7 @@ export class ServerCsrfService {
 	}): Promise<boolean> {
 		const sessionData = await this.sessionService.getSession(sessionId);
 		if (!this.sessionService.isSession(sessionData)) {
-			throw new ForbiddenException('Invalid session data');
+			throw new ForbiddenException("Invalid session data");
 		}
 		const { csrf } = sessionData;
 		return csrf === csrfToken;

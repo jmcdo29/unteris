@@ -1,12 +1,12 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export const DomainSchema = z.object({
 	id: z.string().ulid(),
 	name: z.string(),
 	type: z.union([
-		z.literal('warlock'),
-		z.literal('druid'),
-		z.literal('cleric'),
+		z.literal("warlock"),
+		z.literal("druid"),
+		z.literal("cleric"),
 	]),
 });
 

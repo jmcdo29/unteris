@@ -6,6 +6,7 @@
 	"targets": {
 		"lint": {
 			"executor": "@unteris/plugin/rz:lint",
+			"outputs": ["{options.outputFile}"],
 			"options": {
 				"unsafe": true
 			}

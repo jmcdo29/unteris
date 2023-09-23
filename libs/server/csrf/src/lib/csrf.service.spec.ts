@@ -1,7 +1,7 @@
-import { Test } from '@nestjs/testing';
-import { ServerCsrfService } from './csrf.service';
+import { Test } from "@nestjs/testing";
+import { ServerCsrfService } from "./csrf.service";
 
-describe('ServerCsrfService', () => {
+describe("ServerCsrfService", () => {
 	let service: ServerCsrfService;
 
 	beforeEach(async () => {
@@ -12,7 +12,7 @@ describe('ServerCsrfService', () => {
 		service = module.get(ServerCsrfService);
 	});
 
-	it('should be defined', () => {
+	it("should be defined", () => {
 		expect(service).toBeTruthy();
 	});
 });

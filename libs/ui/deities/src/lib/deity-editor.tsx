@@ -1,14 +1,14 @@
-import { useTheme } from '@mui/material';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import { Deity } from '@unteris/shared/types';
-import { Grid } from '@unteris/ui/components';
-import { useSetAtom } from 'jotai';
-import { ChangeEvent } from 'react';
-import { editingAtom } from './atoms';
+import { useTheme } from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import { Deity } from "@unteris/shared/types";
+import { Grid } from "@unteris/ui/components";
+import { useSetAtom } from "jotai";
+import { ChangeEvent } from "react";
+import { editingAtom } from "./atoms";
 
-type DeityReturn = Omit<Deity, 'imageId'> & { imageUrl: string };
+type DeityReturn = Omit<Deity, "imageId"> & { imageUrl: string };
 
 interface DeityEditorProps {
 	deity: DeityReturn;
@@ -22,11 +22,11 @@ export const DeityEditor = (props: DeityEditorProps): JSX.Element => {
 	const handleChange = (
 		e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
 	) => {
-		const targetField = e.target.dataset.fieldid ?? '';
-		if (!['name', 'description'].includes(targetField)) {
+		const targetField = e.target.dataset.fieldid ?? "";
+		if (!["name", "description"].includes(targetField)) {
 			return;
 		}
-		deityCopy[targetField as keyof Omit<DeityReturn, 'domain'>] =
+		deityCopy[targetField as keyof Omit<DeityReturn, "domain">] =
 			e.target.value;
 	};
 	const saveChanges = () => {
@@ -40,29 +40,29 @@ export const DeityEditor = (props: DeityEditorProps): JSX.Element => {
 		<Grid columns={12}>
 			<Box
 				sx={{
-					gridColumn: 'span 4',
-					paddingLeft: '1em',
-					display: 'grid',
-					gridColumnTemplate: 'fr',
+					gridColumn: "span 4",
+					paddingLeft: "1em",
+					display: "grid",
+					gridColumnTemplate: "fr",
 					rowGap: theme.spacing(4),
 				}}
 			>
 				<TextField
-					label='Name'
+					label="Name"
 					defaultValue={props.deity.name}
-					id='deity-name'
-					variant='standard'
+					id="deity-name"
+					variant="standard"
 					onChange={handleChange}
-					inputProps={{ 'data-fieldId': 'name' }}
+					inputProps={{ "data-fieldId": "name" }}
 				/>
 				<TextField
-					label='Description'
+					label="Description"
 					defaultValue={props.deity.description}
-					id='deity-description'
-					variant='standard'
+					id="deity-description"
+					variant="standard"
 					multiline
 					onChange={handleChange}
-					inputProps={{ 'data-fieldId': 'description' }}
+					inputProps={{ "data-fieldId": "description" }}
 				/>
 				{/* <TextField
           label="Domains"
@@ -73,10 +73,10 @@ export const DeityEditor = (props: DeityEditorProps): JSX.Element => {
           inputProps={{ 'data-fieldId': 'domains' }}
         />*/}
 				<Grid columns={2} sx={{ columnGap: theme.spacing(2) }}>
-					<Button variant='outlined' onClick={cancelChanges}>
+					<Button variant="outlined" onClick={cancelChanges}>
 						Cancel
 					</Button>
-					<Button variant='contained' color='primary' onClick={saveChanges}>
+					<Button variant="contained" color="primary" onClick={saveChanges}>
 						Save
 					</Button>
 				</Grid>

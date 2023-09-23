@@ -1,4 +1,4 @@
-import Box from '@mui/material/Box';
+import Box from "@mui/material/Box";
 
 interface ImageProps {
 	src: string;
@@ -9,16 +9,16 @@ interface ImageProps {
 export const Image = (props: ImageProps): JSX.Element => {
 	return (
 		<Box>
-			<a href={props.src} target='_blank' rel='noreferrer'>
+			<a href={props.src} target="_blank" rel="noreferrer">
 				<img
 					src={props.src}
 					alt={props.alt}
 					style={{
-						width: '100%',
-						height: '100%',
-						maxHeight: '600px',
-						objectFit: 'contain',
-						padding: '0 1em',
+						width: "100%",
+						height: "100%",
+						maxHeight: "600px",
+						objectFit: "contain",
+						padding: "0 1em",
 						...(props.style ?? {}),
 					}}
 				/>

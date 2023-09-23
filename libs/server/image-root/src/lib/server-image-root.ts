@@ -1,3 +1,3 @@
 export function serverImageRoot(): string {
-	return 'server-image-root';
+	return "server-image-root";
 }

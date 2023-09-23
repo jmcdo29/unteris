@@ -1,34 +1,34 @@
-import { Inject, Module } from '@nestjs/common';
+import { Inject, Module } from "@nestjs/common";
 import {
 	OgmaModule,
 	OgmaService,
 	createProviderToken,
-} from '@ogma/nestjs-module';
-import { style } from '@ogma/styler';
+} from "@ogma/nestjs-module";
+import { style } from "@ogma/styler";
 import {
 	ServerConfigModule,
 	ServerConfigService,
-} from '@unteris/server/config';
+} from "@unteris/server/config";
 import {
 	CamelCasePlugin,
 	Kysely,
 	KyselyConfig,
 	LogEvent,
 	PostgresDialect,
-} from 'kysely';
-import { Pool } from 'pg';
+} from "kysely";
+import { Pool } from "pg";
 import {
 	getKyselyConfigToken,
 	getKyselyInstanceToken,
-} from './kysely.constants';
+} from "./kysely.constants";
 
 @Module({
-	imports: [ServerConfigModule, OgmaModule.forFeature('Kysely')],
+	imports: [ServerConfigModule, OgmaModule.forFeature("Kysely")],
 	controllers: [],
 	providers: [
 		{
 			provide: getKyselyConfigToken(),
-			inject: [ServerConfigService, createProviderToken('Kysely')],
+			inject: [ServerConfigService, createProviderToken("Kysely")],
 			useFactory: (
 				config: ServerConfigService,
 				logger: OgmaService,
@@ -36,40 +36,40 @@ import {
 				try {
 					logger.silly(
 						{
-							host: config.get('DATABASE_HOST'),
-							port: config.get('DATABASE_PORT'),
-							database: config.get('DATABASE_NAME'),
-							user: config.get('DATABASE_USER'),
-							password: config.get('DATABASE_PASSWORD'),
+							host: config.get("DATABASE_HOST"),
+							port: config.get("DATABASE_PORT"),
+							database: config.get("DATABASE_NAME"),
+							user: config.get("DATABASE_USER"),
+							password: config.get("DATABASE_PASSWORD"),
 						},
-						{ context: 'PG Pool' },
+						{ context: "PG Pool" },
 					);
 					const dbConfig = {
 						dialect: new PostgresDialect({
 							pool: new Pool({
-								host: config.get('DATABASE_HOST'),
-								port: config.get('DATABASE_PORT'),
-								database: config.get('DATABASE_NAME'),
-								user: config.get('DATABASE_USER'),
-								password: config.get('DATABASE_PASSWORD'),
+								host: config.get("DATABASE_HOST"),
+								port: config.get("DATABASE_PORT"),
+								database: config.get("DATABASE_NAME"),
+								user: config.get("DATABASE_USER"),
+								password: config.get("DATABASE_PASSWORD"),
 							}),
 						}),
 						log: (event: LogEvent) => {
 							logger.verbose({
-								message: 'Running Query',
+								message: "Running Query",
 								query: event.query.query,
 								parameters: event.query.parameters,
 								raw: event.query.sql,
 							});
-							if (event.level === 'query') {
+							if (event.level === "query") {
 								logger.verbose({
-									message: 'Query Timing',
+									message: "Query Timing",
 									duration: event.queryDurationMillis,
 								});
 							}
-							if (event.level === 'error') {
+							if (event.level === "error") {
 								logger.error({
-									message: 'Error running query',
+									message: "Error running query",
 									error: event.error,
 								});
 							}
@@ -78,8 +78,8 @@ import {
 					};
 					logger.debug(
 						`Connectinig to database ${style.blue.apply(
-							config.get('DATABASE_NAME'),
-						)} on host ${style.magenta.apply(config.get('DATABASE_HOST'))}`,
+							config.get("DATABASE_NAME"),
+						)} on host ${style.magenta.apply(config.get("DATABASE_HOST"))}`,
 					);
 					return dbConfig;
 				} catch (e) {

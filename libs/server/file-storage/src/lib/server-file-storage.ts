@@ -1,3 +1,3 @@
 export function serverFileStorage(): string {
-	return 'server-file-storage';
+	return "server-file-storage";
 }

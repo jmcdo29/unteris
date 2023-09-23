@@ -4,9 +4,9 @@ import {
 	TextInput,
 	convertUnknownErrorToDisplayError,
 	sdk,
-} from '@unteris/ui/components';
-import { useAtom, useSetAtom } from 'jotai';
-import { authErrorAtom, authUserAtom, displayErrorAtom } from './auth.atoms';
+} from "@unteris/ui/components";
+import { useAtom, useSetAtom } from "jotai";
+import { authErrorAtom, authUserAtom, displayErrorAtom } from "./auth.atoms";
 
 export const ForgotPassword = (): JSX.Element => {
 	const [loginUser, setLoginUser] = useAtom(authUserAtom);
@@ -17,25 +17,25 @@ export const ForgotPassword = (): JSX.Element => {
 			const res = await sdk.passwordResetRequest({ email: loginUser.email });
 		} catch (e) {
 			setAuthError(
-				convertUnknownErrorToDisplayError(e, 'Reset Password Error'),
+				convertUnknownErrorToDisplayError(e, "Reset Password Error"),
 			);
 			setDisplayError(true);
 		}
 	};
 	return (
 		<>
-			<Heading text='Forgot Password?' />
+			<Heading text="Forgot Password?" />
 			<TextInput
 				value={loginUser.email}
-				aria-label='email'
-				label='Email'
-				type='email'
+				aria-label="email"
+				label="Email"
+				type="email"
 				required={true}
 				onUpdate={(e) =>
-					setLoginUser({ password: '', email: e.target.value, name: '' })
+					setLoginUser({ password: "", email: e.target.value, name: "" })
 				}
 			/>
-			<ActionButton action={sendResetRequest} text='Reset Password' />
+			<ActionButton action={sendResetRequest} text="Reset Password" />
 		</>
 	);
 };

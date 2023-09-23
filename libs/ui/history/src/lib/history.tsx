@@ -1,9 +1,9 @@
-import { Typography } from '@mui/material';
-import { Grid, Image } from '@unteris/ui/components';
-import { ReactNode } from 'react';
+import { Typography } from "@mui/material";
+import { Grid, Image } from "@unteris/ui/components";
+import { ReactNode } from "react";
 
 const HistoryBlurb = ({ children }: { children: ReactNode }): JSX.Element => (
-	<Typography variant='body1' gutterBottom={true} paragraph={true}>
+	<Typography variant="body1" gutterBottom={true} paragraph={true}>
 		{children}
 	</Typography>
 );
@@ -56,11 +56,11 @@ export const History = (): JSX.Element => {
 				to stay and watch over the faceless. Who, over time, changed with the
 				new land.
 			</HistoryBlurb>
-			<Grid sx={{ justifyItems: 'center' }}>
+			<Grid sx={{ justifyItems: "center" }}>
 				<Image
-					src='/images/unteris_map.jpg'
-					alt='Unteris Map'
-					style={{ maxHeight: 'unset' }}
+					src="/images/unteris_map.jpg"
+					alt="Unteris Map"
+					style={{ maxHeight: "unset" }}
 				/>
 			</Grid>
 		</>

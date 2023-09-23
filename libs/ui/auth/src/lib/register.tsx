@@ -1,5 +1,5 @@
-import { SignupUser } from '@unteris/shared/types';
-import { userAtom } from '@unteris/ui/atoms';
+import { SignupUser } from "@unteris/shared/types";
+import { userAtom } from "@unteris/ui/atoms";
 import {
 	ActionButton,
 	Heading,
@@ -7,10 +7,10 @@ import {
 	TextInput,
 	convertUnknownErrorToDisplayError,
 	sdk,
-} from '@unteris/ui/components';
-import { useAtom, useSetAtom } from 'jotai';
-import { useNavigate } from 'react-router-dom';
-import { authErrorAtom, authUserAtom, displayErrorAtom } from './auth.atoms';
+} from "@unteris/ui/components";
+import { useAtom, useSetAtom } from "jotai";
+import { useNavigate } from "react-router-dom";
+import { authErrorAtom, authUserAtom, displayErrorAtom } from "./auth.atoms";
 
 export const Register = (): JSX.Element => {
 	const setUser = useSetAtom(userAtom);
@@ -32,38 +32,38 @@ export const Register = (): JSX.Element => {
 				displayName: newUser.name,
 			});
 			setNewUser({
-				email: '',
-				password: '',
-				name: '',
+				email: "",
+				password: "",
+				name: "",
 			});
-			navigate('/');
+			navigate("/");
 		} catch (e) {
-			setAuthError(convertUnknownErrorToDisplayError(e, 'Registration Error'));
+			setAuthError(convertUnknownErrorToDisplayError(e, "Registration Error"));
 			setDisplayError(true);
 		}
 	};
 	return (
 		<>
-			<Heading text='Register' />
+			<Heading text="Register" />
 			<TextInput
 				value={newUser.email}
-				label='Email'
-				type='email'
+				label="Email"
+				type="email"
 				required={true}
-				onUpdate={updateField('email')}
+				onUpdate={updateField("email")}
 			/>
 			<TextInput
 				value={newUser.name}
-				label='Display Name'
+				label="Display Name"
 				required={true}
-				onUpdate={updateField('name')}
+				onUpdate={updateField("name")}
 			/>
 			<PasswordInput
 				value={newUser.password}
-				onUpdate={updateField('password')}
+				onUpdate={updateField("password")}
 				isSignup={true}
 			/>
-			<ActionButton action={submit} text='Register' />
+			<ActionButton action={submit} text="Register" />
 		</>
 	);
 };

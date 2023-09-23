@@ -3,20 +3,20 @@ import {
 	PasswordReset,
 	UiAuth,
 	User,
-} from '@unteris/ui/auth';
-import { Heading } from '@unteris/ui/components';
-import { DeityNav } from '@unteris/ui/deities';
-import { History } from '@unteris/ui/history';
-import { UiRace } from '@unteris/ui/race';
+} from "@unteris/ui/auth";
+import { Heading } from "@unteris/ui/components";
+import { DeityNav } from "@unteris/ui/deities";
+import { History } from "@unteris/ui/history";
+import { UiRace } from "@unteris/ui/race";
 import {
 	RouteObject,
 	createBrowserRouter,
 	useRouteError,
-} from 'react-router-dom';
-import { Root } from './root';
+} from "react-router-dom";
+import { Root } from "./root";
 
-import { Box, useTheme } from '@mui/material';
-import { Welcome } from './welcome/welcome';
+import { Box, useTheme } from "@mui/material";
+import { Welcome } from "./welcome/welcome";
 
 const ErrorBoundary = (): JSX.Element => {
 	const error = useRouteError();
@@ -30,7 +30,7 @@ const ErrorBoundary = (): JSX.Element => {
 						<summary>{error.message}</summary>
 						<Box
 							sx={{
-								fontFamily: 'monospace',
+								fontFamily: "monospace",
 								margin: `0 ${theme.spacing(3)}`,
 								backgroundColor: theme.palette.grey[700],
 							}}
@@ -45,7 +45,7 @@ const ErrorBoundary = (): JSX.Element => {
 		return (
 			<Root>
 				<>
-					<Heading text='Unknown Error' />
+					<Heading text="Unknown Error" />
 					<div>{`${error}`}</div>
 				</>
 			</Root>
@@ -56,38 +56,38 @@ const ErrorBoundary = (): JSX.Element => {
 const routes = (): RouteObject[] => {
 	return [
 		{
-			path: '/',
+			path: "/",
 			element: <Root />,
 			errorElement: <ErrorBoundary />,
 			children: [
 				{ index: true, element: <Welcome /> },
 
 				{
-					path: '/history',
+					path: "/history",
 					element: <History />,
 				},
 				{
-					path: '/deities',
+					path: "/deities",
 					element: <DeityNav />,
 				},
 				{
-					path: '/races',
+					path: "/races",
 					element: <UiRace />,
 				},
 				{
-					path: '/login',
+					path: "/login",
 					element: <UiAuth />,
 				},
 				{
-					path: '/verify',
+					path: "/verify",
 					element: <EmailVerification />,
 				},
 				{
-					path: '/me',
+					path: "/me",
 					element: <User />,
 				},
 				{
-					path: '/reset-password',
+					path: "/reset-password",
 					element: <PasswordReset />,
 				},
 			],

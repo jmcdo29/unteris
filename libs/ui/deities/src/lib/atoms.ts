@@ -1,12 +1,12 @@
-import { Deity, Location } from '@unteris/shared/types';
-import { sdk } from '@unteris/ui/components';
-import { atom } from 'jotai';
+import { Deity, Location } from "@unteris/shared/types";
+import { sdk } from "@unteris/ui/components";
+import { atom } from "jotai";
 
 export const editingAtom = atom(false);
 
-export const locationsAtom = atom<Promise<Pick<Location, 'id' | 'name'>[]>>(
+export const locationsAtom = atom<Promise<Pick<Location, "id" | "name">[]>>(
 	async () => {
-		return sdk.getLocationsByType('plane');
+		return sdk.getLocationsByType("plane");
 	},
 );
 
@@ -16,13 +16,13 @@ export const locationIdAtom = atom<Promise<string>>(async (get) => {
 	const locations = await get(locationsAtom);
 	const locationIndex = get(locationIndexAtom);
 	if (!locations.length || locationIndex === -1) {
-		return '';
+		return "";
 	}
 	return locations[locationIndex].id;
 });
 
 export const deitiesForLocationAtom = atom<
-	Promise<Pick<Deity, 'id' | 'name'>[]>
+	Promise<Pick<Deity, "id" | "name">[]>
 >(async (get) => {
 	const locationId = await get(locationIdAtom);
 	if (!locationId) {
@@ -54,13 +54,13 @@ export const deityIdAtom = atom<Promise<string>>(async (get) => {
 	const deities = await get(deitiesForLocationAtom);
 	const deityIndex = get(deityIndexAtom);
 	if (!deities.length || deityIndex === -1) {
-		return '';
+		return "";
 	}
 	return deities[deityIndex].id;
 });
 
 export const deityAtom = atom<
-	Promise<(Omit<Deity, 'imageId'> & { imageUrl: string }) | undefined>
+	Promise<(Omit<Deity, "imageId"> & { imageUrl: string }) | undefined>
 >(async (get) => {
 	const deityId = await get(deityIdAtom);
 	if (!deityId) {

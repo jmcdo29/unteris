@@ -1,6 +1,6 @@
-import { Atom, WritableAtom, useAtom, useAtomValue } from 'jotai';
-import { Suspense, SyntheticEvent } from 'react';
-import { TabsWithPanel } from './tabs-with-panel';
+import { Atom, WritableAtom, useAtom, useAtomValue } from "jotai";
+import { Suspense, SyntheticEvent } from "react";
+import { TabsWithPanel } from "./tabs-with-panel";
 
 interface TabbedNavigatorProps {
 	resourceAtom: Atom<
@@ -9,7 +9,7 @@ interface TabbedNavigatorProps {
 	indexAtom: WritableAtom<number, [val: number], void>;
 	label: string;
 	tabPanelContent: () => JSX.Element;
-	indicator?: 'primary' | 'secondary';
+	indicator?: "primary" | "secondary";
 }
 
 export const TabbedNavigator = (props: TabbedNavigatorProps) => {

@@ -1,8 +1,8 @@
-import { Link, useTheme } from '@mui/material';
-import { Grid, Heading, sdk } from '@unteris/ui/components';
-import { atom, useAtomValue, useSetAtom } from 'jotai';
-import { Suspense } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useTheme } from "@mui/material";
+import { Grid, Heading, sdk } from "@unteris/ui/components";
+import { atom, useAtomValue, useSetAtom } from "jotai";
+import { Suspense } from "react";
+import { useSearchParams } from "react-router-dom";
 
 const tokenAtom = atom<string | null>(null);
 const verifiedEmailStateAtom = atom(async (get) => {
@@ -21,8 +21,8 @@ const verifiedEmailStateAtom = atom(async (get) => {
 const Header = () => {
 	const [queryParams] = useSearchParams();
 	const setToken = useSetAtom(tokenAtom);
-	setToken(queryParams.get('token'));
-	return <Heading text='Email Verification' />;
+	setToken(queryParams.get("token"));
+	return <Heading text="Email Verification" />;
 };
 
 const Body = () => {
@@ -34,8 +34,8 @@ const Body = () => {
 			) : (
 				<div>
 					We could not verify your email at this time. Please double check your
-					email, and submit a request for a new verification token on the{' '}
-					<Link href='/me'>Users</Link> page.
+					email, and submit a request for a new verification token on the{" "}
+					<Link href="/me">Users</Link> page.
 				</div>
 			)}
 		</>
@@ -45,9 +45,9 @@ const Body = () => {
 export const EmailVerification = (): JSX.Element => {
 	const theme = useTheme();
 	return (
-		<Grid columns={1} sx={{ justifyItems: 'center', rowGap: theme.spacing(2) }}>
+		<Grid columns={1} sx={{ justifyItems: "center", rowGap: theme.spacing(2) }}>
 			<Header />
-			<Suspense fallback='Loading...'>
+			<Suspense fallback="Loading...">
 				<Body />
 			</Suspense>
 		</Grid>

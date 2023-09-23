@@ -1,6 +1,6 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { FileManager } from './file-manager.interface';
-import { FILE_STORE_TOKEN } from './file-storage.constants';
+import { Inject, Injectable } from "@nestjs/common";
+import { FileManager } from "./file-manager.interface";
+import { FILE_STORE_TOKEN } from "./file-storage.constants";
 
 @Injectable()
 export class ServerFileStorageService {

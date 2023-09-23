@@ -1,12 +1,14 @@
-import { spawn } from 'child_process';
+import { spawn } from "child_process";
+import { appendFileSync, mkdirSync, writeFile, writeFileSync } from "fs";
+import { join } from "path";
 import {
 	ExecutorContext,
 	getPackageManagerCommand,
 	runExecutor as nxExecutor,
-} from '@nx/devkit';
-import { Ogma } from '@ogma/logger';
-import { style } from '@ogma/styler';
-import { LintExecutorSchema } from './schema';
+} from "@nx/devkit";
+import { Ogma } from "@ogma/logger";
+import { style } from "@ogma/styler";
+import { LintExecutorSchema } from "./schema";
 
 export default async function runExecutor(
 	options: LintExecutorSchema,
@@ -14,16 +16,16 @@ export default async function runExecutor(
 ) {
 	try {
 		const logger = new Ogma({
-			application: 'Rz Plugin - Biome',
+			application: "Rz Plugin - Biome",
 			context: context.projectName,
-			logLevel: options.verbose ? 'ALL' : 'INFO',
+			logLevel: options.verbose ? "ALL" : "INFO",
 		});
 		const lintForProject = `${style.cyan.apply(
-			'nx-lint',
-		)} for the ${style.magenta.apply(context.projectName ?? '')} project`;
+			"nx-lint",
+		)} for the ${style.magenta.apply(context.projectName ?? "")} project`;
 		logger.log(`Running ${lintForProject}`);
 		for await (const s of await nxExecutor(
-			{ target: 'nx-lint', project: context.projectName ?? '' },
+			{ target: "nx-lint", project: context.projectName ?? "" },
 			{},
 			context,
 		)) {
@@ -33,30 +35,48 @@ export default async function runExecutor(
 			}
 		}
 		const root =
-			context.projectsConfigurations?.projects[context.projectName ?? '']
-				.root ?? '';
+			context.projectsConfigurations?.projects[context.projectName ?? ""]
+				.root ?? "";
 		const args: string[] = [];
 		if (options.apply === undefined || options.apply) {
 			if (options.unsafe) {
-				args.push('--apply-unsafe');
+				args.push("--apply-unsafe");
 			} else {
-				args.push('--apply');
+				args.push("--apply");
 			}
 		}
+		const cachePath = join(
+			process.cwd(),
+			"tmp",
+			"rz",
+			"lint",
+			context.projectName ?? "",
+		);
+		const lintCacheFile = join(cachePath, "lint.txt");
+		const errorCacheFile = join(cachePath, "error.txt");
+		mkdirSync(cachePath, { recursive: true });
+		writeFileSync(lintCacheFile, "");
+		writeFileSync(errorCacheFile, "");
 		const biomeRun = await new Promise<{ success: boolean }>((resolve) => {
 			const command = `${getPackageManagerCommand().exec} biome check`;
 			logger.log(
 				`Executing ${style.blue.apply(
-					`${[command, ...args, root].join(' ')}`,
+					`${[command, ...args, root].join(" ")}`,
 				)}`,
 			);
-			const [biome, ...pnArgs] = command.split(' ');
+			const [biome, ...pnArgs] = command.split(" ");
 			const biomeCommand = spawn(biome, [...pnArgs, ...args, root]);
-			biomeCommand.stdout.on('data', (chunk) => logger.log(chunk.toString()));
+			biomeCommand.stdout.on("data", (chunk) => {
+				logger.log(chunk.toString());
+				appendFileSync(lintCacheFile, chunk.toString());
+			});
 
-			biomeCommand.stderr.on('data', (chunk) => logger.error(chunk.toString()));
-			biomeCommand.on('close', (code) => resolve({ success: code === 0 }));
-			biomeCommand.on('error', (err) => {
+			biomeCommand.stderr.on("data", (chunk) => {
+				logger.error(chunk.toString());
+				appendFileSync(errorCacheFile, chunk.toString());
+			});
+			biomeCommand.on("close", (code) => resolve({ success: code === 0 }));
+			biomeCommand.on("error", (err) => {
 				logger.printError(err);
 				resolve({ success: false });
 			});

@@ -1,5 +1,5 @@
-import { Module } from '@nestjs/common';
-import { ServerHashService } from './hash.service';
+import { Module } from "@nestjs/common";
+import { ServerHashService } from "./hash.service";
 
 @Module({
 	controllers: [],

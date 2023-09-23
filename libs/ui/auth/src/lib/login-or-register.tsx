@@ -1,15 +1,15 @@
-import Button from '@mui/material/Button';
-import { ErrorDisplay, Grid } from '@unteris/ui/components';
-import { useAtom, useAtomValue } from 'jotai';
+import Button from "@mui/material/Button";
+import { ErrorDisplay, Grid } from "@unteris/ui/components";
+import { useAtom, useAtomValue } from "jotai";
 import {
 	authErrorAtom,
 	displayErrorAtom,
 	forgotPasswordAtom,
 	isLoggingInAtom,
-} from './auth.atoms';
-import { ForgotPassword } from './forgot-password';
-import { Login } from './login';
-import { Register } from './register';
+} from "./auth.atoms";
+import { ForgotPassword } from "./forgot-password";
+import { Login } from "./login";
+import { Register } from "./register";
 
 export const LoginOrRegister = (): JSX.Element => {
 	const [isLoggingIn, setIsLoggingIn] = useAtom(isLoggingInAtom);
@@ -34,12 +34,12 @@ export const LoginOrRegister = (): JSX.Element => {
 				)}
 			</Grid>
 			<Button onClick={() => setIsLoggingIn(!isLoggingIn)}>
-				Switch to {isLoggingIn ? 'register' : 'login'}.
+				Switch to {isLoggingIn ? "register" : "login"}.
 			</Button>
 			<Button onClick={() => setForgotPassword(!forgotPassword)}>
 				{!forgotPassword
-					? 'Forgot password?'
-					: `Back to ${isLoggingIn ? 'login' : 'register'}.`}
+					? "Forgot password?"
+					: `Back to ${isLoggingIn ? "login" : "register"}.`}
 			</Button>
 		</>
 	);

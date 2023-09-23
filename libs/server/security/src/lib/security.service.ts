@@ -2,12 +2,12 @@ import {
 	BadRequestException,
 	Injectable,
 	UnauthorizedException,
-} from '@nestjs/common';
-import { OgmaLogger, OgmaService } from '@ogma/nestjs-module';
-import { ServerEmailService } from '@unteris/server/email';
-import { ServerHashService } from '@unteris/server/hash';
-import { ServerSessionService } from '@unteris/server/session';
-import { ServerTokenService } from '@unteris/server/token';
+} from "@nestjs/common";
+import { OgmaLogger, OgmaService } from "@ogma/nestjs-module";
+import { ServerEmailService } from "@unteris/server/email";
+import { ServerHashService } from "@unteris/server/hash";
+import { ServerSessionService } from "@unteris/server/session";
+import { ServerTokenService } from "@unteris/server/token";
 import {
 	LoginBody,
 	LoginResponse,
@@ -15,8 +15,8 @@ import {
 	PasswordResetRequest,
 	SignupUser,
 	UserAccount,
-} from '@unteris/shared/types';
-import { SecurityRepo } from './security.repository';
+} from "@unteris/shared/types";
+import { SecurityRepo } from "./security.repository";
 
 @Injectable()
 export class ServerSecurityService {
@@ -32,13 +32,13 @@ export class ServerSecurityService {
 	async signUpLocal(
 		newUser: SignupUser,
 		sessionId: string,
-	): Promise<{ success: boolean; id: UserAccount['id'] }> {
+	): Promise<{ success: boolean; id: UserAccount["id"] }> {
 		const existingAccount = await this.securityRepo.findUserByEmail(
 			newUser.email,
 		);
 		if (existingAccount) {
 			throw new BadRequestException({
-				type: 'Authentication',
+				type: "Authentication",
 				message: [
 					`Email ${newUser.email} is already taken. Did you mean to login?`,
 				],
@@ -47,7 +47,7 @@ export class ServerSecurityService {
 		const createdUser = await this.securityRepo.createUserRecord(newUser);
 		const loginMethod = await this.securityRepo.createLoginMethodRecord(
 			createdUser.id,
-			'local',
+			"local",
 		);
 		await this.securityRepo.createLocalLoginRecord(
 			await this.hashService.hash(newUser.password),
@@ -65,7 +65,7 @@ export class ServerSecurityService {
 	}
 
 	private async sendEmailVerification(
-		user: Pick<UserAccount, 'id' | 'email' | 'name'>,
+		user: Pick<UserAccount, "id" | "email" | "name">,
 	): Promise<void> {
 		try {
 			const verificationToken = await this.tokenService.generateToken(192);
@@ -96,8 +96,8 @@ export class ServerSecurityService {
 		);
 		if (!user || user.attempts >= 5) {
 			throw new UnauthorizedException({
-				type: 'AttemptLimit',
-				message: ['Too many login attempts. Try again later.'],
+				type: "AttemptLimit",
+				message: ["Too many login attempts. Try again later."],
 			});
 		}
 		if (
@@ -108,8 +108,8 @@ export class ServerSecurityService {
 				user.localLoginId,
 			);
 			throw new UnauthorizedException({
-				type: 'Authentication',
-				message: ['Invalid username or password'],
+				type: "Authentication",
+				message: ["Invalid username or password"],
 			});
 		}
 		await this.sessionService.updateSession(sessionId, {
@@ -136,7 +136,7 @@ export class ServerSecurityService {
 		const user = await this.securityRepo.findUserByEmail(email);
 		if (!user) {
 			throw new BadRequestException({
-				type: 'Unknown Email',
+				type: "Unknown Email",
 				message: [
 					`No user with email ${email} was found. Perhaps you'd like to sign up?`,
 				],

@@ -1,8 +1,8 @@
-import { execSync, spawn } from 'child_process';
-import { ExecutorContext } from '@nx/devkit';
-import { Ogma } from '@ogma/logger';
-import { style } from '@ogma/styler';
-import { BuildExecutorSchema } from './schema';
+import { execSync, spawn } from "child_process";
+import { ExecutorContext } from "@nx/devkit";
+import { Ogma } from "@ogma/logger";
+import { style } from "@ogma/styler";
+import { BuildExecutorSchema } from "./schema";
 
 export default async function runExecutor(
 	options: BuildExecutorSchema,
@@ -11,9 +11,9 @@ export default async function runExecutor(
 	return new Promise((resolve, reject) => {
 		const project = options.imageName ?? context.projectName;
 		const logger = new Ogma({
-			application: 'Rz Plugin - Docker',
+			application: "Rz Plugin - Docker",
 			context: project,
-			logLevel: options?.verbose ? 'VERBOSE' : 'LOG',
+			logLevel: options?.verbose ? "VERBOSE" : "LOG",
 		});
 		try {
 			const scope = context.nxJsonConfiguration?.npmScope;
@@ -26,48 +26,48 @@ export default async function runExecutor(
 			const gCommit =
 				process.env.GITHUB_SHA ??
 				process.env.NX_HEAD ??
-				execSync('git log -n 1 --format="%h"').toString().replace('\n', '');
+				execSync('git log -n 1 --format="%h"').toString().replace("\n", "");
 			logger.verbose(`Git Commit was determined to be ${gCommit}`);
-			const dockerNamespace = options.dockerNamespace ?? 'jmcdo29';
+			const dockerNamespace = options.dockerNamespace ?? "jmcdo29";
 			const tagPrefix = options.tag ?? `${scope}-${project}:latest`;
 			const tags = [
 				`${dockerNamespace}/${tagPrefix}`,
-				`${dockerNamespace}/${tagPrefix.replace('latest', gCommit)}`,
+				`${dockerNamespace}/${tagPrefix.replace("latest", gCommit)}`,
 			];
 			logger.verbose(`Using docker tag ${tags}`);
 			const target = options.target ?? `${project}-prod`;
 			logger.verbose(`Using dockerfile target ${target}`);
-			const builder = options.builder ?? 'container';
+			const builder = options.builder ?? "container";
 			logger.verbose(`Using docker builder ${builder}`);
 			const publish = options.publish ?? false;
 			const path =
 				options.path ??
 				`${
-					context.projectsConfigurations?.projects[context.projectName ?? '']
+					context.projectsConfigurations?.projects[context.projectName ?? ""]
 						.root
 				}/Dockerfile`;
 			const commandString = `docker buildx build ${
-				path ? `-f ${path} ` : ''
+				path ? `-f ${path} ` : ""
 			}${tags
 				.map((t) => `-t ${t}`)
 				.join(
-					' ',
+					" ",
 				)} --cache-from type=local,src=${cachePath} --cache-to type=local,dest=${cachePath} --target=${target} --builder=${builder} --platform linux/arm64/v8,linux/amd64 ${
-				publish ? '--push' : ''
+				publish ? "--push" : ""
 			} .`;
-			const [docker, ...args] = commandString.split(' ').filter((arg) => !!arg);
-			logger.log(style.blue.apply(`Executing "${docker} ${args.join(' ')}"`));
+			const [docker, ...args] = commandString.split(" ").filter((arg) => !!arg);
+			logger.log(style.blue.apply(`Executing "${docker} ${args.join(" ")}"`));
 			const dockerCommand = spawn(docker, args);
-			dockerCommand.stdout.on('data', (chunk) => {
+			dockerCommand.stdout.on("data", (chunk) => {
 				logger.log(chunk.toString());
 			});
-			dockerCommand.stderr.on('data', (chunk) => {
+			dockerCommand.stderr.on("data", (chunk) => {
 				logger.log(chunk.toString());
 			});
-			dockerCommand.on('close', (code) => {
+			dockerCommand.on("close", (code) => {
 				resolve({ success: code === 0 });
 			});
-			dockerCommand.on('error', (err) => {
+			dockerCommand.on("error", (err) => {
 				logger.printError(err);
 				reject({ success: false });
 			});

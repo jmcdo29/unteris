@@ -1,10 +1,10 @@
-import Input, { InputProps } from '@mui/material/Input';
-import InputLabel from '@mui/material/InputLabel';
-import { UFormControl } from './form-control';
+import Input, { InputProps } from "@mui/material/Input";
+import InputLabel from "@mui/material/InputLabel";
+import { UFormControl } from "./form-control";
 
 interface TextInputProps {
 	value: string;
-	type?: InputProps['type'];
+	type?: InputProps["type"];
 	onUpdate: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 	label: string;
 	required?: boolean;
@@ -19,7 +19,7 @@ export const TextInput = (props: TextInputProps): JSX.Element => {
 				id={props.label}
 				value={props.value}
 				aria-label={props.label}
-				type={props.type ?? 'text'}
+				type={props.type ?? "text"}
 				onChange={props.onUpdate}
 				onBlur={props.onUpdate}
 			/>

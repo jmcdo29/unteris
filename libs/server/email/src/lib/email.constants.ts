@@ -1,5 +1,5 @@
-export const EMAIL_CONFIG_TOKEN = Symbol('METADAT:EMAIL_CONFIG');
-export const EMAIL_INSTANCE_TOKEN = Symbol('METADATA:EMAIL_INSTANCE');
+export const EMAIL_CONFIG_TOKEN = Symbol("METADAT:EMAIL_CONFIG");
+export const EMAIL_INSTANCE_TOKEN = Symbol("METADATA:EMAIL_INSTANCE");
 
 export const getEmailConfigToken = () => EMAIL_CONFIG_TOKEN;
 export const getEmailInstanceToken = () => EMAIL_INSTANCE_TOKEN;

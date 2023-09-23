@@ -1,9 +1,9 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import { SessionData } from '@unteris/server/common';
-import { SKIP_SESSION_LOGGED_IN_CHECK } from '@unteris/server/session';
-import { UserAccount } from '@unteris/shared/types';
-import { ServerSecurityService } from './security.service';
+import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
+import { Reflector } from "@nestjs/core";
+import { SessionData } from "@unteris/server/common";
+import { SKIP_SESSION_LOGGED_IN_CHECK } from "@unteris/server/session";
+import { UserAccount } from "@unteris/shared/types";
+import { ServerSecurityService } from "./security.service";
 
 @Injectable()
 export class IsLoggedInGuard implements CanActivate {

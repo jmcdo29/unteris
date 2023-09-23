@@ -1,10 +1,10 @@
 /* eslint-disable */
 export default {
-	displayName: '@unteris/plugins/rz',
-	preset: '../../jest.preset.js',
+	displayName: "@unteris/plugins/rz",
+	preset: "../../jest.preset.js",
 	transform: {
-		'^.+\\.[tj]s$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.spec.json' }],
+		"^.+\\.[tj]s$": ["ts-jest", { tsconfig: "<rootDir>/tsconfig.spec.json" }],
 	},
-	moduleFileExtensions: ['ts', 'js', 'html'],
-	coverageDirectory: '../../coverage/libs/rz',
+	moduleFileExtensions: ["ts", "js", "html"],
+	coverageDirectory: "../../coverage/libs/rz",
 };

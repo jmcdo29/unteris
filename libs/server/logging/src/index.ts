@@ -1,1 +1,1 @@
-export * from './lib/server-logging.module';
+export * from "./lib/server-logging.module";

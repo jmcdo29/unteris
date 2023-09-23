@@ -1,15 +1,15 @@
-import { useMediaQuery } from '@mui/material';
-import Box from '@mui/material/Box';
-import { Race as IRace } from '@unteris/shared/types';
-import { useAtomValue } from 'jotai';
+import { useMediaQuery } from "@mui/material";
+import Box from "@mui/material/Box";
+import { Race as IRace } from "@unteris/shared/types";
+import { useAtomValue } from "jotai";
 
-import { Suspense } from 'react';
-import { editingAtom, raceAtom } from './atoms';
-import { RaceEditor } from './race-editor';
-import { RaceViewer } from './race-viewer';
+import { Suspense } from "react";
+import { editingAtom, raceAtom } from "./atoms";
+import { RaceEditor } from "./race-editor";
+import { RaceViewer } from "./race-viewer";
 
 export const Race = (): JSX.Element => {
-	const isWideEnough = useMediaQuery('(min-width:600px)');
+	const isWideEnough = useMediaQuery("(min-width:600px)");
 	const race = useAtomValue(raceAtom);
 	const isEditing = useAtomValue(editingAtom);
 
@@ -23,7 +23,7 @@ export const Race = (): JSX.Element => {
 
 	return (
 		<Suspense>
-			<Box padding={`${!isWideEnough ? '1em' : '0'} 1em`}>
+			<Box padding={`${!isWideEnough ? "1em" : "0"} 1em`}>
 				{isEditing ? (
 					<RaceEditor race={race} setRace={updateRace} />
 				) : (

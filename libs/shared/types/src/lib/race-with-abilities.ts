@@ -1,6 +1,6 @@
-import { z } from 'zod';
-import { RaceSchema } from './race';
-import { RacialAbilitySchema } from './racial-ability';
+import { z } from "zod";
+import { RaceSchema } from "./race";
+import { RacialAbilitySchema } from "./racial-ability";
 
 export const RaceWithAbilitiesSchema = RaceSchema.and(
 	z.object({

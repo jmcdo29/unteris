@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export const PasswordResetSchema = z.object({
 	resetToken: z.string().length(43),

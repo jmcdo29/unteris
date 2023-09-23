@@ -1,8 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { z } from 'zod';
+import { Inject, Injectable } from "@nestjs/common";
+import { z } from "zod";
 
-import { SCHEMA } from './config.constants';
-import { Config } from './config.schema';
+import { SCHEMA } from "./config.constants";
+import { Config } from "./config.schema";
 
 @Injectable()
 export class ServerConfigService {

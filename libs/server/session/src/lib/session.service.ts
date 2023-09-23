@@ -1,14 +1,14 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from "@nestjs/common";
 import {
 	RefreshSessionData,
 	SavedSessionData,
 	SessionData,
-} from '@unteris/server/common';
-import { ServerConfigService } from '@unteris/server/config';
-import { InjectRedisInstance } from '@unteris/server/redis';
-import { ServerTokenService } from '@unteris/server/token';
-import { Cookie } from 'nest-cookies';
-import { RedisClientType } from 'redis';
+} from "@unteris/server/common";
+import { ServerConfigService } from "@unteris/server/config";
+import { InjectRedisInstance } from "@unteris/server/redis";
+import { ServerTokenService } from "@unteris/server/token";
+import { Cookie } from "nest-cookies";
+import { RedisClientType } from "redis";
 
 @Injectable()
 export class ServerSessionService {
@@ -27,7 +27,7 @@ export class ServerSessionService {
 	}
 
 	async createFullSession(
-		sessionData: SessionData = { user: {}, csrf: '' },
+		sessionData: SessionData = { user: {}, csrf: "" },
 	): Promise<{ id: string; refreshId: string }> {
 		const sessionToken = await this.createSessionId();
 		const refreshToken = await this.createRefreshId();
@@ -36,14 +36,14 @@ export class ServerSessionService {
 			refreshToken,
 			JSON.stringify({ sessionId: sessionToken }),
 			{
-				EX: this.config.get('REFRESH_EXPIRES_IN'),
+				EX: this.config.get("REFRESH_EXPIRES_IN"),
 			},
 		);
 		return { id: sessionToken, refreshId: refreshToken };
 	}
 
 	async createSession(
-		sessionData: SessionData = { user: {}, csrf: '' },
+		sessionData: SessionData = { user: {}, csrf: "" },
 		sessionId?: string,
 	): Promise<{ id: string }> {
 		let id = sessionId;
@@ -51,21 +51,21 @@ export class ServerSessionService {
 			id = await this.createSessionId();
 		}
 		await this.redis.set(id, JSON.stringify(sessionData), {
-			EX: this.config.get('SESSION_EXPIRES_IN'),
+			EX: this.config.get("SESSION_EXPIRES_IN"),
 		});
 		return { id };
 	}
 
-	async getSession<T extends 'session' | 'refresh' = 'session'>(
+	async getSession<T extends "session" | "refresh" = "session">(
 		sessionId: string,
-	): Promise<T extends 'session' ? SessionData : RefreshSessionData> {
-		return JSON.parse((await this.redis.get(sessionId)) ?? '{}');
+	): Promise<T extends "session" ? SessionData : RefreshSessionData> {
+		return JSON.parse((await this.redis.get(sessionId)) ?? "{}");
 	}
 
-	async updateSession<T extends 'session' | 'refresh' = 'session'>(
+	async updateSession<T extends "session" | "refresh" = "session">(
 		sessionId: string,
 		sessionData: Partial<
-			T extends 'session' ? SessionData : RefreshSessionData
+			T extends "session" ? SessionData : RefreshSessionData
 		>,
 	): Promise<void> {
 		const session = await this.getSession(sessionId);
@@ -87,13 +87,13 @@ export class ServerSessionService {
 	isSession(
 		sessionData: SavedSessionData | object,
 	): sessionData is SessionData {
-		return 'user' in sessionData && 'csrf' in sessionData;
+		return "user" in sessionData && "csrf" in sessionData;
 	}
 
 	isRefreshData(
 		refreshData: SavedSessionData | object,
 	): refreshData is RefreshSessionData {
-		return 'sessionId' in refreshData;
+		return "sessionId" in refreshData;
 	}
 
 	createCookie({
@@ -101,9 +101,9 @@ export class ServerSessionService {
 		value,
 		options = {},
 	}: {
-		name: 'session' | 'refresh';
+		name: "session" | "refresh";
 		value: string | number;
-		options?: Cookie['options'];
+		options?: Cookie["options"];
 	}): Cookie {
 		const cookie = {
 			name: `${name}Id`,
@@ -113,11 +113,11 @@ export class ServerSessionService {
 					`${name.toUpperCase() as Uppercase<typeof name>}_EXPIRES_IN`,
 				),
 				httpOnly: true,
-				path: '/api',
+				path: "/api",
 				...options,
 			},
 		};
-		if (this.config.get('NODE_ENV') === 'production') {
+		if (this.config.get("NODE_ENV") === "production") {
 			cookie.options.secure = true;
 		}
 		return cookie;

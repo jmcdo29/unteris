@@ -1,6 +1,6 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { csrfHeader } from '@unteris/shared/types';
-import { ServerCsrfService } from './csrf.service';
+import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
+import { csrfHeader } from "@unteris/shared/types";
+import { ServerCsrfService } from "./csrf.service";
 
 @Injectable()
 export class CsrfGuard implements CanActivate {
@@ -12,7 +12,7 @@ export class CsrfGuard implements CanActivate {
 			session: { id: string };
 			[key: string]: unknown;
 		}>();
-		if (method === 'GET') {
+		if (method === "GET") {
 			return true;
 		}
 		return this.csrfService.verifyCsrfToken({

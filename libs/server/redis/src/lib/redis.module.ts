@@ -1,38 +1,38 @@
-import { Module, OnModuleDestroy } from '@nestjs/common';
+import { Module, OnModuleDestroy } from "@nestjs/common";
 import {
 	OgmaModule,
 	OgmaService,
 	createProviderToken,
-} from '@ogma/nestjs-module';
+} from "@ogma/nestjs-module";
 import {
 	ServerConfigModule,
 	ServerConfigService,
-} from '@unteris/server/config';
-import { RedisClientOptions, RedisClientType, createClient } from 'redis';
+} from "@unteris/server/config";
+import { RedisClientOptions, RedisClientType, createClient } from "redis";
 
 import {
 	InjectRedisInstance,
 	getInstanceToken,
 	getOptionsToken,
-} from './redis.constants';
+} from "./redis.constants";
 
 @Module({
-	imports: [ServerConfigModule, OgmaModule.forFeature('Redis')],
+	imports: [ServerConfigModule, OgmaModule.forFeature("Redis")],
 	controllers: [],
 	providers: [
 		{
 			provide: getOptionsToken(),
 			useFactory: (config: ServerConfigService) => ({
-				url: config.get('REDIS_URL'),
+				url: config.get("REDIS_URL"),
 			}),
 			inject: [ServerConfigService],
 		},
 		{
 			provide: getInstanceToken(),
 			useFactory: async (options: RedisClientOptions, logger: OgmaService) => {
-				logger.debug(options, { context: 'REDIS' });
+				logger.debug(options, { context: "REDIS" });
 				const redis = createClient(options);
-				redis.once('error', (err) => {
+				redis.once("error", (err) => {
 					if (err instanceof Error) {
 						logger.printError(err);
 					}
@@ -40,7 +40,7 @@ import {
 				await redis.connect();
 				return redis;
 			},
-			inject: [getOptionsToken(), createProviderToken('Redis')],
+			inject: [getOptionsToken(), createProviderToken("Redis")],
 		},
 	],
 	exports: [getInstanceToken()],

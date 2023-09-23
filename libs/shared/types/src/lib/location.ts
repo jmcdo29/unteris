@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export const LocationSchema = z.object({
 	id: z.string().ulid(),
@@ -6,14 +6,14 @@ export const LocationSchema = z.object({
 	description: z.string().nullable(),
 	type: z
 		.enum([
-			'plane',
-			'region',
-			'city',
-			'shop',
-			'mine',
-			'forest',
-			'beach',
-			'wilderness',
+			"plane",
+			"region",
+			"city",
+			"shop",
+			"mine",
+			"forest",
+			"beach",
+			"wilderness",
 		])
 		.nullable(),
 	parentId: z.string().ulid().nullable(),

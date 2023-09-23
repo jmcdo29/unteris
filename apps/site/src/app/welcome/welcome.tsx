@@ -1,7 +1,7 @@
-import { Theme, Typography, useTheme } from '@mui/material';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Unstable_Grid2';
-import { ReactNode } from 'react';
+import { Theme, Typography, useTheme } from "@mui/material";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Unstable_Grid2";
+import { ReactNode } from "react";
 
 const Descriptor = ({
 	theme,
@@ -16,7 +16,7 @@ const Descriptor = ({
 				padding={`${theme.spacing()} ${theme.spacing(2)}`}
 				border={`2px solid ${theme.palette.primary[theme.palette.mode]}`}
 				borderRadius={theme.shape.borderRadius}
-				sx={{ minHeight: '4em' }}
+				sx={{ minHeight: "4em" }}
 			>
 				{children}
 			</Box>
@@ -26,30 +26,30 @@ const Descriptor = ({
 
 export const Welcome = (): JSX.Element => {
 	const theme = useTheme();
-	const opacityMod = theme.palette.mode === 'dark' ? '88' : '8';
+	const opacityMod = theme.palette.mode === "dark" ? "88" : "8";
 	return (
 		<Box padding={`${theme.spacing(5)} 0`}>
-			<Grid sx={{ justifyItems: 'center', height: '40%' }}>
+			<Grid sx={{ justifyItems: "center", height: "40%" }}>
 				<Grid
 					container={true}
 					sx={{
-						justifyItems: 'center',
-						width: '100%',
+						justifyItems: "center",
+						width: "100%",
 						borderRadius: theme.shape.borderRadius,
 						background: ` linear-gradient(to right, ${
 							theme.palette.secondary[theme.palette.mode]
 						}, ${
 							theme.palette.background.default
 						}${opacityMod}), url(./images/vitoak.png)`,
-						backgroundRepeat: 'no-repeat, no-repeat',
-						backgroundPosition: 'left, right top 40%',
+						backgroundRepeat: "no-repeat, no-repeat",
+						backgroundPosition: "left, right top 40%",
 						padding: `${theme.spacing(8)} ${theme.spacing(2)}`,
 						margin: `0 0 ${theme.spacing(2)}`,
 					}}
 					spacing={theme.spacing()}
 				>
 					<Grid xs={12} md={3}>
-						<Typography variant='h2' component='h1'>
+						<Typography variant="h2" component="h1">
 							Welcome to Unteris
 						</Typography>
 					</Grid>
@@ -58,8 +58,8 @@ export const Welcome = (): JSX.Element => {
 			<Grid
 				spacing={theme.spacing(2)}
 				sx={{
-					justifyItems: 'center',
-					justifyContent: 'center',
+					justifyItems: "center",
+					justifyContent: "center",
 				}}
 				container={true}
 			>

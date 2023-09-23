@@ -1,8 +1,8 @@
-import { Test } from '@nestjs/testing';
-import { ServerCsrfController } from './csrf.controller';
-import { ServerCsrfService } from './csrf.service';
+import { Test } from "@nestjs/testing";
+import { ServerCsrfController } from "./csrf.controller";
+import { ServerCsrfService } from "./csrf.service";
 
-describe('ServerCsrfController', () => {
+describe("ServerCsrfController", () => {
 	let controller: ServerCsrfController;
 
 	beforeEach(async () => {
@@ -14,7 +14,7 @@ describe('ServerCsrfController', () => {
 		controller = module.get(ServerCsrfController);
 	});
 
-	it('should be defined', () => {
+	it("should be defined", () => {
 		expect(controller).toBeTruthy();
 	});
 });
