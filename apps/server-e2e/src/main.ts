@@ -5,9 +5,10 @@ import { getKyselyInstanceToken } from "@unteris/server/kysely";
 import { RootModule } from "@unteris/server/root";
 import { request } from "pactum";
 import { beforeAll, beforeEach, describe } from "vitest";
-import { DbContext } from "./interfaces/test-context.interface";
+import { TestContext } from "./interfaces/test-context.interface";
 import { csrfTest } from "./tests/csrf";
 import { signUpAndLoginTests } from "./tests/signup-and-login";
+import { getEmailInstanceToken } from "@unteris/server/email";
 
 describe("Unteris E2E test suite", () => {
 	let app: INestApplication;
@@ -21,8 +22,9 @@ describe("Unteris E2E test suite", () => {
 			await app.close();
 		};
 	});
-	beforeEach<DbContext>((context) => {
+	beforeEach<TestContext>((context) => {
 		context.db = app.get(getKyselyInstanceToken(), { strict: false });
+		context.mailer = app.get(getEmailInstanceToken(), { strict: false });
 	});
 	csrfTest();
 	signUpAndLoginTests();

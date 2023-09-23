@@ -122,7 +122,7 @@ export class SecurityRepo {
 			.selectFrom("verificationToken")
 			.select("userId")
 			.where("token", "=", verificationToken)
-			.where(sql`id::timestamp`, ">", sql`CURRENT TIMESTAMP - '1 hour'`)
+			.where(sql`id::timestamp`, ">", sql`NOW() - INTERVAL '1 hour'`)
 			.executeTakeFirst();
 		if (!verificationRecord) {
 			throw new Error(
@@ -157,7 +157,7 @@ export class SecurityRepo {
 			.selectFrom("userAccount as u")
 			.select(["u.id", "u.email"])
 			.innerJoin("verificationToken as vt", "vt.userId", "u.id")
-			.where(sql`vt.id::timestamp`, ">", sql`CURRENT TIMESTAMP - '1 day'`)
+			.where(sql`vt.id::timestamp`, ">", sql`NOW() - INTERVAL '1 day'`)
 			.where("vt.token", "=", resetToken)
 			.executeTakeFirstOrThrow();
 	}

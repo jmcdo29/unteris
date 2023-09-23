@@ -55,9 +55,12 @@ import {
 							}),
 						}),
 						log: (event: LogEvent) => {
-							logger.verbose({
-								message: "Running Query",
+							logger.silly({
+								message: "Kysely Config",
 								query: event.query.query,
+							});
+							logger.debug({
+								message: "Running Query",
 								parameters: event.query.parameters,
 								raw: event.query.sql,
 							});

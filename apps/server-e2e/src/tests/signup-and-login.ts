@@ -2,15 +2,16 @@ import { randomUUID } from "crypto";
 import { base32Regex } from "@unteris/shared/base32";
 import { spec } from "pactum";
 import { regex } from "pactum-matchers";
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 import { csrfSpec, csrfStoreToken, sessionStoreToken } from "../csrf";
-import { DbContext } from "../interfaces/test-context.interface";
+import { TestContext } from "../interfaces/test-context.interface";
 
 export const signUpAndLoginTests = () => {
 	return describe("SignUp and Login", () => {
 		const testPass = "ALongEnoughP4ssw0rdToBeFin3";
-		test<DbContext>("A new user should be able to sign up", async (context) => {
+		test<TestContext>("A new user should be able to sign up", async (context) => {
 			await csrfSpec();
+			const emailSpy = vi.spyOn(context.mailer, "sendMail");
 			const email = `${randomUUID()}@testing.com`;
 			const name = `Test User${randomUUID()}`;
 			const res = await spec()
@@ -52,6 +53,26 @@ export const signUpAndLoginTests = () => {
 					id: regex(base32Regex),
 					success: true,
 				});
+			let emailResult = undefined;
+			for await (const result of emailSpy.mock.results) {
+				const json = JSON.parse(result.value.message);
+				if (json.subject === "Email verification") {
+					emailResult = json.html;
+					break;
+				}
+			}
+			if (!emailResult) {
+				throw new Error(
+					`No email was ever sent to ${email}. This means something broke in the signup flow`,
+				);
+			}
+			const verifyToken = emailResult.split("verify?token=")[1].split(">")[0];
+			await spec()
+				.get("/auth/verify-email")
+				.withQueryParams("verificationToken", verifyToken)
+				.withCookies("sessionId", sessionStoreToken)
+				.expectStatus(200)
+				.expectJson({ success: true });
 		});
 	});
 };

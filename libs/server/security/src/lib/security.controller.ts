@@ -36,7 +36,7 @@ export class ServerSecurityController {
 	}
 
 	@Post("logout")
-	async loguot(@Cookies() cookies: UnterisCookies) {
+	async logout(@Cookies() cookies: UnterisCookies) {
 		const { sessionId } = cookies;
 		await this.serverSecurityService.logout(sessionId);
 		return { success: true };

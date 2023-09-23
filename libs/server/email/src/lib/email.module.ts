@@ -17,14 +17,20 @@ import { ServerEmailService } from "./email.service";
 	providers: [
 		{
 			provide: EMAIL_CONFIG_TOKEN,
-			useFactory: (config: ServerConfigService) => ({
-				pool: true,
-				host: config.get("SMTP_HOST"),
-				auth: {
-					user: config.get("NOREPLY_EMAIL"),
-					pass: config.get("SMTP_PASS"),
-				},
-			}),
+			useFactory: (config: ServerConfigService) => {
+				console.log(config.get("NODE_ENV"));
+				if (config.get("NODE_ENV") === "test") {
+					return { jsonTransport: true };
+				}
+				return {
+					pool: true,
+					host: config.get("SMTP_HOST"),
+					auth: {
+						user: config.get("NOREPLY_EMAIL"),
+						pass: config.get("SMTP_PASS"),
+					},
+				};
+			},
 			inject: [ServerConfigService],
 		},
 		{
