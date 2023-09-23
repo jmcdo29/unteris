@@ -35,7 +35,7 @@ export const PasswordInput = (props: PasswordProps): JSX.Element => {
 		e: React.KeyboardEvent,
 		key: 'CapsLock' | 'NumLock',
 		currVal: boolean,
-		setVal: (val: boolean) => void
+		setVal: (val: boolean) => void,
 	) => {
 		if (e.getModifierState(key) && e.key !== key) {
 			setVal(true);
@@ -60,11 +60,11 @@ export const PasswordInput = (props: PasswordProps): JSX.Element => {
 				onBlur={props.onUpdate}
 				onKeyDown={passwordInput}
 				endAdornment={
-					<InputAdornment position="end">
+					<InputAdornment position='end'>
 						<IconButton
-							aria-label="toggle password visibility"
+							aria-label='toggle password visibility'
 							onClick={toggleShowPassword}
-							edge="end"
+							edge='end'
 						>
 							{showPassword ? <DoNotShow /> : <Show />}
 						</IconButton>

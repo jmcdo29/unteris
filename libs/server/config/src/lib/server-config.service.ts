@@ -13,7 +13,7 @@ export class ServerConfigService {
 	}
 
 	get<T extends keyof z.infer<typeof Config>>(
-		key: T
+		key: T,
 	): z.infer<typeof Config>[T] {
 		return this.config[key];
 	}

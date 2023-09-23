@@ -7,7 +7,7 @@ export const getEmailInstanceToken = () => EMAIL_INSTANCE_TOKEN;
 export const verificationEmail = (
 	username: string,
 	verificationCode: string,
-	unterisServer: string
+	unterisServer: string,
 ) => {
 	const link = `${unterisServer}/verify?token=${verificationCode}`;
 	return `<html>
@@ -32,7 +32,7 @@ export const verificationEmail = (
 
 export const passwordResetEmail = (
 	resetToken: string,
-	unterisServer: string
+	unterisServer: string,
 ): string => {
 	const link = `${unterisServer}/reset-password?resetToken=${resetToken}`;
 	return `<html>

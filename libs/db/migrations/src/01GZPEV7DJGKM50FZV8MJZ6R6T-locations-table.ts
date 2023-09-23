@@ -1,7 +1,7 @@
 import { Kysely, sql } from 'kysely';
 
 export const up = async (
-	db: Kysely<Record<string, Record<string, unknown>>>
+	db: Kysely<Record<string, Record<string, unknown>>>,
 ) => {
 	await db.schema
 		.createTable('location')
@@ -20,13 +20,13 @@ export const up = async (
 	await db.schema
 		.alterTable('deity')
 		.addColumn('location', 'text', (col) =>
-			col.references('location.id').notNull().defaultTo(id)
+			col.references('location.id').notNull().defaultTo(id),
 		)
 		.execute();
 };
 
 export const down = async (
-	db: Kysely<Record<string, Record<string, unknown>>>
+	db: Kysely<Record<string, Record<string, unknown>>>,
 ) => {
 	await db.schema.alterTable('deity').dropColumn('location').execute();
 	await db.schema.dropTable('location').execute();

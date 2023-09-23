@@ -17,10 +17,10 @@ export const Footer = (): JSX.Element => {
 				sx={{ justifyContent: 'center', justifyItems: 'center' }}
 			>
 				<div>
-					Made with <Heart color={color} display="inline-block" /> by&nbsp;
+					Made with <Heart color={color} display='inline-block' /> by&nbsp;
 					<StyledLink
-						href="https://github.com/jmcdo29"
-						display="inline"
+						href='https://github.com/jmcdo29'
+						display='inline'
 						color={color}
 					>
 						Jay McDoniel

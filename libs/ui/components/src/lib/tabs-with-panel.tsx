@@ -11,7 +11,7 @@ interface TabsWithPanelProps {
 	tabIndex: number;
 	handleTabChange: (_event: SyntheticEvent, newIndex: number) => void;
 	tabElements: Array<{ id: string; name: string }>;
-	tabPanelContent: (prop: any) => JSX.Element;
+	tabPanelContent: (prop: unknown) => JSX.Element;
 	indicator?: 'primary' | 'secondary';
 }
 
@@ -44,7 +44,7 @@ export const TabsWithPanel = (props: TabsWithPanelProps): JSX.Element => {
 				))}
 			</Tabs>
 			{props.tabElements.map((tab, index) => (
-				<TabPanel value={props.tabIndex} index={index} key={index}>
+				<TabPanel value={props.tabIndex} index={index} key={tab.id}>
 					<Suspense>{props.tabPanelContent(tab)}</Suspense>
 				</TabPanel>
 			))}

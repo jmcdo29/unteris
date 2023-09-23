@@ -30,7 +30,7 @@ export const PasswordReset = (): JSX.Element => {
 	};
 	return (
 		<Grid columns={1} sx={{ justifyItems: 'center' }}>
-			<Heading text="Password Reset" />
+			<Heading text='Password Reset' />
 			<PasswordInput
 				onUpdate={(e) => setPassword(e.target.value)}
 				value={password}

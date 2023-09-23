@@ -10,8 +10,8 @@ export const ActionButton = (props: ActionButtonProps): JSX.Element => {
 	return (
 		<Button
 			onClick={props.action}
-			color="secondary"
-			variant="contained"
+			color='secondary'
+			variant='contained'
 			disabled={props.disabled}
 		>
 			{props.text}

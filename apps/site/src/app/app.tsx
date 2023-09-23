@@ -62,7 +62,7 @@ export function App() {
 					},
 				},
 			}),
-		[prefersDarkMode, chosenTheme, LinkBehavior]
+		[prefersDarkMode, chosenTheme, LinkBehavior],
 	);
 	return (
 		<ThemeProvider theme={theme}>

@@ -10,7 +10,7 @@ export class ServerCsrfController {
 	constructor(private serverCsrfService: ServerCsrfService) {}
 	@Get()
 	async getCsrfToken(
-		@Session() session: UnterisSession
+		@Session() session: UnterisSession,
 	): Promise<{ csrfToken: string }> {
 		return {
 			csrfToken: await this.serverCsrfService.generateToken(session.id),

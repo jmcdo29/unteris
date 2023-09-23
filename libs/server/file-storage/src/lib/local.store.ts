@@ -7,7 +7,7 @@ import { FILE_LOCAL_CONFIG_TOKEN } from './file-storage.constants';
 @Injectable()
 export class LocalStore implements FileManager {
 	constructor(
-		@Inject(FILE_LOCAL_CONFIG_TOKEN) private readonly config: LocalStoreConfig
+		@Inject(FILE_LOCAL_CONFIG_TOKEN) private readonly config: LocalStoreConfig,
 	) {}
 
 	read(path: string) {

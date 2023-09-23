@@ -22,7 +22,7 @@ const Header = () => {
 	const [queryParams] = useSearchParams();
 	const setToken = useSetAtom(tokenAtom);
 	setToken(queryParams.get('token'));
-	return <Heading text="Email Verification" />;
+	return <Heading text='Email Verification' />;
 };
 
 const Body = () => {
@@ -35,7 +35,7 @@ const Body = () => {
 				<div>
 					We could not verify your email at this time. Please double check your
 					email, and submit a request for a new verification token on the{' '}
-					<Link href="/me">Users</Link> page.
+					<Link href='/me'>Users</Link> page.
 				</div>
 			)}
 		</>
@@ -47,7 +47,7 @@ export const EmailVerification = (): JSX.Element => {
 	return (
 		<Grid columns={1} sx={{ justifyItems: 'center', rowGap: theme.spacing(2) }}>
 			<Header />
-			<Suspense fallback="Loading...">
+			<Suspense fallback='Loading...'>
 				<Body />
 			</Suspense>
 		</Grid>

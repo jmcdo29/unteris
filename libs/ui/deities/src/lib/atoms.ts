@@ -7,7 +7,7 @@ export const editingAtom = atom(false);
 export const locationsAtom = atom<Promise<Pick<Location, 'id' | 'name'>[]>>(
 	async () => {
 		return sdk.getLocationsByType('plane');
-	}
+	},
 );
 
 export const locationIndexAtom = atom(0);
@@ -21,7 +21,7 @@ export const locationIdAtom = atom<Promise<string>>(async (get) => {
 	return locations[locationIndex].id;
 });
 
-export const deitiesForLocaitonAtom = atom<
+export const deitiesForLocationAtom = atom<
 	Promise<Pick<Deity, 'id' | 'name'>[]>
 >(async (get) => {
 	const locationId = await get(locationIdAtom);
@@ -35,11 +35,11 @@ const primitiveDeityIndex = atom({ deityIndex: 0, lastKnownLocationIndex: 0 });
 export const deityIndexAtom = atom(
 	(get) => {
 		const locationIndex = get(locationIndexAtom);
-		const deityIndicies = get(primitiveDeityIndex);
-		if (locationIndex !== deityIndicies.lastKnownLocationIndex) {
+		const deityIndices = get(primitiveDeityIndex);
+		if (locationIndex !== deityIndices.lastKnownLocationIndex) {
 			return 0;
 		}
-		return deityIndicies.deityIndex;
+		return deityIndices.deityIndex;
 	},
 	(get, set, val: number) => {
 		const locationIndex = get(locationIndexAtom);
@@ -47,11 +47,11 @@ export const deityIndexAtom = atom(
 			deityIndex: val,
 			lastKnownLocationIndex: locationIndex,
 		});
-	}
+	},
 );
 
 export const deityIdAtom = atom<Promise<string>>(async (get) => {
-	const deities = await get(deitiesForLocaitonAtom);
+	const deities = await get(deitiesForLocationAtom);
 	const deityIndex = get(deityIndexAtom);
 	if (!deities.length || deityIndex === -1) {
 		return '';

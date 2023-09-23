@@ -8,7 +8,7 @@ export class ServerLocationService {
 	constructor(private readonly locationRepo: LocationRepository) {}
 
 	async getLocationsByType(
-		type: Location['type']
+		type: Location['type'],
 	): Promise<Pick<Location, 'id' | 'name'>[]> {
 		return this.locationRepo.getLocationsByType(type);
 	}

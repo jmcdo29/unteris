@@ -18,7 +18,7 @@ export const raceIdAtom = atom<Promise<string>>(async (get) => {
 export const racesAtom = atom<Promise<Pick<Race, 'id' | 'name'>[]>>(
 	async () => {
 		return sdk.getRaces();
-	}
+	},
 );
 
 export const raceAtom = atom<Promise<RaceWithAbilities | undefined>>(
@@ -29,5 +29,5 @@ export const raceAtom = atom<Promise<RaceWithAbilities | undefined>>(
 		}
 		const data = await sdk.getRaceById(raceId);
 		return data;
-	}
+	},
 );

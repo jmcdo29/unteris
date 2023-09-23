@@ -6,7 +6,7 @@ import { ServerTokenService } from '@unteris/server/token';
 export class ServerCsrfService {
 	constructor(
 		private readonly tokenService: ServerTokenService,
-		private readonly sessionService: ServerSessionService
+		private readonly sessionService: ServerSessionService,
 	) {}
 	async generateToken(sessionId: string): Promise<string> {
 		const csrfToken = await this.tokenService.generateToken(256);

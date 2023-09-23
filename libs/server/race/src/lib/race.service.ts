@@ -7,7 +7,7 @@ import { Kysely } from 'kysely';
 export class ServerRaceService {
 	constructor(
 		@InjectKysely()
-		private readonly db: Kysely<Pick<Database, 'race' | 'racialAbility'>>
+		private readonly db: Kysely<Pick<Database, 'race' | 'racialAbility'>>,
 	) {}
 
 	async getRaces(): Promise<Array<Pick<Race, 'id' | 'name'>>> {

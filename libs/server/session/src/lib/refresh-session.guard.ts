@@ -14,13 +14,13 @@ export class RefreshSessionGuard implements CanActivate {
 		const { cookies } = req;
 		const { refreshId } = cookies;
 		const refreshSessionData = await this.sessionService.getSession<'refresh'>(
-			refreshId
+			refreshId,
 		);
 		if (!this.sessionService.isRefreshData(refreshSessionData)) {
 			return false;
 		}
 		const oldSession = await this.sessionService.getSession(
-			refreshSessionData.sessionId
+			refreshSessionData.sessionId,
 		);
 		req.oldSession = oldSession;
 		return true;

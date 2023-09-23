@@ -11,7 +11,7 @@ export class DeityQuestions {
 	private askLocation = false;
 	constructor(
 		private readonly locationsService: ServerLocationService,
-		@InjectKysely() private readonly db: Kysely<Database>
+		@InjectKysely() private readonly db: Kysely<Database>,
 	) {}
 	@Question({
 		message: 'What is the name of the deity?',

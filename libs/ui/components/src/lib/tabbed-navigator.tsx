@@ -3,7 +3,9 @@ import { Suspense, SyntheticEvent } from 'react';
 import { TabsWithPanel } from './tabs-with-panel';
 
 interface TabbedNavigatorProps {
-	resourceAtom: Atom<Promise<any[]> | any[]>;
+	resourceAtom: Atom<
+		Promise<{ id: string; name: string }[]> | { id: string; name: string }[]
+	>;
 	indexAtom: WritableAtom<number, [val: number], void>;
 	label: string;
 	tabPanelContent: () => JSX.Element;

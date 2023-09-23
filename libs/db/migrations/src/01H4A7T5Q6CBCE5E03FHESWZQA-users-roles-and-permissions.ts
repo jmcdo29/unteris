@@ -1,7 +1,7 @@
 import { Kysely, sql } from 'kysely';
 
 export const up = async (
-	db: Kysely<Record<string, Record<string, unknown>>>
+	db: Kysely<Record<string, Record<string, unknown>>>,
 ) => {
 	await db.schema
 		.createTable('role')
@@ -22,7 +22,7 @@ export const up = async (
 		.createTable('user_permission')
 		.addColumn('id', 'text', (col) => col.defaultTo(sql`ulid()`).primaryKey())
 		.addColumn('user_id', 'text', (col) =>
-			col.notNull().references('user_account.id')
+			col.notNull().references('user_account.id'),
 		)
 		.addColumn('role_id', 'text', (col) => col.notNull().references('role.id'))
 		.execute();
@@ -30,7 +30,7 @@ export const up = async (
 		.createTable('login_method')
 		.addColumn('id', 'text', (col) => col.defaultTo(sql`ulid()`).primaryKey())
 		.addColumn('user_id', 'text', (col) =>
-			col.notNull().references('user_account.id')
+			col.notNull().references('user_account.id'),
 		)
 		.addColumn('name', 'text', (col) => col.notNull())
 		.execute();
@@ -39,7 +39,7 @@ export const up = async (
 		.addColumn('id', 'text', (col) => col.defaultTo(sql`ulid()`).primaryKey())
 		.addColumn('password', 'text', (col) => col.notNull())
 		.addColumn('login_method_id', 'text', (col) =>
-			col.notNull().references('login_method.id')
+			col.notNull().references('login_method.id'),
 		)
 		.addColumn('last_used', 'timetz')
 		.addColumn('attempts', 'integer', (col) => col.defaultTo(0))

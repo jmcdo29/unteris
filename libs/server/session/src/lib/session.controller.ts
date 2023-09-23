@@ -15,7 +15,7 @@ export class SessionController {
 		@Cookies() cookies: UnterisCookies,
 		@NewCookies() newCookies: Cookie[],
 		@Req()
-		{ oldSession }: RefreshRequest
+		{ oldSession }: RefreshRequest,
 	) {
 		const { refreshId } = cookies;
 		const sessionId = await this.sessionService.createSessionId();
@@ -27,7 +27,7 @@ export class SessionController {
 			this.sessionService.createCookie({
 				name: 'session',
 				value: sessionId,
-			})
+			}),
 		);
 		return { success: true };
 	}

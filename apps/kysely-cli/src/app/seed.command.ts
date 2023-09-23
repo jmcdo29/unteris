@@ -11,7 +11,7 @@ export class SeedCommand extends CommandRunner {
 		private readonly inquirer: InquirerService,
 		@InjectKysely() private readonly db: Kysely<Database>,
 		@OgmaLogger(SeedCommand) private readonly logger: OgmaService,
-		private readonly locationService: ServerLocationService
+		private readonly locationService: ServerLocationService,
 	) {
 		super();
 	}
@@ -21,7 +21,7 @@ export class SeedCommand extends CommandRunner {
 			if (!type) {
 				({ type } = await this.inquirer.ask<{ type: keyof Database }>(
 					'seed-type',
-					{}
+					{},
 				));
 			}
 			if (!this.typeIsKeyOfDatabase(type)) {
@@ -52,7 +52,7 @@ export class SeedCommand extends CommandRunner {
 		} finally {
 			const { doItAgain } = await this.inquirer.ask<{ doItAgain: boolean }>(
 				'repeat',
-				{}
+				{},
 			);
 			if (doItAgain) {
 				await this.run([]);
@@ -74,7 +74,7 @@ export class SeedCommand extends CommandRunner {
 	private async insertDeityCategory(): Promise<void> {
 		const data = await this.inquirer.ask<Insertable<DeityCategory>>(
 			'deityCategory',
-			{}
+			{},
 		);
 		await this.db.insertInto('deityCategory').values([data]).execute();
 	}
@@ -94,7 +94,7 @@ export class SeedCommand extends CommandRunner {
 			.executeTakeFirst();
 		if (!category) {
 			throw new Error(
-				`Deity category "${data.category}" does not exist in the database.`
+				`Deity category "${data.category}" does not exist in the database.`,
 			);
 		}
 		await this.db
@@ -137,7 +137,7 @@ export class SeedCommand extends CommandRunner {
 			.execute();
 		const { doItAgain } = await this.inquirer.ask<{ doItAgain: boolean }>(
 			'repeat',
-			{}
+			{},
 		);
 		if (doItAgain) {
 			await this.insertDeityDomain();

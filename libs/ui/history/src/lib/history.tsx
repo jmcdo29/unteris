@@ -3,7 +3,7 @@ import { Grid, Image } from '@unteris/ui/components';
 import { ReactNode } from 'react';
 
 const HistoryBlurb = ({ children }: { children: ReactNode }): JSX.Element => (
-	<Typography variant="body1" gutterBottom={true} paragraph={true}>
+	<Typography variant='body1' gutterBottom={true} paragraph={true}>
 		{children}
 	</Typography>
 );
@@ -58,8 +58,8 @@ export const History = (): JSX.Element => {
 			</HistoryBlurb>
 			<Grid sx={{ justifyItems: 'center' }}>
 				<Image
-					src="/images/unteris_map.jpg"
-					alt="Unteris Map"
+					src='/images/unteris_map.jpg'
+					alt='Unteris Map'
 					style={{ maxHeight: 'unset' }}
 				/>
 			</Grid>

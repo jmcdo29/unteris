@@ -1,7 +1,7 @@
 import { Kysely, sql } from 'kysely';
 
 export const up = async (
-	db: Kysely<Record<string, Record<string, unknown>>>
+	db: Kysely<Record<string, Record<string, unknown>>>,
 ) => {
 	await sql`CREATE EXTENSION IF NOT EXISTS pgcrypto;`.execute(db);
 	// ulid reference https://github.com/geckoboard/pgulid/blob/master/pgulid.sql
@@ -84,7 +84,7 @@ VOLATILE;`.execute(db);
 		.addColumn('description', 'text', (col) => col.notNull())
 		.addColumn('image_url', 'text')
 		.addColumn('category', 'text', (col) =>
-			col.references('deity_category.id').notNull()
+			col.references('deity_category.id').notNull(),
 		)
 		.execute();
 
@@ -97,7 +97,7 @@ VOLATILE;`.execute(db);
 };
 
 export const down = async (
-	db: Kysely<Record<string, Record<string, unknown>>>
+	db: Kysely<Record<string, Record<string, unknown>>>,
 ) => {
 	await db.schema.dropTable('deity_domain').execute();
 	await db.schema.dropTable('deity').execute();

@@ -49,7 +49,7 @@ export const Welcome = (): JSX.Element => {
 					spacing={theme.spacing()}
 				>
 					<Grid xs={12} md={3}>
-						<Typography variant="h2" component="h1">
+						<Typography variant='h2' component='h1'>
 							Welcome to Unteris
 						</Typography>
 					</Grid>

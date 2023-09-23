@@ -8,7 +8,7 @@ export class LocationRepository {
 	constructor(@InjectKysely() private readonly db: Kysely<Database>) {}
 
 	async getLocationsByType(
-		type: Location['type']
+		type: Location['type'],
 	): Promise<Pick<Location, 'id' | 'name'>[]> {
 		return this.db
 			.selectFrom('location')

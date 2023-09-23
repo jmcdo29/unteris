@@ -15,7 +15,7 @@ export class ServerSessionService {
 	constructor(
 		private readonly tokenService: ServerTokenService,
 		@InjectRedisInstance() private readonly redis: RedisClientType,
-		private readonly config: ServerConfigService
+		private readonly config: ServerConfigService,
 	) {}
 
 	async createSessionId() {
@@ -27,7 +27,7 @@ export class ServerSessionService {
 	}
 
 	async createFullSession(
-		sessionData: SessionData = { user: {}, csrf: '' }
+		sessionData: SessionData = { user: {}, csrf: '' },
 	): Promise<{ id: string; refreshId: string }> {
 		const sessionToken = await this.createSessionId();
 		const refreshToken = await this.createRefreshId();
@@ -37,14 +37,14 @@ export class ServerSessionService {
 			JSON.stringify({ sessionId: sessionToken }),
 			{
 				EX: this.config.get('REFRESH_EXPIRES_IN'),
-			}
+			},
 		);
 		return { id: sessionToken, refreshId: refreshToken };
 	}
 
 	async createSession(
 		sessionData: SessionData = { user: {}, csrf: '' },
-		sessionId?: string
+		sessionId?: string,
 	): Promise<{ id: string }> {
 		let id = sessionId;
 		if (!id) {
@@ -57,14 +57,16 @@ export class ServerSessionService {
 	}
 
 	async getSession<T extends 'session' | 'refresh' = 'session'>(
-		sessionId: string
+		sessionId: string,
 	): Promise<T extends 'session' ? SessionData : RefreshSessionData> {
 		return JSON.parse((await this.redis.get(sessionId)) ?? '{}');
 	}
 
 	async updateSession<T extends 'session' | 'refresh' = 'session'>(
 		sessionId: string,
-		sessionData: Partial<T extends 'session' ? SessionData : RefreshSessionData>
+		sessionData: Partial<
+			T extends 'session' ? SessionData : RefreshSessionData
+		>,
 	): Promise<void> {
 		const session = await this.getSession(sessionId);
 		if (!this.isSavedSession(session)) {
@@ -72,24 +74,24 @@ export class ServerSessionService {
 		}
 		await this.redis.set(
 			sessionId,
-			JSON.stringify({ ...session, ...sessionData })
+			JSON.stringify({ ...session, ...sessionData }),
 		);
 	}
 
 	private isSavedSession<T extends object = SavedSessionData>(
-		sessionObject: T | object
+		sessionObject: T | object,
 	): sessionObject is T {
 		return Object.keys(sessionObject).length !== 0;
 	}
 
 	isSession(
-		sessionData: SavedSessionData | object
+		sessionData: SavedSessionData | object,
 	): sessionData is SessionData {
 		return 'user' in sessionData && 'csrf' in sessionData;
 	}
 
 	isRefreshData(
-		refreshData: SavedSessionData | object
+		refreshData: SavedSessionData | object,
 	): refreshData is RefreshSessionData {
 		return 'sessionId' in refreshData;
 	}
@@ -108,7 +110,7 @@ export class ServerSessionService {
 			value,
 			options: {
 				maxAge: this.config.get(
-					`${name.toUpperCase() as Uppercase<typeof name>}_EXPIRES_IN`
+					`${name.toUpperCase() as Uppercase<typeof name>}_EXPIRES_IN`,
 				),
 				httpOnly: true,
 				path: '/api',

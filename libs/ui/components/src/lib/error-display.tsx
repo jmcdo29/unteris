@@ -29,7 +29,7 @@ export const ErrorDisplay = (props: ErrorDisplayProps): JSX.Element => {
 					padding={theme.spacing(1)}
 				>
 					<Box>
-						<Typography variant="h2" fontSize="2em">
+						<Typography variant='h2' fontSize='2em'>
 							{props.errorToDisplay.title}
 						</Typography>
 					</Box>

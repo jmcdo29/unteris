@@ -5,6 +5,12 @@
 	"projectType": "library",
 	"targets": {
 		"lint": {
+			"executor": "@unteris/plugin/rz:lint",
+			"options": {
+				"unsafe": true
+			}
+		},
+		"nx-lint": {
 			"executor": "@nx/linter:eslint",
 			"outputs": ["{options.outputFile}"],
 			"options": {

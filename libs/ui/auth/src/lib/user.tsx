@@ -12,7 +12,7 @@ export const User = (): JSX.Element => {
 	};
 	return (
 		<div>
-			<Typography variant="h2" fontSize={'2em'}>
+			<Typography variant='h2' fontSize={'2em'}>
 				{user.displayName}
 			</Typography>
 			<Button onClick={logout}>Logout</Button>

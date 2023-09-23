@@ -15,7 +15,7 @@ export const TabPanel = (props: TabPanelProps) => {
 		<Grid container={true}>
 			<Grid>
 				<Box
-					role="tabpanel"
+					role='tabpanel'
 					hidden={value !== index}
 					id={`vertical-tabpanel-${index}`}
 					aria-labelledby={`vertical-tab-${index}`}

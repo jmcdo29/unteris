@@ -45,16 +45,16 @@ export class ServerSecurityController {
 	@Get('verify-email')
 	@SkipSessionCheck(false)
 	async verifyEmailByToken(
-		@Query() query: TokenVerificationData
+		@Query() query: TokenVerificationData,
 	): Promise<{ success: boolean }> {
 		return this.serverSecurityService.verifyUserRecord(
-			query.data.verificationToken
+			query.data.verificationToken,
 		);
 	}
 
 	@Post('password-reset-request')
 	async startUserPasswordReset(
-		@Body() body: PasswordResetRequestDto
+		@Body() body: PasswordResetRequestDto,
 	): Promise<{ success: boolean }> {
 		await this.serverSecurityService.createPasswordResetToken(body.data);
 		return { success: true };
@@ -62,7 +62,7 @@ export class ServerSecurityController {
 
 	@Post('password-reset')
 	async resetUserPasswordFromToken(
-		@Body() body: PasswordResetDto
+		@Body() body: PasswordResetDto,
 	): Promise<{ success: boolean }> {
 		await this.serverSecurityService.resetUserPassword(body.data);
 		return { success: true };

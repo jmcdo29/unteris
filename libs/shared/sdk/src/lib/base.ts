@@ -46,7 +46,7 @@ abstract class SdkBase<T extends SdkGeneric = RouteToType> {
 		}
 		const res = await fetch(
 			`${this.baseUrl}/${config.endpoint.toString()}`,
-			reqConfig
+			reqConfig,
 		);
 		if (!res.ok) {
 			throw new FetchError('Error durng request', res);
@@ -56,7 +56,7 @@ abstract class SdkBase<T extends SdkGeneric = RouteToType> {
 
 	get<E extends keyof T['get']>(
 		endpoint: E,
-		config: Record<string, string> = {}
+		config: Record<string, string> = {},
 	): Promise<T['get'][E][0]> {
 		return this.request({ endpoint, method: 'get', headers: config });
 	}
@@ -64,7 +64,7 @@ abstract class SdkBase<T extends SdkGeneric = RouteToType> {
 	post<E extends keyof T['post']>(
 		endpoint: E,
 		body: T['post'][E][1],
-		config: Record<string, string> = {}
+		config: Record<string, string> = {},
 	): Promise<T['post'][E][0]> {
 		return this.request({ endpoint, method: 'post', headers: config, body });
 	}
@@ -72,7 +72,7 @@ abstract class SdkBase<T extends SdkGeneric = RouteToType> {
 	patch<E extends keyof T['patch']>(
 		endpoint: E,
 		body: T['patch'][E][1],
-		config: Record<string, string> = {}
+		config: Record<string, string> = {},
 	): Promise<T['patch'][E][0]> {
 		return this.request({ endpoint, method: 'patch', headers: config, body });
 	}
@@ -80,7 +80,7 @@ abstract class SdkBase<T extends SdkGeneric = RouteToType> {
 	put<E extends keyof T['put']>(
 		endpoint: E,
 		body: T['put'][E][1],
-		config: Record<string, string> = {}
+		config: Record<string, string> = {},
 	): Promise<T['put'][E][0]> {
 		return this.request({ endpoint, method: 'put', headers: config, body });
 	}
@@ -88,7 +88,7 @@ abstract class SdkBase<T extends SdkGeneric = RouteToType> {
 	delete<E extends keyof T['delete']>(
 		endpoint: E,
 		body: T['delete'][E][1],
-		config: Record<string, string> = {}
+		config: Record<string, string> = {},
 	): Promise<T['delete'][E][0]> {
 		return this.request({ endpoint, method: 'delete', headers: config, body });
 	}
@@ -96,7 +96,7 @@ abstract class SdkBase<T extends SdkGeneric = RouteToType> {
 
 export class Sdk extends SdkBase {
 	override async request<
-		E extends keyof RouteToType[method] = keyof RouteToType[method]
+		E extends keyof RouteToType[method] = keyof RouteToType[method],
 	>(config: {
 		endpoint: E;
 		method: method;

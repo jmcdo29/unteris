@@ -7,7 +7,7 @@ import { ImageRepo } from './image.repository';
 export class ServerImageProcessingService {
 	constructor(
 		private readonly fileStorage: ServerFileStorageService,
-		private readonly imageRepo: ImageRepo
+		private readonly imageRepo: ImageRepo,
 	) {}
 
 	async processImage(imageId: string): Promise<void> {
@@ -23,7 +23,7 @@ export class ServerImageProcessingService {
 			sharp(file).resize(1536, 2304).toFormat('webp').toBuffer(),
 		]);
 		const fileNames = ['sm', 'md', 'lg'].map(
-			(size) => `${path.reverse().join('/')}/${name}_${size}.webp`
+			(size) => `${path.reverse().join('/')}/${name}_${size}.webp`,
 		);
 		await Promise.all([
 			this.fileStorage.writeFileToStore(fileNames[0], small),

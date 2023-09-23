@@ -1,7 +1,7 @@
 import { Kysely, sql } from 'kysely';
 
 export const up = async (
-	db: Kysely<Record<string, Record<string, unknown>>>
+	db: Kysely<Record<string, Record<string, unknown>>>,
 ) => {
 	await db.schema
 		.createTable('race')
@@ -13,14 +13,14 @@ export const up = async (
 		.addColumn('type', 'text', (col) => col.defaultTo('humanoid').notNull())
 		.addColumn('speed', 'integer', (col) => col.defaultTo(30).notNull())
 		.addColumn('known_languages', 'text', (col) =>
-			col.notNull().defaultTo('You can speak and read Common')
+			col.notNull().defaultTo('You can speak and read Common'),
 		)
 		.execute();
 	await db.schema
 		.createTable('racial_ability')
 		.addColumn('id', 'text', (col) => col.defaultTo(sql`ulid()`).primaryKey())
 		.addColumn('race_id', 'text', (col) =>
-			col.references('race.id').notNull().onDelete('cascade')
+			col.references('race.id').notNull().onDelete('cascade'),
 		)
 		.addColumn('name', 'text', (col) => col.notNull())
 		.addColumn('description', 'text', (col) => col.notNull())
@@ -28,7 +28,7 @@ export const up = async (
 };
 
 export const down = async (
-	db: Kysely<Record<string, Record<string, unknown>>>
+	db: Kysely<Record<string, Record<string, unknown>>>,
 ) => {
 	await db.schema.dropTable('racial_ability').execute();
 	await db.schema.dropTable('race').execute();

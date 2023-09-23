@@ -17,7 +17,7 @@ export class ImageRepo {
 
 	async updateImageUrls(
 		imageId: string,
-		paths: { small: string; medium: string; large: string }
+		paths: { small: string; medium: string; large: string },
 	): Promise<void> {
 		await this.db
 			.updateTable('image')

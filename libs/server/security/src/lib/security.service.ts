@@ -26,15 +26,15 @@ export class ServerSecurityService {
 		private readonly emailService: ServerEmailService,
 		private readonly tokenService: ServerTokenService,
 		@OgmaLogger(ServerSecurityService) private readonly logger: OgmaService,
-		private readonly securityRepo: SecurityRepo
+		private readonly securityRepo: SecurityRepo,
 	) {}
 
 	async signUpLocal(
 		newUser: SignupUser,
-		sessionId: string
+		sessionId: string,
 	): Promise<{ success: boolean; id: UserAccount['id'] }> {
 		const existingAccount = await this.securityRepo.findUserByEmail(
-			newUser.email
+			newUser.email,
 		);
 		if (existingAccount) {
 			throw new BadRequestException({
@@ -47,11 +47,11 @@ export class ServerSecurityService {
 		const createdUser = await this.securityRepo.createUserRecord(newUser);
 		const loginMethod = await this.securityRepo.createLoginMethodRecord(
 			createdUser.id,
-			'local'
+			'local',
 		);
 		await this.securityRepo.createLocalLoginRecord(
 			await this.hashService.hash(newUser.password),
-			loginMethod.id
+			loginMethod.id,
 		);
 		this.sessionService.updateSession(sessionId, {
 			user: { email: newUser.email, id: createdUser.id },
@@ -65,18 +65,18 @@ export class ServerSecurityService {
 	}
 
 	private async sendEmailVerification(
-		user: Pick<UserAccount, 'id' | 'email' | 'name'>
+		user: Pick<UserAccount, 'id' | 'email' | 'name'>,
 	): Promise<void> {
 		try {
 			const verificationToken = await this.tokenService.generateToken(192);
 			await this.securityRepo.createUserVerificationRecord(
 				user.id,
-				verificationToken
+				verificationToken,
 			);
 			await this.emailService.sendVerificationEmail(
 				user.name,
 				user.email,
-				verificationToken
+				verificationToken,
 			);
 		} catch (err) {
 			if (err instanceof Error) {
@@ -89,10 +89,10 @@ export class ServerSecurityService {
 
 	async logUserIn(
 		userLogin: LoginBody,
-		sessionId: string
+		sessionId: string,
 	): Promise<LoginResponse> {
 		const user = await this.securityRepo.findUserWithLocalLogin(
-			userLogin.email
+			userLogin.email,
 		);
 		if (!user || user.attempts >= 5) {
 			throw new UnauthorizedException({
@@ -105,7 +105,7 @@ export class ServerSecurityService {
 			!(await this.hashService.verify(userLogin.password, user.password))
 		) {
 			void this.securityRepo.incrementLoginAttemptsByLocalLoginId(
-				user.localLoginId
+				user.localLoginId,
 			);
 			throw new UnauthorizedException({
 				type: 'Authentication',
@@ -124,7 +124,7 @@ export class ServerSecurityService {
 	}
 
 	async verifyUserRecord(
-		verificationToken: string
+		verificationToken: string,
 	): Promise<{ success: boolean }> {
 		await this.securityRepo.setUserRecordAsActive(verificationToken);
 		return { success: true };
@@ -154,7 +154,7 @@ export class ServerSecurityService {
 		const user = await this.securityRepo.findUserByResetToken(resetToken);
 		await this.securityRepo.updateUserPassword(
 			user.id,
-			await this.hashService.hash(password)
+			await this.hashService.hash(password),
 		);
 	}
 

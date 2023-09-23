@@ -45,7 +45,7 @@ const ErrorBoundary = (): JSX.Element => {
 		return (
 			<Root>
 				<>
-					<Heading text="Unknown Error" />
+					<Heading text='Unknown Error' />
 					<div>{`${error}`}</div>
 				</>
 			</Root>

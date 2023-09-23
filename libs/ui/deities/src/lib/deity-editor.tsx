@@ -20,20 +20,14 @@ export const DeityEditor = (props: DeityEditorProps): JSX.Element => {
 	const theme = useTheme();
 	const deityCopy = { ...props.deity };
 	const handleChange = (
-		e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+		e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
 	) => {
-		const targetField = e.target.dataset.fieldid!;
-		if (!['name', 'description', 'domains'].includes(targetField)) {
+		const targetField = e.target.dataset.fieldid ?? '';
+		if (!['name', 'description'].includes(targetField)) {
 			return;
 		}
-		console.log({
-			targetField: e.target.dataset.fieldid,
-			value: e.target.value,
-		});
-		deityCopy[targetField as keyof DeityReturn] =
-			targetField === 'domains'
-				? e.target.value.split(',')
-				: (e.target.value as any);
+		deityCopy[targetField as keyof Omit<DeityReturn, 'domain'>] =
+			e.target.value;
 	};
 	const saveChanges = () => {
 		setIsEditing(false);
@@ -49,23 +43,23 @@ export const DeityEditor = (props: DeityEditorProps): JSX.Element => {
 					gridColumn: 'span 4',
 					paddingLeft: '1em',
 					display: 'grid',
-					gridColumnTempalte: 'fr',
+					gridColumnTemplate: 'fr',
 					rowGap: theme.spacing(4),
 				}}
 			>
 				<TextField
-					label="Name"
+					label='Name'
 					defaultValue={props.deity.name}
-					id="diety-name"
-					variant="standard"
+					id='deity-name'
+					variant='standard'
 					onChange={handleChange}
 					inputProps={{ 'data-fieldId': 'name' }}
 				/>
 				<TextField
-					label="Description"
+					label='Description'
 					defaultValue={props.deity.description}
-					id="deity-description"
-					variant="standard"
+					id='deity-description'
+					variant='standard'
 					multiline
 					onChange={handleChange}
 					inputProps={{ 'data-fieldId': 'description' }}
@@ -79,10 +73,10 @@ export const DeityEditor = (props: DeityEditorProps): JSX.Element => {
           inputProps={{ 'data-fieldId': 'domains' }}
         />*/}
 				<Grid columns={2} sx={{ columnGap: theme.spacing(2) }}>
-					<Button variant="outlined" onClick={cancelChanges}>
+					<Button variant='outlined' onClick={cancelChanges}>
 						Cancel
 					</Button>
-					<Button variant="contained" color="primary" onClick={saveChanges}>
+					<Button variant='contained' color='primary' onClick={saveChanges}>
 						Save
 					</Button>
 				</Grid>

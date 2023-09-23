@@ -44,17 +44,17 @@ export const Register = (): JSX.Element => {
 	};
 	return (
 		<>
-			<Heading text="Register" />
+			<Heading text='Register' />
 			<TextInput
 				value={newUser.email}
-				label="Email"
-				type="email"
+				label='Email'
+				type='email'
 				required={true}
 				onUpdate={updateField('email')}
 			/>
 			<TextInput
 				value={newUser.name}
-				label="Display Name"
+				label='Display Name'
 				required={true}
 				onUpdate={updateField('name')}
 			/>
@@ -63,7 +63,7 @@ export const Register = (): JSX.Element => {
 				onUpdate={updateField('password')}
 				isSignup={true}
 			/>
-			<ActionButton action={submit} text="Register" />
+			<ActionButton action={submit} text='Register' />
 		</>
 	);
 };

@@ -31,7 +31,7 @@ import {
 			inject: [ServerConfigService, createProviderToken('Kysely')],
 			useFactory: (
 				config: ServerConfigService,
-				logger: OgmaService
+				logger: OgmaService,
 			): KyselyConfig => {
 				try {
 					logger.silly(
@@ -42,7 +42,7 @@ import {
 							user: config.get('DATABASE_USER'),
 							password: config.get('DATABASE_PASSWORD'),
 						},
-						{ context: 'PG Pool' }
+						{ context: 'PG Pool' },
 					);
 					const dbConfig = {
 						dialect: new PostgresDialect({
@@ -78,8 +78,8 @@ import {
 					};
 					logger.debug(
 						`Connectinig to database ${style.blue.apply(
-							config.get('DATABASE_NAME')
-						)} on host ${style.magenta.apply(config.get('DATABASE_HOST'))}`
+							config.get('DATABASE_NAME'),
+						)} on host ${style.magenta.apply(config.get('DATABASE_HOST'))}`,
 					);
 					return dbConfig;
 				} catch (e) {
@@ -103,7 +103,7 @@ import {
 export class KyselyModule {
 	constructor(
 		@Inject(getKyselyInstanceToken())
-		private readonly kysely: Kysely<Record<string, Record<string, unknown>>>
+		private readonly kysely: Kysely<Record<string, Record<string, unknown>>>,
 	) {}
 
 	async onModuleDestroy() {

@@ -23,13 +23,13 @@ DeityViewerProps): JSX.Element => {
 		<Grid container={true}>
 			<Grid
 				container={true}
-				direction="column"
+				direction='column'
 				xs={12}
 				md={6}
 				rowGap={theme.spacing(3)}
 			>
-				<Grid alignSelf="center">
-					<Typography variant="h2" fontSize="3.25rem">
+				<Grid alignSelf='center'>
+					<Typography variant='h2' fontSize='3.25rem'>
 						{deity.name}
 
 						{/*<Button onClick={() => setIsEditing(true)}>
@@ -38,7 +38,7 @@ DeityViewerProps): JSX.Element => {
 					</Typography>
 				</Grid>
 				<Grid>
-					<Typography variant="body1">{deity.description}</Typography>
+					<Typography variant='body1'>{deity.description}</Typography>
 				</Grid>
 				<Grid>
 					<DeityDomains deity={deity} />

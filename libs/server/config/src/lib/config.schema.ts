@@ -53,5 +53,5 @@ const commonConfig = z.object({
 });
 export const Config = z.intersection(
 	commonConfig.merge(dbConfig).merge(rabbitConfig),
-	z.discriminatedUnion('NODE_ENV', [prodConfig, devConfig])
+	z.discriminatedUnion('NODE_ENV', [prodConfig, devConfig]),
 );

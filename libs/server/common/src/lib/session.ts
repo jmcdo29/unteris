@@ -26,7 +26,7 @@ export type SavedSessionData = SessionData | RefreshSessionData;
 
 export const SessionSchema = z.intersection(
 	SessionIdSchema,
-	z.union([SessionDataSchema, RefreshSessionDataSchema])
+	z.union([SessionDataSchema, RefreshSessionDataSchema]),
 );
 
 export type UnterisSession = z.infer<typeof SessionSchema>;

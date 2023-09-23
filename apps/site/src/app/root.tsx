@@ -13,7 +13,7 @@ export const Root = ({
 	return (
 		<>
 			<NavBar />
-			<Box minHeight="85vh" padding={`${theme.spacing(3)} ${theme.spacing(2)}`}>
+			<Box minHeight='85vh' padding={`${theme.spacing(3)} ${theme.spacing(2)}`}>
 				<>
 					<Outlet />
 					{children ? children : <div />}

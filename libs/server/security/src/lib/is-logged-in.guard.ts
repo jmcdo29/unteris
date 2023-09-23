@@ -9,13 +9,13 @@ import { ServerSecurityService } from './security.service';
 export class IsLoggedInGuard implements CanActivate {
 	constructor(
 		private readonly reflector: Reflector,
-		private readonly securityService: ServerSecurityService
+		private readonly securityService: ServerSecurityService,
 	) {}
 
 	async canActivate(context: ExecutionContext) {
 		const skipCheck = this.reflector.getAllAndOverride(
 			SKIP_SESSION_LOGGED_IN_CHECK,
-			[context.getClass(), context.getHandler()]
+			[context.getClass(), context.getHandler()],
 		);
 		if (skipCheck) {
 			return true;

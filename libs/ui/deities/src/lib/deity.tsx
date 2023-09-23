@@ -14,7 +14,7 @@ export const Deity = (): JSX.Element => {
 	const isEditing = useAtomValue(editingAtom);
 
 	const updateDeity = (
-		_deity: Omit<IDeity, 'imageId'> & { imageUrl: string }
+		_deity: Omit<IDeity, 'imageId'> & { imageUrl: string },
 	) => {
 		/* this is where I'll call back to the server to save */
 	};

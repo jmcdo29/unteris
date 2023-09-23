@@ -16,7 +16,7 @@ import {
 export class ServerLoggingModule {
 	static forApplication(
 		app: string,
-		logLevel: OgmaOptions['logLevel'] = 'INFO'
+		logLevel: OgmaOptions['logLevel'] = 'INFO',
 	): DynamicModule {
 		return {
 			module: ServerLoggingModule,

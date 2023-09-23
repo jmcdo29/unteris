@@ -7,7 +7,7 @@ import {
 import { kyselyDefaultUlid } from './ulid.sql';
 
 const convertToUlid = (
-	column: string
+	column: string,
 ): [string, AlterColumnBuilderCallback] => [
 	column,
 	(col: AlterColumnBuilder) =>
@@ -15,7 +15,7 @@ const convertToUlid = (
 ];
 
 const setUlidDefault = (
-	column: string
+	column: string,
 ): [string, AlterColumnBuilderCallback] => [
 	column,
 	(col: AlterColumnBuilder) => col.setDefault(kyselyDefaultUlid()),
@@ -25,7 +25,7 @@ const migrateTableColumnToUlid = async (
 	db: Kysely<Record<string, Record<string, unknown>>>,
 	table: string,
 	column: string,
-	setDefault = false
+	setDefault = false,
 ): Promise<void> => {
 	let command = db.schema
 		.alterTable(table)
@@ -42,7 +42,7 @@ const recreateForeignKey = async (
 	table: string,
 	column: string,
 	targetTable: string,
-	targetColumn: string
+	targetColumn: string,
 ): Promise<void> => {
 	await db.schema
 		.alterTable(table)
@@ -53,7 +53,7 @@ const recreateForeignKey = async (
 };
 
 export const up = async (
-	db: Kysely<Record<string, Record<string, unknown>>>
+	db: Kysely<Record<string, Record<string, unknown>>>,
 ): Promise<void> => {
 	await sql`CREATE EXTENSION ulid;`.execute(db);
 	await db.schema
@@ -126,7 +126,7 @@ export const up = async (
 		'verification_token',
 		'user_id',
 		'user_account',
-		'id'
+		'id',
 	);
 	await db.schema
 		.alterTable('verification_token')
@@ -141,7 +141,7 @@ export const up = async (
 		'user_permission',
 		'user_id',
 		'user_account',
-		'id'
+		'id',
 	);
 	await recreateForeignKey(db, 'login_method', 'user_id', 'user_account', 'id');
 	await recreateForeignKey(
@@ -149,12 +149,12 @@ export const up = async (
 		'local_login',
 		'login_method_id',
 		'login_method',
-		'id'
+		'id',
 	);
 };
 
 export const down = async (
-	db: Kysely<Record<string, Record<string, unknown>>>
+	db: Kysely<Record<string, Record<string, unknown>>>,
 ) => {
 	await sql`DROP EXTENSION ulid`.execute(db);
 };

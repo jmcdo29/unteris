@@ -24,7 +24,7 @@ export type RouteToType = {
 	get: {
 		'auth/me': [UserAccount];
 		[key: `auth/verify-email?verificationToken=${string}`]: [
-			{ success: boolean }
+			{ success: boolean },
 		];
 		race: [Array<Pick<Race, 'id' | 'name'>>];
 		[key: `race/${string}`]: [RaceWithAbilities];
@@ -33,7 +33,7 @@ export type RouteToType = {
 		[key: `deities/category/${string}`]: [Array<Pick<Deity, 'id' | 'name'>>];
 		[key: `deities/location/${string}`]: [Array<Pick<Deity, 'id' | 'name'>>];
 		[key: `deities/id/${string}`]: [
-			Omit<Deity, 'imageId'> & { imageUrl: 'string' }
+			Omit<Deity, 'imageId'> & { imageUrl: 'string' },
 		];
 	} & Record<
 		`locations?type=${Location['type']}`,
@@ -48,7 +48,7 @@ export type RouteToType = {
 				id: UserAccount['id'];
 				displayName: UserAccount['name'];
 			},
-			LoginBody
+			LoginBody,
 		];
 		'auth/logout': [{ success: boolean }];
 		'auth/password-reset-request': [{ success: boolean }, PasswordResetRequest];

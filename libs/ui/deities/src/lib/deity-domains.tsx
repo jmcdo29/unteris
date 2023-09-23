@@ -7,7 +7,7 @@ type DomainType = Exclude<Deity['domain'], undefined>[number];
 
 const filterDomains = (
 	deity: Omit<Deity, 'imageId'>,
-	domainType: DomainType['type']
+	domainType: DomainType['type'],
 ): Omit<DomainType, 'type'>[] => {
 	return (deity.domain ?? [])
 		.filter((d) => d.type === domainType)
@@ -33,7 +33,7 @@ const Domain = ({
 	}
 	return (
 		<Box margin={theme.spacing(1, 0)}>
-			<Typography variant="body2" fontSize="1.5em">
+			<Typography variant='body2' fontSize='1.5em'>
 				{titles[type]}
 			</Typography>
 			{domains.map((d) => d.name).join(', ')}
@@ -54,9 +54,9 @@ export const DeityDomains = ({
 	}
 	return (
 		<Box>
-			<Domain type="cleric" domains={clericDomains} />
-			<Domain type="druid" domains={druidDomains} />
-			<Domain type="warlock" domains={warlockDomains} />
+			<Domain type='cleric' domains={clericDomains} />
+			<Domain type='druid' domains={druidDomains} />
+			<Domain type='warlock' domains={warlockDomains} />
 		</Box>
 	);
 };

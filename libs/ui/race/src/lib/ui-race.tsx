@@ -8,7 +8,7 @@ export const UiRace = (): JSX.Element => {
 	return (
 		<Suspense>
 			<TabbedNavigator
-				label="homebrew race tab picker"
+				label='homebrew race tab picker'
 				resourceAtom={racesAtom}
 				tabPanelContent={() => <Race />}
 				indexAtom={raceIndexAtom}

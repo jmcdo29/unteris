@@ -2,12 +2,12 @@ import { ExpressionBuilder, Kysely, sql } from 'kysely';
 import { kyselyDefaultUlid, kyselyUlid } from './ulid.sql';
 
 export const up = async (
-	db: Kysely<Record<string, Record<string, unknown>>>
+	db: Kysely<Record<string, Record<string, unknown>>>,
 ) => {
 	await db.schema
 		.createTable('image')
 		.addColumn('id', kyselyUlid, (col) =>
-			col.defaultTo(kyselyDefaultUlid()).primaryKey()
+			col.defaultTo(kyselyDefaultUlid()).primaryKey(),
 		)
 		.addColumn('type', 'text', (col) => col.notNull())
 		.addColumn('original_url', 'text')
@@ -21,7 +21,7 @@ export const up = async (
 		.expression((eb) =>
 			eb
 				.selectFrom('deity')
-				.select([eb.val('deity_avatar').as('type'), 'image_url'])
+				.select([eb.val('deity_avatar').as('type'), 'image_url']),
 		)
 		.execute();
 	await db
@@ -30,7 +30,7 @@ export const up = async (
 		.expression((eb) =>
 			eb
 				.selectFrom('user_account')
-				.select([eb.val('user_avatar').as('type'), 'photo_url'])
+				.select([eb.val('user_avatar').as('type'), 'photo_url']),
 		)
 		.execute();
 	await db.schema
@@ -53,34 +53,34 @@ export const up = async (
 		.updateTable('deity')
 		.set(
 			(
-				eb: ExpressionBuilder<Record<string, Record<string, unknown>>, string>
+				eb: ExpressionBuilder<Record<string, Record<string, unknown>>, string>,
 			) => ({
 				image_id: eb
 					.selectFrom('image')
 					.select('id')
 					.where('original_url', '=', 'deity.image_id')
 					.where('type', '=', 'deity_avatar'),
-			})
+			}),
 		)
 		.execute();
 	await db
 		.updateTable('user_account')
 		.set(
 			(
-				eb: ExpressionBuilder<Record<string, Record<string, unknown>>, string>
+				eb: ExpressionBuilder<Record<string, Record<string, unknown>>, string>,
 			) => ({
 				image_id: eb
 					.selectFrom('image')
 					.select('id')
 					.where('original_url', '=', 'user_account.image_id')
 					.where('type', '=', 'user_avatar'),
-			})
+			}),
 		)
 		.execute();
 	await db.schema
 		.alterTable('deity')
 		.alterColumn('image_id', (col) =>
-			col.setDataType(sql`ulid USING (${sql.ref('image_id')}::ulid)`)
+			col.setDataType(sql`ulid USING (${sql.ref('image_id')}::ulid)`),
 		)
 		.execute();
 	await db.schema
@@ -92,7 +92,7 @@ export const up = async (
 	await db.schema
 		.alterTable('user_account')
 		.alterColumn('image_id', (col) =>
-			col.setDataType(sql`ulid USING (${sql.ref('image_id')}::ulid)`)
+			col.setDataType(sql`ulid USING (${sql.ref('image_id')}::ulid)`),
 		)
 		.execute();
 	await db.schema
@@ -101,13 +101,13 @@ export const up = async (
 			'user_account_image_id_fkey',
 			['image_id'],
 			'image',
-			['id']
+			['id'],
 		)
 		.execute();
 };
 
 export const down = async (
-	_db: Kysely<Record<string, Record<string, unknown>>>
+	_db: Kysely<Record<string, Record<string, unknown>>>,
 ) => {
 	/* intentioanlly no op */
 };

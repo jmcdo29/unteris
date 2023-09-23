@@ -6,7 +6,7 @@ import { OgmaFilterService } from '@ogma/nestjs-module';
 export class BaseFilter extends BaseExceptionFilter {
 	constructor(
 		private readonly logger: OgmaFilterService,
-		host: HttpAdapterHost
+		host: HttpAdapterHost,
 	) {
 		super(host.httpAdapter.getHttpServer());
 	}

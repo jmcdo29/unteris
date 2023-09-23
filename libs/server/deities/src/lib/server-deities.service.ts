@@ -10,7 +10,7 @@ export class ServerDeitiesService {
 	constructor(@InjectKysely() private readonly db: Kysely<Database>) {}
 
 	async findDeitiesOfCategory(
-		category: string
+		category: string,
 	): Promise<Pick<Deity, 'id' | 'name'>[]> {
 		return this.db
 			.selectFrom('deity')
@@ -65,7 +65,7 @@ export class ServerDeitiesService {
 	}
 
 	async findDeitiesOfLocation(
-		location: string
+		location: string,
 	): Promise<Pick<Deity, 'id' | 'name'>[]> {
 		return this.db
 			.selectFrom('deity')

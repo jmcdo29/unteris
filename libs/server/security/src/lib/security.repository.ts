@@ -13,7 +13,7 @@ export class SecurityRepo {
 	constructor(@InjectKysely() private readonly db: Kysely<Database>) {}
 
 	async findUserByEmail(
-		email: string
+		email: string,
 	): Promise<Pick<UserAccount, 'id'> | undefined> {
 		return this.db
 			.selectFrom('userAccount')
@@ -54,7 +54,7 @@ export class SecurityRepo {
 	}
 
 	async findUserWithLocalLogin(
-		email: string
+		email: string,
 	): Promise<
 		| (Pick<UserAccount, 'id' | 'name' | 'email'> &
 				Pick<LocalLogin, 'password' | 'attempts'> & { localLoginId: string })
@@ -94,7 +94,7 @@ export class SecurityRepo {
 
 	async createLoginMethodRecord(
 		userId: string,
-		name: LoginMethod['name']
+		name: LoginMethod['name'],
 	): Promise<Pick<LoginMethod, 'id'>> {
 		return await this.db
 			.insertInto('loginMethod')
@@ -105,7 +105,7 @@ export class SecurityRepo {
 
 	async createLocalLoginRecord(
 		password: string,
-		loginMethodId: string
+		loginMethodId: string,
 	): Promise<void> {
 		await this.db
 			.insertInto('localLogin')
@@ -126,7 +126,7 @@ export class SecurityRepo {
 			.executeTakeFirst();
 		if (!verificationRecord) {
 			throw new Error(
-				'Invalid verification token. If you clicked this from an email, please request a new token.'
+				'Invalid verification token. If you clicked this from an email, please request a new token.',
 			);
 		}
 		await this.db
@@ -138,7 +138,7 @@ export class SecurityRepo {
 
 	async createUserPasswordResetRecord(
 		userId: string,
-		token: string
+		token: string,
 	): Promise<void> {
 		await this.db
 			.insertInto('verificationToken')
@@ -151,7 +151,7 @@ export class SecurityRepo {
 	}
 
 	async findUserByResetToken(
-		resetToken: string
+		resetToken: string,
 	): Promise<Pick<UserAccount, 'id' | 'email'>> {
 		return this.db
 			.selectFrom('userAccount as u')
@@ -173,7 +173,7 @@ export class SecurityRepo {
 					eb
 						.selectFrom('loginMethod')
 						.select(['id'])
-						.where('userId', '=', userId)
+						.where('userId', '=', userId),
 				);
 			})
 			.executeTakeFirstOrThrow();

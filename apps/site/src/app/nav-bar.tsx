@@ -15,19 +15,19 @@ export const NavBar = (): JSX.Element => {
 		<>
 			<Grid container={true} columns={{ xs: 4, md: 12 }}>
 				<Grid md={1}>
-					<Button onClick={() => setShowMenu(!showMenu)} aria-label="Menu">
+					<Button onClick={() => setShowMenu(!showMenu)} aria-label='Menu'>
 						<MenuIcon />
 					</Button>
 				</Grid>
 				<Grid md={1}>
-					<StyledButton href="/" variant="h2" fontSize="2em">
+					<StyledButton href='/' variant='h2' fontSize='2em'>
 						Unteris
 					</StyledButton>
 				</Grid>
 				<Grid xs={0} md={8} />
 				<ThemeSwitcher />
 				<Grid md={1}>
-					<Button aria-label="Profile" href="/login">
+					<Button aria-label='Profile' href='/login'>
 						<ProfileIcon />
 					</Button>
 				</Grid>
@@ -37,16 +37,16 @@ export const NavBar = (): JSX.Element => {
 				onClose={() => setShowMenu(false)}
 				sx={{ alignItems: 'start' }}
 			>
-				<StyledButton href="/" onClick={() => setShowMenu(false)}>
+				<StyledButton href='/' onClick={() => setShowMenu(false)}>
 					Home
 				</StyledButton>
-				<StyledButton href="/history" onClick={() => setShowMenu(false)}>
+				<StyledButton href='/history' onClick={() => setShowMenu(false)}>
 					History
 				</StyledButton>
-				<StyledButton href="/deities" onClick={() => setShowMenu(false)}>
+				<StyledButton href='/deities' onClick={() => setShowMenu(false)}>
 					Deities
 				</StyledButton>
-				<StyledButton href="/races" onClick={() => setShowMenu(false)}>
+				<StyledButton href='/races' onClick={() => setShowMenu(false)}>
 					races
 				</StyledButton>
 			</Drawer>

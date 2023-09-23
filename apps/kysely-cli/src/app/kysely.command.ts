@@ -19,7 +19,7 @@ interface KyselyCliOptions {
 export class KyselyCliCommand extends CommandRunner {
 	constructor(
 		@InjectKysely() private readonly kysely: Kysely<unknown>,
-		@OgmaLogger(KyselyCliCommand) private readonly logger: OgmaService
+		@OgmaLogger(KyselyCliCommand) private readonly logger: OgmaService,
 	) {
 		super();
 	}
@@ -36,7 +36,7 @@ export class KyselyCliCommand extends CommandRunner {
 					'libs',
 					'db',
 					'migrations',
-					'src'
+					'src',
 				),
 			}),
 		});
@@ -54,11 +54,11 @@ export class KyselyCliCommand extends CommandRunner {
 		results?.forEach((result) => {
 			if (result.status === 'Success') {
 				this.logger.log(
-					`Migration ${result.migrationName} successfully migrated ${result.direction}.`
+					`Migration ${result.migrationName} successfully migrated ${result.direction}.`,
 				);
 			} else if (result.status === 'Error') {
 				migrationErrors.push(
-					`Migration ${result.migrationName} encountered an error while migrating ${result.direction}`
+					`Migration ${result.migrationName} encountered an error while migrating ${result.direction}`,
 				);
 			}
 		});

@@ -8,13 +8,13 @@ import { InjectEmailTransport } from './email.decorators';
 export class ServerEmailService {
 	constructor(
 		@InjectEmailTransport() private readonly transport: Transporter,
-		private readonly configService: ServerConfigService
+		private readonly configService: ServerConfigService,
 	) {}
 
 	async sendVerificationEmail(
 		username: string,
 		email: string,
-		verificationToken: string
+		verificationToken: string,
 	): Promise<void> {
 		await this.transport.sendMail({
 			from: 'No Reply <no-reply@unteris.com>',
@@ -23,14 +23,14 @@ export class ServerEmailService {
 			html: verificationEmail(
 				username,
 				verificationToken,
-				this.configService.get('CORS')
+				this.configService.get('CORS'),
 			),
 		});
 	}
 
 	async sendPasswordResetEmail(
 		email: string,
-		resetToken: string
+		resetToken: string,
 	): Promise<void> {
 		await this.transport.sendMail({
 			from: 'No reply <no-reply@unteris.com>',

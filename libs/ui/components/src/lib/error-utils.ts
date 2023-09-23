@@ -24,14 +24,14 @@ const isObject = (val: unknown): val is Record<string, unknown> => {
 };
 
 const isServerError = (
-	obj: Record<string, unknown>
+	obj: Record<string, unknown>,
 ): obj is ErrorFromServer => {
 	return 'type' in obj && typeof obj.type === 'string' && 'message' in obj;
 };
 
 export const convertUnknownErrorToDisplayError = (
 	error: unknown,
-	title = 'Error'
+	title = 'Error',
 ): DisplayError => {
 	let err = error;
 	if (
@@ -77,7 +77,7 @@ export const convertUnknownErrorToDisplayError = (
 
 export const convertValidationErrorToDisplayError = (
 	err: ValidationError,
-	title = 'Validation Error'
+	title = 'Validation Error',
 ): DisplayError => {
 	return {
 		title,

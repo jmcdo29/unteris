@@ -15,11 +15,11 @@ interface RaceDetailProps {
 const RaceDetail = ({ name, detail }: RaceDetailProps): JSX.Element => {
 	return (
 		<Grid>
-			<Typography variant="body2" fontSize="1.5em">
+			<Typography variant='body2' fontSize='1.5em'>
 				{name}
 			</Typography>
-			{detail.split('\\n').map((d, index) => (
-				<Typography variant="body1" key={index}>
+			{detail.split('\\n').map((d) => (
+				<Typography variant='body1' key={d}>
 					{d}
 				</Typography>
 			))}
@@ -33,13 +33,13 @@ export const RaceViewer = ({ race }: RaceViewerProps): JSX.Element => {
 		<Grid container={true}>
 			<Grid
 				container={true}
-				direction="column"
+				direction='column'
 				xs={12}
 				md={6}
 				rowGap={theme.spacing(3)}
 			>
-				<Grid alignSelf="center">
-					<Typography variant="h2" fontSize="3.25rem">
+				<Grid alignSelf='center'>
+					<Typography variant='h2' fontSize='3.25rem'>
 						{race.name}
 
 						{/*<Button onClick={() => setIsEditing(true)}>
@@ -47,16 +47,16 @@ export const RaceViewer = ({ race }: RaceViewerProps): JSX.Element => {
             </Button>*/}
 					</Typography>
 				</Grid>
-				<RaceDetail name="Description" detail={race.description} />
-				<RaceDetail name="Creature Type" detail={race.type} />
-				<RaceDetail name="Size" detail={race.sizeDescription} />
-				<RaceDetail name="Age" detail={race.ageDescription} />
+				<RaceDetail name='Description' detail={race.description} />
+				<RaceDetail name='Creature Type' detail={race.type} />
+				<RaceDetail name='Size' detail={race.sizeDescription} />
+				<RaceDetail name='Age' detail={race.ageDescription} />
 				<RaceDetail
-					name="Speed"
+					name='Speed'
 					detail={`Your base walking speed is ${race.speed} feet.`}
 				/>
-				<RaceDetail name="Known Languages" detail={race.knownLanguages} />
-				<Typography variant="body2" fontSize="2.25em">
+				<RaceDetail name='Known Languages' detail={race.knownLanguages} />
+				<Typography variant='body2' fontSize='2.25em'>
 					Features
 				</Typography>
 				{race.racialAbilities.map((ability) => (

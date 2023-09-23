@@ -19,7 +19,7 @@ import { ServerImageClientService } from './image-client.service';
 					options: {
 						urls: [
 							`amqp://${config.get('RABBIT_USER')}:${config.get(
-								'RABBIT_PASSWORD'
+								'RABBIT_PASSWORD',
 							)}@${config.get('RABBIT_HOST')}:${config.get('RABBIT_PORT')}`,
 						],
 						queue: '',

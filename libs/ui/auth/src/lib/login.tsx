@@ -38,25 +38,25 @@ export const Login = (): JSX.Element => {
 	};
 	return (
 		<>
-			<Heading text="Login" />
+			<Heading text='Login' />
 			<TextInput
 				value={loginUser.email}
-				aria-label="email"
-				label="Email"
-				type="email"
+				aria-label='email'
+				label='Email'
+				type='email'
 				required={true}
 				onUpdate={(e) => setLoginUser({ ...loginUser, email: e.target.value })}
 			/>
 			<PasswordInput
 				value={loginUser.password}
-				aria-label="password"
-				label="Password"
+				aria-label='password'
+				label='Password'
 				isSignup={false}
 				onUpdate={(e) =>
 					setLoginUser({ ...loginUser, password: e.target.value })
 				}
 			/>
-			<ActionButton action={login} text="Log In" />
+			<ActionButton action={login} text='Log In' />
 		</>
 	);
 };

@@ -2,7 +2,7 @@ import { Kysely } from 'kysely';
 import { kyselyUlid } from './ulid.sql';
 
 export const up = async (
-	db: Kysely<Record<string, Record<string, unknown>>>
+	db: Kysely<Record<string, Record<string, unknown>>>,
 ) => {
 	await db.schema
 		.alterTable('location')
@@ -13,7 +13,7 @@ export const up = async (
 };
 
 export const down = async (
-	db: Kysely<Record<string, Record<string, unknown>>>
+	db: Kysely<Record<string, Record<string, unknown>>>,
 ) => {
 	await db.schema
 		.alterTable('location')

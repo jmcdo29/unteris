@@ -6,7 +6,7 @@ import { ServerImageProcessingService } from './image-processing.service';
 @Controller()
 export class ServerImageProcessingController {
 	constructor(
-		private readonly processingService: ServerImageProcessingService
+		private readonly processingService: ServerImageProcessingService,
 	) {}
 
 	@EventPattern(PROCESS_IMAGE_EVENT)
