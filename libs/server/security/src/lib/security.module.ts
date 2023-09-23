@@ -11,17 +11,17 @@ import { SecurityRepo } from './security.repository';
 import { ServerSecurityService } from './security.service';
 
 @Module({
-  imports: [
-    KyselyModule,
-    ServerSessionModule,
-    ServerHashModule,
-    ServerCsrfModule,
-    ServerEmailModule,
-    ServerTokenModule,
-    OgmaModule.forFeature(ServerSecurityService),
-  ],
-  controllers: [ServerSecurityController],
-  providers: [ServerSecurityService, SecurityRepo],
-  exports: [ServerSecurityService],
+	imports: [
+		KyselyModule,
+		ServerSessionModule,
+		ServerHashModule,
+		ServerCsrfModule,
+		ServerEmailModule,
+		ServerTokenModule,
+		OgmaModule.forFeature(ServerSecurityService),
+	],
+	controllers: [ServerSecurityController],
+	providers: [ServerSecurityService, SecurityRepo],
+	exports: [ServerSecurityService],
 })
 export class ServerSecurityModule {}

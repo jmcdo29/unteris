@@ -3,19 +3,19 @@ import { Test } from '@nestjs/testing';
 import { AppService } from './app.service';
 
 describe('AppService', () => {
-  let service: AppService;
+	let service: AppService;
 
-  beforeAll(async () => {
-    const app = await Test.createTestingModule({
-      providers: [AppService],
-    }).compile();
+	beforeAll(async () => {
+		const app = await Test.createTestingModule({
+			providers: [AppService],
+		}).compile();
 
-    service = app.get<AppService>(AppService);
-  });
+		service = app.get<AppService>(AppService);
+	});
 
-  describe('getData', () => {
-    it('should return "Welcome to kysely-cli!"', () => {
-      expect(service.getData()).toEqual({ message: 'Welcome to kysely-cli!' });
-    });
-  });
+	describe('getData', () => {
+		it('should return "Welcome to kysely-cli!"', () => {
+			expect(service.getData()).toEqual({ message: 'Welcome to kysely-cli!' });
+		});
+	});
 });

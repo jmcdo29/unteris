@@ -10,34 +10,34 @@ import { ServerSessionService } from './session.service';
  **/
 @Injectable()
 export class SessionExistsGuard implements CanActivate {
-  constructor(private readonly sessionService: ServerSessionService) {}
+	constructor(private readonly sessionService: ServerSessionService) {}
 
-  async canActivate(context: ExecutionContext) {
-    const req = context
-      .switchToHttp()
-      .getRequest<
-        NestCookieRequest<{ session?: SessionData & { id: string } }>
-      >();
-    const { sessionId } = req.cookies;
-    const session = await this.sessionService.getSession(sessionId ?? '');
-    if (!this.sessionService.isSession(session)) {
-      const newSession: SessionData = { user: {}, csrf: '' };
-      const { id, refreshId } = await this.sessionService.createFullSession(
-        newSession
-      );
-      req._cookies.push(
-        this.sessionService.createCookie({
-          name: 'session',
-          value: id,
-        })
-      );
-      req._cookies.push(
-        this.sessionService.createCookie({ name: 'refresh', value: refreshId })
-      );
-      req.session = { ...newSession, id };
-    } else {
-      req.session = { ...session, id: sessionId };
-    }
-    return true;
-  }
+	async canActivate(context: ExecutionContext) {
+		const req = context
+			.switchToHttp()
+			.getRequest<
+				NestCookieRequest<{ session?: SessionData & { id: string } }>
+			>();
+		const { sessionId } = req.cookies;
+		const session = await this.sessionService.getSession(sessionId ?? '');
+		if (!this.sessionService.isSession(session)) {
+			const newSession: SessionData = { user: {}, csrf: '' };
+			const { id, refreshId } = await this.sessionService.createFullSession(
+				newSession
+			);
+			req._cookies.push(
+				this.sessionService.createCookie({
+					name: 'session',
+					value: id,
+				})
+			);
+			req._cookies.push(
+				this.sessionService.createCookie({ name: 'refresh', value: refreshId })
+			);
+			req.session = { ...newSession, id };
+		} else {
+			req.session = { ...session, id: sessionId };
+		}
+		return true;
+	}
 }

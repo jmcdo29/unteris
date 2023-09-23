@@ -4,9 +4,9 @@ import { ServerRaceController } from './race.controller';
 import { ServerRaceService } from './race.service';
 
 @Module({
-  imports: [KyselyModule],
-  controllers: [ServerRaceController],
-  providers: [ServerRaceService],
-  exports: [ServerRaceService],
+	imports: [KyselyModule],
+	controllers: [ServerRaceController],
+	providers: [ServerRaceService],
+	exports: [ServerRaceService],
 })
 export class ServerRaceModule {}

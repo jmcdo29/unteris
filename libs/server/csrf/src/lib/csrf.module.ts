@@ -5,9 +5,9 @@ import { ServerCsrfController } from './csrf.controller';
 import { ServerCsrfService } from './csrf.service';
 
 @Module({
-  imports: [ServerTokenModule, ServerSessionModule],
-  controllers: [ServerCsrfController],
-  providers: [ServerCsrfService],
-  exports: [ServerCsrfService],
+	imports: [ServerTokenModule, ServerSessionModule],
+	controllers: [ServerCsrfController],
+	providers: [ServerCsrfService],
+	exports: [ServerCsrfService],
 })
 export class ServerCsrfModule {}

@@ -1,3 +1,3 @@
 export function serverHash(): string {
-  return 'server-hash';
+	return 'server-hash';
 }

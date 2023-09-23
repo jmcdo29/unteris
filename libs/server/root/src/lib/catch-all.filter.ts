@@ -4,15 +4,15 @@ import { OgmaFilterService } from '@ogma/nestjs-module';
 
 @Catch()
 export class BaseFilter extends BaseExceptionFilter {
-  constructor(
-    private readonly logger: OgmaFilterService,
-    host: HttpAdapterHost
-  ) {
-    super(host.httpAdapter.getHttpServer());
-  }
+	constructor(
+		private readonly logger: OgmaFilterService,
+		host: HttpAdapterHost
+	) {
+		super(host.httpAdapter.getHttpServer());
+	}
 
-  override catch(exception: any, host: ArgumentsHost): void {
-    this.logger.log(exception, host);
-    super.catch(exception, host);
-  }
+	override catch(exception: Error, host: ArgumentsHost): void {
+		this.logger.log(exception, host);
+		super.catch(exception, host);
+	}
 }

@@ -18,25 +18,25 @@ import { RepeatQuestions } from './seeds/repeat.questions';
 import { SeedTypeQuestions } from './seeds/seed-type.questions';
 
 @Module({
-  imports: [
-    KyselyModule,
-    ServerLoggingModule.forApplication('Kysely CLI', 'ALL'),
-    OgmaModule.forFeatures([KyselyCliCommand, SeedCommand]),
-    ServerDeitiesModule,
-    ServerLocationModule,
-  ],
-  controllers: [AppController],
-  providers: [
-    AppService,
-    KyselyCliCommand,
-    SeedCommand,
-    DeityQuestions,
-    DeityCategoryQuestions,
-    DomainQuestions,
-    SeedTypeQuestions,
-    RepeatQuestions,
-    DeityDomainQuestions,
-    LocationQuestins,
-  ],
+	imports: [
+		KyselyModule,
+		ServerLoggingModule.forApplication('Kysely CLI', 'ALL'),
+		OgmaModule.forFeatures([KyselyCliCommand, SeedCommand]),
+		ServerDeitiesModule,
+		ServerLocationModule,
+	],
+	controllers: [AppController],
+	providers: [
+		AppService,
+		KyselyCliCommand,
+		SeedCommand,
+		DeityQuestions,
+		DeityCategoryQuestions,
+		DomainQuestions,
+		SeedTypeQuestions,
+		RepeatQuestions,
+		DeityDomainQuestions,
+		LocationQuestins,
+	],
 })
 export class AppModule {}

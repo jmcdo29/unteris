@@ -1,3 +1,11 @@
 {
-  "cSpell.words": ["lightcookie", "unteris"]
+	"cSpell.words": ["lightcookie", "unteris"],
+	"editor.formatOnSave": true,
+	"editor.codeActionsOnSave": {
+		"quickfix.biome": true
+	},
+	"editor.tabSize": 2,
+	"[javascript][typescript][json]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	}
 }

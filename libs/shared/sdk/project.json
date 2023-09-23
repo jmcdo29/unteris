@@ -1,16 +1,16 @@
 {
-  "name": "shared-sdk",
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/shared/sdk/src",
-  "projectType": "library",
-  "targets": {
-    "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/shared/sdk/**/*.ts"]
-      }
-    }
-  },
-  "tags": ["shared", "sdk", "utility"]
+	"name": "shared-sdk",
+	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "libs/shared/sdk/src",
+	"projectType": "library",
+	"targets": {
+		"lint": {
+			"executor": "@nx/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["libs/shared/sdk/**/*.ts"]
+			}
+		}
+	},
+	"tags": ["shared", "sdk", "utility"]
 }

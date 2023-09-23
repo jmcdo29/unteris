@@ -1,9 +1,11 @@
 import { Kysely, sql } from 'kysely';
 
-export const up = async (db: Kysely<any>) => {
-  await sql`CREATE EXTENSION IF NOT EXISTS pgcrypto;`.execute(db);
-  // ulid reference https://github.com/geckoboard/pgulid/blob/master/pgulid.sql
-  await sql`CREATE FUNCTION ulid()
+export const up = async (
+	db: Kysely<Record<string, Record<string, unknown>>>
+) => {
+	await sql`CREATE EXTENSION IF NOT EXISTS pgcrypto;`.execute(db);
+	// ulid reference https://github.com/geckoboard/pgulid/blob/master/pgulid.sql
+	await sql`CREATE FUNCTION ulid()
 RETURNS TEXT
 AS $$
 DECLARE
@@ -63,42 +65,44 @@ $$
 LANGUAGE plpgsql
 VOLATILE;`.execute(db);
 
-  await db.schema
-    .createTable('deity_category')
-    .addColumn('id', 'text', (col) => col.defaultTo(sql`ulid()`).primaryKey())
-    .addColumn('name', 'text', (col) => col.unique().notNull())
-    .execute();
+	await db.schema
+		.createTable('deity_category')
+		.addColumn('id', 'text', (col) => col.defaultTo(sql`ulid()`).primaryKey())
+		.addColumn('name', 'text', (col) => col.unique().notNull())
+		.execute();
 
-  await db.schema
-    .createTable('domain')
-    .addColumn('id', 'text', (col) => col.defaultTo(sql`ulid()`).primaryKey())
-    .addColumn('name', 'text')
-    .execute();
+	await db.schema
+		.createTable('domain')
+		.addColumn('id', 'text', (col) => col.defaultTo(sql`ulid()`).primaryKey())
+		.addColumn('name', 'text')
+		.execute();
 
-  await db.schema
-    .createTable('deity')
-    .addColumn('id', 'text', (col) => col.defaultTo(sql`ulid()`).primaryKey())
-    .addColumn('name', 'text', (col) => col.unique().notNull())
-    .addColumn('description', 'text', (col) => col.notNull())
-    .addColumn('image_url', 'text')
-    .addColumn('category', 'text', (col) =>
-      col.references('deity_category.id').notNull()
-    )
-    .execute();
+	await db.schema
+		.createTable('deity')
+		.addColumn('id', 'text', (col) => col.defaultTo(sql`ulid()`).primaryKey())
+		.addColumn('name', 'text', (col) => col.unique().notNull())
+		.addColumn('description', 'text', (col) => col.notNull())
+		.addColumn('image_url', 'text')
+		.addColumn('category', 'text', (col) =>
+			col.references('deity_category.id').notNull()
+		)
+		.execute();
 
-  await db.schema
-    .createTable('deity_domain')
-    .addColumn('id', 'text', (col) => col.defaultTo(sql`ulid()`).primaryKey())
-    .addColumn('deity_id', 'text', (col) => col.references('deity.id'))
-    .addColumn('domain_id', 'text', (col) => col.references('domain.id'))
-    .execute();
+	await db.schema
+		.createTable('deity_domain')
+		.addColumn('id', 'text', (col) => col.defaultTo(sql`ulid()`).primaryKey())
+		.addColumn('deity_id', 'text', (col) => col.references('deity.id'))
+		.addColumn('domain_id', 'text', (col) => col.references('domain.id'))
+		.execute();
 };
 
-export const down = async (db: Kysely<any>) => {
-  await db.schema.dropTable('deity_domain').execute();
-  await db.schema.dropTable('deity').execute();
-  await db.schema.dropTable('domain').execute();
-  await db.schema.dropTable('deity_category').execute();
-  await sql`DROP FUNCTION ulid;`.execute(db);
-  await sql`DROP EXTENSION pgcrypto;`.execute(db);
+export const down = async (
+	db: Kysely<Record<string, Record<string, unknown>>>
+) => {
+	await db.schema.dropTable('deity_domain').execute();
+	await db.schema.dropTable('deity').execute();
+	await db.schema.dropTable('domain').execute();
+	await db.schema.dropTable('deity_category').execute();
+	await sql`DROP FUNCTION ulid;`.execute(db);
+	await sql`DROP EXTENSION pgcrypto;`.execute(db);
 };

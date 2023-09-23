@@ -4,10 +4,10 @@ import { KyselyModule } from '@unteris/server/kysely';
 import { ServerLoggingModule } from '@unteris/server/logging';
 
 @Module({
-  imports: [
-    ServerLoggingModule.forApplication('Unteris Image', 'DEBUG'),
-    KyselyModule,
-    ServerImageProcessingModule,
-  ],
+	imports: [
+		ServerLoggingModule.forApplication('Unteris Image', 'DEBUG'),
+		KyselyModule,
+		ServerImageProcessingModule,
+	],
 })
 export class ImageRootModule {}

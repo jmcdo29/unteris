@@ -1,24 +1,24 @@
 {
-  "name": "ui-history",
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/ui/history/src",
-  "projectType": "library",
-  "tags": ["ui", "front-end", "react"],
-  "targets": {
-    "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/ui/history/**/*.{ts,tsx,js,jsx}"]
-      }
-    },
-    "test": {
-      "executor": "@nx/vite:test",
-      "outputs": ["{workspaceRoot}/coverage/libs/ui/history"],
-      "options": {
-        "passWithNoTests": true,
-        "reportsDirectory": "../../../coverage/libs/ui/history"
-      }
-    }
-  }
+	"name": "ui-history",
+	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "libs/ui/history/src",
+	"projectType": "library",
+	"tags": ["ui", "front-end", "react"],
+	"targets": {
+		"lint": {
+			"executor": "@nx/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["libs/ui/history/**/*.{ts,tsx,js,jsx}"]
+			}
+		},
+		"test": {
+			"executor": "@nx/vite:test",
+			"outputs": ["{workspaceRoot}/coverage/libs/ui/history"],
+			"options": {
+				"passWithNoTests": true,
+				"reportsDirectory": "../../../coverage/libs/ui/history"
+			}
+		}
+	}
 }

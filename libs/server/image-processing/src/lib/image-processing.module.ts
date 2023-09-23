@@ -6,9 +6,9 @@ import { ServerImageProcessingService } from './image-processing.service';
 import { ImageRepo } from './image.repository';
 
 @Module({
-  imports: [ServerFileStorageModule, KyselyModule],
-  controllers: [ServerImageProcessingController],
-  providers: [ServerImageProcessingService, ImageRepo],
-  exports: [ServerImageProcessingService],
+	imports: [ServerFileStorageModule, KyselyModule],
+	controllers: [ServerImageProcessingController],
+	providers: [ServerImageProcessingService, ImageRepo],
+	exports: [ServerImageProcessingService],
 })
 export class ServerImageProcessingModule {}

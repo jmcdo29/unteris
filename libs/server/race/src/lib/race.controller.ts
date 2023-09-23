@@ -6,15 +6,15 @@ import { ServerRaceService } from './race.service';
 @Controller('race')
 @SkipSessionCheck()
 export class ServerRaceController {
-  constructor(private serverRaceService: ServerRaceService) {}
+	constructor(private serverRaceService: ServerRaceService) {}
 
-  @Get()
-  async getAllRaces() {
-    return this.serverRaceService.getRaces();
-  }
+	@Get()
+	async getAllRaces() {
+		return this.serverRaceService.getRaces();
+	}
 
-  @Get(':id')
-  async getRaceWithAbilities(@Param() param: IdParamDto) {
-    return this.serverRaceService.getRaceWithAbilities(param.data.id);
-  }
+	@Get(':id')
+	async getRaceWithAbilities(@Param() param: IdParamDto) {
+		return this.serverRaceService.getRaceWithAbilities(param.data.id);
+	}
 }

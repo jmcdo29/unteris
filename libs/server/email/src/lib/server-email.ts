@@ -1,3 +1,3 @@
 export function serverEmail(): string {
-  return 'server-email';
+	return 'server-email';
 }

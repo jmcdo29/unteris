@@ -7,28 +7,28 @@ import { ServerSecurityService } from './security.service';
 
 @Injectable()
 export class IsLoggedInGuard implements CanActivate {
-  constructor(
-    private readonly reflector: Reflector,
-    private readonly securityService: ServerSecurityService
-  ) {}
+	constructor(
+		private readonly reflector: Reflector,
+		private readonly securityService: ServerSecurityService
+	) {}
 
-  async canActivate(context: ExecutionContext) {
-    const skipCheck = this.reflector.getAllAndOverride(
-      SKIP_SESSION_LOGGED_IN_CHECK,
-      [context.getClass(), context.getHandler()]
-    );
-    if (skipCheck) {
-      return true;
-    }
-    const req = context
-      .switchToHttp()
-      .getRequest<{ session: SessionData; user?: UserAccount }>();
-    const { session } = req;
-    if (!session.user.id) {
-      return false;
-    }
-    const user = await this.securityService.getUserById(session.user.id);
-    req.user = user;
-    return true;
-  }
+	async canActivate(context: ExecutionContext) {
+		const skipCheck = this.reflector.getAllAndOverride(
+			SKIP_SESSION_LOGGED_IN_CHECK,
+			[context.getClass(), context.getHandler()]
+		);
+		if (skipCheck) {
+			return true;
+		}
+		const req = context
+			.switchToHttp()
+			.getRequest<{ session: SessionData; user?: UserAccount }>();
+		const { session } = req;
+		if (!session.user.id) {
+			return false;
+		}
+		const user = await this.securityService.getUserById(session.user.id);
+		req.user = user;
+		return true;
+	}
 }

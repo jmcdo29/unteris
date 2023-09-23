@@ -1,6 +1,6 @@
 export * from './a11y.props';
 export * from './action-button';
-export * from './error-disaply';
+export * from './error-display';
 export * from './error-utils';
 export * from './form-control';
 export * from './grid';

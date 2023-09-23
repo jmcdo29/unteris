@@ -5,16 +5,16 @@ import { LocationRepository } from './location.repository';
 
 @Injectable()
 export class ServerLocationService {
-  constructor(private readonly locationRepo: LocationRepository) {}
+	constructor(private readonly locationRepo: LocationRepository) {}
 
-  async getLocationsByType(
-    type: Location['type']
-  ): Promise<Pick<Location, 'id' | 'name'>[]> {
-    return this.locationRepo.getLocationsByType(type);
-  }
+	async getLocationsByType(
+		type: Location['type']
+	): Promise<Pick<Location, 'id' | 'name'>[]> {
+		return this.locationRepo.getLocationsByType(type);
+	}
 
-  async createLocation(location: Insertable<Location>): Promise<Location> {
-    const result = this.locationRepo.createLocation(location);
-    return result;
-  }
+	async createLocation(location: Insertable<Location>): Promise<Location> {
+		const result = this.locationRepo.createLocation(location);
+		return result;
+	}
 }

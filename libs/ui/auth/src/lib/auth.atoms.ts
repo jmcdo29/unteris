@@ -7,7 +7,7 @@ export const displayErrorAtom = atom(false);
 export const authErrorAtom = atom<DisplayError | undefined>(undefined);
 export const forgotPasswordAtom = atom(false);
 export const authUserAtom = atom<SignupUser>({
-  email: '',
-  password: '',
-  name: '',
+	email: '',
+	password: '',
+	name: '',
 });

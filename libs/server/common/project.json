@@ -1,16 +1,16 @@
 {
-  "name": "server-common",
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/server/common/src",
-  "projectType": "library",
-  "targets": {
-    "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/server/common/**/*.ts"]
-      }
-    }
-  },
-  "tags": ["server", "utility"]
+	"name": "server-common",
+	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "libs/server/common/src",
+	"projectType": "library",
+	"targets": {
+		"lint": {
+			"executor": "@nx/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["libs/server/common/**/*.ts"]
+			}
+		}
+	},
+	"tags": ["server", "utility"]
 }

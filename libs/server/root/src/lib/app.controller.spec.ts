@@ -4,21 +4,21 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 describe('AppController', () => {
-  let app: TestingModule;
+	let app: TestingModule;
 
-  beforeAll(async () => {
-    app = await Test.createTestingModule({
-      controllers: [AppController],
-      providers: [AppService],
-    }).compile();
-  });
+	beforeAll(async () => {
+		app = await Test.createTestingModule({
+			controllers: [AppController],
+			providers: [AppService],
+		}).compile();
+	});
 
-  describe('getData', () => {
-    it('should return "Welcome to server!"', () => {
-      const appController = app.get<AppController>(AppController);
-      expect(appController.getData()).toEqual({
-        message: 'Welcome to server!',
-      });
-    });
-  });
+	describe('getData', () => {
+		it('should return "Welcome to server!"', () => {
+			const appController = app.get<AppController>(AppController);
+			expect(appController.getData()).toEqual({
+				message: 'Welcome to server!',
+			});
+		});
+	});
 });

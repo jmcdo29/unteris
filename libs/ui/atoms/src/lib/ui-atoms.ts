@@ -1,3 +1,3 @@
 export function uiAtoms(): string {
-  return 'ui-atoms';
+	return 'ui-atoms';
 }

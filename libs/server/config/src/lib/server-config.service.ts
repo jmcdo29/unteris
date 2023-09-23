@@ -6,15 +6,15 @@ import { Config } from './config.schema';
 
 @Injectable()
 export class ServerConfigService {
-  private readonly config: z.infer<typeof Config>;
+	private readonly config: z.infer<typeof Config>;
 
-  constructor(@Inject(SCHEMA) schema: typeof Config) {
-    this.config = schema.parse(process.env);
-  }
+	constructor(@Inject(SCHEMA) schema: typeof Config) {
+		this.config = schema.parse(process.env);
+	}
 
-  get<T extends keyof z.infer<typeof Config>>(
-    key: T
-  ): z.infer<typeof Config>[T] {
-    return this.config[key];
-  }
+	get<T extends keyof z.infer<typeof Config>>(
+		key: T
+	): z.infer<typeof Config>[T] {
+		return this.config[key];
+	}
 }
