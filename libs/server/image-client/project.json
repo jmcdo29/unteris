@@ -1,16 +1,23 @@
 {
-  "name": "server-image-client",
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/server/image-client/src",
-  "projectType": "library",
-  "targets": {
-    "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/server/image-client/**/*.ts"]
-      }
-    }
-  },
-  "tags": ["server", "utility"]
+	"name": "server-image-client",
+	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "libs/server/image-client/src",
+	"projectType": "library",
+	"targets": {
+		"lint": {
+			"executor": "@unteris/plugin/rz:lint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"unsafe": true
+			}
+		},
+		"nx-lint": {
+			"executor": "@nx/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["libs/server/image-client/**/*.ts"]
+			}
+		}
+	},
+	"tags": ["server", "utility"]
 }

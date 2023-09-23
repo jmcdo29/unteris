@@ -1,1 +1,1 @@
-export * from './shared-sdk';
+export * from "./shared-sdk";

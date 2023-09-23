@@ -1,0 +1,46 @@
+{
+	"$schema": "http://json-schema.org/schema",
+	"version": 2,
+	"title": "Build executor",
+	"description": "",
+	"type": "object",
+	"properties": {
+		"imageName": {
+			"type": "string",
+			"description": "The image name that pairs with the project name e.g. site -> unteris-site"
+		},
+		"tag": {
+			"type": "string",
+			"description:": "The tag to use for the newly built image"
+		},
+		"target": {
+			"type": "string",
+			"description": "The target of the dockerfile to use"
+		},
+		"path": {
+			"type": "string",
+			"description": "The path to the dockerfile to make use of"
+		},
+		"cachePath": {
+			"type": "string",
+			"description": "The cache path to read from and write to"
+		},
+		"verbose": {
+			"type": "boolean",
+			"description": "Printe decisions made along the way with the command at the end"
+		},
+		"builder": {
+			"type": "string",
+			"description": "Docker buildx builder to use"
+		},
+		"dockerNamespace": {
+			"type": "string",
+			"description": "The namespace for the tag"
+		},
+		"publish": {
+			"type": "boolean",
+			"description": "If the container should be published on build"
+		}
+	},
+	"required": []
+}

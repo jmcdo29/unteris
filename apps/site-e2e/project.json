@@ -1,35 +1,42 @@
 {
-  "name": "site-e2e",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/site-e2e/src",
-  "projectType": "application",
-  "targets": {
-    "e2e": {
-      "executor": "@nx/cypress:cypress",
-      "options": {
-        "cypressConfig": "apps/site-e2e/cypress.config.ts",
-        "devServerTarget": "site:serve:development",
-        "testingType": "e2e"
-      },
-      "configurations": {
-        "production": {
-          "devServerTarget": "site:serve:production"
-        },
-        "ci": {
-          "env": {
-            "ELECTRON_EXTRA_LAUNCH_ARGS": "--disable-gpu"
-          }
-        }
-      }
-    },
-    "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["apps/site-e2e/**/*.{js,ts}"]
-      }
-    }
-  },
-  "tags": [],
-  "implicitDependencies": ["site"]
+	"name": "site-e2e",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "apps/site-e2e/src",
+	"projectType": "application",
+	"targets": {
+		"e2e": {
+			"executor": "@nx/cypress:cypress",
+			"options": {
+				"cypressConfig": "apps/site-e2e/cypress.config.ts",
+				"devServerTarget": "site:serve:development",
+				"testingType": "e2e"
+			},
+			"configurations": {
+				"production": {
+					"devServerTarget": "site:serve:production"
+				},
+				"ci": {
+					"env": {
+						"ELECTRON_EXTRA_LAUNCH_ARGS": "--disable-gpu"
+					}
+				}
+			}
+		},
+		"lint": {
+			"executor": "@unteris/plugin/rz:lint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"unsafe": true
+			}
+		},
+		"nx-lint": {
+			"executor": "@nx/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["apps/site-e2e/**/*.{js,ts}"]
+			}
+		}
+	},
+	"tags": [],
+	"implicitDependencies": ["site"]
 }

@@ -1,1 +1,1 @@
-export const SCHEMA = Symbol('INJECT:SCHEMA');
+export const SCHEMA = Symbol("INJECT:SCHEMA");

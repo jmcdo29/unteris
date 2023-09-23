@@ -1,24 +1,31 @@
 {
-  "name": "shared-base32",
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/shared/base32/src",
-  "projectType": "library",
-  "targets": {
-    "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/shared/base32/**/*.ts"]
-      }
-    },
-    "test": {
-      "executor": "@nx/vite:test",
-      "outputs": ["{workspaceRoot}/coverage/libs/shared/base32"],
-      "options": {
-        "passWithNoTests": true,
-        "reportsDirectory": "../../../coverage/libs/shared/base32"
-      }
-    }
-  },
-  "tags": []
+	"name": "shared-base32",
+	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "libs/shared/base32/src",
+	"projectType": "library",
+	"targets": {
+		"lint": {
+			"executor": "@unteris/plugin/rz:lint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"unsafe": true
+			}
+		},
+		"nx-lint": {
+			"executor": "@nx/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["libs/shared/base32/**/*.ts"]
+			}
+		},
+		"test": {
+			"executor": "@nx/vite:test",
+			"outputs": ["{workspaceRoot}/coverage/libs/shared/base32"],
+			"options": {
+				"passWithNoTests": true,
+				"reportsDirectory": "../../../coverage/libs/shared/base32"
+			}
+		}
+	},
+	"tags": []
 }

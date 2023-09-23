@@ -1,3 +1,3 @@
 export function serverCommon(): string {
-  return 'server-common';
+	return "server-common";
 }

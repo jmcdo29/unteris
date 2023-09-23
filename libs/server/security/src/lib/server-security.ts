@@ -1,3 +1,3 @@
 export function serverSecurity(): string {
-  return 'server-security';
+	return "server-security";
 }
