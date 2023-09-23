@@ -65,8 +65,8 @@
 			}
 		},
 		"package": {
-			"executor": "@unteris/plugin/docker:build",
-			"outputs": ["{workspaceRoot}/docker/cache/server"],
+			"executor": "@unteris/plugin/rz:build",
+			"outputs": ["{workspaceRoot}/tmp/rz/docker/cache/image-server"],
 			"options": {},
 			"configurations": {
 				"ci": {

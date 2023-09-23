@@ -5,7 +5,22 @@
 		"quickfix.biome": true
 	},
 	"editor.tabSize": 2,
-	"[javascript][typescript][json]": {
+	"[javascript]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[javascriptreact]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[json]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[jsonc]": {
 		"editor.defaultFormatter": "biomejs.biome"
 	}
 }

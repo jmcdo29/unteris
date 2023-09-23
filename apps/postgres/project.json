@@ -8,9 +8,9 @@
 			"executor": "nx:noop"
 		},
 		"package": {
-			"executor": "@unteris/plugin/docker:build",
-			"outputs": ["{workspaceRoot}/docker/cache/postgres"],
-			"opitons": {},
+			"executor": "@unteris/plugin/rz:build",
+			"outputs": ["{workspaceRoot}/tmp/rz/docker/cache/postgres"],
+			"options": {},
 			"inputs": ["{projectRoot}/Dockerfile", "{projectRoot}/postgresql.conf"],
 			"configurations": {
 				"ci": {

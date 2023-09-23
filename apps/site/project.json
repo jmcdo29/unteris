@@ -75,8 +75,8 @@
 			}
 		},
 		"package": {
-			"executor": "@unteris/plugin/docker:build",
-			"outputPath": ["docker/cache/site"],
+			"executor": "@unteris/plugin/rz:build",
+			"outputs": ["{workspaceRoot}/tmp/rz/docker/cache/site"],
 			"options": {},
 			"configurations": {
 				"ci": {

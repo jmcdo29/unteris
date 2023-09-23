@@ -117,8 +117,8 @@
 			}
 		},
 		"package": {
-			"executor": "@unteris/plugin/docker:build",
-			"outputPath": ["docker/cache/migrations"],
+			"executor": "@unteris/plugin/rz:build",
+			"outputs": ["{workspaceRoot}/tmp/rz/docker/cache/migrations"],
 			"options": {
 				"imageName": "migrations"
 			},

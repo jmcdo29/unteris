@@ -19,7 +19,7 @@ export default async function runExecutor(
 			const scope = context.nxJsonConfiguration?.npmScope;
 			logger.verbose(`Project scope was determined to be ${scope}`);
 			logger.verbose(`Project name was determined to be ${project}`);
-			const cachePath = options.cachePath ?? `docker/cache/${project}`;
+			const cachePath = options.cachePath ?? `tmp/rz/docker/cache/${project}`;
 			logger.verbose(
 				`Docker cache path was evaluated to ${cachePath}. This was automatically generated.`,
 			);
