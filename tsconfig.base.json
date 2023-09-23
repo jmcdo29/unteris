@@ -19,7 +19,7 @@
 		"esModuleInterop": true,
 		"paths": {
 			"@unteris/db/migrations": ["libs/db/migrations/src/index.ts"],
-			"@unteris/plugin/docker": ["libs/docker/src/index.ts"],
+			"@unteris/plugin/rz": ["libs/rz/src/index.ts"],
 			"@unteris/server/common": ["libs/server/common/src/index.ts"],
 			"@unteris/server/config": ["libs/server/config/src/index.ts"],
 			"@unteris/server/csrf": ["libs/server/csrf/src/index.ts"],

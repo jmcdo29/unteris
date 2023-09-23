@@ -6,12 +6,13 @@ import { BuildExecutorSchema } from './schema';
 
 export default async function runExecutor(
 	options: BuildExecutorSchema,
-	context: ExecutorContext
+	context: ExecutorContext,
 ) {
 	return new Promise((resolve, reject) => {
 		const project = options.imageName ?? context.projectName;
 		const logger = new Ogma({
-			application: `Nx Docker Plugin - ${project}`,
+			application: 'Rz Plugin - Docker',
+			context: project,
 			logLevel: options?.verbose ? 'VERBOSE' : 'LOG',
 		});
 		try {
@@ -20,7 +21,7 @@ export default async function runExecutor(
 			logger.verbose(`Project name was determined to be ${project}`);
 			const cachePath = options.cachePath ?? `docker/cache/${project}`;
 			logger.verbose(
-				`Docker cache path was evaluated to ${cachePath}. This was automatically generated.`
+				`Docker cache path was evaluated to ${cachePath}. This was automatically generated.`,
 			);
 			const gCommit =
 				process.env.GITHUB_SHA ??
@@ -50,7 +51,7 @@ export default async function runExecutor(
 			}${tags
 				.map((t) => `-t ${t}`)
 				.join(
-					' '
+					' ',
 				)} --cache-from type=local,src=${cachePath} --cache-to type=local,dest=${cachePath} --target=${target} --builder=${builder} --platform linux/arm64/v8,linux/amd64 ${
 				publish ? '--push' : ''
 			} .`;
