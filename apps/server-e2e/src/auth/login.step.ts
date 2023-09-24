@@ -1,7 +1,7 @@
-import { spec } from "pactum";
-import { csrfStoreToken, sessionStoreToken } from "../csrf";
-import { regex } from "pactum-matchers";
 import { base32Regex } from "@unteris/shared/base32";
+import { spec } from "pactum";
+import { regex } from "pactum-matchers";
+import { csrfStoreToken, sessionStoreToken } from "../csrf";
 
 export const loginStep = async ({
 	email,

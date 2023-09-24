@@ -8,8 +8,8 @@ import { request } from "pactum";
 import { beforeAll, beforeEach, describe } from "vitest";
 import { TestContext } from "./interfaces/test-context.interface";
 import { csrfTest } from "./tests/csrf";
-import { signUpAndLoginTests } from "./tests/signup-and-login";
 import { resetPasswordTest } from "./tests/reset-password";
+import { signUpAndLoginTests } from "./tests/signup-and-login";
 
 describe("Unteris E2E test suite", () => {
 	let app: INestApplication;

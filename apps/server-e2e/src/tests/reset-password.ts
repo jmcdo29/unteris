@@ -1,9 +1,9 @@
 import { randomUUID } from "node:crypto";
-import { describe, test, vi } from "vitest";
-import { TestContext } from "../interfaces/test-context.interface";
-import { loginStep, signup } from "../auth";
 import { spec } from "pactum";
+import { describe, test, vi } from "vitest";
+import { loginStep, signup } from "../auth";
 import { csrfStoreToken, sessionStoreToken } from "../csrf";
+import { TestContext } from "../interfaces/test-context.interface";
 
 export const resetPasswordTest = () => {
 	return describe("Reset Password Flow", () => {
