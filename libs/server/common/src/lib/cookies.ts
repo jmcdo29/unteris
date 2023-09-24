@@ -1,10 +1,10 @@
-import { z } from "valibot";
+import { Output, object, optional, passthrough, string } from "valibot";
 
-const CookiesSchema = z
-	.object({
-		refreshId: optional(string())(),
+const CookiesSchema = passthrough(
+	object({
+		refreshId: optional(string()),
 		sessionId: string(),
-	})
-	.passthrough();
+	}),
+);
 
 export type UnterisCookies = Output<typeof CookiesSchema>;

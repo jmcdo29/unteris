@@ -1,3 +1,4 @@
+import { typeschemaPlugin } from "@decs/typeschema/vite";
 import swc from "unplugin-swc";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { defineConfig } from "vitest/config";
@@ -12,5 +13,6 @@ export default defineConfig({
 		swc.vite({
 			module: { type: "es6" },
 		}),
+		typeschemaPlugin(),
 	],
 });

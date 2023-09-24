@@ -3,6 +3,7 @@ import {
 	RefreshSessionData,
 	SavedSessionData,
 	SessionData,
+	UnterisSession,
 } from "@unteris/server/common";
 import { ServerConfigService } from "@unteris/server/config";
 import { InjectRedisInstance } from "@unteris/server/redis";

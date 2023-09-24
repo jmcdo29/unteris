@@ -16,11 +16,11 @@ const hourInSeconds = 60 * 60;
 const dayInSeconds = hourInSeconds * 24;
 
 const prodConfig = object({
-	NODE_ENV: literal("production"),
+	NODE_ENV: enumType(["development", "production", "test"]),
 	NOREPLY_EMAIL: string([email()]),
 	SMTP_PASS: string(),
 	SMTP_HOST: string(),
-	FILE_PATH: fallback(optional(string()), join(process.cwd(), "images")),
+	FILE_PATH: fallback(string(), join(process.cwd(), "images")),
 });
 
 const devConfig = object({

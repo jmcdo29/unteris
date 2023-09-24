@@ -1,32 +1,42 @@
-import { z } from "valibot";
-
-const SessionIdSchema = object({
-	id: string(),
-});
+import {
+	Output,
+	email,
+	merge,
+	object,
+	optional,
+	passthrough,
+	string,
+	ulid,
+	union,
+} from "valibot";
 
 export const SessionDataSchema = object({
-	user: z
-		.object({
-			email: string().email().optional(),
-			id: string([ulid()]).optional(),
-		})
-		.passthrough(),
+	id: string(),
+	user: passthrough(
+		object({
+			email: optional(string([email()])),
+			id: optional(string([ulid()])),
+		}),
+	),
 	csrf: string(),
 });
 
-export type SessionData = Output<typeof SessionDataSchema>;
+export type SessionData = Omit<Output<typeof SessionDataSchema>, "id">;
 
 const RefreshSessionDataSchema = object({
+	id: string(),
 	sessionId: string(),
 });
 
-export type RefreshSessionData = Output<typeof RefreshSessionDataSchema>;
+export type RefreshSessionData = Omit<
+	Output<typeof RefreshSessionDataSchema>,
+	"id"
+>;
 
-export type SavedSessionData = SessionData | RefreshSessionData;
+const SavedSessionDataSchema = union([
+	SessionDataSchema,
+	RefreshSessionDataSchema,
+]);
 
-export const SessionSchema = intersection(
-	SessionIdSchema,
-	union([SessionDataSchema, RefreshSessionDataSchema]),
-);
-
-export type UnterisSession = Output<typeof SessionSchema>;
+export type UnterisSession = Output<typeof SavedSessionDataSchema>;
+export type SavedSessionData = Omit<UnterisSession, "id">;
