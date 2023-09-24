@@ -1,8 +1,8 @@
-import { z } from "zod";
+import { Output, object, omit } from "valibot";
 import { SessionDataSchema } from "./session";
 
-const RefreshRequestSchema = z.object({
-	oldSession: SessionDataSchema,
+const RefreshRequestSchema = object({
+	oldSession: omit(SessionDataSchema, ["id"]),
 });
 
-export type RefreshRequest = z.infer<typeof RefreshRequestSchema>;
+export type RefreshRequest = Output<typeof RefreshRequestSchema>;

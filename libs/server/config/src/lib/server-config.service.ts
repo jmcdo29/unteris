@@ -1,20 +1,31 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { z } from "zod";
+import { Output, safeParse } from "valibot";
 
 import { SCHEMA } from "./config.constants";
 import { Config } from "./config.schema";
 
 @Injectable()
 export class ServerConfigService {
-	private readonly config: z.infer<typeof Config>;
+	private readonly config: Output<typeof Config>;
 
 	constructor(@Inject(SCHEMA) schema: typeof Config) {
-		this.config = schema.parse(process.env);
+		const result = safeParse(schema, process.env);
+		if (!result.success) {
+			throw new Error(
+				result.issues
+					.map(
+						(i) =>
+							`${i.message}: ${i.validation} - ${i.path
+								?.map((item) => item.key)
+								.join(".")} w/ ${i.input}`,
+					)
+					.join("\n"),
+			);
+		}
+		this.config = result.output;
 	}
 
-	get<T extends keyof z.infer<typeof Config>>(
-		key: T,
-	): z.infer<typeof Config>[T] {
+	get<T extends keyof Output<typeof Config>>(key: T): Output<typeof Config>[T] {
 		return this.config[key];
 	}
 }

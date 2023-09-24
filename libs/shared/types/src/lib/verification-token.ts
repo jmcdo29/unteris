@@ -1,10 +1,10 @@
-import { z } from "zod";
+import { Output, enumType, object, string, ulid } from "valibot";
 
-export const VerificationTokenSchmea = z.object({
-	id: z.string().ulid(),
-	token: z.string(),
-	userId: z.string().ulid(),
-	type: z.enum(["verification", "reset"]),
+export const VerificationTokenSchema = object({
+	id: string([ulid()]),
+	token: string(),
+	userId: string([ulid()]),
+	type: enumType(["verification", "reset"]),
 });
 
-export type VerificationToken = z.infer<typeof VerificationTokenSchmea>;
+export type VerificationToken = Output<typeof VerificationTokenSchema>;

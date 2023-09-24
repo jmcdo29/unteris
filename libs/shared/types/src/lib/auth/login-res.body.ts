@@ -1,9 +1,9 @@
-import { z } from "zod";
+import { Output, boolean, object, string, ulid } from "valibot";
 
-const LoginResponseSchema = z.object({
-	id: z.string().ulid(),
-	displayName: z.string(),
-	success: z.boolean(),
+const LoginResponseSchema = object({
+	id: string([ulid()]),
+	displayName: string(),
+	success: boolean(),
 });
 
-export type LoginResponse = z.infer<typeof LoginResponseSchema>;
+export type LoginResponse = Output<typeof LoginResponseSchema>;

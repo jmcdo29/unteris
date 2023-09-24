@@ -1,3 +1,4 @@
+import { ValidationPipe } from "@nest-lab/typeschema";
 import { Module } from "@nestjs/common";
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from "@nestjs/core";
 import { OgmaInterceptor } from "@ogma/nestjs-module";
@@ -16,7 +17,6 @@ import {
 	ServerSessionModule,
 	SessionExistsGuard,
 } from "@unteris/server/session";
-import { ZodValidationPipe } from "@unteris/server/zod-pipe";
 import { CookieModule, CookiesInterceptor } from "nest-cookies";
 
 import { AppController } from "./app.controller";
@@ -61,7 +61,7 @@ import { BaseFilter } from "./catch-all.filter";
 		},
 		{
 			provide: APP_PIPE,
-			useClass: ZodValidationPipe,
+			useClass: ValidationPipe,
 		},
 	],
 })

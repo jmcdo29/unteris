@@ -1,14 +1,14 @@
-import { z } from "zod";
+import { Output, array, object, optional, string, ulid } from "valibot";
 import { DomainSchema } from "./domain";
 
-export const DeitySchema = z.object({
-	id: z.string().ulid(),
-	name: z.string(),
-	description: z.string(),
-	imageId: z.string(),
-	categoryId: z.string().ulid().optional(),
-	locationId: z.string().ulid().optional(),
-	domain: z.array(DomainSchema).optional(),
+export const DeitySchema = object({
+	id: string([ulid()]),
+	name: string(),
+	description: string(),
+	imageId: string(),
+	categoryId: optional(string([ulid()])),
+	locationId: optional(string([ulid()])),
+	domain: optional(array(DomainSchema)),
 });
 
-export type Deity = z.infer<typeof DeitySchema>;
+export type Deity = Output<typeof DeitySchema>;

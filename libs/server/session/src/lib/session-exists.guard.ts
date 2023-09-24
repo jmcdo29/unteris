@@ -5,7 +5,7 @@ import { ServerSessionService } from "./session.service";
 
 /**
  * This is  less of a guard and more of a middleware as it will always return
- * true, but it's useful to ensure that the sesssion does indeed exist and the
+ * true, but it's useful to ensure that the session does indeed exist and the
  * proper values are available via the cookies/session
  **/
 @Injectable()

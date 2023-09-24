@@ -1,11 +1,9 @@
-import { ZodDtoClass } from "@unteris/server/zod-pipe";
-import { z } from "zod";
-const tokenVerificationSchema = z.object({
-	verificationToken: z.string().length(32),
+import { TypeschemaDto } from "@nest-lab/typeschema";
+import { length, object, string } from "valibot";
+const tokenVerificationSchema = object({
+	verificationToken: string([length(32)]),
 });
 
-export class TokenVerificationData extends ZodDtoClass<
-	typeof tokenVerificationSchema
-> {
-	static override schema = tokenVerificationSchema;
-}
+export class TokenVerificationData extends TypeschemaDto(
+	tokenVerificationSchema,
+) {}

@@ -1,13 +1,13 @@
 import { DisplayError } from "./error-display";
 
-interface ZodError {
+interface ValibotError {
 	path: string;
 	message: string;
 }
 
 interface ValidationError {
 	type: "Validation";
-	message: ZodError[];
+	message: ValibotError[];
 }
 
 interface AuthenticationError {

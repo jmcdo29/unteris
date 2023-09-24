@@ -1,6 +1,4 @@
-import { ZodDtoClass } from "@unteris/server/zod-pipe";
+import { TypeschemaDto } from "@nest-lab/typeschema";
 import { SignupSchema } from "@unteris/shared/types";
 
-export class SignupBody extends ZodDtoClass<typeof SignupSchema> {
-	static override schema = SignupSchema;
-}
+export class SignupBody extends TypeschemaDto(SignupSchema) {}

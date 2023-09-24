@@ -1,9 +1,9 @@
-import { z } from "zod";
+import { Output, object, string, ulid } from "valibot";
 
-export const UserPermissionSchema = z.object({
-	id: z.string().ulid(),
-	userId: z.string().ulid(),
-	roleId: z.string().ulid(),
+export const UserPermissionSchema = object({
+	id: string([ulid()]),
+	userId: string([ulid()]),
+	roleId: string([ulid()]),
 });
 
-export type UserPermission = z.infer<typeof UserPermissionSchema>;
+export type UserPermission = Output<typeof UserPermissionSchema>;

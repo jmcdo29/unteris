@@ -1,7 +1,7 @@
-import { z } from "zod";
+import { Output, object, string, ulid } from "valibot";
 
-export const CategoryParamSchema = z.object({
-	category: z.string().ulid(),
+export const CategoryParamSchema = object({
+	category: string([ulid()]),
 });
 
-export type CategoryParam = z.infer<typeof CategoryParamSchema>;
+export type CategoryParam = Output<typeof CategoryParamSchema>;

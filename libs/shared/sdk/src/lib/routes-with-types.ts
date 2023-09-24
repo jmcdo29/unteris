@@ -9,14 +9,11 @@ import {
 	SignupUser,
 	UserAccount,
 } from "@unteris/shared/types";
-import { ZodTypeAny, z } from "zod";
+import { AnySchema, Output } from "valibot";
 
 export type method = "get" | "post" | "patch" | "put" | "delete";
 
-type PathToTypeMap = Record<
-	string,
-	[z.infer<ZodTypeAny>, z.infer<ZodTypeAny>?]
->;
+type PathToTypeMap = Record<string, [Output<AnySchema>, Output<AnySchema>?]>;
 
 export type SdkGeneric = Record<method, PathToTypeMap>;
 

@@ -1,8 +1,6 @@
-import { ZodDtoClass } from "@unteris/server/zod-pipe";
+import { TypeschemaDto } from "@nest-lab/typeschema";
 import { PasswordResetRequestSchema } from "@unteris/shared/types";
 
-export class PasswordResetRequestDto extends ZodDtoClass<
-	typeof PasswordResetRequestSchema
-> {
-	static override schema = PasswordResetRequestSchema;
-}
+export class PasswordResetRequestDto extends TypeschemaDto(
+	PasswordResetRequestSchema,
+) {}

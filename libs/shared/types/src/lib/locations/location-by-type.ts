@@ -1,6 +1,6 @@
-import { z } from "zod";
+import { Output, pick } from "valibot";
 import { LocationSchema } from "../location";
 
-export const LocationByTypeQuerySchema = LocationSchema.pick({ type: true });
+export const LocationByTypeQuerySchema = pick(LocationSchema, ["type"]);
 
-export type LocationByTypeQuery = z.infer<typeof LocationByTypeQuerySchema>;
+export type LocationByTypeQuery = Output<typeof LocationByTypeQuerySchema>;
