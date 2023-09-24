@@ -1,12 +1,12 @@
-import { z } from "zod";
+import { Output, enumType, object, optional, string, ulid } from "valibot";
 
-export const ImageSchema = z.object({
-	id: z.string().ulid(),
-	type: z.enum(["deity_avatar", "user_avatar"]),
-	originalUrl: z.string(),
-	smallUrl: z.string().optional(),
-	mediumUrl: z.string().optional(),
-	largeUrl: z.string().optional(),
+export const ImageSchema = object({
+	id: string([ulid()]),
+	type: enumType(["deity_avatar", "user_avatar"]),
+	originalUrl: string(),
+	smallUrl: optional(string()),
+	mediumUrl: optional(string()),
+	largeUrl: optional(string()),
 });
 
-export type Image = z.infer<typeof ImageSchema>;
+export type Image = Output<typeof ImageSchema>;

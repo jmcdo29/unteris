@@ -1,13 +1,9 @@
-import { z } from "zod";
+import { Output, literal, object, string, ulid, union } from "valibot";
 
-export const DomainSchema = z.object({
-	id: z.string().ulid(),
-	name: z.string(),
-	type: z.union([
-		z.literal("warlock"),
-		z.literal("druid"),
-		z.literal("cleric"),
-	]),
+export const DomainSchema = object({
+	id: string([ulid()]),
+	name: string(),
+	type: union([literal("warlock"), literal("druid"), literal("cleric")]),
 });
 
-export type Domain = z.infer<typeof DomainSchema>;
+export type Domain = Output<typeof DomainSchema>;

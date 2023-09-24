@@ -1,8 +1,8 @@
-import { z } from "zod";
+import { Output, enumType, object, string, ulid } from "valibot";
 
-export const LoginMethodSchema = z.object({
-	id: z.string().ulid(),
-	userId: z.string().ulid(),
-	name: z.enum(["local"]),
+export const LoginMethodSchema = object({
+	id: string([ulid()]),
+	userId: string([ulid()]),
+	name: enumType(["local"]),
 });
-export type LoginMethod = z.infer<typeof LoginMethodSchema>;
+export type LoginMethod = Output<typeof LoginMethodSchema>;

@@ -1,7 +1,7 @@
-import { z } from "zod";
+import { Output, email, object, string } from "valibot";
 
-export const PasswordResetRequestSchema = z.object({
-	email: z.string().email(),
+export const PasswordResetRequestSchema = object({
+	email: string([email()]),
 });
 
-export type PasswordResetRequest = z.infer<typeof PasswordResetRequestSchema>;
+export type PasswordResetRequest = Output<typeof PasswordResetRequestSchema>;

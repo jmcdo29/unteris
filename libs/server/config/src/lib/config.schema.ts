@@ -1,57 +1,62 @@
-import { join } from "path";
-import { z } from "zod";
+import { join } from 'path';
+import {
+	object,
+	literal,
+	enumType,
+	merge,
+	optional,
+	string,
+	transform,
+	fallback,
+	email,
+	number,
+} from 'valibot';
 
 const hourInSeconds = 60 * 60;
 const dayInSeconds = hourInSeconds * 24;
 
-const prodConfig = z.object({
-	NODE_ENV: z.literal("production"),
-	NOREPLY_EMAIL: z.string().email(),
-	SMTP_PASS: z.string(),
-	SMTP_HOST: z.string(),
-	FILE_PATH: z.string().optional().default(join(process.cwd(), "images")),
+const prodConfig = object({
+	NODE_ENV: literal('production'),
+	NOREPLY_EMAIL: string([email()]),
+	SMTP_PASS: string(),
+	SMTP_HOST: string(),
+	FILE_PATH: fallback(optional(string()), join(process.cwd(), 'images')),
 });
 
-const devConfig = z.object({
-	NODE_ENV: z.enum(["development", "test"]),
-	NOREPLY_EMAIL: z.string().email().optional(),
-	SMTP_PASS: z.string().optional(),
-	SMTP_HOST: z.string().optional(),
-	FILE_PATH: z
-		.string()
-		.optional()
-		.default(join(process.cwd(), "apps", "site", "public", "images")),
+const devConfig = object({
+	NODE_ENV: enumType(['development', 'test']),
+	NOREPLY_EMAIL: optional(string([email()])),
+	SMTP_PASS: optional(string()),
+	SMTP_HOST: optional(string()),
+	FILE_PATH: fallback(
+		string(),
+		join(process.cwd(), 'apps', 'site', 'public', 'images')
+	),
 });
 
-const dbConfig = z.object({
-	DATABASE_USER: z.string(),
-	DATABASE_PASSWORD: z.string(),
-	DATABASE_PORT: z.string().transform((val) => Number.parseInt(val)),
-	DATABASE_HOST: z.string(),
-	DATABASE_NAME: z.string(),
+const dbConfig = object({
+	DATABASE_USER: string(),
+	DATABASE_PASSWORD: string(),
+	DATABASE_PORT: transform(string(), (val) => Number.parseInt(val)),
+	DATABASE_HOST: string(),
+	DATABASE_NAME: string(),
 });
 
-const rabbitConfig = z.object({
-	RABBIT_USER: z.string(),
-	RABBIT_PASSWORD: z.string(),
-	RABBIT_HOST: z.string(),
-	RABBIT_PORT: z.string(),
+const rabbitConfig = object({
+	RABBIT_USER: string(),
+	RABBIT_PASSWORD: string(),
+	RABBIT_HOST: string(),
+	RABBIT_PORT: string(),
 });
 
-const commonConfig = z.object({
-	PORT: z
-		.optional(z.string().transform((val) => Number.parseInt(val, 10)))
-		.default("3333"),
-	CORS: z.optional(z.string()).default("http://localhost:4200"),
-	REDIS_URL: z.string(),
-	NODE_ENV: z.enum(["development", "production", "test"]),
-	SESSION_EXPIRES_IN: z.number().optional().default(hourInSeconds),
-	REFRESH_EXPIRES_IN: z
-		.number()
-		.optional()
-		.default(7 * dayInSeconds),
+const commonConfig = object({
+	PORT: transform(fallback(string(), '3333'), (val: string) =>
+		Number.parseInt(val, 10)
+	),
+	CORS: fallback(string(), 'http://localhost:4200'),
+	REDIS_URL: string(),
+	NODE_ENV: enumType(['development', 'production', 'test']),
+	SESSION_EXPIRES_IN: fallback(number(), hourInSeconds),
+	REFRESH_EXPIRES_IN: fallback(number(), 7 * dayInSeconds),
 });
-export const Config = z.intersection(
-	commonConfig.merge(dbConfig).merge(rabbitConfig),
-	z.discriminatedUnion("NODE_ENV", [prodConfig, devConfig]),
-);
+export const Config = merge([commonConfig, dbConfig, rabbitConfig, prodConfig]);

@@ -1,13 +1,12 @@
-import { z } from "zod";
+import { Output, array, merge, object, pick } from "valibot";
 import { RaceSchema } from "./race";
 import { RacialAbilitySchema } from "./racial-ability";
 
-export const RaceWithAbilitiesSchema = RaceSchema.and(
-	z.object({
-		racialAbilities: z.array(
-			RacialAbilitySchema.pick({ name: true, description: true }),
-		),
+export const RaceWithAbilitiesSchema = merge([
+	RaceSchema,
+	object({
+		racialAbilities: array(pick(RacialAbilitySchema, ["name", "description"])),
 	}),
-);
+]);
 
-export type RaceWithAbilities = z.infer<typeof RaceWithAbilitiesSchema>;
+export type RaceWithAbilities = Output<typeof RaceWithAbilitiesSchema>;

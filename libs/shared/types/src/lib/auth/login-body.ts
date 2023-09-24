@@ -1,8 +1,9 @@
+import { Output, email, minLength, object, string } from "valibot";
 import { z } from "zod";
 
-export const LoginBodySchema = z.object({
-	email: z.string().email(),
-	password: z.string().min(12),
+export const LoginBodySchema = object({
+	email: string([email()]),
+	password: string([minLength(12)]),
 });
 
-export type LoginBody = z.infer<typeof LoginBodySchema>;
+export type LoginBody = Output<typeof LoginBodySchema>;

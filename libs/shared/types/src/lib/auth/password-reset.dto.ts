@@ -1,8 +1,8 @@
-import { z } from "zod";
+import { Output, length, object, string } from "valibot";
 
-export const PasswordResetSchema = z.object({
-	resetToken: z.string().length(43),
-	password: z.string(),
+export const PasswordResetSchema = object({
+	resetToken: string([length(43)]),
+	password: string(),
 });
 
-export type PasswordReset = z.infer<typeof PasswordResetSchema>;
+export type PasswordReset = Output<typeof PasswordResetSchema>;
