@@ -1,181 +1,181 @@
-import { Injectable } from '@nestjs/common';
-import { Database, InjectKysely } from '@unteris/server/kysely';
+import { Injectable } from "@nestjs/common";
+import { Database, InjectKysely } from "@unteris/server/kysely";
 import {
-  LocalLogin,
-  LoginMethod,
-  SignupUser,
-  UserAccount,
-} from '@unteris/shared/types';
-import { Kysely, sql } from 'kysely';
+	LocalLogin,
+	LoginMethod,
+	SignupUser,
+	UserAccount,
+} from "@unteris/shared/types";
+import { Kysely, sql } from "kysely";
 
 @Injectable()
 export class SecurityRepo {
-  constructor(@InjectKysely() private readonly db: Kysely<Database>) {}
+	constructor(@InjectKysely() private readonly db: Kysely<Database>) {}
 
-  async findUserByEmail(
-    email: string
-  ): Promise<Pick<UserAccount, 'id'> | undefined> {
-    return this.db
-      .selectFrom('userAccount')
-      .select(['id'])
-      .where('email', '=', email)
-      .executeTakeFirst();
-  }
+	async findUserByEmail(
+		email: string,
+	): Promise<Pick<UserAccount, "id"> | undefined> {
+		return this.db
+			.selectFrom("userAccount")
+			.select(["id"])
+			.where("email", "=", email)
+			.executeTakeFirst();
+	}
 
-  async findUserById(id: string): Promise<UserAccount> {
-    return await this.db
-      .selectFrom('userAccount')
-      .selectAll()
-      .where('id', '=', id)
-      .executeTakeFirstOrThrow();
-  }
+	async findUserById(id: string): Promise<UserAccount> {
+		return await this.db
+			.selectFrom("userAccount")
+			.selectAll()
+			.where("id", "=", id)
+			.executeTakeFirstOrThrow();
+	}
 
-  async createUserRecord(user: SignupUser): Promise<Pick<UserAccount, 'id'>> {
-    return this.db
-      .insertInto('userAccount')
-      .values({
-        email: user.email,
-        name: user.name,
-        isVerified: false,
-      })
-      .returning(['id'])
-      .executeTakeFirstOrThrow();
-  }
+	async createUserRecord(user: SignupUser): Promise<Pick<UserAccount, "id">> {
+		return this.db
+			.insertInto("userAccount")
+			.values({
+				email: user.email,
+				name: user.name,
+				isVerified: false,
+			})
+			.returning(["id"])
+			.executeTakeFirstOrThrow();
+	}
 
-  async createUserVerificationRecord(id: string, token: string): Promise<void> {
-    await this.db
-      .insertInto('verificationToken')
-      .values({
-        userId: id,
-        token,
-        type: 'verification',
-      })
-      .execute();
-  }
+	async createUserVerificationRecord(id: string, token: string): Promise<void> {
+		await this.db
+			.insertInto("verificationToken")
+			.values({
+				userId: id,
+				token,
+				type: "verification",
+			})
+			.execute();
+	}
 
-  async findUserWithLocalLogin(
-    email: string
-  ): Promise<
-    | (Pick<UserAccount, 'id' | 'name' | 'email'> &
-        Pick<LocalLogin, 'password' | 'attempts'> & { localLoginId: string })
-    | undefined
-  > {
-    return this.db
-      .selectFrom('userAccount as ua')
-      .innerJoin('loginMethod as lm', 'lm.userId', 'ua.id')
-      .innerJoin('localLogin as ll', 'loginMethodId', 'lm.id')
-      .select([
-        'ua.email',
-        'ua.name',
-        'ua.id',
-        'll.password',
-        'll.attempts',
-        'll.id as localLoginId',
-      ])
-      .where('ua.email', '=', email)
-      .executeTakeFirst();
-  }
+	async findUserWithLocalLogin(
+		email: string,
+	): Promise<
+		| (Pick<UserAccount, "id" | "name" | "email"> &
+				Pick<LocalLogin, "password" | "attempts"> & { localLoginId: string })
+		| undefined
+	> {
+		return this.db
+			.selectFrom("userAccount as ua")
+			.innerJoin("loginMethod as lm", "lm.userId", "ua.id")
+			.innerJoin("localLogin as ll", "loginMethodId", "lm.id")
+			.select([
+				"ua.email",
+				"ua.name",
+				"ua.id",
+				"ll.password",
+				"ll.attempts",
+				"ll.id as localLoginId",
+			])
+			.where("ua.email", "=", email)
+			.executeTakeFirst();
+	}
 
-  async incrementLoginAttemptsByLocalLoginId(id: string): Promise<void> {
-    await this.db
-      .updateTable('localLogin')
-      .set((eb) => ({ attempts: eb('attempts', '+', 1) }))
-      .where('id', '=', id)
-      .execute();
-  }
+	async incrementLoginAttemptsByLocalLoginId(id: string): Promise<void> {
+		await this.db
+			.updateTable("localLogin")
+			.set((eb) => ({ attempts: eb("attempts", "+", 1) }))
+			.where("id", "=", id)
+			.execute();
+	}
 
-  async clearLoginAttemptsByLocalLoginId(id: string): Promise<void> {
-    await this.db
-      .updateTable('localLogin')
-      .set({ attempts: 0 })
-      .where('id', '=', id)
-      .execute();
-  }
+	async clearLoginAttemptsByLocalLoginId(id: string): Promise<void> {
+		await this.db
+			.updateTable("localLogin")
+			.set({ attempts: 0 })
+			.where("id", "=", id)
+			.execute();
+	}
 
-  async createLoginMethodRecord(
-    userId: string,
-    name: LoginMethod['name']
-  ): Promise<Pick<LoginMethod, 'id'>> {
-    return await this.db
-      .insertInto('loginMethod')
-      .values({ userId, name })
-      .returning(['id'])
-      .executeTakeFirstOrThrow();
-  }
+	async createLoginMethodRecord(
+		userId: string,
+		name: LoginMethod["name"],
+	): Promise<Pick<LoginMethod, "id">> {
+		return await this.db
+			.insertInto("loginMethod")
+			.values({ userId, name })
+			.returning(["id"])
+			.executeTakeFirstOrThrow();
+	}
 
-  async createLocalLoginRecord(
-    password: string,
-    loginMethodId: string
-  ): Promise<void> {
-    await this.db
-      .insertInto('localLogin')
-      .values({
-        password,
-        loginMethodId,
-        attempts: 0,
-      })
-      .execute();
-  }
+	async createLocalLoginRecord(
+		password: string,
+		loginMethodId: string,
+	): Promise<void> {
+		await this.db
+			.insertInto("localLogin")
+			.values({
+				password,
+				loginMethodId,
+				attempts: 0,
+			})
+			.execute();
+	}
 
-  async setUserRecordAsActive(verificationToken: string): Promise<void> {
-    const verificationRecord = await this.db
-      .selectFrom('verificationToken')
-      .select('userId')
-      .where('token', '=', verificationToken)
-      .where(sql`id::timestamp`, '>', sql`CURRENT TIMESTAMP - '1 hour'`)
-      .executeTakeFirst();
-    if (!verificationRecord) {
-      throw new Error(
-        'Invalid verification token. If you clicked this from an email, please request a new token.'
-      );
-    }
-    await this.db
-      .updateTable('userAccount')
-      .set({ isVerified: true })
-      .where('id', '=', verificationRecord.userId)
-      .executeTakeFirstOrThrow();
-  }
+	async setUserRecordAsActive(verificationToken: string): Promise<void> {
+		const verificationRecord = await this.db
+			.selectFrom("verificationToken")
+			.select("userId")
+			.where("token", "=", verificationToken)
+			.where(sql`id::timestamp`, ">", sql`NOW() - INTERVAL '1 hour'`)
+			.executeTakeFirst();
+		if (!verificationRecord) {
+			throw new Error(
+				"Invalid verification token. If you clicked this from an email, please request a new token.",
+			);
+		}
+		await this.db
+			.updateTable("userAccount")
+			.set({ isVerified: true })
+			.where("id", "=", verificationRecord.userId)
+			.executeTakeFirstOrThrow();
+	}
 
-  async createUserPasswordResetRecord(
-    userId: string,
-    token: string
-  ): Promise<void> {
-    await this.db
-      .insertInto('verificationToken')
-      .values({
-        userId,
-        token,
-        type: 'reset',
-      })
-      .executeTakeFirstOrThrow();
-  }
+	async createUserPasswordResetRecord(
+		userId: string,
+		token: string,
+	): Promise<void> {
+		await this.db
+			.insertInto("verificationToken")
+			.values({
+				userId,
+				token,
+				type: "reset",
+			})
+			.executeTakeFirstOrThrow();
+	}
 
-  async findUserByResetToken(
-    resetToken: string
-  ): Promise<Pick<UserAccount, 'id' | 'email'>> {
-    return this.db
-      .selectFrom('userAccount as u')
-      .select(['u.id', 'u.email'])
-      .innerJoin('verificationToken as vt', 'vt.userId', 'u.id')
-      .where(sql`vt.id::timestamp`, '>', sql`CURRENT TIMESTAMP - '1 day'`)
-      .where('vt.token', '=', resetToken)
-      .executeTakeFirstOrThrow();
-  }
+	async findUserByResetToken(
+		resetToken: string,
+	): Promise<Pick<UserAccount, "id" | "email">> {
+		return this.db
+			.selectFrom("userAccount as u")
+			.select(["u.id", "u.email"])
+			.innerJoin("verificationToken as vt", "vt.userId", "u.id")
+			.where(sql`vt.id::timestamp`, ">", sql`NOW() - INTERVAL '1 day'`)
+			.where("vt.token", "=", resetToken)
+			.executeTakeFirstOrThrow();
+	}
 
-  async updateUserPassword(userId: string, password: string): Promise<void> {
-    await this.db
-      .updateTable('localLogin')
-      .set({ password })
-      .where((eb) => {
-        return eb(
-          'loginMethodId',
-          '=',
-          eb
-            .selectFrom('loginMethod')
-            .select(['id'])
-            .where('userId', '=', userId)
-        );
-      })
-      .executeTakeFirstOrThrow();
-  }
+	async updateUserPassword(userId: string, password: string): Promise<void> {
+		await this.db
+			.updateTable("localLogin")
+			.set({ password })
+			.where((eb) => {
+				return eb(
+					"loginMethodId",
+					"=",
+					eb
+						.selectFrom("loginMethod")
+						.select(["id"])
+						.where("userId", "=", userId),
+				);
+			})
+			.executeTakeFirstOrThrow();
+	}
 }

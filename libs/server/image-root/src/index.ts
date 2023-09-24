@@ -1,1 +1,1 @@
-export * from './lib/image-root.module';
+export * from "./lib/image-root.module";

@@ -1,72 +1,79 @@
 {
-  "name": "image-server",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/image-server/src",
-  "projectType": "application",
-  "targets": {
-    "build": {
-      "executor": "@nx/webpack:webpack",
-      "outputs": ["{options.outputPath}"],
-      "defaultConfiguration": "production",
-      "options": {
-        "target": "node",
-        "compiler": "tsc",
-        "outputPath": "dist/apps/image-server",
-        "main": "apps/image-server/src/main.ts",
-        "tsConfig": "apps/image-server/tsconfig.app.json",
-        "assets": ["apps/image-server/src/assets"],
-        "isolatedConfig": true,
-        "webpackConfig": "apps/image-server/webpack.config.js"
-      },
-      "configurations": {
-        "production": {
-          "optimization": true,
-          "extractLicenses": true,
-          "inspect": false,
-          "generatePackageJson": true,
-          "buildLibsFromSrc": true,
-          "fileReplacements": [
-            {
-              "replace": "apps/image-server/src/environments/environment.ts",
-              "with": "apps/image-server/src/environments/environment.prod.ts"
-            }
-          ]
-        }
-      }
-    },
-    "serve": {
-      "executor": "@nx/js:node",
-      "defaultConfiguration": "development",
-      "options": {
-        "inspect": false,
-        "buildTarget": "image-server:build"
-      },
-      "configurations": {
-        "development": {
-          "buildTarget": "image-server:build:development"
-        },
-        "production": {
-          "buildTarget": "image-server:build:production"
-        }
-      }
-    },
-    "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["apps/image-server/**/*.ts"]
-      }
-    },
-    "package": {
-      "executor": "@unteris/plugin/docker:build",
-      "outputs": ["{workspaceRoot}/docker/cache/server"],
-      "options": {},
-      "configurations": {
-        "ci": {
-          "publish": true
-        }
-      }
-    }
-  },
-  "tags": []
+	"name": "image-server",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "apps/image-server/src",
+	"projectType": "application",
+	"targets": {
+		"build": {
+			"executor": "@nx/webpack:webpack",
+			"outputs": ["{options.outputPath}"],
+			"defaultConfiguration": "production",
+			"options": {
+				"target": "node",
+				"compiler": "tsc",
+				"outputPath": "dist/apps/image-server",
+				"main": "apps/image-server/src/main.ts",
+				"tsConfig": "apps/image-server/tsconfig.app.json",
+				"assets": ["apps/image-server/src/assets"],
+				"isolatedConfig": true,
+				"webpackConfig": "apps/image-server/webpack.config.js"
+			},
+			"configurations": {
+				"production": {
+					"optimization": true,
+					"extractLicenses": true,
+					"inspect": false,
+					"generatePackageJson": true,
+					"buildLibsFromSrc": true,
+					"fileReplacements": [
+						{
+							"replace": "apps/image-server/src/environments/environment.ts",
+							"with": "apps/image-server/src/environments/environment.prod.ts"
+						}
+					]
+				}
+			}
+		},
+		"serve": {
+			"executor": "@nx/js:node",
+			"defaultConfiguration": "development",
+			"options": {
+				"inspect": false,
+				"buildTarget": "image-server:build"
+			},
+			"configurations": {
+				"development": {
+					"buildTarget": "image-server:build:development"
+				},
+				"production": {
+					"buildTarget": "image-server:build:production"
+				}
+			}
+		},
+		"lint": {
+			"executor": "@unteris/plugin/rz:lint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"unsafe": true
+			}
+		},
+		"nx-lint": {
+			"executor": "@nx/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["apps/image-server/**/*.ts"]
+			}
+		},
+		"package": {
+			"executor": "@unteris/plugin/rz:build",
+			"outputs": ["{workspaceRoot}/tmp/rz/docker/cache/image-server"],
+			"options": {},
+			"configurations": {
+				"ci": {
+					"publish": true
+				}
+			}
+		}
+	},
+	"tags": []
 }

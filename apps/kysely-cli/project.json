@@ -1,126 +1,133 @@
 {
-  "name": "kysely-cli",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/kysely-cli/src",
-  "projectType": "application",
-  "implicitDependencies": ["db-migrations"],
-  "targets": {
-    "build": {
-      "executor": "@nx/webpack:webpack",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "target": "node",
-        "compiler": "tsc",
-        "outputPath": "dist/apps/kysely-cli",
-        "main": "apps/kysely-cli/src/main.ts",
-        "tsConfig": "apps/kysely-cli/tsconfig.app.json",
-        "assets": ["apps/kysely-cli/src/assets"],
-        "isolatedConfig": true,
-        "webpackConfig": "apps/kysely-cli/webpack.config.js",
-        "generatePackageJson": true
-      },
-      "configurations": {
-        "development": {},
-        "production": {}
-      }
-    },
-    "migrate": {
-      "executor": "@nx/js:node",
-      "options": {
-        "buildTarget": "kysely-cli:build",
-        "watch": false
-      },
-      "configurations": {
-        "development": {
-          "buildTarget": "kysely-cli:build:development"
-        },
-        "production": {
-          "buildTarget": "kysely-cli:build:production"
-        }
-      },
-      "dependsOn": [
-        {
-          "target": "build",
-          "dependencies": true
-        }
-      ]
-    },
-    "migrate-e2e": {
-      "executor": "@nx/js:node",
-      "options": {
-        "buildTarget": "kysely-cli:build",
-        "watch": false
-      },
-      "configurations": {
-        "development": {
-          "buildTarget": "kysely-cli:build:development"
-        },
-        "production": {
-          "buildTarget": "kysely-cli:build:production"
-        }
-      },
-      "dependsOn": [
-        {
-          "target": "build",
-          "dependencies": true
-        }
-      ]
-    },
-    "seed": {
-      "executor": "@nx/js:node",
-      "options": {
-        "buildTarget": "kysely-cli:build",
-        "args": ["seed"],
-        "watch": false
-      },
-      "configurations": {
-        "development": {
-          "buildTarget": "kysely-cli:build:development"
-        },
-        "production": {
-          "buildTarget": "kysely-cli:build:production"
-        }
-      },
-      "dependsOn": [
-        {
-          "target": "build",
-          "dependencies": true
-        }
-      ]
-    },
-    "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["apps/kysely-cli/**/*.ts"]
-      }
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "options": {
-        "jestConfig": "apps/kysely-cli/jest.config.ts",
-        "passWithNoTests": true
-      },
-      "configurations": {
-        "ci": {
-          "ci": true,
-          "codeCoverage": true
-        }
-      }
-    },
-    "package": {
-      "executor": "@unteris/plugin/docker:build",
-      "outputPath": ["docker/cache/migrations"],
-      "options": {
-        "imageName": "migrations"
-      },
-      "configurations": {
-        "ci": {
-          "publish": true
-        }
-      }
-    }
-  },
-  "tags": ["database", "cli"]
+	"name": "kysely-cli",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "apps/kysely-cli/src",
+	"projectType": "application",
+	"implicitDependencies": ["db-migrations"],
+	"targets": {
+		"build": {
+			"executor": "@nx/webpack:webpack",
+			"outputs": ["{options.outputPath}"],
+			"options": {
+				"target": "node",
+				"compiler": "tsc",
+				"outputPath": "dist/apps/kysely-cli",
+				"main": "apps/kysely-cli/src/main.ts",
+				"tsConfig": "apps/kysely-cli/tsconfig.app.json",
+				"assets": ["apps/kysely-cli/src/assets"],
+				"isolatedConfig": true,
+				"webpackConfig": "apps/kysely-cli/webpack.config.js",
+				"generatePackageJson": true
+			},
+			"configurations": {
+				"development": {},
+				"production": {}
+			}
+		},
+		"migrate": {
+			"executor": "@nx/js:node",
+			"options": {
+				"buildTarget": "kysely-cli:build",
+				"watch": false
+			},
+			"configurations": {
+				"development": {
+					"buildTarget": "kysely-cli:build:development"
+				},
+				"production": {
+					"buildTarget": "kysely-cli:build:production"
+				}
+			},
+			"dependsOn": [
+				{
+					"target": "build",
+					"dependencies": true
+				}
+			]
+		},
+		"e2e": {
+			"executor": "@nx/js:node",
+			"options": {
+				"buildTarget": "kysely-cli:build",
+				"watch": false
+			},
+			"configurations": {
+				"development": {
+					"buildTarget": "kysely-cli:build:development"
+				},
+				"production": {
+					"buildTarget": "kysely-cli:build:production"
+				}
+			},
+			"dependsOn": [
+				{
+					"target": "build",
+					"dependencies": true
+				}
+			]
+		},
+		"seed": {
+			"executor": "@nx/js:node",
+			"options": {
+				"buildTarget": "kysely-cli:build",
+				"args": ["seed"],
+				"watch": false
+			},
+			"configurations": {
+				"development": {
+					"buildTarget": "kysely-cli:build:development"
+				},
+				"production": {
+					"buildTarget": "kysely-cli:build:production"
+				}
+			},
+			"dependsOn": [
+				{
+					"target": "build",
+					"dependencies": true
+				}
+			]
+		},
+		"lint": {
+			"executor": "@unteris/plugin/rz:lint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"unsafe": true
+			}
+		},
+		"nx-lint": {
+			"executor": "@nx/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["apps/kysely-cli/**/*.ts"]
+			}
+		},
+		"test": {
+			"executor": "@nx/jest:jest",
+			"outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+			"options": {
+				"jestConfig": "apps/kysely-cli/jest.config.ts",
+				"passWithNoTests": true
+			},
+			"configurations": {
+				"ci": {
+					"ci": true,
+					"codeCoverage": true
+				}
+			}
+		},
+		"package": {
+			"executor": "@unteris/plugin/rz:build",
+			"outputs": ["{workspaceRoot}/tmp/rz/docker/cache/migrations"],
+			"options": {
+				"imageName": "migrations"
+			},
+			"configurations": {
+				"ci": {
+					"publish": true
+				}
+			}
+		}
+	},
+	"tags": ["database", "cli"]
 }

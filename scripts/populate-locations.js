@@ -1,8 +1,8 @@
 let locationsInsert = 'INSERT INTO location (name) VALUES ';
 
-let locations = ['Empyrean Sea', 'Caelaum Arboria', 'Feywild', 'Shadowfell'];
+const locations = ['Empyrean Sea', 'Caelaum Arboria', 'Feywild', 'Shadowfell'];
 
 for (const loc of locations) {
-  locationsInsert += `('${loc}'),`;
+	locationsInsert += `('${loc}'),`;
 }
-console.log(locationsInsert.substring(0, locationsInsert.length - 1) + ';');
+console.log(`${locationsInsert.substring(0, locationsInsert.length - 1)};`);

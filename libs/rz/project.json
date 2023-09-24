@@ -1,0 +1,71 @@
+{
+	"name": "rz",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "libs/rz/src",
+	"projectType": "library",
+	"targets": {
+		"build": {
+			"executor": "@nx/js:tsc",
+			"outputs": ["{options.outputPath}"],
+			"options": {
+				"outputPath": "dist/libs/rz",
+				"main": "libs/rz/src/index.ts",
+				"tsConfig": "libs/rz/tsconfig.lib.json",
+				"assets": [
+					"libs/rz/*.md",
+					{
+						"input": "./libs/rz/src",
+						"glob": "**/!(*.ts)",
+						"output": "./src"
+					},
+					{
+						"input": "./libs/rz/src",
+						"glob": "**/*.d.ts",
+						"output": "./src"
+					},
+					{
+						"input": "./libs/rz",
+						"glob": "generators.json",
+						"output": "."
+					},
+					{
+						"input": "./libs/rz",
+						"glob": "executors.json",
+						"output": "."
+					}
+				],
+				"updateBuildableProjectDepsInPackageJson": true
+			}
+		},
+		"lint": {
+			"executor": "@unteris/plugin/rz:lint"
+		},
+		"nx-lint": {
+			"executor": "@nx/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": [
+					"libs/rz/**/*.ts",
+					"libs/rz/generators.json",
+					"libs/rz/executors.json",
+					"libs/rz/package.json"
+				]
+			}
+		},
+		"test": {
+			"executor": "@nx/jest:jest",
+			"outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+			"options": {
+				"jestConfig": "libs/rz/jest.config.ts",
+				"passWithNoTests": true
+			},
+			"configurations": {
+				"ci": {
+					"ci": true,
+					"codeCoverage": true
+				}
+			}
+		}
+	},
+	"tags": ["utility", "plugin", "docker"]
+}

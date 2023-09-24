@@ -1,0 +1,9 @@
+{
+	"name": "@unteris/plugin/rz",
+	"version": "0.0.1",
+	"main": "src/index.js",
+	"executors": "./executors.json",
+	"dependencies": {
+		"@nx/devkit": "16.6.0"
+	}
+}

@@ -1,3 +1,3 @@
 export function serverImageProcessing(): string {
-  return 'server-image-processing';
+	return "server-image-processing";
 }

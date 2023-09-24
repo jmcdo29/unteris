@@ -1,50 +1,57 @@
 {
-  "name": "server-e2e",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/server-e2e/src",
-  "projectType": "application",
-  "targets": {
-    "e2e": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": ["docker compose -f docker-compose.test.yml down"]
-      },
-      "dependsOn": ["run-tests"]
-    },
-    "run-tests": {
-      "executor": "@nx/vite:test",
-      "options": {},
-      "dependsOn": [
-        {
-          "projects": "self",
-          "target": "run-migrations"
-        }
-      ]
-    },
-    "run-migrations": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "pnpm nx run kysely-cli:migrate-e2e"
-      },
-      "dependsOn": ["start-docker"]
-    },
-    "start-docker": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": [
-          "docker compose -f docker-compose.test.yml up -d",
-          "while ! nc -q0 localhost 26379 < /dev/null > /dev/null 2>&1; do sleep 10; done",
-          "while ! nc -q0 localhost 25432 < /dev/null > /dev/null 2>&1; do sleep 10; done"
-        ]
-      }
-    },
-    "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["apps/server-e2e/**/*.ts"]
-      }
-    }
-  },
-  "tags": ["server", "e2e", "test"]
+	"name": "server-e2e",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "apps/server-e2e/src",
+	"projectType": "application",
+	"targets": {
+		"e2e": {
+			"executor": "nx:run-commands",
+			"options": {
+				"commands": ["docker compose -f docker-compose.test.yml down"]
+			},
+			"dependsOn": ["run-tests"]
+		},
+		"run-tests": {
+			"executor": "@nx/vite:test",
+			"options": {},
+			"dependsOn": [
+				{
+					"projects": "self",
+					"target": "run-migrations"
+				}
+			]
+		},
+		"run-migrations": {
+			"executor": "nx:run-commands",
+			"options": {
+				"command": "pnpm nx run kysely-cli:e2e"
+			},
+			"dependsOn": ["start-docker"]
+		},
+		"start-docker": {
+			"executor": "nx:run-commands",
+			"options": {
+				"commands": [
+					"docker compose -f docker-compose.test.yml up -d --build",
+					"while ! nc -q0 -z localhost 26379; do sleep 10; done",
+					"while ! nc -q0 -z localhost 25432; do sleep 10; done"
+				]
+			}
+		},
+		"lint": {
+			"executor": "@unteris/plugin/rz:lint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"unsafe": true
+			}
+		},
+		"nx-lint": {
+			"executor": "@nx/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["apps/server-e2e/**/*.ts"]
+			}
+		}
+	},
+	"tags": ["server", "e2e", "test"]
 }

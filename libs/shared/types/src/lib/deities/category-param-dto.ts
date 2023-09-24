@@ -1,7 +1,7 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export const CategoryParamSchema = z.object({
-  category: z.string().ulid(),
+	category: z.string().ulid(),
 });
 
 export type CategoryParam = z.infer<typeof CategoryParamSchema>;
