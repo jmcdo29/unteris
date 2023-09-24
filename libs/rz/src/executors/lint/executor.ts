@@ -1,5 +1,5 @@
 import { spawn } from "child_process";
-import { appendFileSync, mkdirSync, writeFile, writeFileSync } from "fs";
+import { appendFileSync, mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
 import {
 	ExecutorContext,
@@ -18,7 +18,6 @@ export default async function runExecutor(
 		application: "Rz Plugin - Biome",
 		context: context.projectName,
 		logLevel: options.verbose ? "ALL" : "INFO",
-		stream: { write: (message) => process.stdout.write(message as string) },
 	});
 	try {
 		const lintForProject = `${style.cyan.apply(
@@ -76,7 +75,7 @@ export default async function runExecutor(
 			const linkEndRegex = /\x1B\]8;;\x1B\\/g;
 			const dataHandler = (dataArray: string[]) => (chunk: Buffer) => {
 				const chunkString = chunk.toString();
-				if (/(\w)+\.[tj]s/.test(chunkString)) {
+				if (!dataArray.length) {
 					dataArray.push(chunkString);
 				} else {
 					dataArray[dataArray.length - 1] += chunkString;
@@ -93,7 +92,7 @@ export default async function runExecutor(
 
 			biomeCommand.on("close", (code) => {
 				if (dataOutput.length) {
-					logger.log(`\n${dataOutput}`);
+					logger.log(["\n", ...dataOutput], { each: true });
 					appendFileSync(
 						lintCacheFile,
 						dataOutput
@@ -104,7 +103,7 @@ export default async function runExecutor(
 					);
 				}
 				if (errorOutput.length) {
-					logger.error(`\n${errorOutput.join("\n")}`);
+					logger.error(["\n", ...errorOutput], { each: true });
 					appendFileSync(
 						errorCacheFile,
 						errorOutput
@@ -117,7 +116,7 @@ export default async function runExecutor(
 				resolve({ success: code === 0 });
 			});
 			biomeCommand.on("error", (err) => {
-				logger.error(`\n${errorOutput}`);
+				logger.error(["\n", ...errorOutput], { each: true });
 				appendFileSync(
 					errorCacheFile,
 					errorOutput
