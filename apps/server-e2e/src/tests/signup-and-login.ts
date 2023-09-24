@@ -1,10 +1,9 @@
 import { randomUUID } from "crypto";
-import { base32Regex } from "@unteris/shared/base32";
 import { spec } from "pactum";
-import { regex } from "pactum-matchers";
 import { describe, expect, test, vi } from "vitest";
-import { csrfSpec, csrfStoreToken, sessionStoreToken } from "../csrf";
+import { csrfSpec, sessionStoreToken } from "../csrf";
 import { TestContext } from "../interfaces/test-context.interface";
+import { loginStep, signup } from "../auth";
 
 export const signUpAndLoginTests = () => {
 	return describe("SignUp and Login", () => {
@@ -14,45 +13,19 @@ export const signUpAndLoginTests = () => {
 			const emailSpy = vi.spyOn(context.mailer, "sendMail");
 			const email = `${randomUUID()}@testing.com`;
 			const name = `Test User${randomUUID()}`;
-			const res = await spec()
-				.post("/auth/signup")
-				.withBody({
-					email,
-					password: testPass,
-					confirmationPassword: testPass,
-					name,
-				})
-				.withHeaders("X-UNTERIS-CSRF-PROTECTION", csrfStoreToken)
-				.withCookies("sessionId", sessionStoreToken)
-				.expectStatus(201)
-				.expectJsonMatch({
-					id: regex(base32Regex),
-					success: true,
-				})
-				.returns(".id");
+			const res = await signup({ email, name, password: testPass });
 			// assert we properly made the user, login method, and related local login
 			const userAccount = await context.db
 				.selectFrom("userAccount as ua")
 				.innerJoin("loginMethod as lm", "lm.userId", "ua.id")
 				.innerJoin("localLogin as ll", "ll.loginMethodId", "lm.id")
 				.select(({ fn }) => [fn.count("ua.id").as("count")])
-				.where("ua.id", "=", res)
+				.where("ua.id", "=", res.id)
 				.execute();
 			expect(userAccount[0].count).toBe("1");
-			await spec()
-				.post("/auth/login")
-				.withBody({
-					email,
-					password: testPass,
-				})
-				.withHeaders("X-UNTERIS-CSRF-PROTECTION", csrfStoreToken)
-				.withCookies("sessionId", sessionStoreToken)
-				.expectStatus(201)
-				.expectJsonMatch({
-					displayName: name,
-					id: regex(base32Regex),
-					success: true,
-				});
+
+			await loginStep({ email, name, password: testPass });
+
 			let emailResult = undefined;
 			for await (const result of emailSpy.mock.results) {
 				const json = JSON.parse(result.value.message);

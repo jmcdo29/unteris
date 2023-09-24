@@ -9,6 +9,7 @@ import { beforeAll, beforeEach, describe } from "vitest";
 import { TestContext } from "./interfaces/test-context.interface";
 import { csrfTest } from "./tests/csrf";
 import { signUpAndLoginTests } from "./tests/signup-and-login";
+import { resetPasswordTest } from "./tests/reset-password";
 
 describe("Unteris E2E test suite", () => {
 	let app: INestApplication;
@@ -28,4 +29,5 @@ describe("Unteris E2E test suite", () => {
 	});
 	csrfTest();
 	signUpAndLoginTests();
+	resetPasswordTest();
 });
