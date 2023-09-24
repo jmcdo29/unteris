@@ -17,7 +17,7 @@ export class ServerEmailService {
 		verificationToken: string,
 	): Promise<void> {
 		await this.transport.sendMail({
-			from: "No Reply <no-reply@unteris.com>",
+			from: "Unteris Support <support@unteris.com>",
 			subject: "Email verification",
 			to: email,
 			html: verificationEmail(
@@ -33,7 +33,7 @@ export class ServerEmailService {
 		resetToken: string,
 	): Promise<void> {
 		await this.transport.sendMail({
-			from: "No reply <no-reply@unteris.com>",
+			from: "Unteris Support <support@unteris.com>",
 			subject: "Reset Password",
 			to: email,
 			html: passwordResetEmail(resetToken, this.configService.get("CORS")),
