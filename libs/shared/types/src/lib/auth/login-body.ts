@@ -1,5 +1,4 @@
 import { Output, email, minLength, object, string } from "valibot";
-import { z } from "zod";
 
 export const LoginBodySchema = object({
 	email: string([email()]),

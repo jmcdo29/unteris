@@ -1,32 +1,32 @@
-import { z } from "zod";
+import { z } from "valibot";
 
-const SessionIdSchema = z.object({
-	id: z.string(),
+const SessionIdSchema = object({
+	id: string(),
 });
 
-export const SessionDataSchema = z.object({
+export const SessionDataSchema = object({
 	user: z
 		.object({
-			email: z.string().email().optional(),
-			id: z.string().ulid().optional(),
+			email: string().email().optional(),
+			id: string([ulid()]).optional(),
 		})
 		.passthrough(),
-	csrf: z.string(),
+	csrf: string(),
 });
 
-export type SessionData = z.infer<typeof SessionDataSchema>;
+export type SessionData = Output<typeof SessionDataSchema>;
 
-const RefreshSessionDataSchema = z.object({
-	sessionId: z.string(),
+const RefreshSessionDataSchema = object({
+	sessionId: string(),
 });
 
-export type RefreshSessionData = z.infer<typeof RefreshSessionDataSchema>;
+export type RefreshSessionData = Output<typeof RefreshSessionDataSchema>;
 
 export type SavedSessionData = SessionData | RefreshSessionData;
 
-export const SessionSchema = z.intersection(
+export const SessionSchema = intersection(
 	SessionIdSchema,
-	z.union([SessionDataSchema, RefreshSessionDataSchema]),
+	union([SessionDataSchema, RefreshSessionDataSchema]),
 );
 
-export type UnterisSession = z.infer<typeof SessionSchema>;
+export type UnterisSession = Output<typeof SessionSchema>;

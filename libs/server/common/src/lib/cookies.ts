@@ -1,10 +1,10 @@
-import { z } from "zod";
+import { z } from "valibot";
 
 const CookiesSchema = z
 	.object({
-		refreshId: z.string().optional(),
-		sessionId: z.string(),
+		refreshId: optional(string())(),
+		sessionId: string(),
 	})
 	.passthrough();
 
-export type UnterisCookies = z.infer<typeof CookiesSchema>;
+export type UnterisCookies = Output<typeof CookiesSchema>;

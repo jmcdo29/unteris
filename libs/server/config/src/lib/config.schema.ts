@@ -1,36 +1,36 @@
-import { join } from 'path';
+import { join } from "path";
 import {
-	object,
-	literal,
+	email,
 	enumType,
+	fallback,
+	literal,
 	merge,
+	number,
+	object,
 	optional,
 	string,
 	transform,
-	fallback,
-	email,
-	number,
-} from 'valibot';
+} from "valibot";
 
 const hourInSeconds = 60 * 60;
 const dayInSeconds = hourInSeconds * 24;
 
 const prodConfig = object({
-	NODE_ENV: literal('production'),
+	NODE_ENV: literal("production"),
 	NOREPLY_EMAIL: string([email()]),
 	SMTP_PASS: string(),
 	SMTP_HOST: string(),
-	FILE_PATH: fallback(optional(string()), join(process.cwd(), 'images')),
+	FILE_PATH: fallback(optional(string()), join(process.cwd(), "images")),
 });
 
 const devConfig = object({
-	NODE_ENV: enumType(['development', 'test']),
+	NODE_ENV: enumType(["development", "test"]),
 	NOREPLY_EMAIL: optional(string([email()])),
 	SMTP_PASS: optional(string()),
 	SMTP_HOST: optional(string()),
 	FILE_PATH: fallback(
 		string(),
-		join(process.cwd(), 'apps', 'site', 'public', 'images')
+		join(process.cwd(), "apps", "site", "public", "images"),
 	),
 });
 
@@ -50,12 +50,12 @@ const rabbitConfig = object({
 });
 
 const commonConfig = object({
-	PORT: transform(fallback(string(), '3333'), (val: string) =>
-		Number.parseInt(val, 10)
+	PORT: transform(fallback(string(), "3333"), (val: string) =>
+		Number.parseInt(val, 10),
 	),
-	CORS: fallback(string(), 'http://localhost:4200'),
+	CORS: fallback(string(), "http://localhost:4200"),
 	REDIS_URL: string(),
-	NODE_ENV: enumType(['development', 'production', 'test']),
+	NODE_ENV: enumType(["development", "production", "test"]),
 	SESSION_EXPIRES_IN: fallback(number(), hourInSeconds),
 	REFRESH_EXPIRES_IN: fallback(number(), 7 * dayInSeconds),
 });

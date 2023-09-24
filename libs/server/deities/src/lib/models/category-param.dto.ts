@@ -1,6 +1,4 @@
-import { ZodDtoClass } from "@unteris/server/zod-pipe";
+import { TypeschemaDto } from "@nest-lab/typeschema";
 import { CategoryParamSchema } from "@unteris/shared/types";
 
-export class CategoryParamDto extends ZodDtoClass<typeof CategoryParamSchema> {
-	static override schema = CategoryParamSchema;
-}
+export class CategoryParamDto extends TypeschemaDto(CategoryParamSchema) {}
