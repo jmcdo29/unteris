@@ -33,7 +33,7 @@ export class ServerDeitiesService {
 				"domain.name as domainName",
 				"domain.type as domainType",
 				"domain.id as domainId",
-				"image.originalUrl as imageUrl",
+				"image.mediumUrl as imageUrl",
 			])
 			.where("deity.id", "=", id)
 			.execute();
