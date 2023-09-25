@@ -1,24 +1,31 @@
 {
-  "name": "shared-types",
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/shared/types/src",
-  "projectType": "library",
-  "targets": {
-    "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/shared/types/**/*.ts"]
-      }
-    },
-    "test": {
-      "executor": "@nx/vite:test",
-      "outputs": ["coverage/libs/shared/types"],
-      "options": {
-        "passWithNoTests": true,
-        "reportsDirectory": "../../../coverage/libs/shared/types"
-      }
-    }
-  },
-  "tags": ["shared", "types", "interfaces"]
+	"name": "shared-types",
+	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "libs/shared/types/src",
+	"projectType": "library",
+	"targets": {
+		"lint": {
+			"executor": "@unteris/plugin/rz:lint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"unsafe": true
+			}
+		},
+		"nx-lint": {
+			"executor": "@nx/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["libs/shared/types/**/*.ts"]
+			}
+		},
+		"test": {
+			"executor": "@nx/vite:test",
+			"outputs": ["{workspaceRoot}/coverage/libs/shared/types"],
+			"options": {
+				"passWithNoTests": true,
+				"reportsDirectory": "../../../coverage/libs/shared/types"
+			}
+		}
+	},
+	"tags": ["shared", "types", "interfaces"]
 }

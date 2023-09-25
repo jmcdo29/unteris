@@ -1,7 +1,9 @@
 version: '3'
 services:
   postgres:
-    image: postgres
+    build:
+      context: .
+      dockerfile: apps/postgres/Dockerfile
     ports:
       - '5432:5432'
     environment:
@@ -12,3 +14,11 @@ services:
     image: redis
     ports:
       - '6379:6379'
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    environment:
+      RABBITMQ_DEFAULT_USER: rabbit
+      RABBITMQ_DEFAULT_PASS: rabbit

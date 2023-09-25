@@ -1,13 +1,14 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-node_modules/.bin/nx affected:lint --parallel
-node_modules/.bin/nx format:write
+node_modules/.bin/nx affected:lint --base=HEAD^ --parallel
+# no longer necessary as the biome lint formats as well
+# node_modules/.bin/nx format:write
 if git diff --cached --name-only | grep -Eq \(diagram\.mmd\|migrations\/README\); then
   node_modules/.bin/embedme --stdout --strip-embed-comment libs/db/migrations/README.template.md > libs/db/migrations/README.md
   git add libs/db/migrations/README.md
 fi
-if git diff --cached --name-only | grep -E migrations\/.*\.ts | grep -Eqv [0-9ABCDEFGHJKMNPQRSTVWXYZ]{26}
+if git diff --cached --name-only | grep -E migrations\/.*\.ts | grep -v 'sql\.ts' | grep -Eqv [0-9ABCDEFGHJKMNPQRSTVWXYZ]{26}
 then
   echo "Migrations should start with a ULID"
   exit 1

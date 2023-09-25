@@ -1,46 +1,35 @@
-import Box from '@mui/material/Box';
-import { useMediaQuery } from '@mui/material';
-import { Race as IRace, RaceWithAbilities } from '@unteris/shared/types';
-import { useFetchEffect } from '@unteris/ui/components';
-import { useState } from 'react';
+import { useMediaQuery } from "@mui/material";
+import Box from "@mui/material/Box";
+import { Race as IRace } from "@unteris/shared/types";
+import { useAtomValue } from "jotai";
 
-import { RaceViewer } from './race-viewer';
-import { RaceEditor } from './race-editor';
+import { Suspense } from "react";
+import { editingAtom, raceAtom } from "./atoms";
+import { RaceEditor } from "./race-editor";
+import { RaceViewer } from "./race-viewer";
 
-interface RaceProps {
-  race: Pick<IRace, 'id' | 'name'>;
-}
+export const Race = (): JSX.Element => {
+	const isWideEnough = useMediaQuery("(min-width:600px)");
+	const race = useAtomValue(raceAtom);
+	const isEditing = useAtomValue(editingAtom);
 
-export const Race = (props: RaceProps): JSX.Element => {
-  const isWideEnough = useMediaQuery('(min-width:600px)');
-  const [race, setRace] = useState<RaceWithAbilities>();
-  const [isEditing, setIsEditing] = useState(false);
+	const updateRace = (_race: IRace) => {
+		/* this is where I'll call back to the server to save */
+	};
 
-  useFetchEffect({
-    endpoint: `race/${props.race.id}`,
-    default: undefined,
-    setter: setRace,
-  });
+	if (!race) {
+		return <div />;
+	}
 
-  const updateRace = (_race: IRace) => {
-    /* this is where I'll call back to the server to save */
-  };
-
-  if (!race) {
-    return <div />;
-  }
-
-  return (
-    <Box padding={`${!isWideEnough ? '1em' : '0'} 1em`}>
-      {isEditing ? (
-        <RaceEditor
-          race={race}
-          setRace={updateRace}
-          setIsEditing={setIsEditing}
-        />
-      ) : (
-        <RaceViewer race={race} setIsEditing={setIsEditing} />
-      )}
-    </Box>
-  );
+	return (
+		<Suspense>
+			<Box padding={`${!isWideEnough ? "1em" : "0"} 1em`}>
+				{isEditing ? (
+					<RaceEditor race={race} setRace={updateRace} />
+				) : (
+					<RaceViewer race={race} />
+				)}
+			</Box>
+		</Suspense>
+	);
 };

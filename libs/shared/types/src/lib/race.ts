@@ -1,14 +1,14 @@
-import { z } from 'zod';
+import { Output, number, object, string } from "valibot";
 
-export const RaceSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  description: z.string(),
-  ageDescription: z.string(),
-  sizeDescription: z.string(),
-  type: z.string(),
-  speed: z.number(),
-  knownLaguages: z.string(),
+export const RaceSchema = object({
+	id: string(),
+	name: string(),
+	description: string(),
+	ageDescription: string(),
+	sizeDescription: string(),
+	type: string(),
+	speed: number(),
+	knownLanguages: string(),
 });
 
-export type Race = z.infer<typeof RaceSchema>;
+export type Race = Output<typeof RaceSchema>;

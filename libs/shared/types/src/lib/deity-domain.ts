@@ -1,8 +1,8 @@
-import { z } from 'zod';
+import { Output, object, string, ulid } from "valibot";
 
-export const DeityDomainSchema = z.object({
-  deityId: z.string().ulid(),
-  domainId: z.string().ulid(),
+export const DeityDomainSchema = object({
+	deityId: string([ulid()]),
+	domainId: string([ulid()]),
 });
 
-export type DeityDomain = z.infer<typeof DeityDomainSchema>;
+export type DeityDomain = Output<typeof DeityDomainSchema>;

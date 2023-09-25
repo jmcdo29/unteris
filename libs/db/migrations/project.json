@@ -1,27 +1,35 @@
 {
-  "name": "db-migrations",
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/db/migrations/src",
-  "projectType": "library",
-  "targets": {
-    "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/db/migrations",
-        "tsConfig": "libs/db/migrations/tsconfig.lib.json",
-        "packageJson": "libs/db/migrations/package.json",
-        "main": "libs/db/migrations/src/index.ts",
-        "assets": ["libs/db/migrations/*.md"]
-      }
-    },
-    "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/db/migrations/**/*.ts"]
-      }
-    }
-  },
-  "tags": ["database", "dni"]
+	"name": "db-migrations",
+	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "libs/db/migrations/src",
+	"projectType": "library",
+	"targets": {
+		"build": {
+			"executor": "@nx/js:tsc",
+			"outputs": ["{options.outputPath}"],
+			"options": {
+				"outputPath": "dist/libs/db/migrations",
+				"tsConfig": "libs/db/migrations/tsconfig.lib.json",
+				"packageJson": "libs/db/migrations/package.json",
+				"main": "libs/db/migrations/src/index.ts",
+				"assets": ["libs/db/migrations/*.md"],
+				"updateBuildableProjectDepsInPackageJson": true
+			}
+		},
+		"lint": {
+			"executor": "@unteris/plugin/rz:lint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"unsafe": true
+			}
+		},
+		"nx-lint": {
+			"executor": "@nx/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["libs/db/migrations/**/*.ts"]
+			}
+		}
+	},
+	"tags": ["database", "dni"]
 }

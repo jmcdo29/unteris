@@ -1,7 +1,7 @@
-import { z } from 'zod';
+import { Output, object, string, ulid } from "valibot";
 
-export const IdParamSchema = z.object({
-  id: z.string().ulid(),
+export const IdParamSchema = object({
+	id: string([ulid()]),
 });
 
-export type IdParam = z.infer<typeof IdParamSchema>;
+export type IdParam = Output<typeof IdParamSchema>;

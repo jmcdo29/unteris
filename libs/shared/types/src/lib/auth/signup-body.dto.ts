@@ -1,10 +1,9 @@
-import { z } from 'zod';
+import { Output, email, minLength, object, string } from "valibot";
 
-export const SignupSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(12),
-  confirmationPassword: z.string().min(12),
-  name: z.string(),
+export const SignupSchema = object({
+	email: string([email()]),
+	password: string([minLength(12)]),
+	name: string([minLength(3)]),
 });
 
-export type SignupUser = z.infer<typeof SignupSchema>;
+export type SignupUser = Output<typeof SignupSchema>;

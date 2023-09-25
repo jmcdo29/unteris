@@ -1,84 +1,89 @@
 {
-  "name": "site",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/site/src",
-  "projectType": "application",
-  "targets": {
-    "build": {
-      "executor": "@nx/vite:build",
-      "outputs": ["{options.outputPath}"],
-      "defaultConfiguration": "production",
-      "options": {
-        "outputPath": "dist/apps/site"
-      },
-      "configurations": {
-        "development": {
-          "mode": "development"
-        },
-        "production": {
-          "mode": "production"
-        }
-      }
-    },
-    "serve": {
-      "executor": "@nx/vite:dev-server",
-      "defaultConfiguration": "development",
-      "options": {
-        "buildTarget": "site:build"
-      },
-      "configurations": {
-        "development": {
-          "buildTarget": "site:build:development",
-          "hmr": true
-        },
-        "production": {
-          "buildTarget": "site:build:production",
-          "hmr": false
-        }
-      }
-    },
-    "preview": {
-      "executor": "@nx/vite:preview-server",
-      "defaultConfiguration": "development",
-      "options": {
-        "buildTarget": "site:build"
-      },
-      "configurations": {
-        "development": {
-          "buildTarget": "site:build:development"
-        },
-        "production": {
-          "buildTarget": "site:build:production"
-        }
-      }
-    },
-    "test": {
-      "executor": "@nx/vite:test",
-      "outputs": ["coverage/apps/site"],
-      "options": {
-        "passWithNoTests": true,
-        "reportsDirectory": "../../coverage/apps/site"
-      }
-    },
-    "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["apps/site/**/*.{ts,tsx,js,jsx}"]
-      }
-    },
-    "package": {
-      "executor": "@unteris/plugin/docker:build",
-      "outputPath": ["docker/cache/site"],
-      "options": {
-        "verbose": true
-      },
-      "configurations": {
-        "ci": {
-          "publish": true
-        }
-      }
-    }
-  },
-  "tags": ["ui", "front-end", "react"]
+	"name": "site",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "apps/site/src",
+	"projectType": "application",
+	"targets": {
+		"build": {
+			"executor": "@nx/vite:build",
+			"outputs": ["{options.outputPath}"],
+			"defaultConfiguration": "production",
+			"options": {
+				"outputPath": "dist/apps/site"
+			},
+			"configurations": {
+				"development": {
+					"mode": "development"
+				},
+				"production": {
+					"mode": "production"
+				}
+			}
+		},
+		"serve": {
+			"executor": "@nx/vite:dev-server",
+			"defaultConfiguration": "development",
+			"options": {
+				"buildTarget": "site:build"
+			},
+			"configurations": {
+				"development": {
+					"buildTarget": "site:build:development",
+					"hmr": true
+				},
+				"production": {
+					"buildTarget": "site:build:production",
+					"hmr": false
+				}
+			}
+		},
+		"preview": {
+			"executor": "@nx/vite:preview-server",
+			"defaultConfiguration": "development",
+			"options": {
+				"buildTarget": "site:build"
+			},
+			"configurations": {
+				"development": {
+					"buildTarget": "site:build:development"
+				},
+				"production": {
+					"buildTarget": "site:build:production"
+				}
+			}
+		},
+		"test": {
+			"executor": "@nx/vite:test",
+			"outputs": ["{workspaceRoot}/coverage/apps/site"],
+			"options": {
+				"passWithNoTests": true,
+				"reportsDirectory": "../../coverage/apps/site"
+			}
+		},
+		"lint": {
+			"executor": "@unteris/plugin/rz:lint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"unsafe": true
+			}
+		},
+		"nx-lint": {
+			"executor": "@nx/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["apps/site/**/*.{ts,tsx,js,jsx}"]
+			}
+		},
+		"package": {
+			"executor": "@unteris/plugin/rz:build",
+			"outputs": ["{workspaceRoot}/tmp/rz/docker/cache/site"],
+			"options": {},
+			"configurations": {
+				"ci": {
+					"publish": true
+				}
+			}
+		}
+	},
+	"tags": ["ui", "front-end", "react"]
 }

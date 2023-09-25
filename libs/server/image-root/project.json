@@ -1,0 +1,23 @@
+{
+	"name": "server-image-root",
+	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "libs/server/image-root/src",
+	"projectType": "library",
+	"targets": {
+		"lint": {
+			"executor": "@unteris/plugin/rz:lint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"unsafe": true
+			}
+		},
+		"nx-lint": {
+			"executor": "@nx/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["libs/server/image-root/**/*.ts"]
+			}
+		}
+	},
+	"tags": ["image", "module:root"]
+}

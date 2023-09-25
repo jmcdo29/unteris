@@ -1,1 +1,1 @@
-export * from './lib/shared-base32';
+export * from "./lib/shared-base32";

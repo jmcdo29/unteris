@@ -1,14 +1,14 @@
-import { Question, QuestionSet } from 'nest-commander';
+import { Question, QuestionSet } from "nest-commander";
 
 @QuestionSet({
-  name: 'deityCategory',
+	name: "deityCategory",
 })
 export class DeityCategoryQuestions {
-  @Question({
-    message: 'What is the name of the deity category?',
-    name: 'name',
-  })
-  parseName(name: string) {
-    return name;
-  }
+	@Question({
+		message: "What is the name of the deity category?",
+		name: "name",
+	})
+	parseName(name: string) {
+		return name;
+	}
 }

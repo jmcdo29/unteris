@@ -1,9 +1,22 @@
-import { z } from 'zod';
+import { Output, enumType, nullable, object, string, ulid } from "valibot";
 
-export const LocationSchema = z.object({
-  id: z.string().ulid(),
-  name: z.string(),
-  description: z.string().nullable(),
+export const LocationSchema = object({
+	id: string([ulid()]),
+	name: string(),
+	description: nullable(string()),
+	type: nullable(
+		enumType([
+			"plane",
+			"region",
+			"city",
+			"shop",
+			"mine",
+			"forest",
+			"beach",
+			"wilderness",
+		]),
+	),
+	parentId: nullable(string([ulid()])),
 });
 
-export type Location = z.infer<typeof LocationSchema>;
+export type Location = Output<typeof LocationSchema>;

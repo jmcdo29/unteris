@@ -1,10 +1,10 @@
-import { z } from 'zod';
+import { Output, object, string } from "valibot";
 
-export const RacialAbilitySchema = z.object({
-  id: z.string(),
-  raceId: z.string(),
-  name: z.string(),
-  description: z.string(),
+export const RacialAbilitySchema = object({
+	id: string(),
+	raceId: string(),
+	name: string(),
+	description: string(),
 });
 
-export type RacialAbility = z.infer<typeof RacialAbilitySchema>;
+export type RacialAbility = Output<typeof RacialAbilitySchema>;

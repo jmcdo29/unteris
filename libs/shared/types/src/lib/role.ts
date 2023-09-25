@@ -1,8 +1,8 @@
-import { z } from 'zod';
+import { Output, object, string, ulid } from "valibot";
 
-export const RoleSchema = z.object({
-  id: z.string().ulid(),
-  name: z.string(),
+export const RoleSchema = object({
+	id: string([ulid()]),
+	name: string(),
 });
 
-export type Role = z.infer<typeof RoleSchema>;
+export type Role = Output<typeof RoleSchema>;

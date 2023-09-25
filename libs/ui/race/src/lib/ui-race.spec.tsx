@@ -1,10 +1,10 @@
-import { render } from '@testing-library/react';
+import { render } from "@testing-library/react";
 
-import UiRace from './ui-race';
+import UiRace from "./ui-race";
 
-describe('UiRace', () => {
-  it('should render successfully', () => {
-    const { baseElement } = render(<UiRace />);
-    expect(baseElement).toBeTruthy();
-  });
+describe("UiRace", () => {
+	it("should render successfully", () => {
+		const { baseElement } = render(<UiRace />);
+		expect(baseElement).toBeTruthy();
+	});
 });

@@ -1,7 +1,7 @@
-import { z } from 'zod';
+import { Output, object, string, ulid } from "valibot";
 
-export const LocationParamSchema = z.object({
-  location: z.string().ulid(),
+export const LocationParamSchema = object({
+	location: string([ulid()]),
 });
 
-export type LocationParam = z.infer<typeof LocationParamSchema>;
+export type LocationParam = Output<typeof LocationParamSchema>;

@@ -1,11 +1,20 @@
-import { z } from 'zod';
+import {
+	url,
+	Output,
+	boolean,
+	email,
+	object,
+	optional,
+	string,
+	ulid,
+} from "valibot";
 
-export const UserAccountSchema = z.object({
-  id: z.string().ulid(),
-  name: z.string(),
-  email: z.string().email(),
-  isVerified: z.boolean(),
-  photoUrl: z.string().url().optional(),
+export const UserAccountSchema = object({
+	id: string([ulid()]),
+	name: string(),
+	email: string([email()]),
+	isVerified: boolean(),
+	imageId: optional(string([url()])),
 });
 
-export type UserAccount = z.infer<typeof UserAccountSchema>;
+export type UserAccount = Output<typeof UserAccountSchema>;

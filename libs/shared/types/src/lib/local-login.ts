@@ -1,11 +1,20 @@
-import { z } from 'zod';
+import {
+	Output,
+	fallback,
+	isoDateTime,
+	number,
+	object,
+	optional,
+	string,
+	ulid,
+} from "valibot";
 
-export const LocalLoginSchema = z.object({
-  id: z.string().ulid(),
-  password: z.string(),
-  loginMethodId: z.string().ulid(),
-  lastUsed: z.string().datetime().optional(),
-  attempts: z.number().default(0),
+export const LocalLoginSchema = object({
+	id: string([ulid()]),
+	password: string(),
+	loginMethodId: string([ulid()]),
+	lastUsed: optional(string([isoDateTime()])),
+	attempts: fallback(number(), 0),
 });
 
-export type LocalLogin = z.infer<typeof LocalLoginSchema>;
+export type LocalLogin = Output<typeof LocalLoginSchema>;

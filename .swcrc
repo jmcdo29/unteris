@@ -1,22 +1,22 @@
 {
-  "jsc": {
-    "parser": {
-      "syntax": "typescript",
-      "decorators": true
-    },
-    "transform": {
-      "legacyDecorator": true,
-      "decoratorMetadata": true
-    },
-    "target": "es2017",
-    "keepClassNames": true,
-    "baseUrl": ".",
-    "paths": {
-      "@unteris/server/*": ["libs/server/*/src/"]
-    }
-  },
-  "module": {
-    "type": "commonjs",
-    "strictMode": true
-  }
+	"jsc": {
+		"parser": {
+			"syntax": "typescript",
+			"decorators": true
+		},
+		"transform": {
+			"legacyDecorator": true,
+			"decoratorMetadata": true
+		},
+		"target": "es2017",
+		"keepClassNames": true,
+		"baseUrl": ".",
+		"paths": {
+			"@unteris/server/*": ["libs/server/*/src/"]
+		}
+	},
+	"module": {
+		"type": "commonjs",
+		"strictMode": true
+	}
 }

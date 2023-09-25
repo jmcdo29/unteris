@@ -1,3 +1,3 @@
 export const RacePicker = (): JSX.Element => {
-  return <div />;
+	return <div />;
 };

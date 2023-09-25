@@ -1,0 +1,22 @@
+{
+	"name": "postgres",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "apps/postgres",
+	"projectType": "application",
+	"targets": {
+		"lint": {
+			"executor": "nx:noop"
+		},
+		"package": {
+			"executor": "@unteris/plugin/rz:build",
+			"outputs": ["{workspaceRoot}/tmp/rz/docker/cache/postgres"],
+			"options": {},
+			"inputs": ["{projectRoot}/Dockerfile", "{projectRoot}/postgresql.conf"],
+			"configurations": {
+				"ci": {
+					"publish": true
+				}
+			}
+		}
+	}
+}
