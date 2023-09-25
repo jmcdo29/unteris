@@ -18,12 +18,22 @@ export class ServerImageProcessingService {
 		const file = await this.fileStorage.readFileFromStore(originalUrl);
 		const [name, ...path] = originalUrl.split("/").reverse();
 		const [small, medium, large] = await Promise.all([
-			sharp(file).resize(256, 384).toFormat("webp").toBuffer(),
-			sharp(file).resize(512, 768).toFormat("webp").toBuffer(),
-			sharp(file).resize(1536, 2304).toFormat("webp").toBuffer(),
+			sharp(file)
+				.resize(256, 384, { fit: "inside" })
+				.toFormat("webp")
+				.toBuffer(),
+			sharp(file)
+				.resize(512, 768, { fit: "inside" })
+				.toFormat("webp")
+				.toBuffer(),
+			sharp(file)
+				.resize(1536, 2304, { fit: "inside" })
+				.toFormat("webp")
+				.toBuffer(),
 		]);
+		const newPath = path.reverse();
 		const fileNames = ["sm", "md", "lg"].map(
-			(size) => `${path.reverse().join("/")}/${name}_${size}.webp`,
+			(size) => `${newPath.join("/")}/${name.split(".")[0]}_${size}.webp`,
 		);
 		await Promise.all([
 			this.fileStorage.writeFileToStore(fileNames[0], small),

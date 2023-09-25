@@ -5,6 +5,7 @@ import {
 	ServerConfigService,
 } from "@unteris/server/config";
 import { ServerImageClientService } from "./image-client.service";
+import { ImageClientController } from "./image-client.controller";
 
 @Module({
 	imports: [ServerConfigModule],
@@ -31,6 +32,7 @@ import { ServerImageClientService } from "./image-client.service";
 			},
 		},
 	],
+	controllers: [ImageClientController],
 	exports: [ServerImageClientService],
 })
 export class ServerImageClientModule {}
