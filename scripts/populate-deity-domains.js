@@ -1,104 +1,104 @@
 let deityDomainInsert =
-	'INSERT INTO deity_domain (deity_id, domain_id) VALUES ';
+	"INSERT INTO deity_domain (deity_id, domain_id) VALUES ";
 const deities = {
-	'The Everfather': {
-		cleric: ['arcana', 'nature', 'knowledge'],
-		druid: ['circle of dreams'],
-		wralock: ['archfey'],
+	"The Everfather": {
+		cleric: ["arcana", "nature", "knowledge"],
+		druid: ["circle of dreams"],
+		wralock: ["archfey"],
 	},
 	Amashia: {
-		cleric: ['life', 'peace'],
-		warlock: ['celestial'],
+		cleric: ["life", "peace"],
+		warlock: ["celestial"],
 	},
 	Fortuna: {
-		cleric: ['trickery'],
+		cleric: ["trickery"],
 	},
 	Jarekos: {
-		cleric: ['forge', 'nature'],
+		cleric: ["forge", "nature"],
 	},
-	'Kor Amare': {
-		cleric: ['life'],
-		warlock: ['celestial'],
+	"Kor Amare": {
+		cleric: ["life"],
+		warlock: ["celestial"],
 	},
 	Kurio: {
-		celric: ['knowledge'],
+		celric: ["knowledge"],
 	},
 	Lacuna: {
-		cleric: ['tempest'],
-		warlock: ['fathomless'],
+		cleric: ["tempest"],
+		warlock: ["fathomless"],
 	},
 	Lux: {
-		cleric: ['light'],
+		cleric: ["light"],
 	},
 	Militaris: {
-		cleric: ['war', 'order'],
+		cleric: ["war", "order"],
 	},
 	Mors: {
-		cleric: ['death', 'grave'],
+		cleric: ["death", "grave"],
 	},
 	Ordin: {
-		cleric: ['order'],
+		cleric: ["order"],
 	},
 	Proecerta: {
-		cleric: ['war'],
+		cleric: ["war"],
 	},
 	Rz: {
-		cleric: ['forge'],
+		cleric: ["forge"],
 	},
 	Thirio: {
-		cleric: ['nature'],
-		druid: ['circle of moon', 'circle of shephard'],
+		cleric: ["nature"],
+		druid: ["circle of moon", "circle of shephard"],
 	},
 	Tsumi: {
-		cleric: ['tempest'],
-		druid: ['circle of land (coast)'],
+		cleric: ["tempest"],
+		druid: ["circle of land (coast)"],
 	},
 	Umbra: {
-		cleric: ['twilight'],
+		cleric: ["twilight"],
 	},
 	Viridi: {
-		cleric: ['life', 'nature'],
-		druid: ['circle of land (forest)', 'circle of land (grasslands)'],
+		cleric: ["life", "nature"],
+		druid: ["circle of land (forest)", "circle of land (grasslands)"],
 	},
-	'Queen Titania': {
-		warlock: ['archfey'],
+	"Queen Titania": {
+		warlock: ["archfey"],
 	},
-	'King Oberon': {
-		warlock: ['archfey'],
+	"King Oberon": {
+		warlock: ["archfey"],
 	},
 	Tadhg: {
-		warlock: ['archfey'],
+		warlock: ["archfey"],
 	},
 	Aodhan: {
-		cleric: ['nature'],
-		warlock: ['archfey'],
+		cleric: ["nature"],
+		warlock: ["archfey"],
 	},
 	Caoimhe: {
-		druid: ['circle of dreams'],
-		warlock: ['archfey'],
+		druid: ["circle of dreams"],
+		warlock: ["archfey"],
 	},
-	'Queen Eira': {
-		warlock: ['archfey'],
+	"Queen Eira": {
+		warlock: ["archfey"],
 	},
 	Branok: {
-		warlock: ['archfey'],
+		warlock: ["archfey"],
 	},
 	Cairadh: {
-		warlock: ['archfey'],
+		warlock: ["archfey"],
 	},
-	'Lady Daeris': {
-		warlock: ['undead'],
+	"Lady Daeris": {
+		warlock: ["undead"],
 	},
-	'Klinge Seele': {
-		warlock: ['hexblade'],
+	"Klinge Seele": {
+		warlock: ["hexblade"],
 	},
 	Verfell: {
-		druid: ['circle of spores'],
-		warlock: ['undying'],
+		druid: ["circle of spores"],
+		warlock: ["undying"],
 	},
-	'Krypta Vatcher': {
-		cleric: ['grave'],
-		warlock: ['undying'],
+	"Krypta Vatcher": {
+		cleric: ["grave"],
+		warlock: ["undying"],
 	},
 };
 
