@@ -11,12 +11,12 @@ export class LocalStore implements FileManager {
 	) {}
 
 	read(path: string) {
-		return readFile(join(this.config.path, path.replace("./image/", "./")));
+		return readFile(join(this.config.path, path.replace("./images/", "./")));
 	}
 
 	write(path: string, data: string | Buffer) {
 		return writeFile(
-			join(this.config.path, path.replace("./image/", "./")),
+			join(this.config.path, path.replace("./images/", "./")),
 			data,
 		);
 	}
