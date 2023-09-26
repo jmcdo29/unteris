@@ -7,12 +7,7 @@ import {
 	ServerConfigService,
 } from "@unteris/server/config";
 
-@Module({
-	imports: [],
-	controllers: [],
-	providers: [],
-	exports: [],
-})
+@Module({})
 export class ServerLoggingModule {
 	static forApplication(
 		app: string,
@@ -26,7 +21,6 @@ export class ServerLoggingModule {
 					useFactory: (config: ServerConfigService) => ({
 						application: app,
 						logLevel: logLevel,
-						json: config.get("NODE_ENV") === "production",
 					}),
 					inject: [ServerConfigService],
 				}),

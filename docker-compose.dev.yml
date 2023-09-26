@@ -1,0 +1,95 @@
+version: '3'
+name: unteris-dev
+
+services:
+  site:
+    build:
+      context: .
+      dockerfile: ./apps/site/Dockerfile
+      args:
+        SERVER_URL: http://localhost:3333/api
+    ports:
+      - '127.0.0.1:8080:80'
+    volumes:
+      - './apps/site/public/images:/src/dist/apps/site/images'
+    labels:
+      - 'com.centurylinklabs.watchtower.enable=true'
+  server:
+    build:
+      context: .
+      dockerfile: ./apps/server/Dockerfile
+    logging:
+      driver: local
+    env_file: .env
+    environment:
+      DATABASE_HOST: postgres
+      RABBIT_HOST: rabbit
+    volumes:
+      - './apps/site/public/images:/src/images'
+    ports:
+      - '127.0.0.1:3333:3333'
+    depends_on:
+      - postgres
+      - redis
+      - rabbit
+    labels:
+      - 'com.centurylinklabs.watchtower.enable=true'
+  image-server:
+    build:
+      context: .
+      dockerfile: ./apps/image-server/Dockerfile
+    logging:
+      driver: local
+    env_file: .env
+    environment:
+      DATABASE_HOST: postgres
+      RABBIT_HOST: rabbit
+    volumes:
+      - './apps/site/public/images:/src/images'
+    depends_on:
+      - postgres
+      - rabbit
+    labels:
+      - 'com.centurylinklabs.watchtower.enable=true'
+  migrations:
+    build:
+      context: .
+      dockerfile: ./apps/kysely-cli/Dockerfile
+    env_file: .env
+    environment:
+      DATABASE_HOST: postgres
+      RABBIT_HOST: rabbit
+    logging:
+      driver: local
+    depends_on:
+      - postgres
+    labels:
+      - 'com.centurylinklabs.watchtower.enable=true'
+  postgres:
+    build:
+      context: .
+      dockerfile: ./apps/postgres/Dockerfile
+    env_file: .env
+    ports:
+      - '127.0.0.1:5433:5432'
+    environment:
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_DB: ${DATABASE_NAME}
+    labels:
+      - 'com.centurylinklabs.watchtower.enable=true'
+    volumes:
+      - ./tmp/postgres-data:/var/lib/postgreslq/data
+  redis:
+    image: redis:7.2.1
+    ports:
+      - '127.0.0.1:6380:6379'
+    # command: redis-server /usr/local/etc/redis/redis.conf
+  rabbit:
+    image: rabbitmq:3.12.6
+    ports:
+      - '127.0.0.1:5673:5672'
+      - '127.0.0.1:15673:15672'
+    environment:
+      RABBITMQ_DEFAULT_USER: rabbit
+      RABBITMQ_DEFAULT_PASS: rabbit
