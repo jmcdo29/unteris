@@ -4,8 +4,8 @@ import {
 	ServerConfigModule,
 	ServerConfigService,
 } from "@unteris/server/config";
-import { ServerImageClientService } from "./image-client.service";
 import { ImageClientController } from "./image-client.controller";
+import { ServerImageClientService } from "./image-client.service";
 
 @Module({
 	imports: [ServerConfigModule],
