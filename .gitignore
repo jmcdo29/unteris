@@ -47,3 +47,4 @@ docker/*
 !libs/docker/
 *.log
 dump
+.env

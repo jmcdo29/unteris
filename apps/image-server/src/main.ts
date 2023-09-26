@@ -1,4 +1,3 @@
-import { Logger } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { Transport } from "@nestjs/microservices";
 import { OgmaService } from "@ogma/nestjs-module";
@@ -19,9 +18,10 @@ async function bootstrap() {
 			},
 		},
 	});
-	app.useLogger(app.get(OgmaService));
+	const logger = app.get(OgmaService);
+	app.useLogger(logger);
 	await app.listen();
-	Logger.log("🚀 Image Processing Server up and running!");
+	logger.log("🚀 Image Processing Server up and running!");
 }
 
 bootstrap();

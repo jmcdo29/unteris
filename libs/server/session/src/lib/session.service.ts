@@ -106,7 +106,7 @@ export class ServerSessionService {
 		value: string | number;
 		options?: Cookie["options"];
 	}): Cookie {
-		const cookie = {
+		const cookie: Required<Cookie> = {
 			name: `${name}Id`,
 			value,
 			options: {
@@ -115,6 +115,7 @@ export class ServerSessionService {
 				),
 				httpOnly: true,
 				path: "/api",
+				sameSite: "Strict" as const,
 				...options,
 			},
 		};

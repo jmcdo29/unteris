@@ -20,13 +20,14 @@ COPY package.json \
 	./
 ENV CYPRESS_INSTALL_BINARY=0
 RUN pnpm i
-  
+
 FROM unteris-common AS site-build
+ARG SERVER_URL=https://api.unteris.com
 WORKDIR /src
 COPY apps/site ./apps/site
 COPY libs/ui ./libs/ui
 COPY libs/shared ./libs/shared/
-RUN VITE_SERVER_URL="https://api.unteris.com" pnpm nx run site:build:production
+RUN VITE_SERVER_URL=$SERVER_URL pnpm nx run site:build:production
 
 FROM caddy:2.6.4-alpine as site-prod
 LABEL description="The Unteris website image, ran via a Caddy reverse proxy"
