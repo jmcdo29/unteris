@@ -1,5 +1,5 @@
 let deityInsert =
-	'INSERT INTO deity (name, description, image_url, category, location) VALUES ';
+	'INSERT INTO deity (name, description, category_id, location_id) VALUES ';
 const arboria = 'Caelaum Arboria';
 const sea = 'Empyrean Sea';
 const being = 'Empyrean Being';
@@ -282,9 +282,7 @@ for (const deity of deities) {
 	deityInsert += `('${deity.name}', '${deity.description.replaceAll(
 		`'`,
 		`''`
-	)}', './images/${
-		deity.imageUrl
-	}', (SELECT id FROM deity_category WHERE name = '${
+	)}', (SELECT id FROM deity_category WHERE name = '${
 		deity.category
 	}'), (SELECT id FROM location WHERE name = '${deity.location}')),`;
 }
