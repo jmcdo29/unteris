@@ -1,6 +1,6 @@
 FROM postgres:15.3 as postgres-prod
 
-LABEL description="A custom postgres image that has ulids built in as an extension with binary representation and the ability to retreive the timestamp from them." 
+LABEL description="A custom postgres image that has ulids built in as an extension with binary representation and the ability to retreive the timestamp from them."
 
 RUN apt update
 
@@ -20,4 +20,3 @@ RUN chown postgres:postgres /home/postgres
 
 COPY apps/postgres/postgresql.conf /etc/postgresql/postgresql.conf
 
-USER postgres
