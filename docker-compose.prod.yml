@@ -68,6 +68,8 @@ services:
       POSTGRES_DB: ${DATABASE_NAME}
     labels:
       - 'com.centurylinklabs.watchtower.enable=true'
+    volumes:
+      - ./postgres-data:/var/lib/postgreslq/data
   redis:
     image: redis:7.2.1
     ports:
