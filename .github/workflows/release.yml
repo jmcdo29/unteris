@@ -38,7 +38,7 @@ jobs:
       - name: Build Projects
         shell: bash
         run: |
-          pnpm nx affected --target=package --configuration=ci --builder=${{ steps.builder.outputs.builder}}
+          pnpm nx affected --target=package --configuration=ci --builder=${{ steps.builder.outputs.builder}} --parallel
 
       - name: Docker List Images
         shell: bash
