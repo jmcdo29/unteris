@@ -117,7 +117,7 @@ export class ServerSessionService {
 					`${name.toUpperCase() as Uppercase<typeof name>}_EXPIRES_IN`,
 				),
 				httpOnly: true,
-				path: "/api",
+				path: "/",
 				sameSite: "Strict" as const,
 				domain: this.domain,
 				...options,
