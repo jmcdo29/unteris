@@ -13,11 +13,14 @@ import { RedisClientType } from "redis";
 
 @Injectable()
 export class ServerSessionService {
+	private readonly domain: string;
 	constructor(
 		private readonly tokenService: ServerTokenService,
 		@InjectRedisInstance() private readonly redis: RedisClientType,
 		private readonly config: ServerConfigService,
-	) {}
+	) {
+		this.domain = new URL(config.get("CORS")).host;
+	}
 
 	async createSessionId() {
 		return this.tokenService.generateToken(128);
@@ -116,6 +119,7 @@ export class ServerSessionService {
 				httpOnly: true,
 				path: "/api",
 				sameSite: "Strict" as const,
+				domain: this.domain,
 				...options,
 			},
 		};
