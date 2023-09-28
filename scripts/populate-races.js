@@ -43,10 +43,10 @@ const races = [
 	{
 		name: "Siren",
 		description:
-			"Syrens are the strong, beautiful guardians of the seas, acclimated to the oceans and survival underwater. Most people don’t realize that Syrens exist due to them very rarely leaving the ocean. Most are mistaken for Water Genasi",
+			"Syrens are the strong, beautiful guardians of the seas, acclimated to the oceans and survival underwater. Most people don't realize that Syrens exist due to them very rarely leaving the ocean. Most are mistaken for Water Genasi",
 		creatureType: "humanoid",
 		age: "Syrens reach physical maturity at the same rate as humans, but can live up to a thousand years.",
-		size: "Your size is medium. Males tend to be smaller and average between 4’8-5’8 ft while Females average between 6’8-7’8",
+		size: "Your size is medium. Males tend to be smaller and average between 4'8-5'8 ft while Females average between 6'8-7'8",
 		speed: 30,
 		racialAbilities: [
 			{
@@ -124,7 +124,7 @@ const races = [
 			},
 			{
 				name: "Shapeshifter",
-				description: `All Kitsune can use old magic to take on a Humanoid form. You can use an action to change your form into a Humanoid of Medium or Small size. All Kitsune have a permanent altered for. This form's appearance is decided when this ability is used for the first time.\\nYou decide your skin color, hair length, sex, height, weight, and race. Though none of your game statistics change. Your clothing and equipment aren’t changed by this trait.\\n(Unlike changelings, you do not get to change your appearance every time you use this feature. Once you choose, that's it.)\\nYou stay in this altered form until you use an action to revert to your true form or until you die.`,
+				description: `All Kitsune can use old magic to take on a Humanoid form. You can use an action to change your form into a Humanoid of Medium or Small size. All Kitsune have a permanent altered for. This form's appearance is decided when this ability is used for the first time.\\nYou decide your skin color, hair length, sex, height, weight, and race. Though none of your game statistics change. Your clothing and equipment aren't changed by this trait.\\n(Unlike changelings, you do not get to change your appearance every time you use this feature. Once you choose, that's it.)\\nYou stay in this altered form until you use an action to revert to your true form or until you die.`,
 			},
 		],
 		languages: "You can speak, read, and write Common and Sylvan.",

@@ -24,21 +24,19 @@ const ErrorBoundary = (): JSX.Element => {
 	if (error instanceof Error) {
 		return (
 			<Root>
-				<>
-					<Heading text={error.name} />
-					<details>
-						<summary>{error.message}</summary>
-						<Box
-							sx={{
-								fontFamily: "monospace",
-								margin: `0 ${theme.spacing(3)}`,
-								backgroundColor: theme.palette.grey[700],
-							}}
-						>
-							{error.stack}
-						</Box>
-					</details>
-				</>
+				<Heading text={error.name} />
+				<details>
+					<summary>{error.message}</summary>
+					<Box
+						sx={{
+							fontFamily: "monospace",
+							margin: `0 ${theme.spacing(3)}`,
+							backgroundColor: theme.palette.grey[700],
+						}}
+					>
+						{error.stack}
+					</Box>
+				</details>
 			</Root>
 		);
 	} else {

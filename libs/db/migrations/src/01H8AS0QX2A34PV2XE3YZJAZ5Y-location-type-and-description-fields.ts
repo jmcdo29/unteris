@@ -1,5 +1,5 @@
 import { Kysely } from "kysely";
-import { kyselyUlid } from "./ulid.sql";
+import { kyselyUlid } from "./utils/ulid.sql";
 
 export const up = async (
 	db: Kysely<Record<string, Record<string, unknown>>>,

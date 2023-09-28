@@ -147,7 +147,7 @@ const deities = [
 	{
 		name: "Thirio",
 		description:
-			"One of the monsters consumed some of the stardust and changed into Thirio. The blood of the beasts coursed through his veins, but now thought did as well. He separeted himself from the mindless creatures and created his own kin. All manner of beasts with thought.",
+			"One of the monsters consumed some of the stardust and changed into Thirio. The blood of the beasts coursed through his veins, but now thought did as well. He separated himself from the mindless creatures and created his own kin. All manner of beasts with thought.",
 		imageUrl: "thirio.png",
 		category: child,
 		location: arboria,

@@ -39,7 +39,7 @@ export const passwordResetEmail = (
 <body>
   <h3>Password Reset</h3>
   <div>
-    <p>We've received your request to be able to resett your password.</p>
+    <p>We've received your request to be able to reset your password.</p>
     <p>Please <a href=${link}>click here</a> to reset your password.</p>
     <p>If the above link doesn't work, copy and paste this into your browser:</p>
     <p>${link}</p>
@@ -48,8 +48,8 @@ export const passwordResetEmail = (
   </div>
   <div>
     <p>Thank you from the Unteris team</p>
-  </div>  
-</body>    
+  </div>
+</body>
 </html>
 `;
 };

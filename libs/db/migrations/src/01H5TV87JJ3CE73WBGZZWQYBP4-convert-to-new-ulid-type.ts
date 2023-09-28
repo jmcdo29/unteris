@@ -4,7 +4,7 @@ import {
 	Kysely,
 	sql,
 } from "kysely";
-import { kyselyDefaultUlid } from "./ulid.sql";
+import { kyselyDefaultUlid } from "./utils/ulid.sql";
 
 const convertToUlid = (
 	column: string,

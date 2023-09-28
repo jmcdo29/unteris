@@ -1,5 +1,5 @@
 import { ExpressionBuilder, Kysely, sql } from "kysely";
-import { kyselyDefaultUlid, kyselyUlid } from "./ulid.sql";
+import { kyselyDefaultUlid, kyselyUlid } from "./utils/ulid.sql";
 
 export const up = async (
 	db: Kysely<Record<string, Record<string, unknown>>>,

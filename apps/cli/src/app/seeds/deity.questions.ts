@@ -25,7 +25,7 @@ export class DeityQuestions {
 		message: "What is the description of the deity?",
 		name: "description",
 	})
-	parseDedscription(desc: string) {
+	parseDescription(desc: string) {
 		return desc;
 	}
 

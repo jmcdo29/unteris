@@ -1,7 +1,7 @@
 {
-	"name": "kysely-cli",
+	"name": "cli",
 	"$schema": "../../node_modules/nx/schemas/project-schema.json",
-	"sourceRoot": "apps/kysely-cli/src",
+	"sourceRoot": "apps/cli/src",
 	"projectType": "application",
 	"implicitDependencies": ["db-migrations"],
 	"targets": {
@@ -11,12 +11,12 @@
 			"options": {
 				"target": "node",
 				"compiler": "tsc",
-				"outputPath": "dist/apps/kysely-cli",
-				"main": "apps/kysely-cli/src/main.ts",
-				"tsConfig": "apps/kysely-cli/tsconfig.app.json",
-				"assets": ["apps/kysely-cli/src/assets"],
+				"outputPath": "dist/apps/cli",
+				"main": "apps/cli/src/main.ts",
+				"tsConfig": "apps/cli/tsconfig.app.json",
+				"assets": ["apps/cli/src/assets"],
 				"isolatedConfig": true,
-				"webpackConfig": "apps/kysely-cli/webpack.config.js",
+				"webpackConfig": "apps/cli/webpack.config.js",
 				"generatePackageJson": true
 			},
 			"configurations": {
@@ -27,15 +27,15 @@
 		"migrate": {
 			"executor": "@nx/js:node",
 			"options": {
-				"buildTarget": "kysely-cli:build",
+				"buildTarget": "cli:build",
 				"watch": false
 			},
 			"configurations": {
 				"development": {
-					"buildTarget": "kysely-cli:build:development"
+					"buildTarget": "cli:build:development"
 				},
 				"production": {
-					"buildTarget": "kysely-cli:build:production"
+					"buildTarget": "cli:build:production"
 				}
 			},
 			"dependsOn": [
@@ -48,15 +48,15 @@
 		"e2e": {
 			"executor": "@nx/js:node",
 			"options": {
-				"buildTarget": "kysely-cli:build",
+				"buildTarget": "cli:build",
 				"watch": false
 			},
 			"configurations": {
 				"development": {
-					"buildTarget": "kysely-cli:build:development"
+					"buildTarget": "cli:build:development"
 				},
 				"production": {
-					"buildTarget": "kysely-cli:build:production"
+					"buildTarget": "cli:build:production"
 				}
 			},
 			"dependsOn": [
@@ -69,16 +69,16 @@
 		"seed": {
 			"executor": "@nx/js:node",
 			"options": {
-				"buildTarget": "kysely-cli:build",
+				"buildTarget": "cli:build",
 				"args": ["seed"],
 				"watch": false
 			},
 			"configurations": {
 				"development": {
-					"buildTarget": "kysely-cli:build:development"
+					"buildTarget": "cli:build:development"
 				},
 				"production": {
-					"buildTarget": "kysely-cli:build:production"
+					"buildTarget": "cli:build:production"
 				}
 			},
 			"dependsOn": [
@@ -99,14 +99,14 @@
 			"executor": "@nx/linter:eslint",
 			"outputs": ["{options.outputFile}"],
 			"options": {
-				"lintFilePatterns": ["apps/kysely-cli/**/*.ts"]
+				"lintFilePatterns": ["apps/cli/**/*.ts"]
 			}
 		},
 		"test": {
 			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
 			"options": {
-				"jestConfig": "apps/kysely-cli/jest.config.ts",
+				"jestConfig": "apps/cli/jest.config.ts",
 				"passWithNoTests": true
 			},
 			"configurations": {

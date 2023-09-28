@@ -4,7 +4,7 @@ const deities = {
 	"The Everfather": {
 		cleric: ["arcana", "nature", "knowledge"],
 		druid: ["circle of dreams"],
-		wralock: ["archfey"],
+		warlock: ["archfey"],
 	},
 	Amashia: {
 		cleric: ["life", "peace"],
@@ -21,7 +21,7 @@ const deities = {
 		warlock: ["celestial"],
 	},
 	Kurio: {
-		celric: ["knowledge"],
+		cleric: ["knowledge"],
 	},
 	Lacuna: {
 		cleric: ["tempest"],
@@ -47,7 +47,7 @@ const deities = {
 	},
 	Thirio: {
 		cleric: ["nature"],
-		druid: ["circle of moon", "circle of shephard"],
+		druid: ["circle of moon", "circle of shepherd"],
 	},
 	Tsumi: {
 		cleric: ["tempest"],
@@ -83,7 +83,7 @@ const deities = {
 	Branok: {
 		warlock: ["archfey"],
 	},
-	Cairadh: {
+	Ciaradh: {
 		warlock: ["archfey"],
 	},
 	"Lady Daeris": {
