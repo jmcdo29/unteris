@@ -4,8 +4,9 @@ import { ServerLocationService } from "@unteris/server/location";
 import { Deity, DeityCategory, Domain, Location } from "@unteris/shared/types";
 import { Insertable, Kysely } from "kysely";
 import { Command, CommandRunner, InquirerService } from "nest-commander";
+import { safeParse, string, ulid } from "valibot";
 
-@Command({ name: "seed", arguments: "[type]" })
+@Command({ name: "repl", arguments: "[type]" })
 export class SeedCommand extends CommandRunner {
 	constructor(
 		private readonly inquirer: InquirerService,
@@ -145,6 +146,6 @@ export class SeedCommand extends CommandRunner {
 	}
 
 	private idFieldIsULID(value: string): boolean {
-		return /[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{26}/.test(value);
+		return safeParse(string([ulid()]), value).success;
 	}
 }

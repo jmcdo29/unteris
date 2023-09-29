@@ -1,4 +1,4 @@
-import { Output, enumType, object, nullable, string, ulid } from "valibot";
+import { Output, enumType, nullable, object, string, ulid } from "valibot";
 
 export const ImageSchema = object({
 	id: string([ulid()]),

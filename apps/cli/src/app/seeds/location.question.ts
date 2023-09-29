@@ -1,7 +1,7 @@
 import { Question, QuestionSet, WhenFor } from "nest-commander";
 
 @QuestionSet({ name: "location" })
-export class LocationQuestins {
+export class LocationQuestions {
 	private addDescription = false;
 
 	@Question({

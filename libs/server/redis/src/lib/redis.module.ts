@@ -4,6 +4,7 @@ import {
 	OgmaService,
 	createProviderToken,
 } from "@ogma/nestjs-module";
+import { style } from "@ogma/styler";
 import {
 	ServerConfigModule,
 	ServerConfigService,
@@ -30,7 +31,12 @@ import {
 		{
 			provide: getInstanceToken(),
 			useFactory: async (options: RedisClientOptions, logger: OgmaService) => {
-				logger.debug(options, { context: "REDIS" });
+				const redisUrl = new URL(options.url ?? "");
+				logger.debug(
+					`Connecting to redis at ${style.magenta.apply(
+						`${redisUrl.host}:${redisUrl.port}`,
+					)}`,
+				);
 				const redis = createClient(options);
 				redis.once("error", (err) => {
 					if (err instanceof Error) {

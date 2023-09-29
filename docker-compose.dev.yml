@@ -54,7 +54,7 @@ services:
   migrations:
     build:
       context: .
-      dockerfile: ./apps/kysely-cli/Dockerfile
+      dockerfile: ./apps/cli/Dockerfile
     env_file: .env
     environment:
       DATABASE_HOST: postgres

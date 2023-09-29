@@ -80,7 +80,7 @@ import {
 						plugins: [new CamelCasePlugin()],
 					};
 					logger.debug(
-						`Connectinig to database ${style.blue.apply(
+						`Connecting to database ${style.blue.apply(
 							config.get("DATABASE_NAME"),
 						)} on host ${style.magenta.apply(config.get("DATABASE_HOST"))}`,
 					);

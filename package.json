@@ -6,10 +6,7 @@
 		"start": "nx serve",
 		"build": "nx build",
 		"test": "nx test",
-		"prepare": "husky install",
-		"docker:server": "docker build -t unteris-server:latest --target=server-prod .",
-		"docker:site": "docker build -t unteris-site:latest --target=site-prod .",
-		"docker:migrations": "docker build -t unteris-migrations:latest --target=migrations-prod ."
+		"prepare": "husky install"
 	},
 	"volta": {
 		"node": "20.5.0"
@@ -130,7 +127,6 @@
 		"typescript": "5.1.6",
 		"ulid": "^2.3.0",
 		"unplugin-swc": "^1.3.2",
-		"uvu": "^0.5.6",
 		"vite": "4.4.9",
 		"vite-plugin-eslint": "^1.8.1",
 		"vite-plugin-node": "^3.0.2",
