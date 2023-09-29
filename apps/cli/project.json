@@ -66,11 +66,11 @@
 				}
 			]
 		},
-		"seed": {
+		"repl": {
 			"executor": "@nx/js:node",
 			"options": {
 				"buildTarget": "cli:build",
-				"args": ["seed"],
+				"args": ["repl"],
 				"watch": false
 			},
 			"configurations": {
@@ -79,6 +79,33 @@
 				},
 				"production": {
 					"buildTarget": "cli:build:production"
+				}
+			},
+			"dependsOn": [
+				{
+					"target": "build",
+					"dependencies": true
+				}
+			]
+		},
+		"seed": {
+			"executor": "@nx/js:node",
+			"options": {
+				"buildTarget": "cli:build",
+				"args": ["seed"],
+				"watch": false,
+				"inspect": false
+			},
+			"configurations": {
+				"development": {
+					"buildTarget": "cli:build:development"
+				},
+				"production": {
+					"buildTarget": "cli:build:production"
+				},
+				"dryRun": {
+					"buildTarget": "cli:build:development",
+					"args": ["seed", "-d"]
 				}
 			},
 			"dependsOn": [

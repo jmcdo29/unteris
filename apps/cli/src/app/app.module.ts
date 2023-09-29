@@ -14,12 +14,13 @@ import { DomainQuestions } from "./seeds/domain.questions";
 import { LocationQuestions } from "./seeds/location.question";
 import { RepeatQuestions } from "./seeds/repeat.questions";
 import { SeedTypeQuestions } from "./seeds/seed-type.questions";
+import { FullSeedCommand } from "./full-seed.command";
 
 @Module({
 	imports: [
 		KyselyModule,
-		ServerLoggingModule.forApplication("Kysely CLI", "ALL"),
-		OgmaModule.forFeatures([KyselyCliCommand, SeedCommand]),
+		ServerLoggingModule.forApplication("CLI", "DEBUG"),
+		OgmaModule.forFeatures([KyselyCliCommand, SeedCommand, FullSeedCommand]),
 		ServerDeitiesModule,
 		ServerLocationModule,
 	],
@@ -33,6 +34,7 @@ import { SeedTypeQuestions } from "./seeds/seed-type.questions";
 		RepeatQuestions,
 		DeityDomainQuestions,
 		LocationQuestions,
+		FullSeedCommand,
 	],
 })
 export class AppModule {}
