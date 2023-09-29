@@ -5,6 +5,7 @@ import { KyselyModule } from "@unteris/server/kysely";
 import { ServerLocationModule } from "@unteris/server/location";
 import { ServerLoggingModule } from "@unteris/server/logging";
 
+import { FullSeedCommand } from "./full-seed.command";
 import { KyselyCliCommand } from "./kysely.command";
 import { SeedCommand } from "./seed.command";
 import { DeityCategoryQuestions } from "./seeds/deity-category.questions";
@@ -14,7 +15,6 @@ import { DomainQuestions } from "./seeds/domain.questions";
 import { LocationQuestions } from "./seeds/location.question";
 import { RepeatQuestions } from "./seeds/repeat.questions";
 import { SeedTypeQuestions } from "./seeds/seed-type.questions";
-import { FullSeedCommand } from "./full-seed.command";
 
 @Module({
 	imports: [

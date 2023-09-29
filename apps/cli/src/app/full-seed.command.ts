@@ -9,12 +9,12 @@ import {
 } from "nest-commander";
 import {
 	categories,
-	domains,
 	deities,
 	deityDomains,
+	domains,
+	images,
 	locations,
 	races,
-	images,
 } from "./seeds/unteris.constants";
 
 @Command({ name: "seed" })
