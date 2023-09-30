@@ -1,11 +1,12 @@
 import { Controller, Get, Req, UseGuards } from "@nestjs/common";
 import { RefreshRequest, UnterisCookies } from "@unteris/server/common";
+import { sessionRoute } from "@unteris/shared/types";
 import { Cookie, Cookies, NewCookies } from "nest-cookies";
 import { RefreshSessionGuard } from "./refresh-session.guard";
 import { SkipSessionCheck } from "./session.decorator";
 import { ServerSessionService } from "./session.service";
 
-@Controller("session")
+@Controller(sessionRoute)
 export class SessionController {
 	constructor(private readonly sessionService: ServerSessionService) {}
 	@Get("refresh")

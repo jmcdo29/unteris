@@ -4,7 +4,13 @@ import {
 	PasswordReset,
 	PasswordResetRequest,
 	SignupUser,
+	authRoute,
 	csrfHeader,
+	csrfRoute,
+	deitiesRoute,
+	locationRoute,
+	raceRoute,
+	sessionRoute,
 } from "@unteris/shared/types";
 import { RouteToType, SdkGeneric, method } from "./routes-with-types";
 
@@ -49,7 +55,7 @@ abstract class SdkBase<T extends SdkGeneric = RouteToType> {
 			reqConfig,
 		);
 		if (!res.ok) {
-			throw new FetchError("Error durng request", res);
+			throw new FetchError("Error during request", res);
 		}
 		return res.json();
 	}
@@ -118,66 +124,70 @@ export class Sdk extends SdkBase {
 	}
 
 	async getCsrfToken() {
-		return this.get("csrf");
+		return this.get(csrfRoute);
 	}
 
 	async getUser() {
-		return this.get("auth/me");
+		return this.get(`${authRoute}/me`);
 	}
 
 	async verifyEmail(token: string) {
-		return this.get(`auth/verify-email?verificationToken=${token}`);
+		return this.get(`${authRoute}/verify-email?verificationToken=${token}`);
 	}
 
 	async getRaces() {
-		return this.get("race");
+		return this.get(raceRoute);
 	}
 
 	async getRaceById(id: string) {
-		return this.get(`race/${id}`);
+		return this.get(`${raceRoute}/${id}`);
 	}
 
 	async getSessionRefresh() {
-		return this.get("session/refresh");
+		return this.get(`${sessionRoute}/refresh`);
 	}
 
 	async getDeitiesByCategory(id: string) {
-		return this.get(`deities/category/${id}`);
+		return this.get(`${deitiesRoute}/category/${id}`);
 	}
 
 	async getDeitiesByLocation(id: string) {
-		return this.get(`deities/location/${id}`);
+		return this.get(`${deitiesRoute}/location/${id}`);
 	}
 
 	async getDeityById(id: string) {
-		return this.get(`deities/id/${id}`);
+		return this.get(`${deitiesRoute}/id/${id}`);
 	}
 
 	async getLocationsByType(type: Location["type"]) {
-		return this.get(`locations?type=${type}`);
+		return this.get(`${locationRoute}?type=${type}`);
+	}
+
+	async getLocationByParentId(id: string) {
+		return this.get(`${locationRoute}/by-parent/${id}`);
 	}
 
 	async verifyCsrf() {
-		return this.post("csrf/verify", undefined);
+		return this.post(`${csrfRoute}/verify`, undefined);
 	}
 
 	async signup(body: SignupUser) {
-		return this.post("auth/signup", body);
+		return this.post(`${authRoute}/signup`, body);
 	}
 
 	async login(body: LoginBody) {
-		return this.post("auth/login", body);
+		return this.post(`${authRoute}/login`, body);
 	}
 
 	async logout() {
-		return this.post("auth/logout", undefined);
+		return this.post(`${authRoute}/logout`, undefined);
 	}
 
 	async passwordResetRequest(body: PasswordResetRequest) {
-		return this.post("auth/password-reset-request", body);
+		return this.post(`${authRoute}/password-reset-request`, body);
 	}
 
 	async passwordReset(body: PasswordReset) {
-		return this.post("auth/password-reset", body);
+		return this.post(`${authRoute}/password-reset`, body);
 	}
 }

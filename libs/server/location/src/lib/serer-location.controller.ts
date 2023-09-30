@@ -1,10 +1,11 @@
 import { Controller, Get, Param, Query } from "@nestjs/common";
 import { SkipSessionCheck } from "@unteris/server/session";
+import { locationRoute } from "@unteris/shared/types";
 import { ByTypeQueryDto } from "./models/by-type-query.dto";
 import { IdParamDto } from "./models/id-param.dto";
 import { ServerLocationService } from "./server-location.service";
 
-@Controller("locations")
+@Controller(locationRoute)
 @SkipSessionCheck()
 export class ServerLocationController {
 	constructor(private readonly service: ServerLocationService) {}

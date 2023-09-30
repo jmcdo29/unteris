@@ -1,10 +1,11 @@
 import { Controller, Get, Post, Session, UseGuards } from "@nestjs/common";
 import { UnterisSession } from "@unteris/server/common";
 import { SkipSessionCheck } from "@unteris/server/session";
+import { csrfRoute } from "@unteris/shared/types";
 import { CsrfGuard } from "./csrf.guard";
 import { ServerCsrfService } from "./csrf.service";
 
-@Controller("csrf")
+@Controller(csrfRoute)
 @SkipSessionCheck()
 export class ServerCsrfController {
 	constructor(private serverCsrfService: ServerCsrfService) {}

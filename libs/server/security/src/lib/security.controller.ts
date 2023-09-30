@@ -11,7 +11,7 @@ import {
 import { UnterisCookies, UnterisSession } from "@unteris/server/common";
 import { CsrfGuard } from "@unteris/server/csrf";
 import { SkipSessionCheck } from "@unteris/server/session";
-import { UserAccount } from "@unteris/shared/types";
+import { UserAccount, authRoute } from "@unteris/shared/types";
 import { Cookies } from "nest-cookies";
 import { LoginBodyDto, SignupBody } from "./models";
 import { PasswordResetRequestDto } from "./models/password-reset-request.dto";
@@ -20,7 +20,7 @@ import { TokenVerificationData } from "./models/token-verification-query.dto";
 import { ServerSecurityService } from "./security.service";
 
 @UseGuards(CsrfGuard)
-@Controller("auth")
+@Controller(authRoute)
 @SkipSessionCheck()
 export class ServerSecurityController {
 	constructor(private serverSecurityService: ServerSecurityService) {}

@@ -1,9 +1,10 @@
 import { Controller, Get, Param } from "@nestjs/common";
 import { SkipSessionCheck } from "@unteris/server/session";
+import { raceRoute } from "@unteris/shared/types";
 import { IdParamDto } from "./models/id-param.dto";
 import { ServerRaceService } from "./race.service";
 
-@Controller("race")
+@Controller(raceRoute)
 @SkipSessionCheck()
 export class ServerRaceController {
 	constructor(private serverRaceService: ServerRaceService) {}

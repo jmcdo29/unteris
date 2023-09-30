@@ -2,6 +2,7 @@
 . "$(dirname "$0")/_/husky.sh"
 
 node_modules/.bin/nx affected:lint --base=HEAD^ --parallel
+git add $(git status --porcelain | grep MM | awk '{print $2}')
 # no longer necessary as the biome lint formats as well
 # node_modules/.bin/nx format:write
 if git diff --cached --name-only | grep -Eq \(diagram\.mmd\|migrations\/README\); then
