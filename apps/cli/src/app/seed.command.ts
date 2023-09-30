@@ -1,151 +1,209 @@
 import { OgmaLogger, OgmaService } from "@ogma/nestjs-module";
 import { Database, InjectKysely } from "@unteris/server/kysely";
-import { ServerLocationService } from "@unteris/server/location";
-import { Deity, DeityCategory, Domain, Location } from "@unteris/shared/types";
-import { Insertable, Kysely } from "kysely";
-import { Command, CommandRunner, InquirerService } from "nest-commander";
-import { safeParse, string, ulid } from "valibot";
+import { Kysely } from "kysely";
+import {
+	CliUtilityService,
+	Command,
+	CommandRunner,
+	Option,
+} from "nest-commander";
+import {
+	categories,
+	cities,
+	deities,
+	deityDomains,
+	domains,
+	images,
+	planes,
+	races,
+	regions,
+} from "./seeds/unteris.constants";
 
-@Command({ name: "repl", arguments: "[type]" })
+@Command({ name: "seed" })
 export class SeedCommand extends CommandRunner {
 	constructor(
-		private readonly inquirer: InquirerService,
-		@InjectKysely() private readonly db: Kysely<Database>,
 		@OgmaLogger(SeedCommand) private readonly logger: OgmaService,
-		private readonly locationService: ServerLocationService,
+		@InjectKysely() private readonly db: Kysely<Database>,
+		private readonly cliService: CliUtilityService,
 	) {
 		super();
 	}
 
-	async run([type]: [type?: string, ...rest: string[]]): Promise<void> {
-		try {
-			if (!type) {
-				({ type } = await this.inquirer.ask<{ type: keyof Database }>(
-					"seed-type",
-					{},
-				));
-			}
-			if (!this.typeIsKeyOfDatabase(type)) {
-				throw new Error(`Table "${type}" is not a known database entity`);
-			}
-			const entityType: keyof Database = type;
-			switch (entityType) {
-				case "deityCategory":
-					await this.insertDeityCategory();
-					break;
-				case "deity":
-					await this.insertDeity();
-					break;
-				case "domain":
-					await this.insertDomain();
-					break;
-				case "deityDomain":
-					await this.insertDeityDomain();
-					break;
-				case "location":
-					await this.insertLocation();
-					break;
-				default:
-					this.logger.log("This entity type is still being worked on");
-			}
-		} catch (err) {
-			this.logger.error(err);
-		} finally {
-			const { doItAgain } = await this.inquirer.ask<{ doItAgain: boolean }>(
-				"repeat",
-				{},
-			);
-			if (doItAgain) {
-				await this.run([]);
-			}
-		}
-		return;
-	}
-
-	private typeIsKeyOfDatabase(type: string): type is keyof Database {
-		return [
-			"deity",
-			"deityCategory",
-			"domain",
-			"deityDomain",
-			"location",
-		].includes(type);
-	}
-
-	private async insertDeityCategory(): Promise<void> {
-		const data = await this.inquirer.ask<Insertable<DeityCategory>>(
-			"deityCategory",
-			{},
+	async run(
+		_params: string[],
+		options: { dryRun: boolean; allowErrors: boolean },
+	): Promise<void> {
+		const queries = [];
+		queries.push(
+			this.db
+				.insertInto("deityCategory")
+				.columns(["name"])
+				.values(categories.map((cat) => ({ name: cat }))),
 		);
-		await this.db.insertInto("deityCategory").values([data]).execute();
-	}
-
-	private async insertDeity(): Promise<void> {
-		const { askLocation: _askLocation, ...data } = await this.inquirer.ask<
-			Insertable<Deity> & { askLocation: boolean } & { category: string }
-		>("deity", {});
-		if (this.idFieldIsULID(data.category)) {
-			await this.db.insertInto("deity").values([data]).execute();
-			return;
-		}
-		const category = await this.db
-			.selectFrom("deityCategory")
-			.select("id")
-			.where("name", "=", data.category)
-			.executeTakeFirst();
-		if (!category) {
-			throw new Error(
-				`Deity category "${data.category}" does not exist in the database.`,
-			);
-		}
-		await this.db
-			.insertInto("deity")
-			.values([{ ...data, categoryId: category.id }])
-			.executeTakeFirstOrThrow();
-	}
-
-	private async insertLocation(): Promise<void> {
-		const { addDescription: _addDescription, ...data } =
-			await this.inquirer.ask<
-				Insertable<Location> & { addDescription: boolean }
-			>("location", {});
-		await this.locationService.createLocation(data);
-	}
-
-	private async insertDomain(): Promise<void> {
-		const data = await this.inquirer.ask<Insertable<Domain>>("domain", {});
-		await this.db.insertInto("domain").values([data]).execute();
-	}
-
-	private async insertDeityDomain(): Promise<void> {
-		const data = await this.inquirer.ask<{
-			deityName: string;
-			domainName: string;
-		}>("deityDomain", {});
-		const { id: deityId } = await this.db
-			.selectFrom("deity")
-			.select("id")
-			.where("name", "=", data.deityName)
-			.executeTakeFirstOrThrow();
-		const { id: domainId } = await this.db
-			.selectFrom("domain")
-			.select("id")
-			.where("name", "=", data.domainName)
-			.executeTakeFirstOrThrow();
-		await this.db
-			.insertInto("deityDomain")
-			.values([{ deityId, domainId }])
-			.execute();
-		const { doItAgain } = await this.inquirer.ask<{ doItAgain: boolean }>(
-			"repeat",
-			{},
+		queries.push(
+			this.db
+				.insertInto("location")
+				.columns(["name"])
+				.values(planes.map((loc) => ({ name: loc, type: "plane" }))),
 		);
-		if (doItAgain) {
-			await this.insertDeityDomain();
+		const domainNames = Object.keys(domains) as Array<keyof typeof domains>;
+		queries.push(
+			this.db
+				.insertInto("domain")
+				.columns(["type", "name"])
+				.values(
+					domainNames.flatMap((domain) =>
+						domains[domain].map((name) => ({ type: domain, name })),
+					),
+				),
+		);
+		queries.push(
+			this.db
+				.insertInto("deity")
+				.columns(["name", "description", "categoryId", "locationId"])
+				.values((eb) =>
+					deities.map((deity) => ({
+						name: deity.name,
+						description: deity.description.replaceAll("'", "''"),
+						categoryId: eb
+							.selectFrom("deityCategory")
+							.select(["id"])
+							.where("name", "=", deity.category),
+						locationId: eb
+							.selectFrom("location")
+							.select(["id"])
+							.where("name", "=", deity.location),
+					})),
+				),
+		);
+		queries.push(
+			this.db
+				.insertInto("race")
+				.columns([
+					"name",
+					"description",
+					"ageDescription",
+					"sizeDescription",
+					"speed",
+					"type",
+					"knownLanguages",
+				])
+				.values(
+					races.map((race) => ({
+						name: race.name,
+						description: race.description,
+						ageDescription: race.ageDescription,
+						sizeDescription: race.sizeDescription.replaceAll("'", "''"),
+						speed: race.speed,
+						type: race.type,
+						knownLanguages: race.knownLanguages,
+					})),
+				),
+		);
+		queries.push(
+			this.db
+				.insertInto("racialAbility")
+				.columns(["description", "name", "raceId"])
+				.values((eb) =>
+					races.flatMap((race) =>
+						race.racialAbilities.map((abil) => ({
+							name: abil.name,
+							description: abil.description,
+							raceId: eb
+								.selectFrom("race")
+								.select(["id"])
+								.where("name", "=", race.name),
+						})),
+					),
+				),
+		);
+		queries.push(
+			this.db
+				.insertInto("image")
+				.columns(["type", "originalUrl"])
+				.values(
+					images.map((img) => ({
+						type: "deity_avatar",
+						originalUrl: `./images/${img}`,
+					})),
+				),
+		);
+		queries.push(
+			this.db
+				.insertInto("deityDomain")
+				.columns(["deityId", "domainId"])
+				.values((eb) =>
+					Object.keys(deityDomains).flatMap((deity) =>
+						Object.keys(deityDomains[deity]).flatMap((type) =>
+							deityDomains[deity][type].map((domain) => ({
+								deityId: eb
+									.selectFrom("deity")
+									.select(["id"])
+									.where("name", "=", deity),
+								domainId: eb
+									.selectFrom("domain")
+									.select(["id"])
+									.where("name", "=", domain),
+							})),
+						),
+					),
+				),
+		);
+		queries.push(
+			this.db
+				.insertInto("location")
+				.columns(["name", "type"])
+				.values(regions.map((region) => ({ name: region, type: "region" }))),
+		);
+		queries.push(
+			this.db
+				.insertInto("location")
+				.columns(["name", "type", "parentId"])
+				.values((eb) =>
+					Object.keys(cities).flatMap((region) =>
+						cities[region as keyof typeof cities].map((city) => ({
+							name: city,
+							type: "city",
+							parentId: eb
+								.selectFrom("location")
+								.select(["id"])
+								.where("name", "=", region),
+						})),
+					),
+				),
+		);
+		if (options.dryRun) {
+			this.logger.log(queries.map((q) => q.compile().sql));
+		} else {
+			for (const query of queries) {
+				try {
+					await query.execute();
+				} catch (err) {
+					if (
+						typeof err !== "object" ||
+						err === null ||
+						!("constraint" in err) ||
+						typeof err.constraint !== "string"
+					) {
+						throw err;
+					}
+					if (options.allowErrors) {
+						this.logger.debug("skipping query");
+					} else {
+						throw err;
+					}
+				}
+			}
 		}
 	}
 
-	private idFieldIsULID(value: string): boolean {
-		return safeParse(string([ulid()]), value).success;
+	@Option({ flags: "-d, --dry-run [dryRun]" })
+	parseDryRun(val: string) {
+		return this.cliService.parseBoolean(val);
+	}
+
+	@Option({ flags: "-a, --allow-errors [allowErrors]" })
+	parseAllowErrors(val: string) {
+		return this.cliService.parseBoolean(val);
 	}
 }

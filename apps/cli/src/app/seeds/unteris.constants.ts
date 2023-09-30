@@ -12,7 +12,67 @@ const shadow = "Shadowfell";
 const shadowfell = "Shadowfell";
 
 export const categories = [being, child, seelie, unseelie, shadowfell];
-export const locations = [sea, arboria, feywild, shadow];
+export const planes = [sea, arboria, feywild, shadow];
+export const regions = [
+	"Frosdain",
+	"Monstera",
+	"Sabu",
+	"Viridiem",
+	"Vistem",
+] as const;
+export const cities: Record<typeof regions[number], string[]> = {
+	Frosdain: [
+		"Avanix",
+		"Crystalmaw",
+		"Glaize",
+		"Saberglass",
+		"Snowhunt",
+		"Wyndfair",
+	],
+	Monstera: [
+		"Aderberg",
+		"Drakes Pass",
+		"Ironfell",
+		"Knightmount",
+		"Luna Vein",
+		"Taka Rest",
+	],
+	Sabu: [
+		"Dryacre",
+		"Bonespire",
+		"Goldburn",
+		"Kimare",
+		"Maloka",
+		"Meadowrest",
+		"Nevergrove",
+		"Oasis Fortuna",
+		"Sandrest",
+		"Scorchfell",
+		"Terae",
+		"Volnova",
+	],
+	Viridiem: [
+		"Angelbury",
+		"Dawncrest",
+		"Ebonwood",
+		"Foxvale",
+		"Golmars",
+		"Roseport",
+		"Wildemoor",
+		"Uma R&D",
+	],
+	Vistem: [
+		"Grassmire",
+		"Haven",
+		"Hollowrock",
+		"Keygarde",
+		"Moonsgate",
+		"Prismaglen",
+		"Shadewick",
+		"Starwood Village",
+		"Sunpoint",
+	],
+};
 export const deities: Array<
 	Omit<Insertable<Deity>, "imageId" | "id"> & {
 		category: string;

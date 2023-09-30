@@ -8,7 +8,7 @@ if git diff --cached --name-only | grep -Eq \(diagram\.mmd\|migrations\/README\)
   node_modules/.bin/embedme --stdout --strip-embed-comment libs/db/migrations/README.template.md > libs/db/migrations/README.md
   git add libs/db/migrations/README.md
 fi
-if git diff --cached --name-only | grep -E migrations\/.*\.ts | grep -v 'sql\.ts' | grep -Eqv [0-9ABCDEFGHJKMNPQRSTVWXYZ]{26}
+if git diff --cached --name-only | grep -E migrations\/.*\.ts | grep -v 'utils' | grep -Eqv [0-9ABCDEFGHJKMNPQRSTVWXYZ]{26}
 then
   echo "Migrations should start with a ULID"
   exit 1

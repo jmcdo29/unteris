@@ -7,10 +7,14 @@ import { LocationRepository } from "./location.repository";
 export class ServerLocationService {
 	constructor(private readonly locationRepo: LocationRepository) {}
 
-	async getLocationsByType(
+	async getByType(
 		type: Location["type"],
 	): Promise<Pick<Location, "id" | "name">[]> {
-		return this.locationRepo.getLocationsByType(type);
+		return this.locationRepo.getByType(type);
+	}
+
+	async getByParentId(id: string): Promise<Pick<Location, "id" | "name">[]> {
+		return this.locationRepo.getByParentId(id);
 	}
 
 	async createLocation(location: Insertable<Location>): Promise<Location> {

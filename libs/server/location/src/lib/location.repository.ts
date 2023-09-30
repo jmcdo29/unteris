@@ -7,13 +7,21 @@ import { Insertable, Kysely } from "kysely";
 export class LocationRepository {
 	constructor(@InjectKysely() private readonly db: Kysely<Database>) {}
 
-	async getLocationsByType(
+	async getByType(
 		type: Location["type"],
 	): Promise<Pick<Location, "id" | "name">[]> {
 		return this.db
 			.selectFrom("location")
 			.select(["id", "name"])
 			.where("type", "=", type)
+			.execute();
+	}
+
+	async getByParentId(id: string): Promise<Pick<Location, "id" | "name">[]> {
+		return this.db
+			.selectFrom("location")
+			.select(["id", "name"])
+			.where("parentId", "=", id)
 			.execute();
 	}
 

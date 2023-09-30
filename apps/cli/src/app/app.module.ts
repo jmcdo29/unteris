@@ -5,8 +5,8 @@ import { KyselyModule } from "@unteris/server/kysely";
 import { ServerLocationModule } from "@unteris/server/location";
 import { ServerLoggingModule } from "@unteris/server/logging";
 
-import { FullSeedCommand } from "./full-seed.command";
 import { KyselyCliCommand } from "./kysely.command";
+import { ReplCommand } from "./repl.command";
 import { SeedCommand } from "./seed.command";
 import { DeityCategoryQuestions } from "./seeds/deity-category.questions";
 import { DeityDomainQuestions } from "./seeds/deity-domain.questions";
@@ -20,7 +20,7 @@ import { SeedTypeQuestions } from "./seeds/seed-type.questions";
 	imports: [
 		KyselyModule,
 		ServerLoggingModule.forApplication("CLI", "DEBUG"),
-		OgmaModule.forFeatures([KyselyCliCommand, SeedCommand, FullSeedCommand]),
+		OgmaModule.forFeatures([KyselyCliCommand, SeedCommand, ReplCommand]),
 		ServerDeitiesModule,
 		ServerLocationModule,
 	],
@@ -34,7 +34,7 @@ import { SeedTypeQuestions } from "./seeds/seed-type.questions";
 		RepeatQuestions,
 		DeityDomainQuestions,
 		LocationQuestions,
-		FullSeedCommand,
+		SeedCommand,
 	],
 })
 export class AppModule {}
