@@ -3,7 +3,7 @@
 
 node_modules/.bin/nx affected:lint --base=HEAD^ --parallel
 updatedByLinter=$(git status --porcelain | grep MM | awk '{print $2}')
-if -z updatedByLinter; then
+if [ -z updatedByLinter ]; then
   git add $updatedByLinter
 fi
 # no longer necessary as the biome lint formats as well
