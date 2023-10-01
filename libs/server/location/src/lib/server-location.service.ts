@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { Location } from "@unteris/shared/types";
+import { Location, LocationWithImage } from "@unteris/shared/types";
 import { Insertable } from "kysely";
 import { LocationRepository } from "./location.repository";
 
@@ -15,6 +15,10 @@ export class ServerLocationService {
 
 	async getByParentId(id: string): Promise<Pick<Location, "id" | "name">[]> {
 		return this.locationRepo.getByParentId(id);
+	}
+
+	async getById(id: string): Promise<LocationWithImage> {
+		return this.locationRepo.getById(id);
 	}
 
 	async createLocation(location: Insertable<Location>): Promise<Location> {

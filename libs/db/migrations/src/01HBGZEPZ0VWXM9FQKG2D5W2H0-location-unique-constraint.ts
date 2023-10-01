@@ -23,12 +23,12 @@ export const down = async (db: DB) => {
 		.alterTable("location")
 		.dropConstraint("name_type_parent_unique")
 		.execute();
-	// await db.schema
-	// 	.alterTable("race")
-	// 	.dropConstraint("race_name_unique")
-	// 	.execute();
-	// await db.schema
-	// 	.alterTable("racial_ability")
-	// 	.dropConstraint("racial_ability_name_race_unique")
-	// 	.execute();
+	await db.schema
+		.alterTable("race")
+		.dropConstraint("race_name_unique")
+		.execute();
+	await db.schema
+		.alterTable("racial_ability")
+		.dropConstraint("racial_ability_name_race_unique")
+		.execute();
 };

@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Database, InjectKysely } from "@unteris/server/kysely";
-import { Location } from "@unteris/shared/types";
+import { Location, LocationWithImage } from "@unteris/shared/types";
 import { Insertable, Kysely } from "kysely";
 
 @Injectable()
@@ -30,6 +30,22 @@ export class LocationRepository {
 			.insertInto("location")
 			.values(location)
 			.returningAll()
+			.executeTakeFirstOrThrow();
+	}
+
+	async getById(id: string): Promise<LocationWithImage> {
+		return this.db
+			.selectFrom("location as l")
+			.leftJoin("image as i", "i.id", "l.imageId")
+			.select([
+				"l.id",
+				"l.name",
+				"l.description",
+				"l.parentId",
+				"l.type",
+				"i.mediumUrl as imageUrl",
+			])
+			.where("l.id", "=", id)
 			.executeTakeFirstOrThrow();
 	}
 }
