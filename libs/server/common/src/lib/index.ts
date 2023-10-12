@@ -6,3 +6,4 @@ export {
 	UnterisSession,
 } from "./session";
 export * from "./request";
+export * from "./valibot-to-openapi";

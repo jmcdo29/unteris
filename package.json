@@ -24,6 +24,7 @@
 		"@nestjs/microservices": "^10.1.3",
 		"@nestjs/platform-express": "10.1.3",
 		"@nestjs/platform-fastify": "^10.0.0",
+		"@nestjs/swagger": "^7.1.13",
 		"@ogma/logger": "^3.1.5",
 		"@ogma/nestjs-module": "^5.1.1",
 		"@ogma/platform-express": "^5.0.1",

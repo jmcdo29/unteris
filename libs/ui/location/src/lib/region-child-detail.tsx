@@ -1,6 +1,6 @@
-import { Box, useTheme } from "@mui/material";
+import { useTheme } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
-import { Lorem, ShrinkButton, useMinWidth } from "@unteris/ui/components";
+import { ShrinkButton, useMinWidth } from "@unteris/ui/components";
 import { useAtomValue } from "jotai";
 import { useState } from "react";
 import { regionChildAtom } from "./atoms";
