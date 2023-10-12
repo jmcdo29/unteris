@@ -19,7 +19,7 @@ export class ServerLocationController {
 		return this.service.getByParentId(params.data.id);
 	}
 
-	@Get(":id")
+	@Get("/id/:id")
 	getById(@Param() param: IdParamDto) {
 		return this.service.getById(param.data.id);
 	}

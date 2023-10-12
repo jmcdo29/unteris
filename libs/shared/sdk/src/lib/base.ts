@@ -166,6 +166,9 @@ export class Sdk extends SdkBase {
 	async getLocationByParentId(id: string) {
 		return this.get(`${locationRoute}/by-parent/${id}`);
 	}
+	async getLocationById(id: string) {
+		return this.get(`${locationRoute}/id/${id}`);
+	}
 
 	async verifyCsrf() {
 		return this.post(`${csrfRoute}/verify`, undefined);

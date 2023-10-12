@@ -49,6 +49,7 @@
 			"@unteris/ui/components": ["libs/ui/components/src/index.ts"],
 			"@unteris/ui/deities": ["libs/ui/deities/src/index.ts"],
 			"@unteris/ui/history": ["libs/ui/history/src/index.ts"],
+			"@unteris/ui/location": ["libs/ui/location/src/index.ts"],
 			"@unteris/ui/race": ["libs/ui/race/src/index.ts"]
 		}
 	},

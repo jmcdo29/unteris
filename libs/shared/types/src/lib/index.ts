@@ -5,6 +5,7 @@ export * from "./domain";
 export * from "./location";
 export * from "./local-login";
 export * from "./login-method";
+export * from "./overview-object";
 export * from "./race";
 export * from "./racial-ability";
 export * from "./race-with-abilities";

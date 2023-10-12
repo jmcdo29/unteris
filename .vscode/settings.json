@@ -9,7 +9,8 @@
 	},
 	"editor.formatOnSave": true,
 	"editor.codeActionsOnSave": {
-		"quickfix.biome": true
+		"quickfix.biome": true,
+		"source.organizeImports.biome": true
 	},
 	"editor.tabSize": 2,
 	"[javascript]": {

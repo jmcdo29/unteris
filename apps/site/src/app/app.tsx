@@ -14,10 +14,9 @@ import {
 import { sdk } from "@unteris/ui/components";
 import { router } from "./router";
 
-export function App() {
-	const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+export const App = () => {
 	const [chosenTheme] = useAtom(themeAtom);
-	void sdk.getCsrfToken().then((data) => sdk.setCsrfToken(data.csrfToken));
+	sdk.getCsrfToken().then((data) => sdk.setCsrfToken(data.csrfToken));
 	const LinkBehavior = forwardRef<
 		HTMLAnchorElement,
 		Omit<RouterLinkProps, "to"> & { href: RouterLinkProps["to"] }
@@ -62,7 +61,7 @@ export function App() {
 					},
 				},
 			}),
-		[prefersDarkMode, chosenTheme, LinkBehavior],
+		[chosenTheme, LinkBehavior],
 	);
 	return (
 		<ThemeProvider theme={theme}>
@@ -70,6 +69,4 @@ export function App() {
 			<RouterProvider router={router()} />
 		</ThemeProvider>
 	);
-}
-
-export default App;
+};

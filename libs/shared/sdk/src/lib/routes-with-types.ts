@@ -82,6 +82,9 @@ type SecurityRoutes = {
 
 type LocationRoutes = {
 	get: {
+		[key: `${typeof locationRoute}/id/${string}`]: [
+			Omit<Location, "imageId"> & { imageUrl: string },
+		];
 		[key: `${typeof locationRoute}/by-parent/${string}`]: [
 			Array<Pick<Location, "id" | "name">>,
 		];
