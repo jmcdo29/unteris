@@ -24,6 +24,7 @@ export class FetchError extends Error {
 
 abstract class SdkBase<T extends SdkGeneric = RouteToType> {
 	private csrfToken = "";
+	private cache = new Map<string, T["get"][keyof T["get"]][0]>();
 	constructor(private readonly baseUrl: string) {}
 
 	setCsrfToken(token: string): SdkBase<T> {
@@ -63,8 +64,17 @@ abstract class SdkBase<T extends SdkGeneric = RouteToType> {
 	get<E extends keyof T["get"]>(
 		endpoint: E,
 		config: Record<string, string> = {},
+		ignoreCache = false,
 	): Promise<T["get"][E][0]> {
-		return this.request({ endpoint, method: "get", headers: config });
+		const reqConfig = { endpoint, method: "get", headers: config } as const;
+		const cacheKey = JSON.stringify(reqConfig);
+		const cacheVal = this.cache.get(cacheKey);
+		if (!ignoreCache && cacheVal) {
+			return cacheVal;
+		}
+		const res = this.request(reqConfig);
+		this.cache.set(cacheKey, res);
+		return res;
 	}
 
 	post<E extends keyof T["post"]>(
@@ -124,7 +134,7 @@ export class Sdk extends SdkBase {
 	}
 
 	async getCsrfToken() {
-		return this.get(csrfRoute);
+		return this.get(csrfRoute, {}, true);
 	}
 
 	async getUser() {
@@ -144,7 +154,7 @@ export class Sdk extends SdkBase {
 	}
 
 	async getSessionRefresh() {
-		return this.get(`${sessionRoute}/refresh`);
+		return this.get(`${sessionRoute}/refresh`, {}, true);
 	}
 
 	async getDeitiesByCategory(id: string) {
