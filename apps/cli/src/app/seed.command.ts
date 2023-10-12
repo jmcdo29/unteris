@@ -1,6 +1,6 @@
 import { OgmaLogger, OgmaService } from "@ogma/nestjs-module";
 import { Database, InjectKysely } from "@unteris/server/kysely";
-import { Kysely } from "kysely";
+import { CompiledQuery, InsertResult, Kysely } from "kysely";
 import {
 	CliUtilityService,
 	Command,
@@ -29,169 +29,216 @@ export class SeedCommand extends CommandRunner {
 		super();
 	}
 
+	private deityCategoryInsert() {
+		return this.db
+			.insertInto("deityCategory")
+			.columns(["name"])
+			.values(categories.map((cat) => ({ name: cat })))
+			.compile();
+	}
+
+	private planeInsert() {
+		return this.db
+			.insertInto("location")
+			.columns(["name"])
+			.values(planes.map((loc) => ({ name: loc, type: "plane" })))
+			.compile();
+	}
+
+	private domainInsert() {
+		const domainNames = Object.keys(domains) as Array<keyof typeof domains>;
+		return this.db
+			.insertInto("domain")
+			.columns(["type", "name"])
+			.values(
+				domainNames.flatMap((domain) =>
+					domains[domain].map((name) => ({ type: domain, name })),
+				),
+			)
+			.compile();
+	}
+
+	private deityInsert() {
+		return this.db
+			.insertInto("deity")
+			.columns(["name", "description", "categoryId", "locationId"])
+			.values((eb) =>
+				deities.map((deity) => ({
+					name: deity.name,
+					description: deity.description.replaceAll("'", "''"),
+					categoryId: eb
+						.selectFrom("deityCategory")
+						.select(["id"])
+						.where("name", "=", deity.category),
+					locationId: eb
+						.selectFrom("location")
+						.select(["id"])
+						.where("name", "=", deity.location),
+				})),
+			)
+			.compile();
+	}
+
+	private raceInsert() {
+		return this.db
+			.insertInto("race")
+			.columns([
+				"name",
+				"description",
+				"ageDescription",
+				"sizeDescription",
+				"speed",
+				"type",
+				"knownLanguages",
+			])
+			.values(
+				races.map((race) => ({
+					name: race.name,
+					description: race.description,
+					ageDescription: race.ageDescription,
+					sizeDescription: race.sizeDescription.replaceAll("'", "''"),
+					speed: race.speed,
+					type: race.type,
+					knownLanguages: race.knownLanguages,
+				})),
+			)
+			.compile();
+	}
+
+	private racialAbilityInsert() {
+		return this.db
+			.insertInto("racialAbility")
+			.columns(["description", "name", "raceId"])
+			.values((eb) =>
+				races.flatMap((race) =>
+					race.racialAbilities.map((abil) => ({
+						name: abil.name,
+						description: abil.description,
+						raceId: eb
+							.selectFrom("race")
+							.select(["id"])
+							.where("name", "=", race.name),
+					})),
+				),
+			)
+			.compile();
+	}
+
+	private imageInsert() {
+		return this.db
+			.insertInto("image")
+			.columns(["type", "originalUrl"])
+			.values(
+				images.map((img) => ({
+					type: "deity_avatar",
+					originalUrl: `./images/${img}`,
+				})),
+			)
+			.compile();
+	}
+
+	private deityDomainInsert() {
+		return this.db
+			.insertInto("deityDomain")
+			.columns(["deityId", "domainId"])
+			.values((eb) =>
+				Object.keys(deityDomains).flatMap((deity) =>
+					Object.keys(deityDomains[deity]).flatMap((type) =>
+						deityDomains[deity][type].map((domain) => ({
+							deityId: eb
+								.selectFrom("deity")
+								.select(["id"])
+								.where("name", "=", deity),
+							domainId: eb
+								.selectFrom("domain")
+								.select(["id"])
+								.where("name", "=", domain),
+						})),
+					),
+				),
+			)
+			.compile();
+	}
+
+	private regionInsert() {
+		return this.db
+			.insertInto("location")
+			.columns(["name", "type"])
+			.values(
+				regions.map((region) => ({
+					name: region.name,
+					description: region.description,
+					type: "region",
+				})),
+			)
+			.compile();
+	}
+	private cityInsert() {
+		return this.db
+			.insertInto("location")
+			.columns(["name", "type", "parentId"])
+			.values((eb) =>
+				Object.keys(cities).flatMap((region) =>
+					cities[region as keyof typeof cities].map((city) => ({
+						name: city.name,
+						description: city.description,
+						type: "city",
+						parentId: eb
+							.selectFrom("location")
+							.select(["id"])
+							.where("name", "=", region),
+					})),
+				),
+			)
+			.compile();
+	}
+
+	private handleErrors(
+		err: unknown,
+		options: { allowErrors: boolean },
+		query: CompiledQuery,
+	): void {
+		if (
+			typeof err !== "object" ||
+			err === null ||
+			!("constraint" in err) ||
+			typeof err.constraint !== "string"
+		) {
+			throw err;
+		}
+		if (options.allowErrors) {
+			this.logger.debug("skipping query");
+			this.logger.fine(query.sql);
+		} else {
+			throw err;
+		}
+	}
+
 	async run(
 		_params: string[],
 		options: { dryRun: boolean; allowErrors: boolean },
 	): Promise<void> {
-		const queries = [];
+		const queries: Array<CompiledQuery<InsertResult>> = [];
 		queries.push(
-			this.db
-				.insertInto("deityCategory")
-				.columns(["name"])
-				.values(categories.map((cat) => ({ name: cat }))),
-		);
-		queries.push(
-			this.db
-				.insertInto("location")
-				.columns(["name"])
-				.values(planes.map((loc) => ({ name: loc, type: "plane" }))),
-		);
-		const domainNames = Object.keys(domains) as Array<keyof typeof domains>;
-		queries.push(
-			this.db
-				.insertInto("domain")
-				.columns(["type", "name"])
-				.values(
-					domainNames.flatMap((domain) =>
-						domains[domain].map((name) => ({ type: domain, name })),
-					),
-				),
-		);
-		queries.push(
-			this.db
-				.insertInto("deity")
-				.columns(["name", "description", "categoryId", "locationId"])
-				.values((eb) =>
-					deities.map((deity) => ({
-						name: deity.name,
-						description: deity.description.replaceAll("'", "''"),
-						categoryId: eb
-							.selectFrom("deityCategory")
-							.select(["id"])
-							.where("name", "=", deity.category),
-						locationId: eb
-							.selectFrom("location")
-							.select(["id"])
-							.where("name", "=", deity.location),
-					})),
-				),
-		);
-		queries.push(
-			this.db
-				.insertInto("race")
-				.columns([
-					"name",
-					"description",
-					"ageDescription",
-					"sizeDescription",
-					"speed",
-					"type",
-					"knownLanguages",
-				])
-				.values(
-					races.map((race) => ({
-						name: race.name,
-						description: race.description,
-						ageDescription: race.ageDescription,
-						sizeDescription: race.sizeDescription.replaceAll("'", "''"),
-						speed: race.speed,
-						type: race.type,
-						knownLanguages: race.knownLanguages,
-					})),
-				),
-		);
-		queries.push(
-			this.db
-				.insertInto("racialAbility")
-				.columns(["description", "name", "raceId"])
-				.values((eb) =>
-					races.flatMap((race) =>
-						race.racialAbilities.map((abil) => ({
-							name: abil.name,
-							description: abil.description,
-							raceId: eb
-								.selectFrom("race")
-								.select(["id"])
-								.where("name", "=", race.name),
-						})),
-					),
-				),
-		);
-		queries.push(
-			this.db
-				.insertInto("image")
-				.columns(["type", "originalUrl"])
-				.values(
-					images.map((img) => ({
-						type: "deity_avatar",
-						originalUrl: `./images/${img}`,
-					})),
-				),
-		);
-		queries.push(
-			this.db
-				.insertInto("deityDomain")
-				.columns(["deityId", "domainId"])
-				.values((eb) =>
-					Object.keys(deityDomains).flatMap((deity) =>
-						Object.keys(deityDomains[deity]).flatMap((type) =>
-							deityDomains[deity][type].map((domain) => ({
-								deityId: eb
-									.selectFrom("deity")
-									.select(["id"])
-									.where("name", "=", deity),
-								domainId: eb
-									.selectFrom("domain")
-									.select(["id"])
-									.where("name", "=", domain),
-							})),
-						),
-					),
-				),
-		);
-		queries.push(
-			this.db
-				.insertInto("location")
-				.columns(["name", "type"])
-				.values(regions.map((region) => ({ name: region, type: "region" }))),
-		);
-		queries.push(
-			this.db
-				.insertInto("location")
-				.columns(["name", "type", "parentId"])
-				.values((eb) =>
-					Object.keys(cities).flatMap((region) =>
-						cities[region as keyof typeof cities].map((city) => ({
-							name: city,
-							type: "city",
-							parentId: eb
-								.selectFrom("location")
-								.select(["id"])
-								.where("name", "=", region),
-						})),
-					),
-				),
+			this.deityCategoryInsert(),
+			this.planeInsert(),
+			this.domainInsert(),
+			this.deityInsert(),
+			this.raceInsert(),
+			this.racialAbilityInsert(),
+			this.imageInsert(),
+			this.deityDomainInsert(),
+			this.regionInsert(),
+			this.cityInsert(),
 		);
 		if (options.dryRun) {
-			this.logger.log(queries.map((q) => q.compile().sql));
+			this.logger.log(queries.map((q) => q.sql));
 		} else {
 			for (const query of queries) {
 				try {
-					await query.execute();
+					await this.db.executeQuery(query);
 				} catch (err) {
-					if (
-						typeof err !== "object" ||
-						err === null ||
-						!("constraint" in err) ||
-						typeof err.constraint !== "string"
-					) {
-						throw err;
-					}
-					if (options.allowErrors) {
-						this.logger.debug("skipping query");
-					} else {
-						throw err;
-					}
+					this.handleErrors(err, options, query);
 				}
 			}
 		}
