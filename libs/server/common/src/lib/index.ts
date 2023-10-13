@@ -7,3 +7,4 @@ export {
 } from "./session";
 export * from "./request";
 export * from "./valibot-to-openapi";
+export * from "./valibot.dto";
