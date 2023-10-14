@@ -18,7 +18,7 @@ export class SessionExistsGuard implements CanActivate {
 			.getRequest<
 				NestCookieRequest<{ session?: SessionData & { id: string } }>
 			>();
-		const { sessionId } = req.cookies ?? {};
+		const { sessionId } = req.cookies;
 		const session = await this.sessionService.getSession(sessionId ?? "");
 		if (!this.sessionService.isSession(session)) {
 			const newSession: SessionData = { user: {}, csrf: "" };

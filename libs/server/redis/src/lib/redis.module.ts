@@ -11,6 +11,7 @@ import {
 } from "@unteris/server/config";
 import { RedisClientOptions, RedisClientType, createClient } from "redis";
 
+import { setTimeout } from "timers/promises";
 import {
 	InjectRedisInstance,
 	getInstanceToken,
@@ -32,12 +33,34 @@ import {
 			provide: getInstanceToken(),
 			useFactory: async (options: RedisClientOptions, logger: OgmaService) => {
 				const redisUrl = new URL(options.url ?? "");
-				logger.debug(
-					`Connecting to redis at ${style.magenta.apply(
-						`${redisUrl.host}:${redisUrl.port}`,
-					)}`,
-				);
 				const redis = createClient(options);
+				redis.on("connect", () => {
+					logger.debug(
+						`${style.yellow.apply(
+							"Connecting",
+						)} to redis at ${style.magenta.apply(
+							`${redisUrl.host}:${redisUrl.port}`,
+						)}`,
+					);
+				});
+				redis.on("ready", () => {
+					logger.debug(
+						`${style.green.apply(
+							"Connected",
+						)} to redis at ${style.magenta.apply(
+							`${redisUrl.host}:${redisUrl.port}`,
+						)}`,
+					);
+				});
+				redis.on("reconnecting", () => {
+					logger.debug(
+						`${style.yellow.apply(
+							"Reconnecting",
+						)} to redis at ${style.magenta.apply(
+							`${redisUrl.host}:${redisUrl.port}`,
+						)}`,
+					);
+				});
 				redis.once("error", (err) => {
 					if (err instanceof Error) {
 						logger.printError(err);
