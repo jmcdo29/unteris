@@ -9,6 +9,7 @@ import {
 	UseGuards,
 } from "@nestjs/common";
 import { ApiConsumes } from "@nestjs/swagger";
+import { CacheSkip } from "@unteris/server/cache";
 import { UnterisCookies, UnterisSession } from "@unteris/server/common";
 import { CsrfGuard } from "@unteris/server/csrf";
 import { SkipSessionCheck } from "@unteris/server/session";
@@ -74,6 +75,7 @@ export class ServerSecurityController {
 	}
 
 	@Get("me")
+	@CacheSkip()
 	@SkipSessionCheck(false)
 	async getMe(@Req() { user }: { user: UserAccount }) {
 		return user;
