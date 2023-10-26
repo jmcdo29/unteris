@@ -106,6 +106,10 @@
 				"dryRun": {
 					"buildTarget": "cli:build:development",
 					"args": ["seed", "-d"]
+				},
+				"with-errors": {
+					"buildTarget": "cli:build:development",
+					"args": ["seed", "-a"]
 				}
 			},
 			"dependsOn": [
