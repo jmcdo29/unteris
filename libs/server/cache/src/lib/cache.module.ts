@@ -21,5 +21,6 @@ import { RedisClientType } from "redis";
 			imports: [ServerRedisModule],
 		}),
 	],
+	exports: [CacheModule],
 })
 export class ServerCacheModule {}
