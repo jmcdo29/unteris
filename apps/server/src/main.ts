@@ -19,6 +19,11 @@ async function bootstrap() {
 	const openApiConfig = new DocumentBuilder()
 		.setTitle("Unteris API")
 		.setDescription("The API for the Unteris.com website.")
+		.setVersion("1.0.0")
+		.addTag("Deity")
+		.addTag("Location")
+		.addTag("Race")
+		.addTag("Security")
 		.build();
 	const document = SwaggerModule.createDocument(app, openApiConfig);
 	SwaggerModule.setup("open-api", app, document);

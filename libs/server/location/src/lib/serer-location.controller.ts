@@ -1,11 +1,12 @@
 import { Controller, Get, Param, Query } from "@nestjs/common";
-import { ApiOkResponse } from "@nestjs/swagger";
+import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { IdParamDto, OverviewObjectDto } from "@unteris/server/common";
 import { SkipSessionCheck } from "@unteris/server/session";
 import { locationRoute } from "@unteris/shared/types";
 import { ByTypeQueryDto } from "./models";
 import { ServerLocationService } from "./server-location.service";
 
+@ApiTags("Location")
 @Controller(locationRoute)
 @SkipSessionCheck()
 export class ServerLocationController {
