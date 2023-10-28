@@ -2,9 +2,9 @@ import {
 	Deity,
 	Location,
 	LoginBody,
+	OverviewObject,
 	PasswordReset,
 	PasswordResetRequest,
-	Race,
 	RaceWithAbilities,
 	SignupUser,
 	UserAccount,
@@ -25,12 +25,8 @@ export type SdkGeneric = Record<method, PathToTypeMap>;
 
 type DeityRoutes = {
 	get: {
-		[key: `${typeof deitiesRoute}/category/${string}`]: [
-			Array<Pick<Deity, "id" | "name">>,
-		];
-		[key: `${typeof deitiesRoute}/location/${string}`]: [
-			Array<Pick<Deity, "id" | "name">>,
-		];
+		[key: `${typeof deitiesRoute}/category/${string}`]: [Array<OverviewObject>];
+		[key: `${typeof deitiesRoute}/location/${string}`]: [Array<OverviewObject>];
 		[key: `${typeof deitiesRoute}/id/${string}`]: [
 			Omit<Deity, "imageId"> & { imageUrl: "string" },
 		];
@@ -39,7 +35,7 @@ type DeityRoutes = {
 
 type RaceRoutes = {
 	get: {
-		[raceRoute]: [Array<Pick<Race, "id" | "name">>];
+		[raceRoute]: [Array<OverviewObject>];
 		[key: `${typeof raceRoute}/${string}`]: [RaceWithAbilities];
 	};
 };
@@ -86,11 +82,11 @@ type LocationRoutes = {
 			Omit<Location, "imageId"> & { imageUrl: string },
 		];
 		[key: `${typeof locationRoute}/by-parent/${string}`]: [
-			Array<Pick<Location, "id" | "name">>,
+			Array<OverviewObject>,
 		];
 	} & Record<
 		`${typeof locationRoute}?type=${Location["type"]}`,
-		[Array<Pick<Location, "id" | "name">>]
+		[Array<OverviewObject>]
 	>;
 };
 

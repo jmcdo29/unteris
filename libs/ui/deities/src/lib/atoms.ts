@@ -1,14 +1,12 @@
-import { Deity, Location } from "@unteris/shared/types";
+import { Deity, Location, OverviewObject } from "@unteris/shared/types";
 import { sdk } from "@unteris/ui/components";
 import { atom } from "jotai";
 
 export const editingAtom = atom(false);
 
-export const locationsAtom = atom<Promise<Pick<Location, "id" | "name">[]>>(
-	async () => {
-		return sdk.getLocationsByType("plane");
-	},
-);
+export const locationsAtom = atom<Promise<OverviewObject[]>>(async () => {
+	return sdk.getLocationsByType("plane");
+});
 
 export const locationIndexAtom = atom(0);
 
@@ -21,15 +19,15 @@ export const locationIdAtom = atom<Promise<string>>(async (get) => {
 	return locations[locationIndex].id;
 });
 
-export const deitiesForLocationAtom = atom<
-	Promise<Pick<Deity, "id" | "name">[]>
->(async (get) => {
-	const locationId = await get(locationIdAtom);
-	if (!locationId) {
-		return [];
-	}
-	return sdk.getDeitiesByLocation(locationId);
-});
+export const deitiesForLocationAtom = atom<Promise<OverviewObject[]>>(
+	async (get) => {
+		const locationId = await get(locationIdAtom);
+		if (!locationId) {
+			return [];
+		}
+		return sdk.getDeitiesByLocation(locationId);
+	},
+);
 
 const primitiveDeityIndex = atom({ deityIndex: 0, lastKnownLocationIndex: 0 });
 export const deityIndexAtom = atom(
