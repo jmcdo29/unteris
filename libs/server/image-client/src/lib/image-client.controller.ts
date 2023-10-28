@@ -1,7 +1,7 @@
 import { Controller, Get, Param } from "@nestjs/common";
+import { IdParamDto } from "@unteris/server/common";
 import { SkipSessionCheck } from "@unteris/server/session";
 import { ServerImageClientService } from "./image-client.service";
-import { IdParamDto } from "./models";
 
 @Controller("image-client")
 @SkipSessionCheck()

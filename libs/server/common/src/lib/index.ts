@@ -1,4 +1,5 @@
 export * from "./cookies";
+export * from "./id-param.dto";
 export * from "./overview-object.dto";
 export {
 	RefreshSessionData,

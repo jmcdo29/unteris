@@ -1,10 +1,9 @@
 import { Controller, Get, Param, Query } from "@nestjs/common";
 import { ApiOkResponse } from "@nestjs/swagger";
-import { OverviewObjectDto } from "@unteris/server/common";
+import { IdParamDto, OverviewObjectDto } from "@unteris/server/common";
 import { SkipSessionCheck } from "@unteris/server/session";
 import { locationRoute } from "@unteris/shared/types";
-import { ByTypeQueryDto } from "./models/by-type-query.dto";
-import { IdParamDto } from "./models/id-param.dto";
+import { ByTypeQueryDto } from "./models";
 import { ServerLocationService } from "./server-location.service";
 
 @Controller(locationRoute)

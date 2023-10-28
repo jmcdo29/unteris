@@ -1,10 +1,10 @@
 import { Controller, Get, Param } from "@nestjs/common";
 import { ApiOkResponse } from "@nestjs/swagger";
 import { OverviewObjectDto } from "@unteris/server/common";
+import { IdParamDto } from "@unteris/server/common";
 import { SkipSessionCheck } from "@unteris/server/session";
 import { deitiesRoute } from "@unteris/shared/types";
 import { CategoryParamDto } from "./models/category-param.dto";
-import { IdParamDto } from "./models/id-param.dto";
 import { LocationParamDto } from "./models/location-param.dto";
 import { ServerDeitiesService } from "./server-deities.service";
 

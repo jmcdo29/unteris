@@ -11,7 +11,6 @@ import {
 } from "@unteris/server/config";
 import { RedisClientOptions, RedisClientType, createClient } from "redis";
 
-import { setTimeout } from "timers/promises";
 import {
 	InjectRedisInstance,
 	getInstanceToken,
