@@ -18,7 +18,6 @@
 		"strictPropertyInitialization": false,
 		"esModuleInterop": true,
 		"paths": {
-			"@unteris/db/migrations": ["libs/db/migrations/src/index.ts"],
 			"@unteris/plugin/rz": ["libs/rz/src/index.ts"],
 			"@unteris/server/cache": ["libs/server/cache/src/index.ts"],
 			"@unteris/server/common": ["libs/server/common/src/index.ts"],
