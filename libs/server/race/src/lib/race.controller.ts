@@ -1,10 +1,11 @@
 import { Controller, Get, Param } from "@nestjs/common";
-import { ApiOkResponse } from "@nestjs/swagger";
+import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { IdParamDto, OverviewObjectDto } from "@unteris/server/common";
 import { SkipSessionCheck } from "@unteris/server/session";
 import { raceRoute } from "@unteris/shared/types";
 import { ServerRaceService } from "./race.service";
 
+@ApiTags("Race")
 @Controller(raceRoute)
 @SkipSessionCheck()
 export class ServerRaceController {

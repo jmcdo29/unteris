@@ -1,4 +1,5 @@
 import { Controller, Get, Req, UseGuards } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
 import { CacheSkip } from "@unteris/server/cache";
 import { RefreshRequest, UnterisCookies } from "@unteris/server/common";
 import { sessionRoute } from "@unteris/shared/types";
@@ -7,6 +8,7 @@ import { RefreshSessionGuard } from "./refresh-session.guard";
 import { SkipSessionCheck } from "./session.decorator";
 import { ServerSessionService } from "./session.service";
 
+@ApiTags("Security")
 @Controller(sessionRoute)
 export class SessionController {
 	constructor(private readonly sessionService: ServerSessionService) {}

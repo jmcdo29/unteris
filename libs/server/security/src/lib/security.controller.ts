@@ -8,7 +8,7 @@ import {
 	Session,
 	UseGuards,
 } from "@nestjs/common";
-import { ApiConsumes } from "@nestjs/swagger";
+import { ApiConsumes, ApiTags } from "@nestjs/swagger";
 import { CacheSkip } from "@unteris/server/cache";
 import { UnterisCookies, UnterisSession } from "@unteris/server/common";
 import { CsrfGuard } from "@unteris/server/csrf";
@@ -21,6 +21,7 @@ import { PasswordResetDto } from "./models/password-reset.dto";
 import { TokenVerificationData } from "./models/token-verification-query.dto";
 import { ServerSecurityService } from "./security.service";
 
+@ApiTags("Security")
 @UseGuards(CsrfGuard)
 @Controller(authRoute)
 @SkipSessionCheck()
