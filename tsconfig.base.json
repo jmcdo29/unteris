@@ -20,6 +20,7 @@
 		"paths": {
 			"@unteris/plugin/rz": ["libs/rz/src/index.ts"],
 			"@unteris/server/cache": ["libs/server/cache/src/index.ts"],
+			"@unteris/server/castle": ["libs/server/castle/src/index.ts"],
 			"@unteris/server/common": ["libs/server/common/src/index.ts"],
 			"@unteris/server/config": ["libs/server/config/src/index.ts"],
 			"@unteris/server/csrf": ["libs/server/csrf/src/index.ts"],
