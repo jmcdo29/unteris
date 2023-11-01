@@ -31,7 +31,7 @@ export class SecurityRepo {
 	}
 
 	async createUserRecord(user: SignupUser): Promise<Pick<UserAccount, "id">> {
-		return this.db
+		const newUser = await this.db
 			.insertInto("userAccount")
 			.values({
 				email: user.email,
@@ -40,6 +40,14 @@ export class SecurityRepo {
 			})
 			.returning(["id"])
 			.executeTakeFirstOrThrow();
+		await this.db
+			.insertInto("userPermission")
+			.values((eb) => ({
+				userId: newUser.id,
+				roleId: eb.selectFrom("role").where("name", "=", "player"),
+			}))
+			.execute();
+		return newUser;
 	}
 
 	async createUserVerificationRecord(id: string, token: string): Promise<void> {
