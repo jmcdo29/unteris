@@ -44,7 +44,7 @@ export class SecurityRepo {
 			.insertInto("userPermission")
 			.values((eb) => ({
 				userId: newUser.id,
-				roleId: eb.selectFrom("role").where("name", "=", "player"),
+				roleId: eb.selectFrom("role").select("id").where("name", "=", "player"),
 			}))
 			.execute();
 		return newUser;

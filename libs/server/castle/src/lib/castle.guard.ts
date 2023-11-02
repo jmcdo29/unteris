@@ -13,8 +13,8 @@ export class CastleGuard implements CanActivate {
 
 	canActivate(context: ExecutionContext) {
 		const [action, expectedSubject] = this.reflector.getAllAndOverride(Castle, [
-			context.getClass(),
 			context.getHandler(),
+			context.getClass(),
 		]);
 		const req = context.switchToHttp().getRequest<AuthorizedRequest>();
 		const { user } = req;

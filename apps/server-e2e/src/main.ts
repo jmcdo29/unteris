@@ -3,11 +3,14 @@ import { NestFactory } from "@nestjs/core";
 import { OgmaService } from "@ogma/nestjs-module";
 import { getEmailInstanceToken } from "@unteris/server/email";
 import { getKyselyInstanceToken } from "@unteris/server/kysely";
+import { getInstanceToken } from "@unteris/server/redis";
 import { RootModule } from "@unteris/server/root";
 import { request } from "pactum";
+import { RedisClientType } from "redis";
 import { beforeAll, beforeEach, describe } from "vitest";
 import { TestContext } from "./interfaces/test-context.interface";
 import { csrfTest } from "./tests/csrf";
+import { locationTest } from "./tests/location";
 import { resetPasswordTest } from "./tests/reset-password";
 import { signUpAndLoginTests } from "./tests/signup-and-login";
 
@@ -20,6 +23,7 @@ describe("Unteris E2E test suite", () => {
 		const reqURL = await app.getUrl();
 		request.setBaseUrl(reqURL.replace("[::1]", "localhost"));
 		return async () => {
+			await app.get<RedisClientType>(getInstanceToken()).del("*");
 			await app.close();
 		};
 	});
@@ -30,4 +34,5 @@ describe("Unteris E2E test suite", () => {
 	csrfTest();
 	signUpAndLoginTests();
 	resetPasswordTest();
+	locationTest();
 });
