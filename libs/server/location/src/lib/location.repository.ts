@@ -5,7 +5,7 @@ import {
 	LocationWithImage,
 	OverviewObject,
 } from "@unteris/shared/types";
-import { Insertable, Kysely } from "kysely";
+import { Insertable, Kysely, Updateable } from "kysely";
 
 @Injectable()
 export class LocationRepository {
@@ -51,5 +51,13 @@ export class LocationRepository {
 			])
 			.where("l.id", "=", id)
 			.executeTakeFirstOrThrow();
+	}
+
+	async update(id: string, location: Updateable<Database["location"]>) {
+		return this.db
+			.updateTable("location")
+			.set(location)
+			.where("id", "=", id)
+			.execute();
 	}
 }
