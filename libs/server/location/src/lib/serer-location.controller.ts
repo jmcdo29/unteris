@@ -57,9 +57,9 @@ export class ServerLocationController {
 	@Post("new")
 	create(
 		@Body() body: LocationCreationDto,
-		@UploadedFiles() files: Record<string, unknown>[],
+		@UploadedFiles() files?: Record<string, unknown>[],
 	) {
-		return this.service.createLocation(body.data, files[0]);
+		return this.service.createLocation(body.data, files?.[0] ?? undefined);
 	}
 
 	@SkipSessionCheck(false)

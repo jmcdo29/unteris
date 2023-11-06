@@ -49,3 +49,4 @@ docker/*
 dump
 .env
 .env.serve
+session.txt

@@ -55,7 +55,7 @@ export class ServerSecurityService {
 			loginMethod.id,
 		);
 		this.sessionService.updateSession(sessionId, {
-			user: { email: newUser.email, id: createdUser.id, roles: ["player"] },
+			user: { email: newUser.email, id: createdUser.id },
 		});
 		await this.sendEmailVerification({
 			id: createdUser.id,
@@ -124,7 +124,7 @@ export class ServerSecurityService {
 			});
 		}
 		await this.sessionService.updateSession(sessionId, {
-			user: { email: user.email, id: user.id, roles: user.roles },
+			user: { email: user.email, id: user.id },
 		});
 		await this.securityRepo.clearLoginAttemptsByLocalLoginId(user.localLoginId);
 		return { success: true, displayName: user.name, id: user.id };
@@ -169,7 +169,11 @@ export class ServerSecurityService {
 		);
 	}
 
-	async getUserById(id: string): Promise<UserAccount & { roles: RoleEnum[] }> {
+	async getUserById(
+		id: string,
+	): Promise<
+		Omit<UserAccount, "imageId" | "isVerified"> & { roles: RoleEnum[] }
+	> {
 		const users = await this.securityRepo.findUserById(id);
 		const user = { ...users[0], roles: [users[0].roles] };
 		for (const u of users) {

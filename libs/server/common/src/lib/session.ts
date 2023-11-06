@@ -10,7 +10,6 @@ import {
 	ulid,
 	union,
 } from "valibot";
-import { RoleEnumSchema } from "./role.enum";
 
 export const SessionDataSchema = object({
 	id: string(),
@@ -18,7 +17,6 @@ export const SessionDataSchema = object({
 		object({
 			email: optional(string([email()])),
 			id: optional(string([ulid()])),
-			roles: optional(array(RoleEnumSchema)),
 		}),
 	),
 	csrf: string(),

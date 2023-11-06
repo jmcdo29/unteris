@@ -25,18 +25,14 @@ export class SecurityRepo {
 
 	async findUserById(
 		id: string,
-	): Promise<Array<Omit<UserAccount, "imageId"> & { roles: RoleEnum }>> {
+	): Promise<
+		Array<Omit<UserAccount, "imageId" | "isVerified"> & { roles: RoleEnum }>
+	> {
 		return await this.db
 			.selectFrom("userAccount as ua")
 			.innerJoin("userPermission as perm", "perm.userId", "ua.id")
 			.innerJoin("role as r", "r.id", "perm.roleId")
-			.select([
-				"ua.email",
-				"ua.id",
-				"ua.isVerified",
-				"ua.name",
-				"r.name as roles",
-			])
+			.select(["ua.email", "ua.id", "ua.name", "r.name as roles"])
 			.where("ua.id", "=", id)
 			.execute();
 	}
