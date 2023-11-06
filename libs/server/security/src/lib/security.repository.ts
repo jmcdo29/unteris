@@ -61,17 +61,21 @@ export class SecurityRepo {
 			.execute();
 	}
 
-	async findUserWithLocalLogin(
-		email: string,
-	): Promise<
-		| (Pick<UserAccount, "id" | "name" | "email"> &
-				Pick<LocalLogin, "password" | "attempts"> & { localLoginId: string })
-		| undefined
+	async findUserWithLocalLogin(email: string): Promise<
+		Array<
+			| Pick<UserAccount, "id" | "name" | "email"> &
+					Pick<LocalLogin, "password" | "attempts"> & {
+						localLoginId: string;
+						roles: string;
+					}
+		>
 	> {
 		return this.db
 			.selectFrom("userAccount as ua")
 			.innerJoin("loginMethod as lm", "lm.userId", "ua.id")
 			.innerJoin("localLogin as ll", "loginMethodId", "lm.id")
+			.innerJoin("userPermission as perm", "perm.userId", "ua.id")
+			.innerJoin("role as r", "r.id", "perm.roleId")
 			.select([
 				"ua.email",
 				"ua.name",
@@ -79,9 +83,10 @@ export class SecurityRepo {
 				"ll.password",
 				"ll.attempts",
 				"ll.id as localLoginId",
+				"r.name as roles",
 			])
 			.where("ua.email", "=", email)
-			.executeTakeFirst();
+			.execute();
 	}
 
 	async incrementLoginAttemptsByLocalLoginId(id: string): Promise<void> {

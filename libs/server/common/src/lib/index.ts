@@ -9,5 +9,6 @@ export {
 	UnterisSession,
 } from "./session";
 export * from "./request";
+export * from "./role.enum";
 export * from "./valibot-to-openapi";
 export * from "./valibot.dto";

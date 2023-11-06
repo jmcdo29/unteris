@@ -4,6 +4,7 @@ import {
 	UnauthorizedException,
 } from "@nestjs/common";
 import { OgmaLogger, OgmaService } from "@ogma/nestjs-module";
+import { RoleEnum } from "@unteris/server/common";
 import { ServerEmailService } from "@unteris/server/email";
 import { ServerHashService } from "@unteris/server/hash";
 import { ServerSessionService } from "@unteris/server/session";
@@ -54,9 +55,9 @@ export class ServerSecurityService {
 			loginMethod.id,
 		);
 		this.sessionService.updateSession(sessionId, {
-			user: { email: newUser.email, id: createdUser.id },
+			user: { email: newUser.email, id: createdUser.id, roles: ["player"] },
 		});
-		void this.sendEmailVerification({
+		await this.sendEmailVerification({
 			id: createdUser.id,
 			name: newUser.name,
 			email: newUser.email,
@@ -91,9 +92,19 @@ export class ServerSecurityService {
 		userLogin: LoginBody,
 		sessionId: string,
 	): Promise<LoginResponse> {
-		const user = await this.securityRepo.findUserWithLocalLogin(
+		const users = await this.securityRepo.findUserWithLocalLogin(
 			userLogin.email,
 		);
+		const userId = users[0]?.id;
+		if (!users.length || !users.every((u) => u.id === userId)) {
+			throw new UnauthorizedException();
+		}
+		// biome-ignore lint/style/noNonNullAssertion: we assert the array is not empty earlier
+		const firstUser = users.pop()!;
+		const user = { ...firstUser, roles: [firstUser?.roles] as RoleEnum[] };
+		for (const u of users) {
+			user.roles.push(u.roles as RoleEnum);
+		}
 		if (!user || user.attempts >= 5) {
 			throw new UnauthorizedException({
 				type: "AttemptLimit",
@@ -104,7 +115,7 @@ export class ServerSecurityService {
 			!user ||
 			!(await this.hashService.verify(userLogin.password, user.password))
 		) {
-			void this.securityRepo.incrementLoginAttemptsByLocalLoginId(
+			await this.securityRepo.incrementLoginAttemptsByLocalLoginId(
 				user.localLoginId,
 			);
 			throw new UnauthorizedException({
@@ -113,9 +124,9 @@ export class ServerSecurityService {
 			});
 		}
 		await this.sessionService.updateSession(sessionId, {
-			user: { email: user.email, id: user.id },
+			user: { email: user.email, id: user.id, roles: user.roles },
 		});
-		void this.securityRepo.clearLoginAttemptsByLocalLoginId(user.localLoginId);
+		await this.securityRepo.clearLoginAttemptsByLocalLoginId(user.localLoginId);
 		return { success: true, displayName: user.name, id: user.id };
 	}
 
