@@ -93,6 +93,7 @@ jobs:
         shell: bash
         run: pnpm exec nx run server-e2e:e2e --configuration=ci
         continue-on-error: true
+        timeout-minutes: 30
 
   agents:
     name: Nx Cloud - Agents
