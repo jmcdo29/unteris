@@ -169,7 +169,14 @@ export class ServerSecurityService {
 		);
 	}
 
-	async getUserById(id: string): Promise<UserAccount> {
-		return await this.securityRepo.findUserById(id);
+	async getUserById(id: string): Promise<UserAccount & { roles: RoleEnum[] }> {
+		const users = await this.securityRepo.findUserById(id);
+		const user = { ...users[0], roles: [users[0].roles] };
+		for (const u of users) {
+			if (!user.roles.includes(u.roles)) {
+				user.roles.push(u.roles);
+			}
+		}
+		return user;
 	}
 }

@@ -1,4 +1,5 @@
 import { Injectable } from "@nestjs/common";
+import { RoleEnum } from "@unteris/server/common";
 import { Database, InjectKysely } from "@unteris/server/kysely";
 import {
 	LocalLogin,
@@ -22,12 +23,22 @@ export class SecurityRepo {
 			.executeTakeFirst();
 	}
 
-	async findUserById(id: string): Promise<UserAccount> {
+	async findUserById(
+		id: string,
+	): Promise<Array<Omit<UserAccount, "imageId"> & { roles: RoleEnum }>> {
 		return await this.db
-			.selectFrom("userAccount")
-			.selectAll()
-			.where("id", "=", id)
-			.executeTakeFirstOrThrow();
+			.selectFrom("userAccount as ua")
+			.innerJoin("userPermission as perm", "perm.userId", "ua.id")
+			.innerJoin("role as r", "r.id", "perm.roleId")
+			.select([
+				"ua.email",
+				"ua.id",
+				"ua.isVerified",
+				"ua.name",
+				"r.name as roles",
+			])
+			.where("ua.id", "=", id)
+			.execute();
 	}
 
 	async createUserRecord(user: SignupUser): Promise<Pick<UserAccount, "id">> {

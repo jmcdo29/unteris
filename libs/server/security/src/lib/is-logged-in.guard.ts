@@ -25,7 +25,7 @@ export class IsLoggedInGuard implements CanActivate {
 			return false;
 		}
 		const user = await this.securityService.getUserById(session.user.id);
-		req.user = { ...user, roles: [] };
+		req.user = user;
 		return true;
 	}
 }
