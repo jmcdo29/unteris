@@ -88,6 +88,7 @@ jobs:
         shell: bash
         run: pnpm exec nx affected -t e2e --parallel --configuration=ci
         continue-on-error: true
+        timeout-minutes: 30
 
   agents:
     name: Nx Cloud - Agents
