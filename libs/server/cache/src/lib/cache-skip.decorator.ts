@@ -1,4 +1,5 @@
-import { SetMetadata } from "@nestjs/common";
-import { CACHE_SKIP } from "./cache.constants";
+import { Reflector } from "@nestjs/core";
 
-export const CacheSkip = (skip = true) => SetMetadata(CACHE_SKIP, skip);
+export const CacheSkip = Reflector.createDecorator<boolean>({
+	transform: (val?: boolean) => val ?? true,
+});
