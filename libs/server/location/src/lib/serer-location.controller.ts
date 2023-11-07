@@ -24,12 +24,15 @@ import {
 	getSchemaPath,
 } from "@nestjs/swagger";
 import { Action, Castle, CastleGuard, Subject } from "@unteris/server/castle";
-import { FileDto, IdParamDto, OverviewObjectDto } from "@unteris/server/common";
+import { IdParamDto, OverviewObjectDto } from "@unteris/server/common";
 import { SkipSessionCheck } from "@unteris/server/session";
 import { locationRoute } from "@unteris/shared/types";
-import { ByTypeQueryDto } from "./models";
-import { LocationCreationDto } from "./models/location-creation.dto";
-import { LocationUpdateDto } from "./models/location-update.dto";
+import {
+	ByTypeQueryDto,
+	ImageFile,
+	LocationCreationDto,
+	LocationUpdateDto,
+} from "./models";
 import { ServerLocationService } from "./server-location.service";
 
 @ApiTags("Location")
@@ -77,7 +80,7 @@ export class ServerLocationController {
 	@UseGuards(CastleGuard)
 	@Castle([Action.Create, Subject.Location])
 	@Post("new")
-	create(@Body() body: LocationCreationDto, @UploadedFile() file?: FileDto) {
+	create(@Body() body: LocationCreationDto, @UploadedFile() file?: ImageFile) {
 		return this.service.createLocation(body.data, file?.data ?? undefined);
 	}
 

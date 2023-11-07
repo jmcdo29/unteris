@@ -1,9 +1,11 @@
 import { TypeschemaDto } from "@nest-lab/typeschema";
-import { ObjectSchema } from "valibot";
+import { ObjectSchema, OptionalSchema, OptionalSchemaAsync } from "valibot";
 import { schemaToOpenAPI } from "./valibot-to-openapi";
 
-// biome-ignore lint/suspicious/noExplicitAny: valibot requires any here
-export const ValibotDto: <T extends ObjectSchema<Record<string, any>>>(
+// biome-ignore lint/suspicious/noExplicitAny: Valibot required any here
+type Object = ObjectSchema<Record<string, any>>;
+
+export const ValibotDto: <T extends Object | OptionalSchema<Object>,>(
 	schema: T,
 ) => ReturnType<typeof TypeschemaDto<T>> = (schema) => {
 	class DtoSchema extends TypeschemaDto(schema) {

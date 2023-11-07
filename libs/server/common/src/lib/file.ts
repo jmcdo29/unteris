@@ -3,7 +3,7 @@ import { ValibotDto } from "./valibot.dto";
 
 export const FileSchema = object({
 	fieldname: string(),
-	originalName: string(),
+	originalname: string(),
 	mimetype: string(),
 	size: number(),
 	buffer: instance(Buffer),

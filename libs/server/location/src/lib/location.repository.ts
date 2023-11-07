@@ -1,4 +1,5 @@
 import { Injectable } from "@nestjs/common";
+import { File } from "@unteris/server/common";
 import { Database, InjectKysely } from "@unteris/server/kysely";
 import {
 	Location,
@@ -29,10 +30,23 @@ export class LocationRepository {
 
 	async createLocation(
 		location: Insertable<Database["location"]>,
+		file?: string,
 	): Promise<Location> {
+		let fileId;
+		if (file) {
+			const result = await this.db
+				.insertInto("image")
+				.values({
+					originalUrl: file,
+					type: "location_image",
+				})
+				.returning(["id"])
+				.execute();
+			fileId = result[0].id;
+		}
 		return this.db
 			.insertInto("location")
-			.values(location)
+			.values({ ...location, imageId: fileId })
 			.returningAll()
 			.executeTakeFirstOrThrow();
 	}

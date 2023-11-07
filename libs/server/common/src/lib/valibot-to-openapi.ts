@@ -1,5 +1,8 @@
 import { Type } from "@nestjs/common";
-import { ObjectSchema } from "valibot";
+import { ObjectSchema, OptionalSchema } from "valibot";
+
+// biome-ignore lint/suspicious/noExplicitAny: valibot needs any here
+type Object = ObjectSchema<Record<string, any>>;
 
 const getType = (schema: {
 	schema: string;
@@ -44,9 +47,12 @@ const getType = (schema: {
 			throw new Error(`Unknown Type: "${schema.schema}"`);
 	}
 };
-
-// biome-ignore lint/suspicious/noExplicitAny: valibot needs any here
-export const schemaToOpenAPI = (schema: ObjectSchema<Record<string, any>>) => {
+export const schemaToOpenAPI = (
+	schema: Object | OptionalSchema<Object>,
+): Record<string, unknown> => {
+	if (schema.schema === "optional") {
+		return { required: false, ...schemaToOpenAPI(schema.wrapped) };
+	}
 	const valibotSchema = schema.object;
 	const schemaObj: Record<string, unknown> = {};
 	const schemaKeys = Object.keys(valibotSchema);
