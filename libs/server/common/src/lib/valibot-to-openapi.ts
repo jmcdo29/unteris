@@ -1,13 +1,15 @@
-import { AnySchema, ObjectSchema } from "valibot";
+import { Type } from "@nestjs/common";
+import { ObjectSchema } from "valibot";
 
 const getType = (schema: {
 	schema: string;
 	enum?: string[];
 	wrapped?: { schema: string };
+	class?: Type<unknown>;
 }): {
-	// biome-ignore lint/complexity/noBannedTypes: @nestjs/swagger requires a Function
-	type: () => Function;
+	type: () => Type<unknown>;
 	required?: boolean;
+	format?: string;
 	enum?: string[];
 } => {
 	switch (schema.schema) {
@@ -29,6 +31,15 @@ const getType = (schema: {
 				type: () => String,
 				enum: schema.enum ?? [],
 			};
+		case "instance":
+			if (schema.class && schema.class.name === "Buffer") {
+				return { type: () => String, format: "binary" };
+			} else if (schema.class) {
+				// biome-ignore lint/style/noNonNullAssertion: <explanation>
+				return { type: () => schema.class! };
+			} else {
+				return { type: () => String };
+			}
 		default:
 			throw new Error(`Unknown Type: "${schema.schema}"`);
 	}

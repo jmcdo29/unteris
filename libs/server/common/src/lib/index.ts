@@ -1,5 +1,6 @@
 export * from "./authorized-user.dto";
 export * from "./cookies";
+export * from "./file";
 export * from "./id-param.dto";
 export * from "./overview-object.dto";
 export {

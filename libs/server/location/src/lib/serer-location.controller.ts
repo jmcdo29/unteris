@@ -6,14 +6,25 @@ import {
 	Patch,
 	Post,
 	Query,
+	UploadedFile,
 	UploadedFiles,
 	UseGuards,
 	UseInterceptors,
 } from "@nestjs/common";
-import { FileFieldsInterceptor } from "@nestjs/platform-express";
-import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
+import {
+	FileFieldsInterceptor,
+	FileInterceptor,
+} from "@nestjs/platform-express";
+import {
+	ApiBody,
+	ApiConsumes,
+	ApiExtraModels,
+	ApiOkResponse,
+	ApiTags,
+	getSchemaPath,
+} from "@nestjs/swagger";
 import { Action, Castle, CastleGuard, Subject } from "@unteris/server/castle";
-import { IdParamDto, OverviewObjectDto } from "@unteris/server/common";
+import { FileDto, IdParamDto, OverviewObjectDto } from "@unteris/server/common";
 import { SkipSessionCheck } from "@unteris/server/session";
 import { locationRoute } from "@unteris/shared/types";
 import { ByTypeQueryDto } from "./models";
@@ -43,23 +54,31 @@ export class ServerLocationController {
 		return this.service.getById(param.data.id);
 	}
 
-	@UseInterceptors(
-		FileFieldsInterceptor([
-			{
-				name: "image",
-				maxCount: 1,
-			},
-		]),
-	)
+	@ApiConsumes("multipart/form-data")
+	@ApiExtraModels(LocationCreationDto)
+	@ApiBody({
+		schema: {
+			allOf: [
+				{ $ref: getSchemaPath(LocationCreationDto) },
+				{
+					type: "object",
+					properties: {
+						image: {
+							type: "string",
+							format: "binary",
+						},
+					},
+				},
+			],
+		},
+	})
+	@UseInterceptors(FileInterceptor("image"))
 	@SkipSessionCheck(false)
 	@UseGuards(CastleGuard)
 	@Castle([Action.Create, Subject.Location])
 	@Post("new")
-	create(
-		@Body() body: LocationCreationDto,
-		@UploadedFiles() files?: Record<string, unknown>[],
-	) {
-		return this.service.createLocation(body.data, files?.[0] ?? undefined);
+	create(@Body() body: LocationCreationDto, @UploadedFile() file?: FileDto) {
+		return this.service.createLocation(body.data, file?.data ?? undefined);
 	}
 
 	@SkipSessionCheck(false)

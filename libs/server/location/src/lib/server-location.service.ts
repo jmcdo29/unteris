@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
+import { File } from "@unteris/server/common";
 import { Database } from "@unteris/server/kysely";
 import {
 	Location,
@@ -26,7 +27,7 @@ export class ServerLocationService {
 
 	async createLocation(
 		location: Insertable<Database["location"]>,
-		file?: Record<string, unknown>,
+		file?: File,
 	): Promise<Location> {
 		const result = this.locationRepo.createLocation(location);
 		return result;
