@@ -7,24 +7,15 @@ import {
 	Post,
 	Query,
 	UploadedFile,
-	UploadedFiles,
 	UseGuards,
-	UseInterceptors,
 } from "@nestjs/common";
-import {
-	FileFieldsInterceptor,
-	FileInterceptor,
-} from "@nestjs/platform-express";
-import {
-	ApiBody,
-	ApiConsumes,
-	ApiExtraModels,
-	ApiOkResponse,
-	ApiTags,
-	getSchemaPath,
-} from "@nestjs/swagger";
+import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { Action, Castle, CastleGuard, Subject } from "@unteris/server/castle";
-import { IdParamDto, OverviewObjectDto } from "@unteris/server/common";
+import {
+	FileUpload,
+	IdParamDto,
+	OverviewObjectDto,
+} from "@unteris/server/common";
 import { SkipSessionCheck } from "@unteris/server/session";
 import { locationRoute } from "@unteris/shared/types";
 import {
@@ -57,25 +48,7 @@ export class ServerLocationController {
 		return this.service.getById(param.data.id);
 	}
 
-	@ApiConsumes("multipart/form-data")
-	@ApiExtraModels(LocationCreationDto)
-	@ApiBody({
-		schema: {
-			allOf: [
-				{ $ref: getSchemaPath(LocationCreationDto) },
-				{
-					type: "object",
-					properties: {
-						image: {
-							type: "string",
-							format: "binary",
-						},
-					},
-				},
-			],
-		},
-	})
-	@UseInterceptors(FileInterceptor("image"))
+	@FileUpload("image", LocationCreationDto)
 	@SkipSessionCheck(false)
 	@UseGuards(CastleGuard)
 	@Castle([Action.Create, Subject.Location])
@@ -84,11 +57,16 @@ export class ServerLocationController {
 		return this.service.createLocation(body.data, file?.data ?? undefined);
 	}
 
+	@FileUpload("image", LocationUpdateDto)
 	@SkipSessionCheck(false)
 	@UseGuards(CastleGuard)
 	@Castle([Action.Update, Subject.Location])
 	@Patch("/update/:id")
-	update(@Body() body: LocationUpdateDto, @Param() param: IdParamDto) {
+	update(
+		@Body() body: LocationUpdateDto,
+		@Param() param: IdParamDto,
+		@UploadedFile() file?: ImageFile,
+	) {
 		return { ...body.data, ...param.data };
 	}
 }
