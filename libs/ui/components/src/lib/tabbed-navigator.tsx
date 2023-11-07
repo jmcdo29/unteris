@@ -1,15 +1,15 @@
+import { OverviewObject } from "@unteris/shared/types";
 import { Atom, WritableAtom, useAtom, useAtomValue } from "jotai";
 import { Suspense, SyntheticEvent } from "react";
 import { TabsWithPanel } from "./tabs-with-panel";
 
 interface TabbedNavigatorProps {
-	resourceAtom: Atom<
-		Promise<{ id: string; name: string }[]> | { id: string; name: string }[]
-	>;
+	resourceAtom: Atom<Promise<OverviewObject[]> | OverviewObject[]>;
 	indexAtom: WritableAtom<number, [val: number], void>;
 	label: string;
 	tabPanelContent: () => JSX.Element;
 	indicator?: "primary" | "secondary";
+	orientation?: "horizontal" | "vertical";
 }
 
 export const TabbedNavigator = (props: TabbedNavigatorProps) => {
@@ -23,6 +23,7 @@ export const TabbedNavigator = (props: TabbedNavigatorProps) => {
 	return (
 		<Suspense>
 			<TabsWithPanel
+				orientation={props.orientation}
 				ariaLabel={props.label}
 				tabIndex={tabIndex}
 				handleTabChange={handleTabChange}

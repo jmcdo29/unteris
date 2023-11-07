@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { Database, InjectKysely } from "@unteris/server/kysely";
-import { Deity } from "@unteris/shared/types";
+import { Deity, OverviewObject } from "@unteris/shared/types";
 import { Kysely } from "kysely";
 
 type DeityReturn = Omit<Deity, "imageId"> & { imageUrl: string | null };
@@ -9,9 +9,7 @@ type DeityReturn = Omit<Deity, "imageId"> & { imageUrl: string | null };
 export class ServerDeitiesService {
 	constructor(@InjectKysely() private readonly db: Kysely<Database>) {}
 
-	async findDeitiesOfCategory(
-		category: string,
-	): Promise<Pick<Deity, "id" | "name">[]> {
+	async findDeitiesOfCategory(category: string): Promise<OverviewObject[]> {
 		return this.db
 			.selectFrom("deity")
 			.select(["id", "name"])
@@ -64,9 +62,7 @@ export class ServerDeitiesService {
 		return deity;
 	}
 
-	async findDeitiesOfLocation(
-		location: string,
-	): Promise<Pick<Deity, "id" | "name">[]> {
+	async findDeitiesOfLocation(location: string): Promise<OverviewObject[]> {
 		return this.db
 			.selectFrom("deity")
 			.select(["id", "name"])

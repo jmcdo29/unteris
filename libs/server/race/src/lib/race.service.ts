@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { Database, InjectKysely } from "@unteris/server/kysely";
-import { Race, RaceWithAbilities } from "@unteris/shared/types";
+import { OverviewObject, RaceWithAbilities } from "@unteris/shared/types";
 import { Kysely } from "kysely";
 
 @Injectable()
@@ -10,7 +10,7 @@ export class ServerRaceService {
 		private readonly db: Kysely<Pick<Database, "race" | "racialAbility">>,
 	) {}
 
-	async getRaces(): Promise<Array<Pick<Race, "id" | "name">>> {
+	async getRaces(): Promise<OverviewObject[]> {
 		return this.db
 			.selectFrom("race")
 			.select(["id", "name"])

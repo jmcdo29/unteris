@@ -9,7 +9,7 @@ export const signUpAndLoginTests = () => {
 	return describe("SignUp and Login", () => {
 		const testPass = "ALongEnoughP4ssw0rdToBeFin3";
 		test<TestContext>("A new user should be able to sign up", async (context) => {
-			await csrfSpec();
+			// await csrfSpec();
 			const emailSpy = vi.spyOn(context.mailer, "sendMail");
 			const email = `${randomUUID()}@testing.com`;
 			const name = `Test User${randomUUID()}`;

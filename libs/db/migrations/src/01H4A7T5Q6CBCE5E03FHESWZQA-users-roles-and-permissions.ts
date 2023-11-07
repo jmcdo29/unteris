@@ -1,8 +1,7 @@
 import { Kysely, sql } from "kysely";
+import { DB } from "./utils/db.interface";
 
-export const up = async (
-	db: Kysely<Record<string, Record<string, unknown>>>,
-) => {
+export const up = async (db: DB) => {
 	await db.schema
 		.createTable("role")
 		.addColumn("id", "text", (col) => col.defaultTo(sql`ulid()`).primaryKey())
@@ -46,9 +45,7 @@ export const up = async (
 		.execute();
 };
 
-export const down = async ({
-	schema,
-}: Kysely<Record<string, Record<string, unknown>>>) => {
+export const down = async ({ schema }: DB) => {
 	await schema.dropTable("local_login").execute();
 	await schema.dropTable("login_method").execute();
 	await schema.dropTable("user_permission").execute();

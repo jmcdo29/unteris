@@ -1,9 +1,8 @@
-import { ExpressionBuilder, Kysely, sql } from "kysely";
+import { ExpressionBuilder, sql } from "kysely";
+import { DB } from "./utils/db.interface";
 import { kyselyDefaultUlid, kyselyUlid } from "./utils/ulid.sql";
 
-export const up = async (
-	db: Kysely<Record<string, Record<string, unknown>>>,
-) => {
+export const up = async (db: DB) => {
 	await db.schema
 		.createTable("image")
 		.addColumn("id", kyselyUlid, (col) =>
@@ -106,8 +105,6 @@ export const up = async (
 		.execute();
 };
 
-export const down = async (
-	_db: Kysely<Record<string, Record<string, unknown>>>,
-) => {
+export const down = async (_db: DB) => {
 	/* intentioanlly no op */
 };

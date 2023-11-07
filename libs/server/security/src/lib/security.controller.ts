@@ -8,25 +8,32 @@ import {
 	Session,
 	UseGuards,
 } from "@nestjs/common";
+import { ApiConsumes, ApiTags } from "@nestjs/swagger";
+import { CacheSkip } from "@unteris/server/cache";
 import { UnterisCookies, UnterisSession } from "@unteris/server/common";
 import { CsrfGuard } from "@unteris/server/csrf";
 import { SkipSessionCheck } from "@unteris/server/session";
-import { UserAccount } from "@unteris/shared/types";
+import { UserAccount, authRoute } from "@unteris/shared/types";
 import { Cookies } from "nest-cookies";
-import { LoginBodyDto, SignupBody } from "./models";
+import { LoginBodyDto, SignupBodyDto } from "./models";
 import { PasswordResetRequestDto } from "./models/password-reset-request.dto";
 import { PasswordResetDto } from "./models/password-reset.dto";
 import { TokenVerificationData } from "./models/token-verification-query.dto";
 import { ServerSecurityService } from "./security.service";
 
+@ApiTags("Security")
 @UseGuards(CsrfGuard)
-@Controller("auth")
+@Controller(authRoute)
 @SkipSessionCheck()
 export class ServerSecurityController {
 	constructor(private serverSecurityService: ServerSecurityService) {}
 
+	@ApiConsumes("multipart/form-data")
 	@Post("signup")
-	async signup(@Body() body: SignupBody, @Session() session: UnterisSession) {
+	async signup(
+		@Body() body: SignupBodyDto,
+		@Session() session: UnterisSession,
+	) {
 		return this.serverSecurityService.signUpLocal(body.data, session.id);
 	}
 
@@ -69,6 +76,7 @@ export class ServerSecurityController {
 	}
 
 	@Get("me")
+	@CacheSkip()
 	@SkipSessionCheck(false)
 	async getMe(@Req() { user }: { user: UserAccount }) {
 		return user;

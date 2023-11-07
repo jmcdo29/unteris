@@ -21,6 +21,7 @@ erDiagram
     User_Account ||--|| Image : "has an avatar"
     Deity ||--|| Image : "has a portrait"
     Location ||--|| Location : "can be in"
+    Location ||--||Image : "has an image"
     DeityCategory {
         string name
         ulid id
@@ -50,6 +51,7 @@ erDiagram
         string description
         string type
         ulid parent_id
+        ulid image_id
     }
     Race {
         ulid id

@@ -1,0 +1,24 @@
+{
+	"name": "ui-location",
+	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "libs/ui/location/src",
+	"projectType": "library",
+	"tags": ["ui", "react"],
+	"targets": {
+		"lint": {
+			"executor": "@nx/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["libs/ui/location/**/*.{ts,tsx,js,jsx}"]
+			}
+		},
+		"test": {
+			"executor": "@nx/vite:test",
+			"outputs": ["coverage/libs/ui/location"],
+			"options": {
+				"passWithNoTests": true,
+				"reportsDirectory": "../../../coverage/libs/ui/location"
+			}
+		}
+	}
+}

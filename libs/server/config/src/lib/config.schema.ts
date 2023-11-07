@@ -3,20 +3,21 @@ import {
 	email,
 	enumType,
 	fallback,
-	literal,
+	intersection,
 	merge,
 	number,
 	object,
 	optional,
 	string,
 	transform,
+	union,
 } from "valibot";
 
 const hourInSeconds = 60 * 60;
 const dayInSeconds = hourInSeconds * 24;
 
 const prodConfig = object({
-	NODE_ENV: enumType(["development", "production", "test"]),
+	NODE_ENV: enumType(["production"]),
 	NOREPLY_EMAIL: string([email()]),
 	SMTP_PASS: string(),
 	SMTP_HOST: string(),
@@ -55,8 +56,13 @@ const commonConfig = object({
 	),
 	CORS: fallback(string(), "http://localhost:4200"),
 	REDIS_URL: string(),
-	NODE_ENV: enumType(["development", "production", "test"]),
 	SESSION_EXPIRES_IN: fallback(number(), hourInSeconds),
 	REFRESH_EXPIRES_IN: fallback(number(), 7 * dayInSeconds),
 });
-export const Config = merge([commonConfig, dbConfig, rabbitConfig, prodConfig]);
+
+const envConfig = union([devConfig, prodConfig]);
+
+export const Config = intersection([
+	envConfig,
+	merge([commonConfig, dbConfig, rabbitConfig]),
+]);

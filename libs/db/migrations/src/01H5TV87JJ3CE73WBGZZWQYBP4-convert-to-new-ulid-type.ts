@@ -1,9 +1,5 @@
-import {
-	AlterColumnBuilder,
-	AlterColumnBuilderCallback,
-	Kysely,
-	sql,
-} from "kysely";
+import { AlterColumnBuilder, AlterColumnBuilderCallback, sql } from "kysely";
+import { DB } from "./utils/db.interface";
 import { kyselyDefaultUlid } from "./utils/ulid.sql";
 
 const convertToUlid = (
@@ -22,7 +18,7 @@ const setUlidDefault = (
 ];
 
 const migrateTableColumnToUlid = async (
-	db: Kysely<Record<string, Record<string, unknown>>>,
+	db: DB,
 	table: string,
 	column: string,
 	setDefault = false,
@@ -38,7 +34,7 @@ const migrateTableColumnToUlid = async (
 };
 
 const recreateForeignKey = async (
-	db: Kysely<Record<string, Record<string, unknown>>>,
+	db: DB,
 	table: string,
 	column: string,
 	targetTable: string,
@@ -52,9 +48,7 @@ const recreateForeignKey = async (
 		.execute();
 };
 
-export const up = async (
-	db: Kysely<Record<string, Record<string, unknown>>>,
-): Promise<void> => {
+export const up = async (db: DB): Promise<void> => {
 	await sql`CREATE EXTENSION ulid;`.execute(db);
 	await db.schema
 		.alterTable("deity_domain")
@@ -153,8 +147,6 @@ export const up = async (
 	);
 };
 
-export const down = async (
-	db: Kysely<Record<string, Record<string, unknown>>>,
-) => {
+export const down = async (db: DB) => {
 	await sql`DROP EXTENSION ulid`.execute(db);
 };

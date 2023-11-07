@@ -7,6 +7,7 @@ import {
 import { Heading } from "@unteris/ui/components";
 import { DeityNav } from "@unteris/ui/deities";
 import { History } from "@unteris/ui/history";
+import { UiLocation } from "@unteris/ui/location";
 import { UiRace } from "@unteris/ui/race";
 import {
 	RouteObject,
@@ -16,7 +17,7 @@ import {
 import { Root } from "./root";
 
 import { Box, useTheme } from "@mui/material";
-import { Welcome } from "./welcome/welcome";
+import { Welcome } from "./welcome";
 
 const ErrorBoundary = (): JSX.Element => {
 	const error = useRouteError();
@@ -75,6 +76,10 @@ const routes = (): RouteObject[] => {
 				{
 					path: "/login",
 					element: <UiAuth />,
+				},
+				{
+					path: "/location",
+					element: <UiLocation />,
 				},
 				{
 					path: "/verify",

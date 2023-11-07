@@ -5,7 +5,7 @@ export const DeitySchema = object({
 	id: string([ulid()]),
 	name: string(),
 	description: string(),
-	imageId: string(),
+	imageId: optional(string()),
 	categoryId: optional(string([ulid()])),
 	locationId: optional(string([ulid()])),
 	domain: optional(array(DomainSchema)),

@@ -1,4 +1,5 @@
 import { Injectable } from "@nestjs/common";
+import { RoleEnum } from "@unteris/server/common";
 import { Database, InjectKysely } from "@unteris/server/kysely";
 import {
 	LocalLogin,
@@ -22,16 +23,22 @@ export class SecurityRepo {
 			.executeTakeFirst();
 	}
 
-	async findUserById(id: string): Promise<UserAccount> {
+	async findUserById(
+		id: string,
+	): Promise<
+		Array<Omit<UserAccount, "imageId" | "isVerified"> & { roles: RoleEnum }>
+	> {
 		return await this.db
-			.selectFrom("userAccount")
-			.selectAll()
-			.where("id", "=", id)
-			.executeTakeFirstOrThrow();
+			.selectFrom("userAccount as ua")
+			.innerJoin("userPermission as perm", "perm.userId", "ua.id")
+			.innerJoin("role as r", "r.id", "perm.roleId")
+			.select(["ua.email", "ua.id", "ua.name", "r.name as roles"])
+			.where("ua.id", "=", id)
+			.execute();
 	}
 
 	async createUserRecord(user: SignupUser): Promise<Pick<UserAccount, "id">> {
-		return this.db
+		const newUser = await this.db
 			.insertInto("userAccount")
 			.values({
 				email: user.email,
@@ -40,6 +47,14 @@ export class SecurityRepo {
 			})
 			.returning(["id"])
 			.executeTakeFirstOrThrow();
+		await this.db
+			.insertInto("userPermission")
+			.values((eb) => ({
+				userId: newUser.id,
+				roleId: eb.selectFrom("role").select("id").where("name", "=", "player"),
+			}))
+			.execute();
+		return newUser;
 	}
 
 	async createUserVerificationRecord(id: string, token: string): Promise<void> {
@@ -53,17 +68,21 @@ export class SecurityRepo {
 			.execute();
 	}
 
-	async findUserWithLocalLogin(
-		email: string,
-	): Promise<
-		| (Pick<UserAccount, "id" | "name" | "email"> &
-				Pick<LocalLogin, "password" | "attempts"> & { localLoginId: string })
-		| undefined
+	async findUserWithLocalLogin(email: string): Promise<
+		Array<
+			| Pick<UserAccount, "id" | "name" | "email"> &
+					Pick<LocalLogin, "password" | "attempts"> & {
+						localLoginId: string;
+						roles: string;
+					}
+		>
 	> {
 		return this.db
 			.selectFrom("userAccount as ua")
 			.innerJoin("loginMethod as lm", "lm.userId", "ua.id")
 			.innerJoin("localLogin as ll", "loginMethodId", "lm.id")
+			.innerJoin("userPermission as perm", "perm.userId", "ua.id")
+			.innerJoin("role as r", "r.id", "perm.roleId")
 			.select([
 				"ua.email",
 				"ua.name",
@@ -71,9 +90,10 @@ export class SecurityRepo {
 				"ll.password",
 				"ll.attempts",
 				"ll.id as localLoginId",
+				"r.name as roles",
 			])
 			.where("ua.email", "=", email)
-			.executeTakeFirst();
+			.execute();
 	}
 
 	async incrementLoginAttemptsByLocalLoginId(id: string): Promise<void> {

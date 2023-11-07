@@ -1,5 +1,6 @@
 import {
 	Output,
+	array,
 	email,
 	merge,
 	object,

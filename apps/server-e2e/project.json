@@ -24,7 +24,7 @@
 		"run-migrations": {
 			"executor": "nx:run-commands",
 			"options": {
-				"command": "pnpm nx run kysely-cli:e2e"
+				"command": "pnpm nx run cli:e2e"
 			},
 			"dependsOn": ["start-docker"]
 		},

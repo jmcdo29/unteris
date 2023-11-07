@@ -1,8 +1,7 @@
 import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
-import { SessionData } from "@unteris/server/common";
+import { AuthorizedRequest } from "@unteris/server/common";
 import { SKIP_SESSION_LOGGED_IN_CHECK } from "@unteris/server/session";
-import { UserAccount } from "@unteris/shared/types";
 import { ServerSecurityService } from "./security.service";
 
 @Injectable()
@@ -15,14 +14,12 @@ export class IsLoggedInGuard implements CanActivate {
 	async canActivate(context: ExecutionContext) {
 		const skipCheck = this.reflector.getAllAndOverride(
 			SKIP_SESSION_LOGGED_IN_CHECK,
-			[context.getClass(), context.getHandler()],
+			[context.getHandler(), context.getClass()],
 		);
 		if (skipCheck) {
 			return true;
 		}
-		const req = context
-			.switchToHttp()
-			.getRequest<{ session: SessionData; user?: UserAccount }>();
+		const req = context.switchToHttp().getRequest<AuthorizedRequest>();
 		const { session } = req;
 		if (!session.user.id) {
 			return false;

@@ -1,15 +1,20 @@
 import { Controller, Get, Req, UseGuards } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
+import { CacheSkip } from "@unteris/server/cache";
 import { RefreshRequest, UnterisCookies } from "@unteris/server/common";
+import { sessionRoute } from "@unteris/shared/types";
 import { Cookie, Cookies, NewCookies } from "nest-cookies";
 import { RefreshSessionGuard } from "./refresh-session.guard";
 import { SkipSessionCheck } from "./session.decorator";
 import { ServerSessionService } from "./session.service";
 
-@Controller("session")
+@ApiTags("Security")
+@Controller(sessionRoute)
 export class SessionController {
 	constructor(private readonly sessionService: ServerSessionService) {}
 	@Get("refresh")
 	@UseGuards(RefreshSessionGuard)
+	@CacheSkip()
 	@SkipSessionCheck()
 	async refreshSession(
 		@Cookies() cookies: UnterisCookies,

@@ -1,3 +1,4 @@
+import { csrfHeader } from "@unteris/shared/types";
 import { spec } from "pactum";
 import { describe, test } from "vitest";
 import { csrfSpec, csrfStoreToken, sessionStoreToken } from "../csrf";
@@ -8,7 +9,7 @@ export const csrfTest = () => {
 			await csrfSpec();
 			await spec()
 				.post("/csrf/verify")
-				.withHeaders("X-UNTERIS-CSRF-PROTECTION", csrfStoreToken)
+				.withHeaders(csrfHeader, csrfStoreToken)
 				.withCookies("sessionId", sessionStoreToken)
 				.expectStatus(201)
 				.expectJson({ success: true })

@@ -1,8 +1,7 @@
-import { Kysely, sql } from "kysely";
+import { sql } from "kysely";
+import { DB } from "./utils/db.interface";
 
-export const up = async (
-	db: Kysely<Record<string, Record<string, unknown>>>,
-) => {
+export const up = async (db: DB) => {
 	await db.schema
 		.createTable("verification_token")
 		.addColumn("id", "text", (col) => col.defaultTo(sql`ulid()`).primaryKey())
@@ -17,8 +16,6 @@ export const up = async (
 		.execute();
 };
 
-export const down = async (
-	db: Kysely<Record<string, Record<string, unknown>>>,
-) => {
+export const down = async (db: DB) => {
 	await db.schema.dropTable("verification_token").execute();
 };

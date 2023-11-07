@@ -1,8 +1,7 @@
 import { Kysely, sql } from "kysely";
+import { DB } from "./utils/db.interface";
 
-export const up = async (
-	db: Kysely<Record<string, Record<string, unknown>>>,
-) => {
+export const up = async (db: DB) => {
 	await sql`CREATE EXTENSION IF NOT EXISTS pgcrypto;`.execute(db);
 	// ulid reference https://github.com/geckoboard/pgulid/blob/master/pgulid.sql
 	await sql`CREATE FUNCTION ulid()
@@ -96,9 +95,7 @@ VOLATILE;`.execute(db);
 		.execute();
 };
 
-export const down = async (
-	db: Kysely<Record<string, Record<string, unknown>>>,
-) => {
+export const down = async (db: DB) => {
 	await db.schema.dropTable("deity_domain").execute();
 	await db.schema.dropTable("deity").execute();
 	await db.schema.dropTable("domain").execute();

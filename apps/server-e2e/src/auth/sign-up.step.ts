@@ -1,7 +1,8 @@
-import { base32, base32Regex } from "@unteris/shared/base32";
-import { spec } from "pactum";
+import { base32Regex } from "@unteris/shared/base32";
+import { csrfHeader } from "@unteris/shared/types";
+import { spec, stash } from "pactum";
 import { regex } from "pactum-matchers";
-import { csrfStoreToken, sessionStoreToken } from "../csrf";
+import { csrfSpec, csrfStoreToken, sessionStoreToken } from "../csrf";
 
 export const signup = async ({
 	email,
@@ -18,7 +19,7 @@ export const signup = async ({
 			confirmationPassword: password,
 			name,
 		})
-		.withHeaders("X-UNTERIS-CSRF-PROTECTION", csrfStoreToken)
+		.withHeaders(csrfHeader, csrfStoreToken)
 		.withCookies("sessionId", sessionStoreToken)
 		.expectStatus(201)
 		.expectJsonMatch({

@@ -1,4 +1,4 @@
-import { TypeschemaDto } from "@nest-lab/typeschema";
+import { ValibotDto } from "@unteris/server/common";
 import { PasswordResetSchema } from "@unteris/shared/types";
 
-export class PasswordResetDto extends TypeschemaDto(PasswordResetSchema) {}
+export class PasswordResetDto extends ValibotDto(PasswordResetSchema) {}
