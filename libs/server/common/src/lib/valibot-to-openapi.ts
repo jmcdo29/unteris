@@ -38,8 +38,8 @@ const getType = (schema: {
 			if (schema.class && schema.class.name === "Buffer") {
 				return { type: () => String, format: "binary" };
 			} else if (schema.class) {
-				// biome-ignore lint/style/noNonNullAssertion: <explanation>
-				return { type: () => schema.class! };
+				const schemaClass = schema.class;
+				return { type: () => schemaClass };
 			} else {
 				return { type: () => String };
 			}

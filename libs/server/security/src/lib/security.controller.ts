@@ -13,7 +13,7 @@ import { CacheSkip } from "@unteris/server/cache";
 import { UnterisCookies, UnterisSession } from "@unteris/server/common";
 import { CsrfGuard } from "@unteris/server/csrf";
 import { SkipSessionCheck } from "@unteris/server/session";
-import { UserAccount, authRoute } from "@unteris/shared/types";
+import { Success, UserAccount, authRoute } from "@unteris/shared/types";
 import { Cookies } from "nest-cookies";
 import { LoginBodyDto, SignupBodyDto } from "./models";
 import { PasswordResetRequestDto } from "./models/password-reset-request.dto";
@@ -53,7 +53,7 @@ export class ServerSecurityController {
 	@SkipSessionCheck(false)
 	async verifyEmailByToken(
 		@Query() query: TokenVerificationData,
-	): Promise<{ success: boolean }> {
+	): Promise<Success> {
 		return this.serverSecurityService.verifyUserRecord(
 			query.data.verificationToken,
 		);
@@ -62,7 +62,7 @@ export class ServerSecurityController {
 	@Post("password-reset-request")
 	async startUserPasswordReset(
 		@Body() body: PasswordResetRequestDto,
-	): Promise<{ success: boolean }> {
+	): Promise<Success> {
 		await this.serverSecurityService.createPasswordResetToken(body.data);
 		return { success: true };
 	}
@@ -70,7 +70,7 @@ export class ServerSecurityController {
 	@Post("password-reset")
 	async resetUserPasswordFromToken(
 		@Body() body: PasswordResetDto,
-	): Promise<{ success: boolean }> {
+	): Promise<Success> {
 		await this.serverSecurityService.resetUserPassword(body.data);
 		return { success: true };
 	}

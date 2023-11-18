@@ -7,6 +7,7 @@ import {
 	PasswordResetRequest,
 	RaceWithAbilities,
 	SignupUser,
+	Success,
 	UserAccount,
 	authRoute,
 	csrfRoute,
@@ -15,11 +16,10 @@ import {
 	raceRoute,
 	sessionRoute,
 } from "@unteris/shared/types";
-import { AnySchema, Output } from "valibot";
 
 export type method = "get" | "post" | "patch" | "put" | "delete";
 
-type PathToTypeMap = Record<string, [Output<AnySchema>, Output<AnySchema>?]>;
+type PathToTypeMap = Record<string, [unknown, unknown?]>;
 
 export type SdkGeneric = Record<method, PathToTypeMap>;
 
@@ -43,37 +43,33 @@ type RaceRoutes = {
 type SecurityRoutes = {
 	get: {
 		[key: `${typeof authRoute}/verify-email?verificationToken=${string}`]: [
-			{ success: boolean },
+			Success,
 		];
 		[csrfRoute]: [{ csrfToken: string }];
 	} & Record<`${typeof authRoute}/me`, [UserAccount]> &
-		Record<`${typeof sessionRoute}/refresh`, [{ success: boolean }]>;
+		Record<`${typeof sessionRoute}/refresh`, [Success]>;
 	post:
-		| Record<`${typeof csrfRoute}/verify`, [{ success: boolean }]> &
+		| Record<`${typeof csrfRoute}/verify`, [Success]> &
 				Record<
 					`${typeof authRoute}/signup`,
-					[{ success: boolean; id: UserAccount["id"] }, SignupUser]
+					[Success & { id: UserAccount["id"] }, SignupUser]
 				> &
 				Record<
 					`${typeof authRoute}/login`,
 					[
-						{
-							success: boolean;
+						Success & {
 							id: UserAccount["id"];
 							displayName: UserAccount["name"];
 						},
 						LoginBody,
 					]
 				> &
-				Record<`${typeof authRoute}/logout`, [{ success: boolean }]> &
+				Record<`${typeof authRoute}/logout`, [Success]> &
 				Record<
 					`${typeof authRoute}/password-reset-request`,
-					[{ success: boolean }, PasswordResetRequest]
+					[Success, PasswordResetRequest]
 				> &
-				Record<
-					`${typeof authRoute}/password-reset`,
-					[{ success: boolean }, PasswordReset]
-				>;
+				Record<`${typeof authRoute}/password-reset`, [Success, PasswordReset]>;
 };
 
 type LocationRoutes = {
@@ -88,6 +84,10 @@ type LocationRoutes = {
 		`${typeof locationRoute}?type=${Location["type"]}`,
 		[Array<OverviewObject>]
 	>;
+	post: Record<`${typeof locationRoute}/new`, [Location, FormData]>;
+	patch: {
+		[key: `${typeof locationRoute}/update/${string}`]: [Success, FormData];
+	};
 };
 
 export type RouteToType = DeityRoutes &

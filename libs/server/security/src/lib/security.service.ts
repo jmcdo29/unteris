@@ -15,6 +15,7 @@ import {
 	PasswordReset,
 	PasswordResetRequest,
 	SignupUser,
+	Success,
 	UserAccount,
 } from "@unteris/shared/types";
 import { SecurityRepo } from "./security.repository";
@@ -33,7 +34,7 @@ export class ServerSecurityService {
 	async signUpLocal(
 		newUser: SignupUser,
 		sessionId: string,
-	): Promise<{ success: boolean; id: UserAccount["id"] }> {
+	): Promise<Success & { id: UserAccount["id"] }> {
 		const existingAccount = await this.securityRepo.findUserByEmail(
 			newUser.email,
 		);
@@ -134,9 +135,7 @@ export class ServerSecurityService {
 		await this.sessionService.updateSession(sessionId, { user: {} });
 	}
 
-	async verifyUserRecord(
-		verificationToken: string,
-	): Promise<{ success: boolean }> {
+	async verifyUserRecord(verificationToken: string): Promise<Success> {
 		await this.securityRepo.setUserRecordAsActive(verificationToken);
 		return { success: true };
 	}

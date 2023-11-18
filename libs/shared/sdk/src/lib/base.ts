@@ -1,5 +1,7 @@
 import {
 	Location,
+	LocationCreation,
+	LocationUpdate,
 	LoginBody,
 	PasswordReset,
 	PasswordResetRequest,
@@ -47,7 +49,7 @@ abstract class SdkBase<T extends SdkGeneric = RouteToType> {
 			credentials: "include",
 			mode: "cors",
 		};
-		if (config.method !== "get") {
+		if (config.method !== "get" && config.method !== "delete") {
 			reqConfig.body = JSON.stringify(config.body);
 		}
 		const res = await fetch(
@@ -170,6 +172,38 @@ export class Sdk extends SdkBase {
 	}
 	async getLocationById(id: string) {
 		return this.get(`${locationRoute}/id/${id}`);
+	}
+
+	async createLocation(location: LocationCreation, image?: Blob) {
+		const form = new FormData();
+		for (const key in location) {
+			const val = location[key as keyof typeof location];
+			if (val) {
+				form.append(key, val);
+			}
+		}
+		if (image) {
+			form.append("image", image);
+		}
+		return this.post("location/new", form, {
+			"Content-Type": "multipart/form-data",
+		});
+	}
+
+	async updateLocation(id: string, location: LocationUpdate, image?: Blob) {
+		const form = new FormData();
+		for (const key in location) {
+			const val = location[key as keyof typeof location];
+			if (val) {
+				form.append(key, val);
+			}
+		}
+		if (image) {
+			form.append("image", image);
+		}
+		return this.patch(`location/update/${id}`, form, {
+			"Content-Type": "multipart/form-data",
+		});
 	}
 
 	async verifyCsrf() {

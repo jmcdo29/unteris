@@ -10,6 +10,7 @@ export * from "./race";
 export * from "./racial-ability";
 export * from "./race-with-abilities";
 export * from "./role";
+export * from "./success";
 export * from "./user-account";
 export * from "./user-permission";
 export * from "./auth";
