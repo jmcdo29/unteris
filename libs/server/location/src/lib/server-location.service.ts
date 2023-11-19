@@ -35,11 +35,7 @@ export class ServerLocationService {
 		location: Insertable<Database["location"]>,
 		file?: File,
 	): Promise<Location> {
-		let filePath;
-		if (file) {
-			filePath = file.originalname;
-			await this.fileService.writeFileToStore(filePath, file.buffer);
-		}
+		const filePath = await this.saveFile(file);
 		const result = await this.locationRepo.createLocation(location, filePath);
 		if (result.imageId) {
 			this.imageService.sendImageIdForProcessing(result.imageId);
@@ -47,11 +43,28 @@ export class ServerLocationService {
 		return result;
 	}
 
-	async updateLocation(id: string, location: Updateable<Database["location"]>) {
+	async updateLocation(
+		id: string,
+		location: Updateable<Database["location"]>,
+		file?: File,
+	) {
 		if (!(await this.getById(id))) {
 			throw new NotFoundException(`Location with the id ${id} not found`);
 		}
-		await this.locationRepo.update(id, location);
+		const filePath = await this.saveFile(file);
+		const result = await this.locationRepo.update(id, location, filePath);
+		if (filePath && result[0].imageId) {
+			this.imageService.sendImageIdForProcessing(result[0].id);
+		}
 		return { success: true };
+	}
+
+	private async saveFile(file?: File): Promise<string | undefined> {
+		let filePath;
+		if (file) {
+			filePath = `./images/${file.originalname}`;
+			await this.fileService.writeFileToStore(filePath, file.buffer);
+		}
+		return filePath;
 	}
 }

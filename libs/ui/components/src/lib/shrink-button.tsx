@@ -1,6 +1,6 @@
 import Left from "@mui/icons-material/Visibility";
 import Right from "@mui/icons-material/VisibilityOff";
-import { Box, Button, Grid, IconButton } from "@mui/material";
+import { Box, Button, IconButton, Unstable_Grid2 as Grid } from "@mui/material";
 
 interface ShrinkButtonProps {
 	hide: boolean;

@@ -54,7 +54,7 @@ export class ServerLocationController {
 	@Castle([Action.Create, Subject.Location])
 	@Post("new")
 	create(@Body() body: LocationCreationDto, @UploadedFile() file?: ImageFile) {
-		return this.service.createLocation(body.data, file?.data ?? undefined);
+		return this.service.createLocation(body.data, file?.data);
 	}
 
 	@FileUpload("image", LocationUpdateDto)
@@ -67,6 +67,6 @@ export class ServerLocationController {
 		@Param() param: IdParamDto,
 		@UploadedFile() file?: ImageFile,
 	) {
-		return { ...body.data, ...param.data };
+		return this.service.updateLocation(param.data.id, body.data, file?.data);
 	}
 }

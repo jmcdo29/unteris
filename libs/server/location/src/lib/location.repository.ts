@@ -67,11 +67,31 @@ export class LocationRepository {
 			.executeTakeFirstOrThrow();
 	}
 
-	async update(id: string, location: Updateable<Database["location"]>) {
+	async update(
+		id: string,
+		location: Updateable<Database["location"]>,
+		file?: string,
+	) {
+		let fileId;
+		if (file) {
+			const result = await this.db
+				.insertInto("image")
+				.values({
+					originalUrl: file,
+					type: "location_image",
+				})
+				.returning(["id"])
+				.execute();
+			fileId = result[0].id;
+		}
+		if (fileId) {
+			location.imageId = fileId;
+		}
 		return this.db
 			.updateTable("location")
 			.set(location)
 			.where("id", "=", id)
+			.returningAll()
 			.execute();
 	}
 }

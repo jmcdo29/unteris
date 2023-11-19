@@ -16,9 +16,11 @@ export const LocationDetail = ({
 }: LocationDetailProps) => {
 	return !shrunk ? (
 		<Grid container columns={1} justifyContent="center">
-			<Typography variant="h2" fontSize={titleSize}>
-				{locationDetail.name}
-			</Typography>
+			<Grid container justifyContent="center" xs={1}>
+				<Typography variant="h2" fontSize={titleSize}>
+					{locationDetail.name}
+				</Typography>
+			</Grid>
 			{locationDetail.description ? (
 				<Box>{locationDetail.description}</Box>
 			) : (
