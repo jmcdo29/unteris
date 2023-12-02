@@ -1,7 +1,10 @@
 import {
+	CsrfReturn,
 	Deity,
 	Location,
+	LocationWithImage,
 	LoginBody,
+	LoginResponse,
 	OverviewObject,
 	PasswordReset,
 	PasswordResetRequest,
@@ -45,7 +48,7 @@ type SecurityRoutes = {
 		[key: `${typeof authRoute}/verify-email?verificationToken=${string}`]: [
 			Success,
 		];
-		[csrfRoute]: [{ csrfToken: string }];
+		[csrfRoute]: [CsrfReturn];
 	} & Record<`${typeof authRoute}/me`, [UserAccount]> &
 		Record<`${typeof sessionRoute}/refresh`, [Success]>;
 	post:
@@ -54,16 +57,7 @@ type SecurityRoutes = {
 					`${typeof authRoute}/signup`,
 					[Success & { id: UserAccount["id"] }, SignupUser]
 				> &
-				Record<
-					`${typeof authRoute}/login`,
-					[
-						Success & {
-							id: UserAccount["id"];
-							displayName: UserAccount["name"];
-						},
-						LoginBody,
-					]
-				> &
+				Record<`${typeof authRoute}/login`, [LoginResponse, LoginBody]> &
 				Record<`${typeof authRoute}/logout`, [Success]> &
 				Record<
 					`${typeof authRoute}/password-reset-request`,
@@ -74,9 +68,7 @@ type SecurityRoutes = {
 
 type LocationRoutes = {
 	get: {
-		[key: `${typeof locationRoute}/id/${string}`]: [
-			Omit<Location, "imageId"> & { imageUrl: string },
-		];
+		[key: `${typeof locationRoute}/id/${string}`]: [LocationWithImage];
 		[key: `${typeof locationRoute}/by-parent/${string}`]: [
 			Array<OverviewObject>,
 		];

@@ -43,14 +43,25 @@ abstract class SdkBase<T extends SdkGeneric = RouteToType> {
 			method: config.method.toString().toUpperCase(),
 			headers: {
 				[csrfHeader]: this.csrfToken,
-				"Content-Type": "application/json",
 				...config.headers,
 			},
 			credentials: "include",
 			mode: "cors",
 		};
 		if (config.method !== "get" && config.method !== "delete") {
-			reqConfig.body = JSON.stringify(config.body);
+			reqConfig.body =
+				config.body instanceof FormData
+					? config.body
+					: JSON.stringify(config.body);
+		}
+		if (
+			!(reqConfig.headers as Record<string, string>)["Content-Type"] &&
+			!(reqConfig.body instanceof FormData)
+		) {
+			reqConfig.headers = {
+				...(reqConfig.headers ?? {}),
+				"Content-Type": "application/json",
+			};
 		}
 		const res = await fetch(
 			`${this.baseUrl}/${config.endpoint.toString()}`,
@@ -185,9 +196,7 @@ export class Sdk extends SdkBase {
 		if (image) {
 			form.append("image", image);
 		}
-		return this.post("location/new", form, {
-			"Content-Type": "multipart/form-data",
-		});
+		return this.post("location/new", form);
 	}
 
 	async updateLocation(id: string, location: LocationUpdate, image?: Blob) {
@@ -201,9 +210,7 @@ export class Sdk extends SdkBase {
 		if (image) {
 			form.append("image", image);
 		}
-		return this.patch(`location/update/${id}`, form, {
-			"Content-Type": "multipart/form-data",
-		});
+		return this.patch(`location/update/${id}`, form);
 	}
 
 	async verifyCsrf() {

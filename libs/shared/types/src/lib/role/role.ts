@@ -1,8 +1,9 @@
 import { Output, enumType, object, string, ulid } from "valibot";
+import { RoleEnum } from "./role.enum";
 
 export const RoleSchema = object({
 	id: string([ulid()]),
-	name: enumType(["player", "dev", "admin", "dm"]),
+	name: RoleEnum,
 });
 
 export type Role = Output<typeof RoleSchema>;
