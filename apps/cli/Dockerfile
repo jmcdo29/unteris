@@ -1,22 +1,22 @@
-FROM node:20.2-alpine3.18 as unteris-node
+FROM node:20.5-alpine3.18 AS unteris-node
 
 RUN npm i -g pnpm@8.6.10 && \
-	apk add --no-cache \
-	dumb-init=1.2.5-r2
+  apk add --no-cache \
+  dumb-init=1.2.5-r2
 
 FROM unteris-node AS unteris-common
 
 WORKDIR /src
 RUN apk add --no-cache \
-	python3 \
-	make \
-	gcc \
-	g++
+  python3 \
+  make \
+  gcc \
+  g++
 COPY package.json \
-	tsconfig* \
-	nx.json \
-	pnpm-lock.yaml \
-	./
+  tsconfig* \
+  nx.json \
+  pnpm-lock.yaml \
+  ./
 ENV CYPRESS_INSTALL_BINARY=0
 RUN pnpm i
 
