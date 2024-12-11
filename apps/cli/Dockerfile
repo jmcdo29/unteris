@@ -1,6 +1,6 @@
 FROM node:20.5-alpine3.18 AS unteris-node
 
-RUN npm i -g pnpm@8.6.10 && \
+RUN npm i -g pnpm@9 && \
   apk add --no-cache \
   dumb-init=1.2.5-r2
 
