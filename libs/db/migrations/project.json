@@ -12,8 +12,7 @@
 				"tsConfig": "libs/db/migrations/tsconfig.lib.json",
 				"packageJson": "libs/db/migrations/package.json",
 				"main": "libs/db/migrations/src/index.ts",
-				"assets": ["libs/db/migrations/*.md"],
-				"updateBuildableProjectDepsInPackageJson": true
+				"assets": ["libs/db/migrations/*.md"]
 			}
 		},
 		"lint": {
@@ -24,11 +23,8 @@
 			}
 		},
 		"nx-lint": {
-			"executor": "@nx/linter:eslint",
-			"outputs": ["{options.outputFile}"],
-			"options": {
-				"lintFilePatterns": ["libs/db/migrations/**/*.ts"]
-			}
+			"executor": "@nx/eslint:lint",
+			"outputs": ["{options.outputFile}"]
 		}
 	},
 	"tags": ["database", "dni"]

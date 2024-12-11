@@ -1,4 +1,5 @@
 import { randomUUID } from "node:crypto";
+import { csrfHeader } from "@unteris/shared/types";
 import { spec } from "pactum";
 import { describe, test, vi } from "vitest";
 import { loginStep, signup } from "../auth";
@@ -18,7 +19,7 @@ export const resetPasswordTest = () => {
 			await spec()
 				.post("/auth/password-reset-request")
 				.withBody({ email })
-				.withHeaders("X-UNTERIS-CSRF-PROTECTION", csrfStoreToken)
+				.withHeaders(csrfHeader, csrfStoreToken)
 				.withCookies("sessionId", sessionStoreToken)
 				.expectStatus(201)
 				.expectJson({ success: true });
@@ -38,14 +39,14 @@ export const resetPasswordTest = () => {
 			await spec()
 				.post("/auth/password-reset")
 				.withBody({ password: newPassword, resetToken })
-				.withHeaders("X-UNTERIS-CSRF-PROTECTION", csrfStoreToken)
+				.withHeaders(csrfHeader, csrfStoreToken)
 				.withCookies("sessionId", sessionStoreToken)
 				.expectStatus(201)
 				.expectJson({ success: true });
 			await spec()
 				.post("/auth/login")
 				.withBody({ email, password: testPass })
-				.withHeaders("X-UNTERIS-CSRF-PROTECTION", csrfStoreToken)
+				.withHeaders(csrfHeader, csrfStoreToken)
 				.withCookies("sessionId", sessionStoreToken)
 				.expectStatus(401)
 				.expectJsonLike(".type", "Authentication");

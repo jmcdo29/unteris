@@ -4,4 +4,10 @@ export const kyselyDefaultUlid = (): RawBuilder<string> => {
 	return sql`gen_ulid()`;
 };
 
-export const kyselyUlid = sql`ulid`;
+/**
+ * A simple helper for setting the type in SQL to "ulid" through the sql
+ * template helper
+ *
+ * sql\`ulid\`
+ */
+export const kyselyUlid = sql<string>`ulid`;

@@ -1,1 +1,1 @@
-export * from "./lib/deities-nav";
+export * from "./lib/deity-nav";

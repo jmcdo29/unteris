@@ -8,11 +8,13 @@ interface TextInputProps {
 	onUpdate: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 	label: string;
 	required?: boolean;
+	multiline?: boolean;
+	fullWidth?: boolean;
 }
 
 export const TextInput = (props: TextInputProps): JSX.Element => {
 	return (
-		<UFormControl required={props.required}>
+		<UFormControl required={props.required} fullWidth={props.fullWidth}>
 			<InputLabel htmlFor={props.label}>{props.label}</InputLabel>
 			<Input
 				name={props.label}
@@ -22,6 +24,7 @@ export const TextInput = (props: TextInputProps): JSX.Element => {
 				type={props.type ?? "text"}
 				onChange={props.onUpdate}
 				onBlur={props.onUpdate}
+				multiline={props.multiline}
 			/>
 		</UFormControl>
 	);

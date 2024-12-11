@@ -1,4 +1,4 @@
-import { TypeschemaDto } from "@nest-lab/typeschema";
+import { ValibotDto } from "@unteris/server/common";
 import { SignupSchema } from "@unteris/shared/types";
 
-export class SignupBody extends TypeschemaDto(SignupSchema) {}
+export class SignupBodyDto extends ValibotDto(SignupSchema) {}

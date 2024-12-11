@@ -48,3 +48,9 @@ docker/*
 *.log
 dump
 .env
+.env.serve
+session.txt
+
+.nx/cache
+.nx/workspace-data
+vite.config.*.timestamp*

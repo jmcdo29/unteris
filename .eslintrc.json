@@ -26,20 +26,5 @@
 				]
 			}
 		}
-		// {
-		// 	"files": ["*.ts", "*.tsx"],
-		// 	"extends": ["plugin:@nx/typescript"],
-		// 	"rules": {}
-		// },
-		// {
-		// 	"files": ["*.js", "*.jsx"],
-		// 	"extends": ["plugin:@nx/javascript"],
-		// 	"rules": {}
-		// },
-		// {
-		// 	"files": "*.json",
-		// 	"parser": "jsonc-eslint-parser",
-		// 	"rules": {}
-		// }
 	]
 }

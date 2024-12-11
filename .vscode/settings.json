@@ -9,7 +9,8 @@
 	},
 	"editor.formatOnSave": true,
 	"editor.codeActionsOnSave": {
-		"quickfix.biome": true
+		"quickfix.biome": "explicit",
+		"source.organizeImports.biome": "explicit"
 	},
 	"editor.tabSize": 2,
 	"[javascript]": {
@@ -29,5 +30,6 @@
 	},
 	"[jsonc]": {
 		"editor.defaultFormatter": "biomejs.biome"
-	}
+	},
+	"typescript.tsdk": "node_modules/typescript/lib"
 }

@@ -1,4 +1,6 @@
 import { execSync, spawn } from "child_process";
+import { readFileSync } from "fs";
+import { join } from "path";
 import { ExecutorContext } from "@nx/devkit";
 import { Ogma } from "@ogma/logger";
 import { style } from "@ogma/styler";
@@ -16,7 +18,9 @@ export default async function runExecutor(
 			logLevel: options?.verbose ? "VERBOSE" : "LOG",
 		});
 		try {
-			const scope = context.nxJsonConfiguration?.npmScope;
+			const scope = JSON.parse(
+				readFileSync(join(process.cwd(), "package.json"), "utf-8"),
+			).name;
 			logger.verbose(`Project scope was determined to be ${scope}`);
 			logger.verbose(`Project name was determined to be ${project}`);
 			const cachePath = options.cachePath ?? `tmp/rz/docker/cache/${project}`;

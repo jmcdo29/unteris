@@ -47,7 +47,10 @@ export const NavBar = (): JSX.Element => {
 					Deities
 				</StyledButton>
 				<StyledButton href="/races" onClick={() => setShowMenu(false)}>
-					races
+					Races
+				</StyledButton>
+				<StyledButton href="/location" onClick={() => setShowMenu(false)}>
+					Locations
 				</StyledButton>
 			</Drawer>
 		</>

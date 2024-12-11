@@ -15,7 +15,7 @@ on:
 jobs:
   main:
     name: Nx Cloud - Main Job
-    uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.11.3
+    uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.15.0
     with:
       main-branch-name: main
       number-of-agents: 3
@@ -25,6 +25,7 @@ jobs:
         pnpm exec nx-cloud record -- pnpm exec nx affected:lint
       parallel-commands-on-agents: |
         pnpm exec nx affected -t lint build --parallel=3
+      pnpm-version: 9.13.0
 
   e2e:
     name: E2E Tests
@@ -84,13 +85,20 @@ jobs:
         shell: bash
         run: pnpm i
 
-      - name: Run E2E Tests
+      - name: Run Site E2E Tests
         shell: bash
-        run: pnpm exec nx affected -t e2e --parallel --configuration=ci
+        run: pnpm exec nx run site-e2e:e2e --configuration=ci
         continue-on-error: true
+
+      - name: Run Server E2E Tests
+        shell: bash
+        run: pnpm exec nx run server-e2e:e2e --configuration=ci
+        continue-on-error: true
+        timeout-minutes: 30
 
   agents:
     name: Nx Cloud - Agents
-    uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.11.3
+    uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.15.0
     with:
       number-of-agents: 3
+      pnpm-version: 9.13.0

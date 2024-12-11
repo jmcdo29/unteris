@@ -1,37 +1,50 @@
 {
-	"npmScope": "unteris",
-	"affected": {
-		"defaultBase": "main"
-	},
-	"tasksRunnerOptions": {
-		"default": {
-			"runner": "nx-cloud",
-			"options": {
-				"cacheableOperations": ["build", "lint", "test", "package"],
-				"accessToken": "YmJjYzUwMWUtZjA4Yy00MmY0LTg4ZTYtNTVmMTllNTkwNTJifHJlYWQtd3JpdGU=",
-				"parallel": 1
-			}
-		}
-	},
 	"$schema": "./node_modules/nx/schemas/nx-schema.json",
 	"defaultProject": "server",
 	"targetDefaults": {
 		"build": {
 			"dependsOn": ["^build"],
-			"inputs": ["production", "^production"]
-		},
-		"test": {
-			"inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
+			"inputs": ["production", "^production"],
+			"cache": true
 		},
 		"lint": {
 			"inputs": [
 				"default",
 				"{workspaceRoot}/biome.json",
 				"{workspaceRoot}/libs/rz/src/executors/lint/executor.ts"
-			]
+			],
+			"cache": true
 		},
 		"e2e": {
 			"inputs": ["default", "^production"]
+		},
+		"package": {
+			"cache": true
+		},
+		"@nx/vite:test": {
+			"cache": true,
+			"inputs": ["default", "^production"]
+		},
+		"@nx/eslint:lint": {
+			"cache": true,
+			"inputs": [
+				"default",
+				"{workspaceRoot}/.eslintrc.json",
+				"{workspaceRoot}/tools/eslint-rules/**/*"
+			]
+		},
+		"@nx/jest:jest": {
+			"inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
+			"cache": true,
+			"options": {
+				"passWithNoTests": true
+			},
+			"configurations": {
+				"ci": {
+					"ci": true,
+					"codeCoverage": true
+				}
+			}
 		}
 	},
 	"namedInputs": {
@@ -72,5 +85,9 @@
 				"unitTestRunner": "none"
 			}
 		}
-	}
+	},
+	"nxCloudAccessToken": "YmJjYzUwMWUtZjA4Yy00MmY0LTg4ZTYtNTVmMTllNTkwNTJifHJlYWQtd3JpdGU=",
+	"parallel": 1,
+	"useInferencePlugins": false,
+	"defaultBase": "main"
 }

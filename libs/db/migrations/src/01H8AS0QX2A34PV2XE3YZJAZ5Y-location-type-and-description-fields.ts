@@ -1,9 +1,7 @@
-import { Kysely } from "kysely";
+import { DB } from "./utils/db.interface";
 import { kyselyUlid } from "./utils/ulid.sql";
 
-export const up = async (
-	db: Kysely<Record<string, Record<string, unknown>>>,
-) => {
+export const up = async (db: DB) => {
 	await db.schema
 		.alterTable("location")
 		.addColumn("type", "text")
@@ -12,9 +10,7 @@ export const up = async (
 	await db.updateTable("location").set({ type: "plane" }).execute();
 };
 
-export const down = async (
-	db: Kysely<Record<string, Record<string, unknown>>>,
-) => {
+export const down = async (db: DB) => {
 	await db.schema
 		.alterTable("location")
 		.dropColumn("parent_id")

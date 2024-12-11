@@ -12,7 +12,70 @@ const shadow = "Shadowfell";
 const shadowfell = "Shadowfell";
 
 export const categories = [being, child, seelie, unseelie, shadowfell];
-export const locations = [sea, arboria, feywild, shadow];
+export const planes = [sea, arboria, feywild, shadow];
+export const regions = [
+	{ name: "Frosdain", description: "" },
+	{ name: "Monstera", description: "" },
+	{ name: "Sabu", description: "" },
+	{ name: "Viridiem", description: "" },
+	{ name: "Vistem", description: "" },
+] as const;
+export const cities: Record<
+	typeof regions[number]["name"],
+	{ name: string; description: string }[]
+> = {
+	Frosdain: [
+		{ name: "Avanix", description: "" },
+		{ name: "Crystalmaw", description: "" },
+		{ name: "Glaize", description: "" },
+		{ name: "Saberglass", description: "" },
+		{ name: "Snowhunt", description: "" },
+		{ name: "Wyndfair", description: "" },
+	],
+	Monstera: [
+		{ name: "Aderberg", description: "" },
+		{ name: "Drakes Pass", description: "" },
+		{ name: "Ironfell", description: "" },
+		{ name: "Knightmount", description: "" },
+		{ name: "Luna Vein", description: "" },
+		{ name: "Taka Rest", description: "" },
+	],
+	Sabu: [
+		{ name: "Dryacre", description: "" },
+		{ name: "Bonespire", description: "" },
+		{ name: "Goldburn", description: "" },
+		{ name: "Kimare", description: "" },
+		{ name: "Maloka", description: "" },
+		{ name: "Meadowrest", description: "" },
+		{ name: "Nevergrove", description: "" },
+		{ name: "Oasis Fortuna", description: "" },
+		{ name: "Sandrest", description: "" },
+		{ name: "Scorchfell", description: "" },
+		{ name: "Terae", description: "" },
+		{ name: "Volnova", description: "" },
+	],
+	Viridiem: [
+		{ name: "Angelbury", description: "" },
+		{ name: "Dawncrest", description: "" },
+		{ name: "Ebonwood", description: "" },
+		{ name: "Foxvale", description: "" },
+		{ name: "Golmars", description: "" },
+		{ name: "Roseport", description: "" },
+		{ name: "Wildemoor", description: "" },
+		{ name: "Uma R&D", description: "" },
+	],
+	Vistem: [
+		{ name: "Grassmire", description: "" },
+		{ name: "Haven", description: "" },
+		{ name: "Hollowrock", description: "" },
+		{ name: "Keygarde", description: "" },
+		{ name: "Moonsgate", description: "" },
+		{ name: "Prismaglen", description: "" },
+		{ name: "Shadewick", description: "" },
+		{ name: "Starwood Village", description: "" },
+		{ name: "Sunpoint", description: "" },
+	],
+};
 export const deities: Array<
 	Omit<Insertable<Deity>, "imageId" | "id"> & {
 		category: string;

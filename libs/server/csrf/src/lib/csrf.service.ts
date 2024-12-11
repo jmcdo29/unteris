@@ -1,15 +1,23 @@
 import { ForbiddenException, Injectable } from "@nestjs/common";
+import { InjectRedisInstance } from "@unteris/server/redis";
 import { ServerSessionService } from "@unteris/server/session";
 import { ServerTokenService } from "@unteris/server/token";
+import { RedisClientType } from "redis";
 
 @Injectable()
 export class ServerCsrfService {
 	constructor(
 		private readonly tokenService: ServerTokenService,
 		private readonly sessionService: ServerSessionService,
+		@InjectRedisInstance() private readonly redis: RedisClientType,
 	) {}
-	async generateToken(sessionId: string): Promise<string> {
+	async generateToken(sessionId: string, ip: string): Promise<string> {
+		const csrfSessionValue = await this.redis.get(`csrf:${ip}`);
+		if (csrfSessionValue) {
+			return csrfSessionValue;
+		}
 		const csrfToken = await this.tokenService.generateToken(256);
+		await this.redis.setEx(`csrf:${ip}`, 24 * 60 * 60, csrfToken);
 		await this.sessionService.updateSession(sessionId, {
 			csrf: csrfToken,
 		});

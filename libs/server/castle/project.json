@@ -1,0 +1,20 @@
+{
+	"name": "server-castle",
+	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "libs/server/castle/src",
+	"projectType": "library",
+	"targets": {
+		"lint": {
+			"executor": "@unteris/plugin/rz:lint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"unsafe": true
+			}
+		},
+		"nx-lint": {
+			"executor": "@nx/eslint:lint",
+			"outputs": ["{options.outputFile}"]
+		}
+	},
+	"tags": ["server", "security"]
+}

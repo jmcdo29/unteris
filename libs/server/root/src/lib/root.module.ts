@@ -2,6 +2,7 @@ import { ValidationPipe } from "@nest-lab/typeschema";
 import { Module } from "@nestjs/common";
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from "@nestjs/core";
 import { OgmaInterceptor } from "@ogma/nestjs-module";
+import { CacheInterceptor, ServerCacheModule } from "@unteris/server/cache";
 import { ServerConfigModule } from "@unteris/server/config";
 import { ServerCsrfModule } from "@unteris/server/csrf";
 import { ServerDeitiesModule } from "@unteris/server/deities";
@@ -18,13 +19,13 @@ import {
 	SessionExistsGuard,
 } from "@unteris/server/session";
 import { CookieModule, CookiesInterceptor } from "nest-cookies";
-
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { BaseFilter } from "./catch-all.filter";
 
 @Module({
 	imports: [
+		ServerCacheModule,
 		CookieModule,
 		ServerDeitiesModule,
 		ServerLocationModule,
@@ -54,6 +55,10 @@ import { BaseFilter } from "./catch-all.filter";
 		{
 			provide: APP_INTERCEPTOR,
 			useClass: OgmaInterceptor,
+		},
+		{
+			provide: APP_INTERCEPTOR,
+			useClass: CacheInterceptor,
 		},
 		{
 			provide: APP_FILTER,

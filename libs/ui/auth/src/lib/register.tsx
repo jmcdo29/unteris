@@ -30,6 +30,7 @@ export const Register = (): JSX.Element => {
 				id: res.id,
 				email: newUser.email,
 				displayName: newUser.name,
+				roles: ["player"],
 			});
 			setNewUser({
 				email: "",

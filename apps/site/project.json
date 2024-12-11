@@ -3,6 +3,7 @@
 	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "apps/site/src",
 	"projectType": "application",
+	"tags": ["ui", "front-end", "react"],
 	"targets": {
 		"build": {
 			"executor": "@nx/vite:build",
@@ -50,7 +51,8 @@
 				"production": {
 					"buildTarget": "site:build:production"
 				}
-			}
+			},
+			"dependsOn": ["build"]
 		},
 		"test": {
 			"executor": "@nx/vite:test",
@@ -68,11 +70,8 @@
 			}
 		},
 		"nx-lint": {
-			"executor": "@nx/linter:eslint",
-			"outputs": ["{options.outputFile}"],
-			"options": {
-				"lintFilePatterns": ["apps/site/**/*.{ts,tsx,js,jsx}"]
-			}
+			"executor": "@nx/eslint:lint",
+			"outputs": ["{options.outputFile}"]
 		},
 		"package": {
 			"executor": "@unteris/plugin/rz:build",
@@ -84,6 +83,5 @@
 				}
 			}
 		}
-	},
-	"tags": ["ui", "front-end", "react"]
+	}
 }

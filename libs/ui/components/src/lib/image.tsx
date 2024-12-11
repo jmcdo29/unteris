@@ -1,17 +1,18 @@
 import Box from "@mui/material/Box";
 
 interface ImageProps {
-	src: string;
+	src?: string | null;
 	alt: string;
 	style?: Record<string, string>;
 }
 
 export const Image = (props: ImageProps): JSX.Element => {
+	const imgSrc = props.src ?? undefined;
 	return (
 		<Box>
-			<a href={props.src} target="_blank" rel="noreferrer">
+			<a href={imgSrc} target="_blank" rel="noreferrer">
 				<img
-					src={props.src}
+					src={imgSrc}
 					alt={props.alt}
 					style={{
 						width: "100%",

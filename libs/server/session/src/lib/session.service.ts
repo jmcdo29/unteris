@@ -19,7 +19,7 @@ export class ServerSessionService {
 		@InjectRedisInstance() private readonly redis: RedisClientType,
 		private readonly config: ServerConfigService,
 	) {
-		this.domain = new URL(config.get("CORS")).host;
+		this.domain = new URL(config.get("CORS")).hostname;
 	}
 
 	async createSessionId() {
