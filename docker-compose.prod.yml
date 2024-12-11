@@ -68,7 +68,7 @@ services:
     labels:
       - 'com.centurylinklabs.watchtower.enable=true'
     volumes:
-      - ./postgres-data:/var/lib/postgreslq/data
+      - ./postgres-data:/var/lib/postgresql/data
   redis:
     image: redis:7.2.1
     ports:
