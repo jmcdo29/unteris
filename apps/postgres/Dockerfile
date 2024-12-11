@@ -18,5 +18,7 @@ ENV PATH=/home/postgres/.cargo/bin:$PATH
 
 RUN chown postgres:postgres /home/postgres
 
+RUN localedef -i en_US -f UTF-8 en_US.UTF-8
+
 COPY apps/postgres/postgresql.conf /etc/postgresql/postgresql.conf
 
