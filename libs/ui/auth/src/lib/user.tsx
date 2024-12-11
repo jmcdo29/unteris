@@ -8,7 +8,7 @@ export const User = (): JSX.Element => {
 	const [user, setUser] = useAtom(userAtom);
 	const logout = async () => {
 		await sdk.logout();
-		setUser({ id: "", email: "", displayName: "" });
+		setUser({ id: "", email: "", displayName: "", roles: [] });
 	};
 	return (
 		<div>
