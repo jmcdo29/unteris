@@ -74,6 +74,7 @@ export const regionChildAtom = atom(
 );
 
 export const newRegionAtom = atom<LocationCreation>({
+	// @ts-expect-error giving incorrect string for initial state
 	name: "",
 	type: "region",
 	description: null,
