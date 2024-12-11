@@ -1,7 +1,7 @@
 import { useTheme } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { ShrinkButton, useMinWidth } from "@unteris/ui/components";
-import { useAtomValue } from "jotai";
+import { useAtom } from "jotai";
 import { useState } from "react";
 import { regionChildAtom } from "./atoms";
 import { LocationDetail } from "./location-detail";
@@ -11,7 +11,7 @@ interface RegionChildDetailProps {
 }
 
 export const RegionChildDetail = ({ parentShrunk }: RegionChildDetailProps) => {
-	const regionChild = useAtomValue(regionChildAtom);
+	const [regionChild, setRegionChild] = useAtom(regionChildAtom);
 	if (!regionChild) {
 		return <div />;
 	}
@@ -38,6 +38,7 @@ export const RegionChildDetail = ({ parentShrunk }: RegionChildDetailProps) => {
 					locationDetail={regionChild}
 					shrunk={shrunk}
 					titleSize={parentShrunk ? undefined : "2rem"}
+					setDetail={setRegionChild}
 				/>
 			</Grid>
 		</Grid>

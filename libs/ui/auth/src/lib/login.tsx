@@ -28,6 +28,7 @@ export const Login = (): JSX.Element => {
 				id: res.id,
 				email: loginUser.email,
 				displayName: res.displayName,
+				roles: res.roles,
 			});
 			setLoginUser({ email: "", password: "", name: "" });
 			navigate("/");

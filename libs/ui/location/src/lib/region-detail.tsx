@@ -5,19 +5,17 @@ import {
 	TabbedNavigator,
 	useMinWidth,
 } from "@unteris/ui/components";
-import { useAtomValue } from "jotai";
+import { useAtom } from "jotai";
 import { useState } from "react";
 import { regionAtom, regionChildIndexAtom, regionChildrenAtom } from "./atoms";
+import { LocationCreate } from "./location-create";
 import { LocationDetail } from "./location-detail";
 import { RegionChildDetail } from "./region-child-detail";
 
 export const RegionDetail = () => {
 	const theme = useTheme();
 	const isWideEnough = useMinWidth();
-	const regionDetail = useAtomValue(regionAtom);
-	if (!regionDetail) {
-		return <div />;
-	}
+	const [regionDetail, setRegionDetail] = useAtom(regionAtom);
 	const columns = isWideEnough ? 24 : 1;
 	const [shrunk, setShrunk] = useState(false);
 	const halfWidth = Math.round(columns / 2);
@@ -35,7 +33,11 @@ export const RegionDetail = () => {
 					regionType={regionDetail.type}
 					hide={!isWideEnough}
 				/>
-				<LocationDetail locationDetail={regionDetail} shrunk={shrunk} />
+				<LocationDetail
+					locationDetail={regionDetail}
+					shrunk={shrunk}
+					setDetail={setRegionDetail}
+				/>
 			</Grid>
 			<Grid xs={!shrunk ? halfWidth : columns - 1} justifyContent="center">
 				<TabbedNavigator
@@ -45,6 +47,7 @@ export const RegionDetail = () => {
 					indicator="secondary"
 					resourceAtom={regionChildrenAtom}
 					tabPanelContent={() => <RegionChildDetail parentShrunk={shrunk} />}
+					creationPanel={() => <LocationCreate parentLocation={regionDetail} />}
 				/>
 			</Grid>
 		</Grid>

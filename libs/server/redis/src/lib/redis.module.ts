@@ -37,18 +37,14 @@ import {
 					logger.debug(
 						`${style.yellow.apply(
 							"Connecting",
-						)} to redis at ${style.magenta.apply(
-							`${redisUrl.host}:${redisUrl.port}`,
-						)}`,
+						)} to redis at ${style.magenta.apply(`${redisUrl.host}`)}`,
 					);
 				});
 				redis.on("ready", () => {
 					logger.debug(
 						`${style.green.apply(
 							"Connected",
-						)} to redis at ${style.magenta.apply(
-							`${redisUrl.host}:${redisUrl.port}`,
-						)}`,
+						)} to redis at ${style.magenta.apply(`${redisUrl.host}`)}`,
 					);
 				});
 				redis.on("reconnecting", () => {

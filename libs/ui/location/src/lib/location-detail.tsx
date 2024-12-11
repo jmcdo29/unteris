@@ -1,38 +1,27 @@
 import { Box, Typography } from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2/Grid2";
-import { Location } from "@unteris/shared/types";
-import { Image, Lorem } from "@unteris/ui/components";
+import { LocationWithImage } from "@unteris/shared/types";
+import { ObjectDetail } from "@unteris/ui/components";
+import { LocationEdit } from "./location-edit";
+import { LocationView } from "./location-view";
 
 interface LocationDetailProps {
 	shrunk: boolean;
-	locationDetail: Omit<Location, "imageId"> & { imageUrl: string };
+	locationDetail: LocationWithImage;
 	titleSize?: string;
+	setDetail: (val: LocationWithImage) => void;
 }
 
-export const LocationDetail = ({
-	shrunk,
-	locationDetail,
-	titleSize = "3.75rem",
-}: LocationDetailProps) => {
-	return !shrunk ? (
-		<Grid container columns={1} justifyContent="center">
-			<Grid container justifyContent="center" xs={1}>
-				<Typography variant="h2" fontSize={titleSize}>
-					{locationDetail.name}
-				</Typography>
-			</Grid>
-			{locationDetail.description ? (
-				<Box>{locationDetail.description}</Box>
-			) : (
-				<Lorem />
-			)}
-			<Box>
-				<Image
-					src={locationDetail.imageUrl}
-					alt={`The ${locationDetail.name} ${locationDetail.type}, pulled from a portion of the full Unteris map`}
-				/>
-			</Box>
-		</Grid>
+export const LocationDetail = (props: LocationDetailProps) => {
+	return !props.shrunk ? (
+		<ObjectDetail
+			name={props.locationDetail.name}
+			columns={1}
+			data={props.locationDetail}
+			titleSize={props.titleSize}
+			objectView={LocationView}
+			objectEdit={LocationEdit}
+			setDetail={props.setDetail}
+		/>
 	) : (
 		<Box />
 	);

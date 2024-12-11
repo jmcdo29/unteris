@@ -3,8 +3,10 @@
 	"compilerOptions": {
 		"outDir": "../../../dist/out-tsc",
 		"declaration": true,
+		"lib": ["ESNext"],
 		"types": ["node"],
-		"target": "es2021"
+		"target": "ESNext",
+		"module": "ESNext"
 	},
 	"include": ["src/**/*.ts"],
 	"exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]

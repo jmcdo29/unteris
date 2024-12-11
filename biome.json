@@ -22,7 +22,8 @@
 				"noConsoleLog": "error"
 			},
 			"nursery": {
-				"all": true
+				"all": true,
+				"noConfusingVoidType": "off"
 			}
 		}
 	},

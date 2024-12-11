@@ -10,6 +10,7 @@ interface TabbedNavigatorProps {
 	tabPanelContent: () => JSX.Element;
 	indicator?: "primary" | "secondary";
 	orientation?: "horizontal" | "vertical";
+	creationPanel?: () => JSX.Element;
 }
 
 export const TabbedNavigator = (props: TabbedNavigatorProps) => {
@@ -30,6 +31,7 @@ export const TabbedNavigator = (props: TabbedNavigatorProps) => {
 				tabElements={resources}
 				tabPanelContent={props.tabPanelContent}
 				indicator={props.indicator}
+				creationPanel={props.creationPanel}
 			/>
 		</Suspense>
 	);

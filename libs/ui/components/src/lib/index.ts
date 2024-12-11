@@ -7,6 +7,8 @@ export * from "./grid";
 export * from "./heading";
 export * from "./image";
 export * from "./lorem";
+export * from "./memo-atom";
+export * from "./object-detail";
 export * from "./password";
 export * from "./shrink-button";
 export * from "./styled-link";

@@ -54,7 +54,7 @@ export class ServerLocationService {
 		const filePath = await this.saveFile(file);
 		const result = await this.locationRepo.update(id, location, filePath);
 		if (filePath && result[0].imageId) {
-			this.imageService.sendImageIdForProcessing(result[0].id);
+			this.imageService.sendImageIdForProcessing(result[0].imageId);
 		}
 		return { success: true };
 	}

@@ -15,7 +15,6 @@
 				"main": "apps/image-server/src/main.ts",
 				"tsConfig": "apps/image-server/tsconfig.app.json",
 				"assets": ["apps/image-server/src/assets"],
-				"isolatedConfig": true,
 				"webpackConfig": "apps/image-server/webpack.config.js"
 			},
 			"configurations": {
@@ -58,11 +57,8 @@
 			}
 		},
 		"nx-lint": {
-			"executor": "@nx/linter:eslint",
-			"outputs": ["{options.outputFile}"],
-			"options": {
-				"lintFilePatterns": ["apps/image-server/**/*.ts"]
-			}
+			"executor": "@nx/eslint:lint",
+			"outputs": ["{options.outputFile}"]
 		},
 		"package": {
 			"executor": "@unteris/plugin/rz:build",

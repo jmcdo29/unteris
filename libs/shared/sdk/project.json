@@ -12,11 +12,8 @@
 			}
 		},
 		"nx-lint": {
-			"executor": "@nx/linter:eslint",
-			"outputs": ["{options.outputFile}"],
-			"options": {
-				"lintFilePatterns": ["libs/shared/sdk/**/*.ts"]
-			}
+			"executor": "@nx/eslint:lint",
+			"outputs": ["{options.outputFile}"]
 		}
 	},
 	"tags": ["shared", "sdk", "utility"]

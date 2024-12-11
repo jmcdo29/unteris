@@ -100,13 +100,9 @@ export class ServerSecurityService {
 		if (!users.length || !users.every((u) => u.id === userId)) {
 			throw new UnauthorizedException();
 		}
-		// biome-ignore lint/style/noNonNullAssertion: we assert the array is not empty earlier
-		const firstUser = users.pop()!;
+		const [firstUser, ...userRecords] = users;
 		const user = { ...firstUser, roles: [firstUser?.roles] as RoleEnum[] };
-		for (const u of users) {
-			user.roles.push(u.roles as RoleEnum);
-		}
-		if (!user || user.attempts >= 5) {
+		if (user.attempts >= 5) {
 			throw new UnauthorizedException({
 				type: "AttemptLimit",
 				message: ["Too many login attempts. Try again later."],
@@ -124,11 +120,19 @@ export class ServerSecurityService {
 				message: ["Invalid username or password"],
 			});
 		}
+		for (const u of userRecords) {
+			user.roles.push(u.roles as RoleEnum);
+		}
 		await this.sessionService.updateSession(sessionId, {
 			user: { email: user.email, id: user.id },
 		});
 		await this.securityRepo.clearLoginAttemptsByLocalLoginId(user.localLoginId);
-		return { success: true, displayName: user.name, id: user.id };
+		return {
+			success: true,
+			displayName: user.name,
+			id: user.id,
+			roles: user.roles,
+		};
 	}
 
 	async logout(sessionId: string): Promise<void> {

@@ -1,6 +1,9 @@
+import PlusIcon from "@mui/icons-material/AddCircle";
 import Tabs from "@mui/material/Tabs";
 import Grid from "@mui/material/Unstable_Grid2";
 import { OverviewObject } from "@unteris/shared/types";
+import { editableAtom } from "@unteris/ui/atoms";
+import { useAtomValue } from "jotai";
 import { Suspense, SyntheticEvent } from "react";
 import { a11yProps } from "./a11y.props";
 import { Tab } from "./tab";
@@ -10,12 +13,12 @@ import { useMinWidth } from "./use-min-width";
 interface TabsWithPanelProps {
 	ariaLabel: string;
 	tabIndex: number;
-	// biome-ignore lint/nursery/noConfusingVoidType: false positive
 	handleTabChange: (_event: SyntheticEvent, newIndex: number) => void;
 	tabElements: OverviewObject[];
 	tabPanelContent: (prop: unknown) => JSX.Element;
 	indicator?: "primary" | "secondary";
 	orientation?: "horizontal" | "vertical";
+	creationPanel?: () => JSX.Element;
 }
 
 export const TabsWithPanel = (props: TabsWithPanelProps): JSX.Element => {
@@ -23,6 +26,25 @@ export const TabsWithPanel = (props: TabsWithPanelProps): JSX.Element => {
 	const horizontalTabs = props.orientation === "horizontal" || !isWideEnough;
 	const indicator = props.indicator ?? "primary";
 	const growAndShrink = !horizontalTabs ? 0 : 1;
+	const canEdit = useAtomValue(editableAtom);
+	const tabs = props.tabElements.map((tab, index) => (
+		<Tab {...a11yProps(index)} label={tab.name} key={tab.id} />
+	));
+	const tabPanels = props.tabElements.map((tab, index) => (
+		<TabPanel value={props.tabIndex} index={index} key={tab.id}>
+			<Suspense>{props.tabPanelContent(tab)}</Suspense>
+		</TabPanel>
+	));
+	if (canEdit) {
+		tabs.push(
+			<Tab {...a11yProps(props.tabElements.length)} icon={<PlusIcon />} />,
+		);
+		tabPanels.push(
+			<TabPanel value={props.tabIndex} index={props.tabElements.length}>
+				<Suspense>{props.creationPanel?.()}</Suspense>
+			</TabPanel>,
+		);
+	}
 	return (
 		<Grid
 			container={true}
@@ -46,15 +68,9 @@ export const TabsWithPanel = (props: TabsWithPanelProps): JSX.Element => {
 					flexShrink: growAndShrink,
 				}}
 			>
-				{props.tabElements.map((tab, index) => (
-					<Tab {...a11yProps(index)} label={tab.name} key={tab.id} />
-				))}
+				{...tabs}
 			</Tabs>
-			{props.tabElements.map((tab, index) => (
-				<TabPanel value={props.tabIndex} index={index} key={tab.id}>
-					<Suspense>{props.tabPanelContent(tab)}</Suspense>
-				</TabPanel>
-			))}
+			{...tabPanels}
 		</Grid>
 	);
 };
