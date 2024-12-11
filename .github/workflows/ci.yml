@@ -25,6 +25,7 @@ jobs:
         pnpm exec nx-cloud record -- pnpm exec nx affected:lint
       parallel-commands-on-agents: |
         pnpm exec nx affected -t lint build --parallel=3
+      pnpm-version: 9.13.0
 
   e2e:
     name: E2E Tests
@@ -100,3 +101,4 @@ jobs:
     uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.15.0
     with:
       number-of-agents: 3
+      pnpm-version: 9.13.0
