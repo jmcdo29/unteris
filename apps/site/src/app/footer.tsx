@@ -23,7 +23,7 @@ export const Footer = (): JSX.Element => {
 						display="inline"
 						color={color}
 					>
-						Jay McDoniel
+						Jackie McDoniel
 					</StyledLink>
 				</div>
 			</Grid>
