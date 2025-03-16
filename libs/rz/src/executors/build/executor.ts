@@ -1,15 +1,24 @@
+<<<<<<< HEAD
 import type { ExecutorContext } from "@nx/devkit";
 import { Ogma } from "@ogma/logger";
 import { style } from "@ogma/styler";
 import { execSync, spawn } from "child_process";
 import { readFileSync } from "fs";
 import { join } from "path";
+=======
+import { execSync, spawn } from "node:child_process";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import type { ExecutorContext } from "@nx/devkit";
+import { Ogma } from "@ogma/logger";
+import { style } from "@ogma/styler";
+>>>>>>> 6631869 (chore: update code for biome rules)
 import type { BuildExecutorSchema } from "./schema";
 
 export default async function runExecutor(
 	options: BuildExecutorSchema,
 	context: ExecutorContext,
-) {
+): Promise<{ success: boolean }> {
 	return new Promise((resolve, reject) => {
 		const project = options.imageName ?? context.projectName;
 		const logger = new Ogma({
@@ -28,7 +37,9 @@ export default async function runExecutor(
 				`Docker cache path was evaluated to ${cachePath}. This was automatically generated.`,
 			);
 			const gCommit =
+				// biome-ignore lint/nursery/noProcessEnv: Only ran in local and CI environs where env will exist
 				process.env.GITHUB_SHA ??
+				// biome-ignore lint/nursery/noProcessEnv: Only ran in local and CI environs where env will exist
 				process.env.NX_HEAD ??
 				execSync('git log -n 1 --format="%h"').toString().replace("\n", "");
 			logger.verbose(`Git Commit was determined to be ${gCommit}`);

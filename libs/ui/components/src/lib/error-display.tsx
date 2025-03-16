@@ -38,7 +38,7 @@ export const ErrorDisplay = (props: ErrorDisplayProps): JSX.Element => {
 							<ListItemText primary={message} key={message} />
 						))}
 					</List>
-					<IconButton onClick={() => props.clearError(false)}>
+					<IconButton onClick={(): void => props.clearError(false)}>
 						<X />
 					</IconButton>
 				</Box>

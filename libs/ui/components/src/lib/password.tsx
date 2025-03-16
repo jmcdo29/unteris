@@ -29,21 +29,21 @@ export const PasswordInput = (props: PasswordProps): JSX.Element => {
 	const [capsLockActive, setCapsLockActive] = useAtom(capsLockAtom);
 	const [numLockActive, setNumLockActive] = useAtom(numLockAtom);
 	const [showPassword, setShowPassword] = useAtom(showPasswordAtom);
-	const toggleShowPassword = () => setShowPassword(!showPassword);
+	const toggleShowPassword = (): void => setShowPassword(!showPassword);
 	const label = props.label ?? "Password";
 	const toggleLockKeys = (
 		e: React.KeyboardEvent,
 		key: "CapsLock" | "NumLock",
 		currVal: boolean,
 		setVal: (val: boolean) => void,
-	) => {
+	): void => {
 		if (e.getModifierState(key) && e.key !== key) {
 			setVal(true);
 		} else if (e.getModifierState(key) && e.key === key) {
 			setVal(!currVal);
 		}
 	};
-	const passwordInput = (e: React.KeyboardEvent) => {
+	const passwordInput = (e: React.KeyboardEvent): void => {
 		toggleLockKeys(e, "CapsLock", capsLockActive, setCapsLockActive);
 		toggleLockKeys(e, "NumLock", numLockActive, setNumLockActive);
 	};

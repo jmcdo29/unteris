@@ -26,7 +26,7 @@ interface ObjectDetailProps<T> {
 	[key: string]: unknown;
 }
 
-export function ObjectDetail<T>(props: ObjectDetailProps<T>) {
+export function ObjectDetail<T>(props: ObjectDetailProps<T>): JSX.Element {
 	const { name, data, setDetail, columns, objectEdit, objectView, ...rest } =
 		props;
 	const [editing, setEditing] = useAtom(useMemo(() => atom(false), []));
@@ -43,7 +43,7 @@ export function ObjectDetail<T>(props: ObjectDetailProps<T>) {
 						<Tooltip title={iconLabel}>
 							<IconButton
 								aria-label={iconLabel}
-								onClick={() => setEditing(!editing)}
+								onClick={(): void => setEditing(!editing)}
 								edge="end"
 							>
 								<Icon fontSize="small" />

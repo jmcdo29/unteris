@@ -1,5 +1,6 @@
 import { CacheInterceptor as NestCacheInterceptor } from "@nestjs/cache-manager";
-import { ExecutionContext, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
+import type { ExecutionContext } from "@nestjs/common";
 import { CacheSkip } from "./cache-skip.decorator";
 
 @Injectable()

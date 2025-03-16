@@ -3,6 +3,7 @@ import {
 	Injectable,
 	UnauthorizedException,
 } from "@nestjs/common";
+<<<<<<< HEAD
 import { OgmaLogger, OgmaService } from "@ogma/nestjs-module";
 import {
 	AuthorizedUser,
@@ -18,14 +19,30 @@ import { ServerSessionService } from "@unteris/server/session";
 import { ServerTokenService } from "@unteris/server/token";
 import { Cookie } from "nest-cookies";
 import {
+=======
+import { OgmaLogger, type OgmaService } from "@ogma/nestjs-module";
+import type { RoleEnum } from "@unteris/server/common";
+import type { ServerEmailService } from "@unteris/server/email";
+import type { ServerHashService } from "@unteris/server/hash";
+import type { ServerSessionService } from "@unteris/server/session";
+import type { ServerTokenService } from "@unteris/server/token";
+import type {
+>>>>>>> 6631869 (chore: update code for biome rules)
 	LoginBody,
 	LoginResponse,
 	PasswordReset,
 	PasswordResetRequest,
 	SignUpLocalResponse,
 	SignupUser,
+<<<<<<< HEAD
 } from "./models";
 import { SecurityRepo } from "./security.repository";
+=======
+	Success,
+	UserAccount,
+} from "@unteris/shared/types";
+import type { SecurityRepo } from "./security.repository";
+>>>>>>> 6631869 (chore: update code for biome rules)
 
 @Injectable()
 export class ServerSecurityService {

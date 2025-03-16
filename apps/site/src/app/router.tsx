@@ -11,6 +11,10 @@ import { History } from "@unteris/ui/history";
 import { UiLocation } from "@unteris/ui/location";
 import { UiRace } from "@unteris/ui/race";
 import {
+<<<<<<< HEAD
+=======
+	type RouteObject,
+>>>>>>> 6631869 (chore: update code for biome rules)
 	createBrowserRouter,
 	type RouteObject,
 	useRouteError,
@@ -42,8 +46,15 @@ const ErrorBoundary = (): JSX.Element => {
 	}
 	return (
 		<Root>
+<<<<<<< HEAD
 			<Heading text="Unknown Error" />
 			<div>{`${error}`}</div>
+=======
+			<>
+				<Heading text="Unknown Error" />
+				<div>{`${error}`}</div>
+			</>
+>>>>>>> 6631869 (chore: update code for biome rules)
 		</Root>
 	);
 };

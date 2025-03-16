@@ -1,14 +1,24 @@
 import { Injectable } from "@nestjs/common";
 import type { RoleEnum } from "@unteris/server/common";
+<<<<<<< HEAD
 import {
 	type Database,
 	InjectKysely,
+=======
+import { type Database, InjectKysely } from "@unteris/server/kysely";
+import type {
+>>>>>>> 6631869 (chore: update code for biome rules)
 	LocalLogin,
 	LoginMethod,
 	UserAccount,
+<<<<<<< HEAD
 } from "@unteris/server/kysely";
 import { type Kysely, sql } from "kysely";
 import { SignupUser } from "./models";
+=======
+} from "@unteris/shared/types";
+import { type Kysely, sql } from "kysely";
+>>>>>>> 6631869 (chore: update code for biome rules)
 
 @Injectable()
 export class SecurityRepo {

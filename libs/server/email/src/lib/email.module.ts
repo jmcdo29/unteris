@@ -3,7 +3,11 @@ import {
 	ServerConfigModule,
 	ServerConfigService,
 } from "@unteris/server/config";
+<<<<<<< HEAD
 import { createTransport, type TransportOptions } from "nodemailer";
+=======
+import { type TransportOptions, createTransport } from "nodemailer";
+>>>>>>> 6631869 (chore: update code for biome rules)
 import {
 	EMAIL_CONFIG_TOKEN,
 	EMAIL_INSTANCE_TOKEN,

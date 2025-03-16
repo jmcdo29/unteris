@@ -1,6 +1,7 @@
 import { Test } from "@nestjs/testing";
 import { ServerLocationService } from "./server-location.service";
 
+// biome-ignore lint/nursery/noSecrets: not a secret
 describe("ServerLocationService", () => {
 	let service: ServerLocationService;
 

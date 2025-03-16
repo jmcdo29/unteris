@@ -6,7 +6,7 @@ export class DeityDomainQuestions {
 		message: "What is the name of the deity?",
 		name: "deityName",
 	})
-	parseDeityName(name: string) {
+	parseDeityName(name: string): string {
 		return name;
 	}
 
@@ -14,7 +14,7 @@ export class DeityDomainQuestions {
 		message: "What is the name of the domain?",
 		name: "domainName",
 	})
-	parseDomainName(name: string) {
+	parseDomainName(name: string): string {
 		return name;
 	}
 }

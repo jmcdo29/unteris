@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { sql } from "kysely";
+=======
+import { Kysely, sql } from "kysely";
+>>>>>>> 6631869 (chore: update code for biome rules)
 import type { DB } from "./utils/db.interface";
 
 export const up = async (db: DB) => {

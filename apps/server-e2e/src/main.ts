@@ -9,6 +9,10 @@ import { request } from "pactum";
 import type { RedisClientType } from "redis";
 import { beforeAll, beforeEach, describe } from "vitest";
 import type { TestContext } from "./interfaces/test-context.interface";
+<<<<<<< HEAD
+=======
+import { csrfTest } from "./tests/csrf";
+>>>>>>> 6631869 (chore: update code for biome rules)
 import { locationTest } from "./tests/location";
 import { resetPasswordTest } from "./tests/reset-password";
 import { signUpAndLoginTests } from "./tests/signup-and-login";

@@ -1,8 +1,16 @@
 import { randomUUID } from "node:crypto";
+<<<<<<< HEAD
+=======
+import { csrfHeader, locationRoute } from "@unteris/shared/types";
+>>>>>>> 6631869 (chore: update code for biome rules)
 import { spec } from "pactum";
 import { ulid } from "ulid";
 import { describe, test } from "vitest";
 import { signup } from "../auth";
+<<<<<<< HEAD
+=======
+import { csrfStoreToken } from "../csrf";
+>>>>>>> 6631869 (chore: update code for biome rules)
 import type { TestContext } from "../interfaces/test-context.interface";
 
 export const locationTest = () =>

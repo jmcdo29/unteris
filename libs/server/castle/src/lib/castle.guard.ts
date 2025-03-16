@@ -3,10 +3,14 @@ import {
 	type ExecutionContext,
 	Injectable,
 } from "@nestjs/common";
+<<<<<<< HEAD
 import { Reflector } from "@nestjs/core";
+=======
+import type { Reflector } from "@nestjs/core";
+>>>>>>> 6631869 (chore: update code for biome rules)
 import type { AuthorizedRequest } from "@unteris/server/common";
 import { Castle } from "./castle.decorator";
-import { ServerCastleService } from "./castle.service";
+import type { ServerCastleService } from "./castle.service";
 
 @Injectable()
 export class CastleGuard implements CanActivate {

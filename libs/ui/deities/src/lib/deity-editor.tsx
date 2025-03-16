@@ -2,7 +2,11 @@ import { useTheme } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+<<<<<<< HEAD
 import type { types } from "@unteris/shared/sdk";
+=======
+import type { Deity } from "@unteris/shared/types";
+>>>>>>> 6631869 (chore: update code for biome rules)
 import { Grid } from "@unteris/ui/components";
 import { useSetAtom } from "jotai";
 import type { ChangeEvent } from "react";

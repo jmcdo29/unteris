@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { applyDecorators, type Type, UseInterceptors } from "@nestjs/common";
+=======
+import { type Type, UseInterceptors, applyDecorators } from "@nestjs/common";
+>>>>>>> 6631869 (chore: update code for biome rules)
 import { FileInterceptor } from "@nestjs/platform-express";
 import {
 	ApiBody,

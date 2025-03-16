@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { sdk, type types } from "@unteris/shared/sdk";
+=======
+import type { PasswordReset as PasswordResetBody } from "@unteris/shared/types";
+>>>>>>> 6631869 (chore: update code for biome rules)
 import {
 	ActionButton,
 	client,
