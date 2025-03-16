@@ -1,4 +1,5 @@
 import type { Type } from "@nestjs/common";
+<<<<<<< HEAD
 import type {
 	BaseIssue,
 	BaseSchema,
@@ -7,6 +8,9 @@ import type {
 	StandardProps,
 	UnknownDataset,
 } from "valibot";
+=======
+import type { ObjectSchema, OptionalSchema } from "valibot";
+>>>>>>> 6631869 (chore: update code for biome rules)
 
 type ValibotObject = {
 	type: "object";
@@ -152,6 +156,7 @@ const getType = (
 } => {
 	switch (schema.type) {
 		case "string":
+<<<<<<< HEAD
 			return { type: "string" };
 		case "number":
 			return { type: "number" };
@@ -176,6 +181,15 @@ const getType = (
 			const val = schema.literal;
 			return { type, enum: [val] };
 		}
+=======
+			return { type: (): StringConstructor => String };
+		case "number":
+			return { type: (): NumberConstructor => Number };
+		case "object":
+			return { type: (): ObjectConstructor => Object };
+		case "boolean":
+			return { type: (): BooleanConstructor => Boolean };
+>>>>>>> 6631869 (chore: update code for biome rules)
 		case "optional":
 		case "nullable":
 		case "nullish":
@@ -187,7 +201,11 @@ const getType = (
 			return { type: "string", enum: Array.from(schema.options) ?? [] };
 		case "enum":
 			return {
+<<<<<<< HEAD
 				type: "string",
+=======
+				type: (): StringConstructor => String,
+>>>>>>> 6631869 (chore: update code for biome rules)
 				enum: schema.enum ?? [],
 			};
 		case "instance": {
@@ -195,6 +213,7 @@ const getType = (
 				type: () => Object,
 			};
 			if (schema.class && schema.class.name === "Buffer") {
+<<<<<<< HEAD
 				type = { type: "string", format: "binary" };
 			} else if (schema.class) {
 				const schemaClass = schema.class;
@@ -261,6 +280,15 @@ const getType = (
 			}
 			return retSchema;
 		}
+=======
+				return { type: (): StringConstructor => String, format: "binary" };
+			}
+			if (schema.class) {
+				const schemaClass = schema.class;
+				return { type: (): Type<unknown> => schemaClass };
+			}
+			return { type: (): StringConstructor => String };
+>>>>>>> 6631869 (chore: update code for biome rules)
 		default:
 			// @ts-expect-error there are still uncovered cases
 			throw new Error(`Unknown Type: "${schema.type}"`);
@@ -277,8 +305,14 @@ export const schemaToOpenAPI = (
 	const schemaObj: Record<string, unknown> = {};
 	const schemaKeys = Object.keys(valibotSchema);
 	for (const schemaKey of schemaKeys) {
+<<<<<<< HEAD
 		const currSchema = valibotSchema[schemaKey as keyof typeof valibotSchema];
 		schemaObj[schemaKey] = getType(currSchema);
+=======
+		schemaObj[schemaKey] = getType(
+			valibotSchema[schemaKey as keyof typeof valibotSchema],
+		);
+>>>>>>> 6631869 (chore: update code for biome rules)
 	}
 	return schemaObj;
 };

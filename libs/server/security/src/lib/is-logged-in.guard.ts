@@ -3,6 +3,7 @@ import {
 	type ExecutionContext,
 	Injectable,
 } from "@nestjs/common";
+<<<<<<< HEAD
 import { Reflector } from "@nestjs/core";
 import { AuthorizedRequest } from "@unteris/server/common";
 import { ServerCryptService } from "@unteris/server/crypt";
@@ -11,6 +12,12 @@ import {
 	SKIP_LOGGED_IN_CHECK,
 } from "@unteris/server/session";
 import { ServerSecurityService } from "./security.service";
+=======
+import type { Reflector } from "@nestjs/core";
+import type { AuthorizedRequest } from "@unteris/server/common";
+import { SKIP_SESSION_LOGGED_IN_CHECK } from "@unteris/server/session";
+import type { ServerSecurityService } from "./security.service";
+>>>>>>> 6631869 (chore: update code for biome rules)
 
 @Injectable()
 export class IsLoggedInGuard implements CanActivate {

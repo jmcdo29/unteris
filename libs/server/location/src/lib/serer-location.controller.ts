@@ -18,6 +18,7 @@ import {
 import { Action, Castle, CastleGuard, Subject } from "@unteris/server/castle";
 import {
 	FileUpload,
+<<<<<<< HEAD
 	IdParamDto,
 	locationRoute,
 	OverviewObjectDto,
@@ -28,11 +29,26 @@ import {
 	GetLocationByIdResponseDto,
 	ImageFile,
 	LocationCreateResponseDto,
+=======
+	type IdParamDto,
+	OverviewObjectDto,
+} from "@unteris/server/common";
+import { SkipSessionCheck } from "@unteris/server/session";
+import {
+	type Location,
+	type LocationWithImage,
+	type OverviewObject,
+	locationRoute,
+} from "@unteris/shared/types";
+import {
+	type ByTypeQueryDto,
+	type ImageFile,
+>>>>>>> 6631869 (chore: update code for biome rules)
 	LocationCreationDto,
 	LocationUpdateDto,
 	LocationUpdateResponseDto,
 } from "./models";
-import { ServerLocationService } from "./server-location.service";
+import type { ServerLocationService } from "./server-location.service";
 
 @ApiTags("Location")
 @Controller(locationRoute)
@@ -41,19 +57,24 @@ export class ServerLocationController {
 	constructor(private readonly service: ServerLocationService) {}
 	@ApiOkResponse({ type: [OverviewObjectDto] })
 	@Get()
+<<<<<<< HEAD
 	getAllByType(@Query() query: ByTypeQueryDto) {
 		return this.service.getByType(query.data);
+=======
+	getAllByType(@Query() query: ByTypeQueryDto): Promise<OverviewObject[]> {
+		return this.service.getByType(query.data.type);
+>>>>>>> 6631869 (chore: update code for biome rules)
 	}
 
 	@ApiOkResponse({ type: [OverviewObjectDto] })
 	@Get("/by-parent/:id")
-	getAllByParentId(@Param() params: IdParamDto) {
+	getAllByParentId(@Param() params: IdParamDto): Promise<OverviewObject[]> {
 		return this.service.getByParentId(params.data.id);
 	}
 
 	@ApiOkResponse({ type: GetLocationByIdResponseDto })
 	@Get("/id/:id")
-	getById(@Param() param: IdParamDto) {
+	getById(@Param() param: IdParamDto): Promise<LocationWithImage> {
 		return this.service.getById(param.data.id);
 	}
 
@@ -64,7 +85,10 @@ export class ServerLocationController {
 	@UseGuards(CastleGuard)
 	@Castle([Action.Create, Subject.Location])
 	@Post("new")
-	create(@Body() body: LocationCreationDto, @UploadedFile() file?: ImageFile) {
+	create(
+		@Body() body: LocationCreationDto,
+		@UploadedFile() file?: ImageFile,
+	): Promise<Location> {
 		return this.service.createLocation(body.data, file?.data);
 	}
 
@@ -79,7 +103,7 @@ export class ServerLocationController {
 		@Body() body: LocationUpdateDto,
 		@Param() param: IdParamDto,
 		@UploadedFile() file?: ImageFile,
-	) {
+	): Promise<{ success: boolean }> {
 		return this.service.updateLocation(param.data.id, body.data, file?.data);
 	}
 }

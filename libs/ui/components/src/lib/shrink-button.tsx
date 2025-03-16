@@ -1,6 +1,10 @@
 import Left from "@mui/icons-material/Visibility";
 import Right from "@mui/icons-material/VisibilityOff";
+<<<<<<< HEAD
 import { Box, Button, Unstable_Grid2 as Grid } from "@mui/material";
+=======
+import { Box, Button, Unstable_Grid2 as Grid, IconButton } from "@mui/material";
+>>>>>>> 6631869 (chore: update code for biome rules)
 
 interface ShrinkButtonProps {
 	hide: boolean;
@@ -14,7 +18,7 @@ export const ShrinkButton = ({
 	shrunk,
 	setShrunk,
 	regionType,
-}: ShrinkButtonProps) => {
+}: ShrinkButtonProps): JSX.Element => {
 	const label = !shrunk
 		? `Shrink the ${regionType} tab`
 		: `Expand the ${regionType} tab`;
@@ -24,7 +28,7 @@ export const ShrinkButton = ({
 				<Button
 					aria-label={label}
 					title={label}
-					onClick={() => setShrunk(!shrunk)}
+					onClick={(): void => setShrunk(!shrunk)}
 				>
 					{shrunk ? <Right /> : <Left />}
 				</Button>

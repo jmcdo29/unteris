@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 import * as v from "valibot";
 
+=======
+import { type Output, instance, number, object, string } from "valibot";
+>>>>>>> 6631869 (chore: update code for biome rules)
 import { ValibotDto } from "./valibot.dto";
 
 export const FileSchema = v.object({

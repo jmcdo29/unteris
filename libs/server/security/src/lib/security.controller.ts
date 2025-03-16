@@ -6,6 +6,7 @@ import {
 	ApiTags,
 } from "@nestjs/swagger";
 import { CacheSkip } from "@unteris/server/cache";
+<<<<<<< HEAD
 import {
 	AuthorizedRequest,
 	authRoute,
@@ -36,6 +37,22 @@ import {
 	TokenVerificationData,
 } from "./models";
 import { ServerSecurityService } from "./security.service";
+=======
+import type { UnterisCookies, UnterisSession } from "@unteris/server/common";
+import { CsrfGuard } from "@unteris/server/csrf";
+import { SkipSessionCheck } from "@unteris/server/session";
+import {
+	type Success,
+	type UserAccount,
+	authRoute,
+} from "@unteris/shared/types";
+import { Cookies } from "nest-cookies";
+import type { LoginBodyDto, SignupBodyDto } from "./models";
+import type { PasswordResetRequestDto } from "./models/password-reset-request.dto";
+import type { PasswordResetDto } from "./models/password-reset.dto";
+import type { TokenVerificationData } from "./models/token-verification-query.dto";
+import type { ServerSecurityService } from "./security.service";
+>>>>>>> 6631869 (chore: update code for biome rules)
 
 @ApiTags("Security")
 @Controller(authRoute)

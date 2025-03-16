@@ -16,7 +16,7 @@ export const ThemeSwitcher = (): JSX.Element => {
 				title={`Turn ${isDarkMode ? "on" : "off"} the lights`}
 				enterDelay={1000}
 			>
-				<Button onClick={() => setTheme(isDarkMode ? "light" : "dark")}>
+				<Button onClick={(): void => setTheme(isDarkMode ? "light" : "dark")}>
 					{isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
 				</Button>
 			</Tooltip>

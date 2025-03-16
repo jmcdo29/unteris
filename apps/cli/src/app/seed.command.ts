@@ -2,7 +2,7 @@ import { OgmaLogger, type OgmaService } from "@ogma/nestjs-module";
 import { type Database, InjectKysely } from "@unteris/server/kysely";
 import type { CompiledQuery, InsertResult, Kysely } from "kysely";
 import {
-	CliUtilityService,
+	type CliUtilityService,
 	Command,
 	CommandRunner,
 	Option,
@@ -29,7 +29,7 @@ export class SeedCommand extends CommandRunner {
 		super();
 	}
 
-	private deityCategoryInsert() {
+	private deityCategoryInsert(): CompiledQuery {
 		return this.db
 			.insertInto("deityCategory")
 			.columns(["name"])
@@ -37,7 +37,7 @@ export class SeedCommand extends CommandRunner {
 			.compile();
 	}
 
-	private planeInsert() {
+	private planeInsert(): CompiledQuery {
 		return this.db
 			.insertInto("location")
 			.columns(["name"])
@@ -45,7 +45,7 @@ export class SeedCommand extends CommandRunner {
 			.compile();
 	}
 
-	private domainInsert() {
+	private domainInsert(): CompiledQuery {
 		const domainNames = Object.keys(domains) as Array<keyof typeof domains>;
 		return this.db
 			.insertInto("domain")
@@ -58,7 +58,7 @@ export class SeedCommand extends CommandRunner {
 			.compile();
 	}
 
-	private deityInsert() {
+	private deityInsert(): CompiledQuery {
 		return this.db
 			.insertInto("deity")
 			.columns(["name", "description", "categoryId", "locationId"])
@@ -79,7 +79,7 @@ export class SeedCommand extends CommandRunner {
 			.compile();
 	}
 
-	private raceInsert() {
+	private raceInsert(): CompiledQuery {
 		return this.db
 			.insertInto("race")
 			.columns([
@@ -105,7 +105,7 @@ export class SeedCommand extends CommandRunner {
 			.compile();
 	}
 
-	private racialAbilityInsert() {
+	private racialAbilityInsert(): CompiledQuery {
 		return this.db
 			.insertInto("racialAbility")
 			.columns(["description", "name", "raceId"])
@@ -124,7 +124,7 @@ export class SeedCommand extends CommandRunner {
 			.compile();
 	}
 
-	private imageInsert() {
+	private imageInsert(): CompiledQuery {
 		return this.db
 			.insertInto("image")
 			.columns(["type", "originalUrl"])
@@ -137,7 +137,7 @@ export class SeedCommand extends CommandRunner {
 			.compile();
 	}
 
-	private deityDomainInsert() {
+	private deityDomainInsert(): CompiledQuery {
 		return this.db
 			.insertInto("deityDomain")
 			.columns(["deityId", "domainId"])
@@ -160,7 +160,7 @@ export class SeedCommand extends CommandRunner {
 			.compile();
 	}
 
-	private regionInsert() {
+	private regionInsert(): CompiledQuery {
 		return this.db
 			.insertInto("location")
 			.columns(["name", "type"])
@@ -173,7 +173,7 @@ export class SeedCommand extends CommandRunner {
 			)
 			.compile();
 	}
-	private cityInsert() {
+	private cityInsert(): CompiledQuery {
 		return this.db
 			.insertInto("location")
 			.columns(["name", "type", "parentId"])
@@ -245,12 +245,12 @@ export class SeedCommand extends CommandRunner {
 	}
 
 	@Option({ flags: "-d, --dry-run [dryRun]" })
-	parseDryRun(val: string) {
+	parseDryRun(val: string): boolean {
 		return this.cliService.parseBoolean(val);
 	}
 
 	@Option({ flags: "-a, --allow-errors [allowErrors]" })
-	parseAllowErrors(val: string) {
+	parseAllowErrors(val: string): boolean {
 		return this.cliService.parseBoolean(val);
 	}
 }

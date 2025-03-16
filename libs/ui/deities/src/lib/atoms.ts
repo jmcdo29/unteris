@@ -1,5 +1,14 @@
+<<<<<<< HEAD
 import { sdk } from "@unteris/shared/sdk";
 import { client } from "@unteris/ui/components";
+=======
+import {
+	type Deity,
+	Location,
+	type OverviewObject,
+} from "@unteris/shared/types";
+import { sdk } from "@unteris/ui/components";
+>>>>>>> 6631869 (chore: update code for biome rules)
 import { atom } from "jotai";
 
 export const editingAtom = atom(false);

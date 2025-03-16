@@ -1,11 +1,24 @@
 import { TypeschemaDto } from "@nest-lab/typeschema";
+<<<<<<< HEAD
 import * as v from "valibot";
+=======
+import {
+	type ObjectSchema,
+	type OptionalSchema,
+	OptionalSchemaAsync,
+} from "valibot";
+import { schemaToOpenAPI } from "./valibot-to-openapi";
+>>>>>>> 6631869 (chore: update code for biome rules)
 
 import { schemaToOpenAPI, Object as ValibotObject } from "./valibot-to-openapi";
 
+<<<<<<< HEAD
 export const ValibotDto: <
 	T extends ValibotObject | v.OptionalSchema<ValibotObject, unknown>,
 >(
+=======
+export const ValibotDto: <T extends Object | OptionalSchema<Object>>(
+>>>>>>> 6631869 (chore: update code for biome rules)
 	schema: T,
 ) => {
 	// these are necessary to allow us to use body.data or similar in a controller

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import type { types } from "@unteris/shared/sdk";
+=======
+import type { SignupUser } from "@unteris/shared/types";
+>>>>>>> 6631869 (chore: update code for biome rules)
 import type { DisplayError } from "@unteris/ui/components";
 import { atom } from "jotai";
 

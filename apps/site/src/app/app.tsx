@@ -1,9 +1,15 @@
 import CssBaseline from "@mui/material/CssBaseline";
 import type { LinkProps } from "@mui/material/Link";
+<<<<<<< HEAD
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { sdk } from "@unteris/shared/sdk";
 import { themeAtom, userAtom } from "@unteris/ui/atoms";
 import { client } from "@unteris/ui/components";
+=======
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { themeAtom } from "@unteris/ui/atoms";
+>>>>>>> 6631869 (chore: update code for biome rules)
 import { useAtom } from "jotai";
 import { forwardRef, useEffect, useMemo } from "react";
 import {

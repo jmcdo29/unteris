@@ -1,6 +1,10 @@
 import { Inject, Injectable } from "@nestjs/common";
 import type { ClientRMQ } from "@nestjs/microservices";
+<<<<<<< HEAD
 import { PROCESS_IMAGE_EVENT } from "@unteris/server/common";
+=======
+import { PROCESS_IMAGE_EVENT } from "@unteris/shared/types";
+>>>>>>> 6631869 (chore: update code for biome rules)
 
 @Injectable()
 export class ServerImageClientService {

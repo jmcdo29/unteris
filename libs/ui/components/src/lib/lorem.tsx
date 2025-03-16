@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 
-export const Lorem = () => (
+export const Lorem = (): JSX.Element => (
 	<Typography>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
 		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,

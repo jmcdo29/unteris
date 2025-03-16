@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
-import { ServerFileStorageService } from "@unteris/server/file-storage";
+import type { ServerFileStorageService } from "@unteris/server/file-storage";
 import sharp from "sharp";
-import { ImageRepo } from "./image.repository";
+import type { ImageRepo } from "./image.repository";
 
 @Injectable()
 export class ServerImageProcessingService {

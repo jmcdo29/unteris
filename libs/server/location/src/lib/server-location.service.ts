@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
+<<<<<<< HEAD
 import type { File, OverviewObject } from "@unteris/server/common";
 import { ServerFileStorageService } from "@unteris/server/file-storage";
 import { ServerImageClientService } from "@unteris/server/image-client";
@@ -11,6 +12,19 @@ import {
 	LocationUpdate,
 	LocationUpdateResponse,
 } from "./models";
+=======
+import type { File } from "@unteris/server/common";
+import type { ServerFileStorageService } from "@unteris/server/file-storage";
+import type { ServerImageClientService } from "@unteris/server/image-client";
+import type { Database } from "@unteris/server/kysely";
+import type {
+	Location,
+	LocationWithImage,
+	OverviewObject,
+} from "@unteris/shared/types";
+import type { Insertable, Updateable } from "kysely";
+import type { LocationRepository } from "./location.repository";
+>>>>>>> 6631869 (chore: update code for biome rules)
 
 @Injectable()
 export class ServerLocationService {
@@ -48,7 +62,11 @@ export class ServerLocationService {
 		id: string,
 		location: LocationUpdate,
 		file?: File,
+<<<<<<< HEAD
 	): Promise<LocationUpdateResponse> {
+=======
+	): Promise<{ success: boolean }> {
+>>>>>>> 6631869 (chore: update code for biome rules)
 		if (!(await this.getById(id))) {
 			throw new NotFoundException(`Location with the id ${id} not found`);
 		}

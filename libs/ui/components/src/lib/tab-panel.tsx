@@ -9,7 +9,7 @@ interface TabPanelProps {
 	gridColumn?: string | number;
 }
 
-export const TabPanel = (props: TabPanelProps) => {
+export const TabPanel = (props: TabPanelProps): JSX.Element => {
 	const { children, value, index, ...other } = props;
 	return (
 		<Grid container={true}>
