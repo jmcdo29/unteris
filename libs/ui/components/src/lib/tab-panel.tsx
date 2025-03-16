@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 interface TabPanelProps {
 	children?: ReactNode;
@@ -9,7 +9,7 @@ interface TabPanelProps {
 	gridColumn?: string | number;
 }
 
-export const TabPanel = (props: TabPanelProps) => {
+export const TabPanel = (props: TabPanelProps): JSX.Element => {
 	const { children, value, index, ...other } = props;
 	return (
 		<Grid container={true}>

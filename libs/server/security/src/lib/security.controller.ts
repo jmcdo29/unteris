@@ -10,16 +10,20 @@ import {
 } from "@nestjs/common";
 import { ApiConsumes, ApiTags } from "@nestjs/swagger";
 import { CacheSkip } from "@unteris/server/cache";
-import { UnterisCookies, UnterisSession } from "@unteris/server/common";
+import type { UnterisCookies, UnterisSession } from "@unteris/server/common";
 import { CsrfGuard } from "@unteris/server/csrf";
 import { SkipSessionCheck } from "@unteris/server/session";
-import { Success, UserAccount, authRoute } from "@unteris/shared/types";
+import {
+	type Success,
+	type UserAccount,
+	authRoute,
+} from "@unteris/shared/types";
 import { Cookies } from "nest-cookies";
-import { LoginBodyDto, SignupBodyDto } from "./models";
-import { PasswordResetRequestDto } from "./models/password-reset-request.dto";
-import { PasswordResetDto } from "./models/password-reset.dto";
-import { TokenVerificationData } from "./models/token-verification-query.dto";
-import { ServerSecurityService } from "./security.service";
+import type { LoginBodyDto, SignupBodyDto } from "./models";
+import type { PasswordResetRequestDto } from "./models/password-reset-request.dto";
+import type { PasswordResetDto } from "./models/password-reset.dto";
+import type { TokenVerificationData } from "./models/token-verification-query.dto";
+import type { ServerSecurityService } from "./security.service";
 
 @ApiTags("Security")
 @UseGuards(CsrfGuard)

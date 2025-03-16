@@ -1,4 +1,4 @@
-import { Output, literal, object, string, ulid, union } from "valibot";
+import { type Output, literal, object, string, ulid, union } from "valibot";
 
 export const DomainSchema = object({
 	id: string([ulid()]),

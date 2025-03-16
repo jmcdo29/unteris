@@ -1,9 +1,14 @@
-import { OgmaLogger, OgmaService } from "@ogma/nestjs-module";
-import { Database, InjectKysely } from "@unteris/server/kysely";
-import { ServerLocationService } from "@unteris/server/location";
-import { Deity, DeityCategory, Domain, Location } from "@unteris/shared/types";
-import { Insertable, Kysely } from "kysely";
-import { Command, CommandRunner, InquirerService } from "nest-commander";
+import { OgmaLogger, type OgmaService } from "@ogma/nestjs-module";
+import { type Database, InjectKysely } from "@unteris/server/kysely";
+import type { ServerLocationService } from "@unteris/server/location";
+import type {
+	Deity,
+	DeityCategory,
+	Domain,
+	Location,
+} from "@unteris/shared/types";
+import type { Insertable, Kysely } from "kysely";
+import { Command, CommandRunner, type InquirerService } from "nest-commander";
 import { safeParse, string, ulid } from "valibot";
 
 @Command({ name: "repl", arguments: "[type]" })

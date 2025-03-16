@@ -3,7 +3,7 @@ import {
 	ServerConfigModule,
 	ServerConfigService,
 } from "@unteris/server/config";
-import { LocalStoreConfig } from "./file-manager.interface";
+import type { LocalStoreConfig } from "./file-manager.interface";
 import {
 	FILE_LOCAL_CONFIG_TOKEN,
 	FILE_STORE_TOKEN,

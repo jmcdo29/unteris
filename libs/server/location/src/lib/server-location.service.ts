@@ -1,15 +1,15 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { File } from "@unteris/server/common";
-import { ServerFileStorageService } from "@unteris/server/file-storage";
-import { ServerImageClientService } from "@unteris/server/image-client";
-import { Database } from "@unteris/server/kysely";
-import {
+import type { File } from "@unteris/server/common";
+import type { ServerFileStorageService } from "@unteris/server/file-storage";
+import type { ServerImageClientService } from "@unteris/server/image-client";
+import type { Database } from "@unteris/server/kysely";
+import type {
 	Location,
 	LocationWithImage,
 	OverviewObject,
 } from "@unteris/shared/types";
-import { Insertable, Updateable } from "kysely";
-import { LocationRepository } from "./location.repository";
+import type { Insertable, Updateable } from "kysely";
+import type { LocationRepository } from "./location.repository";
 
 @Injectable()
 export class ServerLocationService {
@@ -47,7 +47,7 @@ export class ServerLocationService {
 		id: string,
 		location: Updateable<Database["location"]>,
 		file?: File,
-	) {
+	): Promise<{ success: boolean }> {
 		if (!(await this.getById(id))) {
 			throw new NotFoundException(`Location with the id ${id} not found`);
 		}
@@ -60,7 +60,7 @@ export class ServerLocationService {
 	}
 
 	private async saveFile(file?: File): Promise<string | undefined> {
-		let filePath;
+		let filePath: string | undefined;
 		if (file) {
 			filePath = `./images/${file.originalname}`;
 			await this.fileService.writeFileToStore(filePath, file.buffer);

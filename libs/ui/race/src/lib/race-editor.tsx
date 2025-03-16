@@ -1,4 +1,4 @@
-import { RaceWithAbilities } from "@unteris/shared/types";
+import type { RaceWithAbilities } from "@unteris/shared/types";
 
 interface RaceEditorProps {
 	race: RaceWithAbilities;

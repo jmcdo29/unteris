@@ -1,4 +1,4 @@
-import { PasswordReset as PasswordResetBody } from "@unteris/shared/types";
+import type { PasswordReset as PasswordResetBody } from "@unteris/shared/types";
 import {
 	ActionButton,
 	Grid,
@@ -37,7 +37,7 @@ export const PasswordReset = (): JSX.Element => {
 				isSignup={true}
 			/>
 			<ActionButton
-				text={"Reset Password"}
+				text="Reset Password"
 				action={submit}
 				disabled={password.length < 12}
 			/>

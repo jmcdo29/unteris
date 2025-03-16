@@ -1,9 +1,9 @@
-import { randomUUID } from "crypto";
+import { randomUUID } from "node:crypto";
 import { spec } from "pactum";
 import { describe, expect, test, vi } from "vitest";
 import { loginStep, signup } from "../auth";
 import { csrfSpec, sessionStoreToken } from "../csrf";
-import { TestContext } from "../interfaces/test-context.interface";
+import type { TestContext } from "../interfaces/test-context.interface";
 
 export const signUpAndLoginTests = () => {
 	return describe("SignUp and Login", () => {

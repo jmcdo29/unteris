@@ -1,4 +1,4 @@
-import { Output, object, string } from "valibot";
+import { type Output, object, string } from "valibot";
 
 export const CsrfReturnSchema = object({
 	csrfToken: string(),

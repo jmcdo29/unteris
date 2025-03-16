@@ -1,15 +1,15 @@
 import { ForbiddenException, Injectable } from "@nestjs/common";
 import {
-	RefreshSessionData,
-	SavedSessionData,
-	SessionData,
+	type RefreshSessionData,
+	type SavedSessionData,
+	type SessionData,
 	UnterisSession,
 } from "@unteris/server/common";
-import { ServerConfigService } from "@unteris/server/config";
+import type { ServerConfigService } from "@unteris/server/config";
 import { InjectRedisInstance } from "@unteris/server/redis";
-import { ServerTokenService } from "@unteris/server/token";
-import { Cookie } from "nest-cookies";
-import { RedisClientType } from "redis";
+import type { ServerTokenService } from "@unteris/server/token";
+import type { Cookie } from "nest-cookies";
+import type { RedisClientType } from "redis";
 
 @Injectable()
 export class ServerSessionService {

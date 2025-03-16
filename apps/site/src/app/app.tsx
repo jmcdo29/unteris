@@ -1,5 +1,5 @@
 import CssBaseline from "@mui/material/CssBaseline";
-import { LinkProps } from "@mui/material/Link";
+import type { LinkProps } from "@mui/material/Link";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { themeAtom } from "@unteris/ui/atoms";
@@ -7,7 +7,7 @@ import { useAtom } from "jotai";
 import { forwardRef, useMemo } from "react";
 import {
 	Link as RouterLink,
-	LinkProps as RouterLinkProps,
+	type LinkProps as RouterLinkProps,
 	RouterProvider,
 } from "react-router-dom";
 

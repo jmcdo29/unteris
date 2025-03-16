@@ -1,4 +1,4 @@
-import { RoleEnum } from "@unteris/shared/types";
+import type { RoleEnum } from "@unteris/shared/types";
 import { atom } from "jotai";
 
 export const userAtom = atom<{

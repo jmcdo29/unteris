@@ -23,7 +23,7 @@
 			},
 			"nursery": {
 				"all": true,
-				"noConfusingVoidType": "off"
+				"noImgElement": "off"
 			}
 		}
 	},

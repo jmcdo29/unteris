@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 // import EditIcon from '@mui/icons-material/Edit';
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Unstable_Grid2";
-import { Deity } from "@unteris/shared/types";
+import type { Deity } from "@unteris/shared/types";
 import { Image } from "@unteris/ui/components";
 import { DeityDomains } from "./deity-domains";
 

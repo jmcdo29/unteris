@@ -1,4 +1,4 @@
-import { DB } from "./utils/db.interface";
+import type { DB } from "./utils/db.interface";
 import { kyselyUlid } from "./utils/ulid.sql";
 
 export const up = async (db: DB) => {

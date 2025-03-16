@@ -1,8 +1,12 @@
-import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
-import { Reflector } from "@nestjs/core";
-import { AuthorizedRequest } from "@unteris/server/common";
+import {
+	type CanActivate,
+	type ExecutionContext,
+	Injectable,
+} from "@nestjs/common";
+import type { Reflector } from "@nestjs/core";
+import type { AuthorizedRequest } from "@unteris/server/common";
 import { SKIP_SESSION_LOGGED_IN_CHECK } from "@unteris/server/session";
-import { ServerSecurityService } from "./security.service";
+import type { ServerSecurityService } from "./security.service";
 
 @Injectable()
 export class IsLoggedInGuard implements CanActivate {

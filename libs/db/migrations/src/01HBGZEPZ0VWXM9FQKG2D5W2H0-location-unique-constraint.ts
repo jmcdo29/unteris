@@ -1,4 +1,4 @@
-import { DB } from "./utils/db.interface";
+import type { DB } from "./utils/db.interface";
 import { uniqueNullsNotDistinct } from "./utils/unique-nulls-not-distinct.sql";
 
 export const up = async (db: DB) => {

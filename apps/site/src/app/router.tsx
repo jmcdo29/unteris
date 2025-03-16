@@ -10,7 +10,7 @@ import { History } from "@unteris/ui/history";
 import { UiLocation } from "@unteris/ui/location";
 import { UiRace } from "@unteris/ui/race";
 import {
-	RouteObject,
+	type RouteObject,
 	createBrowserRouter,
 	useRouteError,
 } from "react-router-dom";
@@ -40,16 +40,15 @@ const ErrorBoundary = (): JSX.Element => {
 				</details>
 			</Root>
 		);
-	} else {
-		return (
-			<Root>
-				<>
-					<Heading text="Unknown Error" />
-					<div>{`${error}`}</div>
-				</>
-			</Root>
-		);
 	}
+	return (
+		<Root>
+			<>
+				<Heading text="Unknown Error" />
+				<div>{`${error}`}</div>
+			</>
+		</Root>
+	);
 };
 
 const routes = (): RouteObject[] => {

@@ -1,5 +1,5 @@
 import {
-	Output,
+	type Output,
 	array,
 	boolean,
 	email,

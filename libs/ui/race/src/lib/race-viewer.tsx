@@ -1,7 +1,7 @@
 import { useTheme } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Unstable_Grid2";
-import { RaceWithAbilities } from "@unteris/shared/types";
+import type { RaceWithAbilities } from "@unteris/shared/types";
 
 interface RaceViewerProps {
 	race: RaceWithAbilities;

@@ -1,7 +1,11 @@
-import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
-import { SessionData } from "@unteris/server/common";
-import { NestCookieRequest } from "nest-cookies";
-import { ServerSessionService } from "./session.service";
+import {
+	type CanActivate,
+	type ExecutionContext,
+	Injectable,
+} from "@nestjs/common";
+import type { SessionData } from "@unteris/server/common";
+import type { NestCookieRequest } from "nest-cookies";
+import type { ServerSessionService } from "./session.service";
 
 /**
  * This is  less of a guard and more of a middleware as it will always return
@@ -22,9 +26,8 @@ export class SessionExistsGuard implements CanActivate {
 		const session = await this.sessionService.getSession(sessionId ?? "");
 		if (!this.sessionService.isSession(session)) {
 			const newSession: SessionData = { user: {}, csrf: "" };
-			const { id, refreshId } = await this.sessionService.createFullSession(
-				newSession,
-			);
+			const { id, refreshId } =
+				await this.sessionService.createFullSession(newSession);
 			req._cookies.push(
 				this.sessionService.createCookie({
 					name: "session",

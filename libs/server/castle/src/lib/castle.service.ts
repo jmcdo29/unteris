@@ -1,10 +1,10 @@
 import {
 	AbilityBuilder,
-	MongoAbility,
+	type MongoAbility,
 	createMongoAbility,
 } from "@casl/ability";
 import { Injectable } from "@nestjs/common";
-import { AuthorizedUser } from "@unteris/server/common";
+import type { AuthorizedUser } from "@unteris/server/common";
 import { Action } from "./action.enum";
 import { Subject } from "./subject.enum";
 

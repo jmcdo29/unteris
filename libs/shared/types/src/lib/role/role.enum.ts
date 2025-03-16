@@ -1,4 +1,4 @@
-import { Output, enumType } from "valibot";
+import { type Output, enumType } from "valibot";
 
 export const RoleEnum = enumType(["player", "dev", "admin", "dm"]);
 

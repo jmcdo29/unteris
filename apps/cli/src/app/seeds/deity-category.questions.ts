@@ -8,7 +8,7 @@ export class DeityCategoryQuestions {
 		message: "What is the name of the deity category?",
 		name: "name",
 	})
-	parseName(name: string) {
+	parseName(name: string): string {
 		return name;
 	}
 }

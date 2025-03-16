@@ -1,5 +1,9 @@
-import { AlterColumnBuilder, AlterColumnBuilderCallback, sql } from "kysely";
-import { DB } from "./utils/db.interface";
+import {
+	type AlterColumnBuilder,
+	type AlterColumnBuilderCallback,
+	sql,
+} from "kysely";
+import type { DB } from "./utils/db.interface";
 import { kyselyDefaultUlid } from "./utils/ulid.sql";
 
 const convertToUlid = (

@@ -1,4 +1,4 @@
-import { DisplayError } from "./error-display";
+import type { DisplayError } from "./error-display";
 
 interface ValibotError {
 	path: string;
@@ -52,19 +52,22 @@ export const convertUnknownErrorToDisplayError = (
 			messages: ["An unknown error has occurred"],
 		};
 	}
-	if (isObject(err)) {
-		if ("body" in err && isObject(err.body) && isServerError(err.body)) {
-			switch (err.body.type) {
-				case "Validation":
-					return convertValidationErrorToDisplayError(err.body, title);
-				case "Authentication":
-					return { title: "Authentication Error", messages: err.body.message };
-				default:
-					return {
-						title: "Unknown Server Error",
-						messages: ["If this persists, contact the server admin"],
-					};
-			}
+	if (
+		isObject(err) &&
+		"body" in err &&
+		isObject(err.body) &&
+		isServerError(err.body)
+	) {
+		switch (err.body.type) {
+			case "Validation":
+				return convertValidationErrorToDisplayError(err.body, title);
+			case "Authentication":
+				return { title: "Authentication Error", messages: err.body.message };
+			default:
+				return {
+					title: "Unknown Server Error",
+					messages: ["If this persists, contact the server admin"],
+				};
 		}
 	}
 	return {

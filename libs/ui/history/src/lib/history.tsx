@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import { Grid, Image } from "@unteris/ui/components";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 const HistoryBlurb = ({ children }: { children: ReactNode }): JSX.Element => (
 	<Typography variant="body1" gutterBottom={true} paragraph={true}>

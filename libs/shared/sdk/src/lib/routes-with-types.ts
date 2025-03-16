@@ -1,23 +1,23 @@
 import {
-	CsrfReturn,
-	Deity,
-	Location,
-	LocationWithImage,
-	LoginBody,
-	LoginResponse,
-	OverviewObject,
-	PasswordReset,
-	PasswordResetRequest,
-	RaceWithAbilities,
-	SignupUser,
-	Success,
-	UserAccount,
-	authRoute,
+	type CsrfReturn,
+	type Deity,
+	type Location,
+	type LocationWithImage,
+	type LoginBody,
+	type LoginResponse,
+	type OverviewObject,
+	type PasswordReset,
+	type PasswordResetRequest,
+	type RaceWithAbilities,
+	type SignupUser,
+	type Success,
+	type UserAccount,
+	type authRoute,
 	csrfRoute,
-	deitiesRoute,
-	locationRoute,
+	type deitiesRoute,
+	type locationRoute,
 	raceRoute,
-	sessionRoute,
+	type sessionRoute,
 } from "@unteris/shared/types";
 
 export type method = "get" | "post" | "patch" | "put" | "delete";
@@ -51,19 +51,18 @@ type SecurityRoutes = {
 		[csrfRoute]: [CsrfReturn];
 	} & Record<`${typeof authRoute}/me`, [UserAccount]> &
 		Record<`${typeof sessionRoute}/refresh`, [Success]>;
-	post:
-		| Record<`${typeof csrfRoute}/verify`, [Success]> &
-				Record<
-					`${typeof authRoute}/signup`,
-					[Success & { id: UserAccount["id"] }, SignupUser]
-				> &
-				Record<`${typeof authRoute}/login`, [LoginResponse, LoginBody]> &
-				Record<`${typeof authRoute}/logout`, [Success]> &
-				Record<
-					`${typeof authRoute}/password-reset-request`,
-					[Success, PasswordResetRequest]
-				> &
-				Record<`${typeof authRoute}/password-reset`, [Success, PasswordReset]>;
+	post: Record<`${typeof csrfRoute}/verify`, [Success]> &
+		Record<
+			`${typeof authRoute}/signup`,
+			[Success & { id: UserAccount["id"] }, SignupUser]
+		> &
+		Record<`${typeof authRoute}/login`, [LoginResponse, LoginBody]> &
+		Record<`${typeof authRoute}/logout`, [Success]> &
+		Record<
+			`${typeof authRoute}/password-reset-request`,
+			[Success, PasswordResetRequest]
+		> &
+		Record<`${typeof authRoute}/password-reset`, [Success, PasswordReset]>;
 };
 
 type LocationRoutes = {

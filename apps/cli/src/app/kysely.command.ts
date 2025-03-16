@@ -1,11 +1,11 @@
-import { promises as fs } from "fs";
-import * as path from "path";
-import { OgmaLogger, OgmaService } from "@ogma/nestjs-module";
+import { promises as fs } from "node:fs";
+import * as path from "node:path";
+import { OgmaLogger, type OgmaService } from "@ogma/nestjs-module";
 import { InjectKysely } from "@unteris/server/kysely";
 import {
 	FileMigrationProvider,
-	Kysely,
-	MigrationResultSet,
+	type Kysely,
+	type MigrationResultSet,
 	Migrator,
 } from "kysely";
 import { Command, CommandRunner, Option } from "nest-commander";
@@ -23,7 +23,7 @@ export class KyselyCliCommand extends CommandRunner {
 	) {
 		super();
 	}
-	async run(_inputs: string[], options: KyselyCliOptions) {
+	async run(_inputs: string[], options: KyselyCliOptions): Promise<void> {
 		this.logger.log("Starting Migrations");
 		const migrator = new Migrator({
 			db: this.kysely,
@@ -51,7 +51,7 @@ export class KyselyCliCommand extends CommandRunner {
 		let migrationErrors: unknown[] = [];
 		const { results, error } = await callMigration;
 		migrationErrors.push(error);
-		results?.forEach((result) => {
+		for (const result of results ?? []) {
 			if (result.status === "Success") {
 				this.logger.log(
 					`Migration ${result.migrationName} successfully migrated ${result.direction}.`,
@@ -61,16 +61,16 @@ export class KyselyCliCommand extends CommandRunner {
 					`Migration ${result.migrationName} encountered an error while migrating ${result.direction}`,
 				);
 			}
-		});
+		}
 		migrationErrors = migrationErrors.filter((error) => !!error);
 		if (migrationErrors.length) {
-			migrationErrors.forEach((err) => {
+			for (const err of migrationErrors) {
 				if (err instanceof Error) {
 					this.logger.printError(err, { context: "Migration Error" });
 				} else {
 					this.logger.error(err);
 				}
-			});
+			}
 		}
 		this.logger.log("Migrations Finished");
 	}
@@ -78,14 +78,14 @@ export class KyselyCliCommand extends CommandRunner {
 	@Option({
 		flags: "-n, --name <name>",
 	})
-	parseMigrationName(name: string) {
+	parseMigrationName(name: string): string {
 		return name;
 	}
 
 	@Option({
 		flags: "-d, --down [down]",
 	})
-	parseDownOptions(down?: string) {
+	parseDownOptions(down?: string): boolean {
 		return !!down;
 	}
 }

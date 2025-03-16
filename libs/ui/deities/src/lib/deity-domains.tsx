@@ -1,7 +1,7 @@
 import { useTheme } from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { Deity } from "@unteris/shared/types";
+import type { Deity } from "@unteris/shared/types";
 
 type DomainType = Exclude<Deity["domain"], undefined>[number];
 

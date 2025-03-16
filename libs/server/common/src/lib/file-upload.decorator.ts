@@ -1,4 +1,4 @@
-import { Type, UseInterceptors, applyDecorators } from "@nestjs/common";
+import { type Type, UseInterceptors, applyDecorators } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import {
 	ApiBody,
@@ -22,7 +22,10 @@ import {
  * @param bodyDto The Body type of the request for swagger documentation
  * @returns
  */
-export const FileUpload = (fileProperty: string, bodyDto: Type<unknown>) =>
+export const FileUpload = (
+	fileProperty: string,
+	bodyDto: Type<unknown>,
+): MethodDecorator =>
 	applyDecorators(
 		ApiConsumes("multipart/form-data", "application/json"),
 		ApiExtraModels(bodyDto),

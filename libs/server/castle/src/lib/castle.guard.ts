@@ -1,8 +1,12 @@
-import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
-import { Reflector } from "@nestjs/core";
-import { AuthorizedRequest } from "@unteris/server/common";
+import {
+	type CanActivate,
+	type ExecutionContext,
+	Injectable,
+} from "@nestjs/common";
+import type { Reflector } from "@nestjs/core";
+import type { AuthorizedRequest } from "@unteris/server/common";
 import { Castle } from "./castle.decorator";
-import { ServerCastleService } from "./castle.service";
+import type { ServerCastleService } from "./castle.service";
 
 @Injectable()
 export class CastleGuard implements CanActivate {

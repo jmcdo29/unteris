@@ -1,4 +1,4 @@
-import { Output, array, boolean, object, string, ulid } from "valibot";
+import { type Output, array, boolean, object, string, ulid } from "valibot";
 import { RoleEnum } from "../role";
 
 const LoginResponseSchema = object({

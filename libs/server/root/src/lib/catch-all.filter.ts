@@ -1,6 +1,6 @@
-import { ArgumentsHost, Catch } from "@nestjs/common";
-import { BaseExceptionFilter, HttpAdapterHost } from "@nestjs/core";
-import { OgmaFilterService } from "@ogma/nestjs-module";
+import { type ArgumentsHost, Catch } from "@nestjs/common";
+import { BaseExceptionFilter, type HttpAdapterHost } from "@nestjs/core";
+import type { OgmaFilterService } from "@ogma/nestjs-module";
 
 @Catch()
 export class BaseFilter extends BaseExceptionFilter {

@@ -1,5 +1,5 @@
-import { SignupUser } from "@unteris/shared/types";
-import { DisplayError } from "@unteris/ui/components";
+import type { SignupUser } from "@unteris/shared/types";
+import type { DisplayError } from "@unteris/ui/components";
 import { atom } from "jotai";
 
 export const isLoggingInAtom = atom(true);

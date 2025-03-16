@@ -1,12 +1,12 @@
 import { Controller, Get, Req, UseGuards } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { CacheSkip } from "@unteris/server/cache";
-import { RefreshRequest, UnterisCookies } from "@unteris/server/common";
+import type { RefreshRequest, UnterisCookies } from "@unteris/server/common";
 import { sessionRoute } from "@unteris/shared/types";
-import { Cookie, Cookies, NewCookies } from "nest-cookies";
+import { type Cookie, Cookies, NewCookies } from "nest-cookies";
 import { RefreshSessionGuard } from "./refresh-session.guard";
 import { SkipSessionCheck } from "./session.decorator";
-import { ServerSessionService } from "./session.service";
+import type { ServerSessionService } from "./session.service";
 
 @ApiTags("Security")
 @Controller(sessionRoute)

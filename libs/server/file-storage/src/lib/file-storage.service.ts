@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { FileManager } from "./file-manager.interface";
+import type { FileManager } from "./file-manager.interface";
 import { FILE_STORE_TOKEN } from "./file-storage.constants";
 
 @Injectable()

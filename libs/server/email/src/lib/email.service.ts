@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import { ServerConfigService } from "@unteris/server/config";
-import { Transporter } from "nodemailer";
+import type { ServerConfigService } from "@unteris/server/config";
+import type { Transporter } from "nodemailer";
 import { passwordResetEmail, verificationEmail } from "./email.constants";
 import { InjectEmailTransport } from "./email.decorators";
 

@@ -4,7 +4,7 @@ import { spec } from "pactum";
 import { describe, test, vi } from "vitest";
 import { loginStep, signup } from "../auth";
 import { csrfStoreToken, sessionStoreToken } from "../csrf";
-import { TestContext } from "../interfaces/test-context.interface";
+import type { TestContext } from "../interfaces/test-context.interface";
 
 export const resetPasswordTest = () => {
 	return describe("Reset Password Flow", () => {

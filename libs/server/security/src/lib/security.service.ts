@@ -3,13 +3,13 @@ import {
 	Injectable,
 	UnauthorizedException,
 } from "@nestjs/common";
-import { OgmaLogger, OgmaService } from "@ogma/nestjs-module";
-import { RoleEnum } from "@unteris/server/common";
-import { ServerEmailService } from "@unteris/server/email";
-import { ServerHashService } from "@unteris/server/hash";
-import { ServerSessionService } from "@unteris/server/session";
-import { ServerTokenService } from "@unteris/server/token";
-import {
+import { OgmaLogger, type OgmaService } from "@ogma/nestjs-module";
+import type { RoleEnum } from "@unteris/server/common";
+import type { ServerEmailService } from "@unteris/server/email";
+import type { ServerHashService } from "@unteris/server/hash";
+import type { ServerSessionService } from "@unteris/server/session";
+import type { ServerTokenService } from "@unteris/server/token";
+import type {
 	LoginBody,
 	LoginResponse,
 	PasswordReset,
@@ -18,7 +18,7 @@ import {
 	Success,
 	UserAccount,
 } from "@unteris/shared/types";
-import { SecurityRepo } from "./security.repository";
+import type { SecurityRepo } from "./security.repository";
 
 @Injectable()
 export class ServerSecurityService {

@@ -1,7 +1,7 @@
-import { Theme, Typography, useTheme } from "@mui/material";
+import { type Theme, Typography, useTheme } from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 const Descriptor = ({
 	theme,

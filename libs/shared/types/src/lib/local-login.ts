@@ -1,5 +1,5 @@
 import {
-	Output,
+	type Output,
 	fallback,
 	isoDateTime,
 	number,

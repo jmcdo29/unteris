@@ -1,13 +1,13 @@
 import { Injectable } from "@nestjs/common";
-import { RoleEnum } from "@unteris/server/common";
-import { Database, InjectKysely } from "@unteris/server/kysely";
-import {
+import type { RoleEnum } from "@unteris/server/common";
+import { type Database, InjectKysely } from "@unteris/server/kysely";
+import type {
 	LocalLogin,
 	LoginMethod,
 	SignupUser,
 	UserAccount,
 } from "@unteris/shared/types";
-import { Kysely, sql } from "kysely";
+import { type Kysely, sql } from "kysely";
 
 @Injectable()
 export class SecurityRepo {
@@ -70,11 +70,11 @@ export class SecurityRepo {
 
 	async findUserWithLocalLogin(email: string): Promise<
 		Array<
-			| Pick<UserAccount, "id" | "name" | "email"> &
-					Pick<LocalLogin, "password" | "attempts"> & {
-						localLoginId: string;
-						roles: string;
-					}
+			Pick<UserAccount, "id" | "name" | "email"> &
+				Pick<LocalLogin, "password" | "attempts"> & {
+					localLoginId: string;
+					roles: string;
+				}
 		>
 	> {
 		return this.db

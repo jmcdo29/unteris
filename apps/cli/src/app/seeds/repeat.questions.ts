@@ -11,7 +11,7 @@ export class RepeatQuestions {
 		default: "y",
 		type: "list",
 	})
-	parseDoItAgain(doItAgain: "y" | "n") {
+	parseDoItAgain(doItAgain: "y" | "n"): boolean {
 		return doItAgain.toLowerCase() === "y";
 	}
 }

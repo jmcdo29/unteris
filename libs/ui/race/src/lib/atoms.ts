@@ -1,4 +1,8 @@
-import { OverviewObject, Race, RaceWithAbilities } from "@unteris/shared/types";
+import {
+	type OverviewObject,
+	Race,
+	type RaceWithAbilities,
+} from "@unteris/shared/types";
 import { sdk } from "@unteris/ui/components";
 import { atom } from "jotai";
 

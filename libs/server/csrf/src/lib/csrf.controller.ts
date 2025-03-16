@@ -1,11 +1,11 @@
 import { Controller, Get, Ip, Post, Session, UseGuards } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { CacheSkip } from "@unteris/server/cache";
-import { UnterisSession } from "@unteris/server/common";
+import type { UnterisSession } from "@unteris/server/common";
 import { SkipSessionCheck } from "@unteris/server/session";
-import { CsrfReturn, csrfRoute } from "@unteris/shared/types";
+import { type CsrfReturn, csrfRoute } from "@unteris/shared/types";
 import { CsrfGuard } from "./csrf.guard";
-import { ServerCsrfService } from "./csrf.service";
+import type { ServerCsrfService } from "./csrf.service";
 
 @ApiTags("Security")
 @Controller(csrfRoute)

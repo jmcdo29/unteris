@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
-import { Database, InjectKysely } from "@unteris/server/kysely";
-import { Image } from "@unteris/shared/types";
-import { Kysely } from "kysely";
+import { type Database, InjectKysely } from "@unteris/server/kysely";
+import type { Image } from "@unteris/shared/types";
+import type { Kysely } from "kysely";
 
 @Injectable()
 export class ImageRepo {

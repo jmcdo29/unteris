@@ -1,7 +1,7 @@
-import { Database, InjectKysely } from "@unteris/server/kysely";
-import { ServerLocationService } from "@unteris/server/location";
-import { Location } from "@unteris/shared/types";
-import { Kysely } from "kysely";
+import { type Database, InjectKysely } from "@unteris/server/kysely";
+import type { ServerLocationService } from "@unteris/server/location";
+import type { Location } from "@unteris/shared/types";
+import type { Kysely } from "kysely";
 import { ChoicesFor, Question, QuestionSet, WhenFor } from "nest-commander";
 
 @QuestionSet({
@@ -17,7 +17,7 @@ export class DeityQuestions {
 		message: "What is the name of the deity?",
 		name: "name",
 	})
-	parseName(name: string) {
+	parseName(name: string): string {
 		return name;
 	}
 
@@ -25,7 +25,7 @@ export class DeityQuestions {
 		message: "What is the description of the deity?",
 		name: "description",
 	})
-	parseDescription(desc: string) {
+	parseDescription(desc: string): string {
 		return desc;
 	}
 
@@ -33,7 +33,7 @@ export class DeityQuestions {
 		message: "Where can the image for this deity be found?",
 		name: "imageUrl",
 	})
-	parseImageUrl(imageUrl: string) {
+	parseImageUrl(imageUrl: string): string {
 		return imageUrl;
 	}
 
@@ -42,7 +42,7 @@ export class DeityQuestions {
 		name: "category",
 		type: "list",
 	})
-	parseCategory(category: string) {
+	parseCategory(category: string): string {
 		return category;
 	}
 
@@ -52,7 +52,7 @@ export class DeityQuestions {
 		type: "list",
 		choices: ["y", "n"],
 	})
-	parseAskLocation(confirmation: string) {
+	parseAskLocation(confirmation: string): string {
 		this.askLocation = confirmation === "y";
 		return confirmation;
 	}
@@ -62,17 +62,17 @@ export class DeityQuestions {
 		name: "location",
 		type: "list",
 	})
-	parseLocation(location: Location) {
+	parseLocation(location: Location): Location {
 		return location;
 	}
 
 	@WhenFor({ name: "location" })
-	shouldAskLocation() {
+	shouldAskLocation(): boolean {
 		return this.askLocation;
 	}
 
 	@ChoicesFor({ name: "location" })
-	async getLocationOptions() {
+	async getLocationOptions(): Promise<Array<{ name: string; value: string }>> {
 		const locations = await this.locationsService.getByType("plane");
 		return locations.map((location) => ({
 			name: location.name,
@@ -81,7 +81,7 @@ export class DeityQuestions {
 	}
 
 	@ChoicesFor({ name: "category" })
-	async getDeityCategories() {
+	async getDeityCategories(): Promise<Array<{ name: string; value: string }>> {
 		return (
 			await this.db.selectFrom("deityCategory").select(["id", "name"]).execute()
 		).map((category) => ({

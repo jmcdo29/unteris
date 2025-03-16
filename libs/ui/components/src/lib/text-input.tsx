@@ -1,4 +1,4 @@
-import Input, { InputProps } from "@mui/material/Input";
+import Input, { type InputProps } from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
 import { UFormControl } from "./form-control";
 

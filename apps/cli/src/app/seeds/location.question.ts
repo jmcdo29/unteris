@@ -8,7 +8,7 @@ export class LocationQuestions {
 		name: "name",
 		message: "What is the name of the plane?",
 	})
-	parseLocationName(name: string) {
+	parseLocationName(name: string): string {
 		return name;
 	}
 
@@ -18,7 +18,7 @@ export class LocationQuestions {
 		type: "list",
 		choices: ["y", "n"],
 	})
-	parseAddDescription(choice: "y" | "n") {
+	parseAddDescription(choice: "y" | "n"): "y" | "n" {
 		this.addDescription = choice === "y";
 		return choice;
 	}
@@ -27,12 +27,12 @@ export class LocationQuestions {
 		name: "description",
 		message: "What is the description of the plane?",
 	})
-	parseDescription(description: string) {
+	parseDescription(description: string): string {
 		return description;
 	}
 
 	@WhenFor({ name: "description" })
-	shouldAskDescription() {
+	shouldAskDescription(): boolean {
 		return this.addDescription;
 	}
 }

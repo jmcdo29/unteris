@@ -1,4 +1,4 @@
-import { SignupUser } from "@unteris/shared/types";
+import type { SignupUser } from "@unteris/shared/types";
 import { userAtom } from "@unteris/ui/atoms";
 import {
 	ActionButton,

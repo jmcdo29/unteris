@@ -1,7 +1,7 @@
 import { Controller, Get } from "@nestjs/common";
 
 import { SkipSessionCheck } from "@unteris/server/session";
-import { AppService } from "./app.service";
+import type { AppService } from "./app.service";
 
 @Controller()
 @SkipSessionCheck()

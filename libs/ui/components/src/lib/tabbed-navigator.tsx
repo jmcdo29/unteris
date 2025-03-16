@@ -1,6 +1,6 @@
-import { OverviewObject } from "@unteris/shared/types";
-import { Atom, WritableAtom, useAtom, useAtomValue } from "jotai";
-import { Suspense, SyntheticEvent } from "react";
+import type { OverviewObject } from "@unteris/shared/types";
+import { type Atom, type WritableAtom, useAtom, useAtomValue } from "jotai";
+import { Suspense, type SyntheticEvent } from "react";
 import { TabsWithPanel } from "./tabs-with-panel";
 
 interface TabbedNavigatorProps {
@@ -13,11 +13,11 @@ interface TabbedNavigatorProps {
 	creationPanel?: () => JSX.Element;
 }
 
-export const TabbedNavigator = (props: TabbedNavigatorProps) => {
+export const TabbedNavigator = (props: TabbedNavigatorProps): JSX.Element => {
 	const [tabIndex, setTabIndex] = useAtom(props.indexAtom);
 	const resources = useAtomValue(props.resourceAtom);
 
-	const handleTabChange = (_event: SyntheticEvent, newIndex: number) => {
+	const handleTabChange = (_event: SyntheticEvent, newIndex: number): void => {
 		setTabIndex(newIndex);
 	};
 

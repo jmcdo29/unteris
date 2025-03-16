@@ -1,7 +1,7 @@
 import { Inject, Module } from "@nestjs/common";
 import {
 	OgmaModule,
-	OgmaService,
+	type OgmaService,
 	createProviderToken,
 } from "@ogma/nestjs-module";
 import { style } from "@ogma/styler";
@@ -12,8 +12,8 @@ import {
 import {
 	CamelCasePlugin,
 	Kysely,
-	KyselyConfig,
-	LogEvent,
+	type KyselyConfig,
+	type LogEvent,
 	PostgresDialect,
 } from "kysely";
 import { Pool } from "pg";

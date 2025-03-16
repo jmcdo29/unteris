@@ -1,4 +1,4 @@
-import { Output, array, object, optional, string, ulid } from "valibot";
+import { type Output, array, object, optional, string, ulid } from "valibot";
 import { DomainSchema } from "./domain";
 
 export const DeitySchema = object({

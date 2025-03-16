@@ -1,5 +1,10 @@
-import { WriteStream, createWriteStream, mkdirSync, statSync } from "fs";
-import { join } from "path";
+import {
+	type WriteStream,
+	createWriteStream,
+	mkdirSync,
+	statSync,
+} from "node:fs";
+import { join } from "node:path";
 import { Injectable } from "@nestjs/common";
 
 @Injectable()

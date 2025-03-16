@@ -1,4 +1,4 @@
-import { Output, length, object, string } from "valibot";
+import { type Output, length, object, string } from "valibot";
 
 export const PasswordResetSchema = object({
 	resetToken: string([length(43)]),

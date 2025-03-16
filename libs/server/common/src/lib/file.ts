@@ -1,4 +1,4 @@
-import { Output, instance, number, object, string } from "valibot";
+import { type Output, instance, number, object, string } from "valibot";
 import { ValibotDto } from "./valibot.dto";
 
 export const FileSchema = object({

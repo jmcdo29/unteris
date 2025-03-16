@@ -1,4 +1,4 @@
-import { Output, object, string, ulid } from "valibot";
+import { type Output, object, string, ulid } from "valibot";
 
 export const DeityDomainSchema = object({
 	deityId: string([ulid()]),

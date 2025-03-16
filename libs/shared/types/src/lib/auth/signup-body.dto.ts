@@ -1,4 +1,4 @@
-import { Output, email, minLength, object, string } from "valibot";
+import { type Output, email, minLength, object, string } from "valibot";
 
 export const SignupSchema = object({
 	email: string([email()]),

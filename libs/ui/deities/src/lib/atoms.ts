@@ -1,4 +1,8 @@
-import { Deity, Location, OverviewObject } from "@unteris/shared/types";
+import {
+	type Deity,
+	Location,
+	type OverviewObject,
+} from "@unteris/shared/types";
 import { sdk } from "@unteris/ui/components";
 import { atom } from "jotai";
 

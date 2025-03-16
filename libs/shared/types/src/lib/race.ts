@@ -1,4 +1,4 @@
-import { Output, number, object, string } from "valibot";
+import { type Output, number, object, string } from "valibot";
 
 export const RaceSchema = object({
 	id: string(),

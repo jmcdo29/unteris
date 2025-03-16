@@ -1,4 +1,4 @@
-import { Output, enumType, object, string, ulid } from "valibot";
+import { type Output, enumType, object, string, ulid } from "valibot";
 
 export const LoginMethodSchema = object({
 	id: string([ulid()]),

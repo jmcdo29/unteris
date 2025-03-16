@@ -1,19 +1,19 @@
-import { spawn } from "child_process";
-import { appendFileSync, mkdirSync, writeFileSync } from "fs";
-import { join } from "path";
+import { spawn } from "node:child_process";
+import { appendFileSync, mkdirSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 import {
-	ExecutorContext,
+	type ExecutorContext,
 	getPackageManagerCommand,
 	runExecutor as nxExecutor,
 } from "@nx/devkit";
 import { Ogma } from "@ogma/logger";
 import { style } from "@ogma/styler";
-import { LintExecutorSchema } from "./schema";
+import type { LintExecutorSchema } from "./schema";
 
 export default async function runExecutor(
 	options: LintExecutorSchema,
 	context: ExecutorContext,
-) {
+): Promise<{ success: boolean }> {
 	const logger = new Ogma({
 		application: "Rz Plugin - Biome",
 		context: context.projectName,
@@ -73,14 +73,16 @@ export default async function runExecutor(
 			const linkRegex = /\x1B\]8;;.*\x1B\\/g;
 			// biome-ignore lint/suspicious/noControlCharactersInRegex: explicitly searching for escape characters
 			const linkEndRegex = /\x1B\]8;;\x1B\\/g;
-			const dataHandler = (dataArray: string[]) => (chunk: Buffer) => {
-				const chunkString = chunk.toString();
-				if (!dataArray.length) {
-					dataArray.push(chunkString);
-				} else {
-					dataArray[dataArray.length - 1] += chunkString;
-				}
-			};
+			const dataHandler =
+				(dataArray: string[]) =>
+				(chunk: Buffer): void => {
+					const chunkString = chunk.toString();
+					if (!dataArray.length) {
+						dataArray.push(chunkString);
+					} else {
+						dataArray[dataArray.length - 1] += chunkString;
+					}
+				};
 
 			const errorOutput: string[] = [];
 			const dataOutput: string[] = [];
