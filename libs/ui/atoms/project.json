@@ -3,6 +3,7 @@
 	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "libs/ui/atoms/src",
 	"projectType": "library",
+	"tags": ["react", "ui", "utility"],
 	"targets": {
 		"lint": {
 			"executor": "@unteris/plugin/rz:lint",
@@ -16,13 +17,12 @@
 			"outputs": ["{options.outputFile}"]
 		},
 		"test": {
-			"executor": "@nx/vite:test",
+			"executor": "@nx/vitest:test",
 			"outputs": ["{workspaceRoot}/coverage/libs/ui/atoms"],
 			"options": {
 				"passWithNoTests": true,
 				"reportsDirectory": "../../../coverage/libs/ui/atoms"
 			}
 		}
-	},
-	"tags": ["react", "ui", "utility"]
+	}
 }

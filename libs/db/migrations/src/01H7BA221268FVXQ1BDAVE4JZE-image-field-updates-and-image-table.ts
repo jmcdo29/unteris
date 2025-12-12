@@ -1,5 +1,5 @@
-import { ExpressionBuilder, sql } from "kysely";
-import { DB } from "./utils/db.interface";
+import { type ExpressionBuilder, sql } from "kysely";
+import type { DB } from "./utils/db.interface";
 import { kyselyDefaultUlid, kyselyUlid } from "./utils/ulid.sql";
 
 export const up = async (db: DB) => {

@@ -1,12 +1,12 @@
-import { Deity, Location, OverviewObject } from "@unteris/shared/types";
+import type { Deity, OverviewObject } from "@unteris/shared/types";
 import { sdk } from "@unteris/ui/components";
 import { atom } from "jotai";
 
 export const editingAtom = atom(false);
 
-export const locationsAtom = atom<Promise<OverviewObject[]>>(async () => {
-	return sdk.getLocationsByType("plane");
-});
+export const locationsAtom = atom<Promise<OverviewObject[]>>(async () =>
+	sdk.getLocationsByType("plane"),
+);
 
 export const locationIndexAtom = atom(0);
 

@@ -1,4 +1,4 @@
-import { OverviewObject, Race, RaceWithAbilities } from "@unteris/shared/types";
+import type { OverviewObject, RaceWithAbilities } from "@unteris/shared/types";
 import { sdk } from "@unteris/ui/components";
 import { atom } from "jotai";
 
@@ -15,9 +15,9 @@ export const raceIdAtom = atom<Promise<string>>(async (get) => {
 	return races[raceIndex].id;
 });
 
-export const racesAtom = atom<Promise<OverviewObject[]>>(async () => {
-	return sdk.getRaces();
-});
+export const racesAtom = atom<Promise<OverviewObject[]>>(async () =>
+	sdk.getRaces(),
+);
 
 export const raceAtom = atom<Promise<RaceWithAbilities | undefined>>(
 	async (get) => {

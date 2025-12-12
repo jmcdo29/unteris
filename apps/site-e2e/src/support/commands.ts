@@ -9,13 +9,13 @@
 // ***********************************************
 
 declare namespace Cypress {
-	interface Chainable<Subject> {
+	interface Chainable<_Subject> {
 		login(email: string, password: string): void;
 	}
 }
 //
 // -- This is a parent command --
-Cypress.Commands.add("login", (email, password) => {
+Cypress.Commands.add("login", (_email, _password) => {
 	// console.log("Custom command example: Login", email, password);
 });
 //

@@ -1,6 +1,6 @@
 import { useMediaQuery } from "@mui/material";
 import Box from "@mui/material/Box";
-import { Race as IRace } from "@unteris/shared/types";
+import type { Race as IRace } from "@unteris/shared/types";
 import { useAtomValue } from "jotai";
 
 import { Suspense } from "react";

@@ -1,3 +1,4 @@
+import { Box, useTheme } from "@mui/material";
 import {
 	EmailVerification,
 	PasswordReset,
@@ -10,13 +11,11 @@ import { History } from "@unteris/ui/history";
 import { UiLocation } from "@unteris/ui/location";
 import { UiRace } from "@unteris/ui/race";
 import {
-	RouteObject,
 	createBrowserRouter,
+	type RouteObject,
 	useRouteError,
 } from "react-router-dom";
 import { Root } from "./root";
-
-import { Box, useTheme } from "@mui/material";
 import { Welcome } from "./welcome";
 
 const ErrorBoundary = (): JSX.Element => {
@@ -40,62 +39,57 @@ const ErrorBoundary = (): JSX.Element => {
 				</details>
 			</Root>
 		);
-	} else {
-		return (
-			<Root>
-				<>
-					<Heading text="Unknown Error" />
-					<div>{`${error}`}</div>
-				</>
-			</Root>
-		);
 	}
+	return (
+		<Root>
+			<Heading text="Unknown Error" />
+			<div>{`${error}`}</div>
+		</Root>
+	);
 };
 
-const routes = (): RouteObject[] => {
-	return [
-		{
-			path: "/",
-			element: <Root />,
-			errorElement: <ErrorBoundary />,
-			children: [
-				{ index: true, element: <Welcome /> },
+const routes = (): RouteObject[] => [
+	{
+		path: "/",
+		element: <Root />,
+		errorElement: <ErrorBoundary />,
+		children: [
+			{ index: true, element: <Welcome /> },
 
-				{
-					path: "/history",
-					element: <History />,
-				},
-				{
-					path: "/deities",
-					element: <DeityNav />,
-				},
-				{
-					path: "/races",
-					element: <UiRace />,
-				},
-				{
-					path: "/login",
-					element: <UiAuth />,
-				},
-				{
-					path: "/location",
-					element: <UiLocation />,
-				},
-				{
-					path: "/verify",
-					element: <EmailVerification />,
-				},
-				{
-					path: "/me",
-					element: <User />,
-				},
-				{
-					path: "/reset-password",
-					element: <PasswordReset />,
-				},
-			],
-		},
-	];
-};
+			{
+				path: "/history",
+				element: <History />,
+			},
+			{
+				path: "/deities",
+				element: <DeityNav />,
+			},
+			{
+				path: "/races",
+				element: <UiRace />,
+			},
+			{
+				path: "/login",
+				element: <UiAuth />,
+			},
+			{
+				path: "/location",
+				element: <UiLocation />,
+			},
+			{
+				path: "/verify",
+				element: <EmailVerification />,
+			},
+			{
+				path: "/me",
+				element: <User />,
+			},
+			{
+				path: "/reset-password",
+				element: <PasswordReset />,
+			},
+		],
+	},
+];
 
 export const router = () => createBrowserRouter(routes());

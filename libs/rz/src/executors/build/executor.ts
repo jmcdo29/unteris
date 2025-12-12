@@ -1,10 +1,10 @@
+import type { ExecutorContext } from "@nx/devkit";
+import { Ogma } from "@ogma/logger";
+import { style } from "@ogma/styler";
 import { execSync, spawn } from "child_process";
 import { readFileSync } from "fs";
 import { join } from "path";
-import { ExecutorContext } from "@nx/devkit";
-import { Ogma } from "@ogma/logger";
-import { style } from "@ogma/styler";
-import { BuildExecutorSchema } from "./schema";
+import type { BuildExecutorSchema } from "./schema";
 
 export default async function runExecutor(
 	options: BuildExecutorSchema,

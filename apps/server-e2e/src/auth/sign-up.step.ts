@@ -1,14 +1,18 @@
 import { base32Regex } from "@unteris/shared/base32";
 import { csrfHeader } from "@unteris/shared/types";
-import { spec, stash } from "pactum";
+import { spec } from "pactum";
 import { regex } from "pactum-matchers";
-import { csrfSpec, csrfStoreToken, sessionStoreToken } from "../csrf";
+import { csrfStoreToken, sessionStoreToken } from "../csrf";
 
 export const signup = async ({
 	email,
 	password,
 	name,
-}: { email: string; password: string; name: string }): Promise<{
+}: {
+	email: string;
+	password: string;
+	name: string;
+}): Promise<{
 	id: string;
 }> => {
 	const res = await spec()

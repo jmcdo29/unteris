@@ -1,7 +1,7 @@
-import { Database } from "@unteris/server/kysely";
-import { Kysely } from "kysely";
-import { Transporter } from "nodemailer";
-import JSONTransport from "nodemailer/lib/json-transport";
+import type { Database } from "@unteris/server/kysely";
+import type { Kysely } from "kysely";
+import type { Transporter } from "nodemailer";
+import type JSONTransport from "nodemailer/lib/json-transport";
 
 export interface TestContext {
 	db: Kysely<Database>;

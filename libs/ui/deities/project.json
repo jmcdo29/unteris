@@ -17,7 +17,7 @@
 			"outputs": ["{options.outputFile}"]
 		},
 		"test": {
-			"executor": "@nx/vite:test",
+			"executor": "@nx/vitest:test",
 			"outputs": ["{workspaceRoot}/coverage/libs/ui/deities"],
 			"options": {
 				"passWithNoTests": true,

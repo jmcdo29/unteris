@@ -1,4 +1,4 @@
-import Input, { InputProps } from "@mui/material/Input";
+import Input, { type InputProps } from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
 import { UFormControl } from "./form-control";
 
@@ -12,20 +12,18 @@ interface TextInputProps {
 	fullWidth?: boolean;
 }
 
-export const TextInput = (props: TextInputProps): JSX.Element => {
-	return (
-		<UFormControl required={props.required} fullWidth={props.fullWidth}>
-			<InputLabel htmlFor={props.label}>{props.label}</InputLabel>
-			<Input
-				name={props.label}
-				id={props.label}
-				value={props.value}
-				aria-label={props.label}
-				type={props.type ?? "text"}
-				onChange={props.onUpdate}
-				onBlur={props.onUpdate}
-				multiline={props.multiline}
-			/>
-		</UFormControl>
-	);
-};
+export const TextInput = (props: TextInputProps): JSX.Element => (
+	<UFormControl required={props.required} fullWidth={props.fullWidth}>
+		<InputLabel htmlFor={props.label}>{props.label}</InputLabel>
+		<Input
+			name={props.label}
+			id={props.label}
+			value={props.value}
+			aria-label={props.label}
+			type={props.type ?? "text"}
+			onChange={props.onUpdate}
+			onBlur={props.onUpdate}
+			multiline={props.multiline}
+		/>
+	</UFormControl>
+);

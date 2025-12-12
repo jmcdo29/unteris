@@ -1,4 +1,4 @@
-import { Output, enumType, object, string, ulid } from "valibot";
+import { enumType, type Output, object, string, ulid } from "valibot";
 
 export const VerificationTokenSchema = object({
 	id: string([ulid()]),

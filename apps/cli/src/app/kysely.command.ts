@@ -1,11 +1,11 @@
-import { promises as fs } from "fs";
-import * as path from "path";
-import { OgmaLogger, OgmaService } from "@ogma/nestjs-module";
+import { promises as fs } from "node:fs";
+import * as path from "node:path";
+import { OgmaLogger, type OgmaService } from "@ogma/nestjs-module";
 import { InjectKysely } from "@unteris/server/kysely";
 import {
 	FileMigrationProvider,
-	Kysely,
-	MigrationResultSet,
+	type Kysely,
+	type MigrationResultSet,
 	Migrator,
 } from "kysely";
 import { Command, CommandRunner, Option } from "nest-commander";

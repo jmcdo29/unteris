@@ -1,20 +1,24 @@
-import { Module, OnModuleDestroy } from "@nestjs/common";
+import { Module, type OnModuleDestroy } from "@nestjs/common";
 import {
-	OgmaModule,
-	OgmaService,
 	createProviderToken,
+	OgmaModule,
+	type OgmaService,
 } from "@ogma/nestjs-module";
 import { style } from "@ogma/styler";
 import {
 	ServerConfigModule,
 	ServerConfigService,
 } from "@unteris/server/config";
-import { RedisClientOptions, RedisClientType, createClient } from "redis";
+import {
+	createClient,
+	type RedisClientOptions,
+	type RedisClientType,
+} from "redis";
 
 import {
-	InjectRedisInstance,
 	getInstanceToken,
 	getOptionsToken,
+	InjectRedisInstance,
 } from "./redis.constants";
 
 @Module({

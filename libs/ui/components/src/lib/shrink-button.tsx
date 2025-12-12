@@ -1,11 +1,10 @@
 import Left from "@mui/icons-material/Visibility";
 import Right from "@mui/icons-material/VisibilityOff";
-import { Box, Button, IconButton, Unstable_Grid2 as Grid } from "@mui/material";
+import { Box, Button, Unstable_Grid2 as Grid } from "@mui/material";
 
 interface ShrinkButtonProps {
 	hide: boolean;
 	shrunk: boolean;
-	// biome-ignore lint/nursery/noConfusingVoidType: it is a type here
 	setShrunk: (val: boolean) => void;
 	regionType: string;
 }

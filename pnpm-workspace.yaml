@@ -1,0 +1,11 @@
+onlyBuiltDependencies:
+  - '@biomejs/biome'
+  - '@nestjs/core'
+  - '@parcel/watcher'
+  - '@swc/core'
+  - argon2
+  - cypress
+  - esbuild
+  - nx
+  - sharp
+  - unrs-resolver

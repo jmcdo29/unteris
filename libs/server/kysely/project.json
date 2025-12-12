@@ -3,6 +3,7 @@
 	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "libs/server/kysely/src",
 	"projectType": "library",
+	"tags": ["server", "database", "cli"],
 	"targets": {
 		"lint": {
 			"executor": "@unteris/plugin/rz:lint",
@@ -22,6 +23,5 @@
 				"jestConfig": "libs/server/kysely/jest.config.ts"
 			}
 		}
-	},
-	"tags": ["server", "database", "cli"]
+	}
 }

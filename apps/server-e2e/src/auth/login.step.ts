@@ -8,7 +8,11 @@ export const loginStep = async ({
 	email,
 	password,
 	name,
-}: { email: string; password: string; name: string }): Promise<void> => {
+}: {
+	email: string;
+	password: string;
+	name: string;
+}): Promise<void> => {
 	await spec()
 		.post("/auth/login")
 		.withBody({ email, password })

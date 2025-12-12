@@ -1,8 +1,8 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { Output, safeParse } from "valibot";
+import { type Output, safeParse } from "valibot";
 
 import { SCHEMA } from "./config.constants";
-import { Config } from "./config.schema";
+import type { Config } from "./config.schema";
 
 @Injectable()
 export class ServerConfigService {

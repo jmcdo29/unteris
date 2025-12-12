@@ -1,14 +1,14 @@
-import { spawn } from "child_process";
-import { appendFileSync, mkdirSync, writeFileSync } from "fs";
-import { join } from "path";
 import {
-	ExecutorContext,
+	type ExecutorContext,
 	getPackageManagerCommand,
 	runExecutor as nxExecutor,
 } from "@nx/devkit";
 import { Ogma } from "@ogma/logger";
 import { style } from "@ogma/styler";
-import { LintExecutorSchema } from "./schema";
+import { spawn } from "child_process";
+import { appendFileSync, mkdirSync, writeFileSync } from "fs";
+import { join } from "path";
+import type { LintExecutorSchema } from "./schema";
 
 export default async function runExecutor(
 	options: LintExecutorSchema,
@@ -40,9 +40,9 @@ export default async function runExecutor(
 		const args: string[] = [];
 		if (options.apply === undefined || options.apply) {
 			if (options.unsafe) {
-				args.push("--apply-unsafe");
+				args.push("--write", "--unsafe");
 			} else {
-				args.push("--apply");
+				args.push("--write");
 			}
 		}
 		args.push("--colors=force");

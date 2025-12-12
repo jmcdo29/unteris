@@ -1,5 +1,5 @@
-import { Deity, Race, RacialAbility } from "@unteris/shared/types";
-import { Insertable } from "kysely";
+import type { Deity, Race, RacialAbility } from "@unteris/shared/types";
+import type { Insertable } from "kysely";
 
 const arboria = "Caelaum Arboria";
 const sea = "Empyrean Sea";
@@ -21,7 +21,7 @@ export const regions = [
 	{ name: "Vistem", description: "" },
 ] as const;
 export const cities: Record<
-	typeof regions[number]["name"],
+	(typeof regions)[number]["name"],
 	{ name: string; description: string }[]
 > = {
 	Frosdain: [

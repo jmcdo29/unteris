@@ -1,10 +1,10 @@
 import PlusIcon from "@mui/icons-material/AddCircle";
 import Tabs from "@mui/material/Tabs";
 import Grid from "@mui/material/Unstable_Grid2";
-import { OverviewObject } from "@unteris/shared/types";
+import type { OverviewObject } from "@unteris/shared/types";
 import { editableAtom } from "@unteris/ui/atoms";
 import { useAtomValue } from "jotai";
-import { Suspense, SyntheticEvent } from "react";
+import { Suspense, type SyntheticEvent } from "react";
 import { a11yProps } from "./a11y.props";
 import { Tab } from "./tab";
 import { TabPanel } from "./tab-panel";

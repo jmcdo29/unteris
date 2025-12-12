@@ -1,6 +1,6 @@
-import { OgmaLogger, OgmaService } from "@ogma/nestjs-module";
-import { Database, InjectKysely } from "@unteris/server/kysely";
-import { CompiledQuery, InsertResult, Kysely } from "kysely";
+import { OgmaLogger, type OgmaService } from "@ogma/nestjs-module";
+import { type Database, InjectKysely } from "@unteris/server/kysely";
+import type { CompiledQuery, InsertResult, Kysely } from "kysely";
 import {
 	CliUtilityService,
 	Command,

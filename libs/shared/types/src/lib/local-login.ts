@@ -1,8 +1,8 @@
 import {
-	Output,
 	fallback,
 	isoDateTime,
 	number,
+	type Output,
 	object,
 	optional,
 	string,

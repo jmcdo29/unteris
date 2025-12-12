@@ -3,8 +3,8 @@ import { spec } from "pactum";
 import { describe, test } from "vitest";
 import { csrfSpec, csrfStoreToken, sessionStoreToken } from "../csrf";
 
-export const csrfTest = () => {
-	return describe("CSRF Tests", () => {
+export const csrfTest = () =>
+	describe("CSRF Tests", () => {
 		test("CSRF Testing", async () => {
 			await csrfSpec();
 			await spec()
@@ -16,4 +16,3 @@ export const csrfTest = () => {
 				.toss();
 		});
 	});
-};

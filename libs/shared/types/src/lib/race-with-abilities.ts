@@ -1,4 +1,4 @@
-import { Output, array, merge, object, pick } from "valibot";
+import { array, merge, type Output, object, pick } from "valibot";
 import { RaceSchema } from "./race";
 import { RacialAbilitySchema } from "./racial-ability";
 

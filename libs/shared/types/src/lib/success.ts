@@ -1,4 +1,4 @@
-import { Output, boolean, object } from "valibot";
+import { boolean, type Output, object } from "valibot";
 
 export const SuccessSchema = object({
 	success: boolean(),

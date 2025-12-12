@@ -4,17 +4,17 @@ import { spec } from "pactum";
 import { describe, test, vi } from "vitest";
 import { loginStep, signup } from "../auth";
 import { csrfStoreToken, sessionStoreToken } from "../csrf";
-import { TestContext } from "../interfaces/test-context.interface";
+import type { TestContext } from "../interfaces/test-context.interface";
 
-export const resetPasswordTest = () => {
-	return describe("Reset Password Flow", () => {
+export const resetPasswordTest = () =>
+	describe("Reset Password Flow", () => {
 		const testPass = randomUUID();
 		test<TestContext>("A user should be able to reset their password", async (context) => {
 			const emailSpy = vi.spyOn(context.mailer, "sendMail");
 			const userUUID = randomUUID();
 			const email = `${userUUID}@testing.com`;
 			const name = `Test User${userUUID}`;
-			const res = await signup({ email, name, password: testPass });
+			const _res = await signup({ email, name, password: testPass });
 
 			await spec()
 				.post("/auth/password-reset-request")
@@ -24,7 +24,7 @@ export const resetPasswordTest = () => {
 				.expectStatus(201)
 				.expectJson({ success: true });
 
-			let emailResult = undefined;
+			let emailResult: string = "";
 			for await (const result of emailSpy.mock.results) {
 				const json = JSON.parse(result.value.message);
 				if (json.subject === "Reset Password") {
@@ -53,4 +53,3 @@ export const resetPasswordTest = () => {
 			await loginStep({ email, name, password: newPassword });
 		});
 	});
-};

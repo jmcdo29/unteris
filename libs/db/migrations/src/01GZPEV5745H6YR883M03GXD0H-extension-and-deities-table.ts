@@ -1,5 +1,5 @@
-import { Kysely, sql } from "kysely";
-import { DB } from "./utils/db.interface";
+import { sql } from "kysely";
+import type { DB } from "./utils/db.interface";
 
 export const up = async (db: DB) => {
 	await sql`CREATE EXTENSION IF NOT EXISTS pgcrypto;`.execute(db);

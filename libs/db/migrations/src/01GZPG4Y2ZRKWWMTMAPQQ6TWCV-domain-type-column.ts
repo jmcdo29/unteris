@@ -1,5 +1,4 @@
-import { Kysely } from "kysely";
-import { DB } from "./utils/db.interface";
+import type { DB } from "./utils/db.interface";
 
 export const up = async (db: DB) => {
 	await db.schema.alterTable("domain").addColumn("type", "text").execute();

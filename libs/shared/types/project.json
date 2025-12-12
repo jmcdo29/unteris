@@ -3,6 +3,7 @@
 	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "libs/shared/types/src",
 	"projectType": "library",
+	"tags": ["shared", "types", "interfaces"],
 	"targets": {
 		"lint": {
 			"executor": "@unteris/plugin/rz:lint",
@@ -16,13 +17,12 @@
 			"outputs": ["{options.outputFile}"]
 		},
 		"test": {
-			"executor": "@nx/vite:test",
+			"executor": "@nx/vitest:test",
 			"outputs": ["{workspaceRoot}/coverage/libs/shared/types"],
 			"options": {
 				"passWithNoTests": true,
 				"reportsDirectory": "../../../coverage/libs/shared/types"
 			}
 		}
-	},
-	"tags": ["shared", "types", "interfaces"]
+	}
 }

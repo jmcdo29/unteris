@@ -1,4 +1,4 @@
-import { Output, array, object, omit, required } from "valibot";
+import { type Output, object, omit, required } from "valibot";
 import { AuthorizedUserSchema } from "./authorized-user.dto";
 import { SessionDataSchema } from "./session";
 

@@ -4,12 +4,12 @@ import {
 	UnauthorizedException,
 } from "@nestjs/common";
 import { OgmaLogger, OgmaService } from "@ogma/nestjs-module";
-import { RoleEnum } from "@unteris/server/common";
+import type { RoleEnum } from "@unteris/server/common";
 import { ServerEmailService } from "@unteris/server/email";
 import { ServerHashService } from "@unteris/server/hash";
 import { ServerSessionService } from "@unteris/server/session";
 import { ServerTokenService } from "@unteris/server/token";
-import {
+import type {
 	LoginBody,
 	LoginResponse,
 	PasswordReset,

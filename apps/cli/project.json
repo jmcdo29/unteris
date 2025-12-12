@@ -3,6 +3,7 @@
 	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "apps/cli/src",
 	"projectType": "application",
+	"tags": ["database", "cli"],
 	"implicitDependencies": ["db-migrations"],
 	"targets": {
 		"build": {
@@ -148,6 +149,5 @@
 				}
 			}
 		}
-	},
-	"tags": ["database", "cli"]
+	}
 }

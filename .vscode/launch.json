@@ -1,0 +1,23 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Debug test-app with Nx",
+			"runtimeExecutable": "pnpm exec",
+			"runtimeArgs": ["nx", "serve", "test-app"],
+			"env": {
+				"NODE_OPTIONS": "--inspect=9229"
+			},
+			"console": "integratedTerminal",
+			"internalConsoleOptions": "neverOpen",
+			"skipFiles": ["<node_internals>/**"],
+			"sourceMaps": true,
+			"outFiles": [
+				"${workspaceFolder}/apps/test-app/dist/**/*.(m|c|)js",
+				"!**/node_modules/**"
+			]
+		}
+	]
+}

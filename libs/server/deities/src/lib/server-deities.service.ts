@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
-import { Database, InjectKysely } from "@unteris/server/kysely";
-import { Deity, OverviewObject } from "@unteris/shared/types";
-import { Kysely } from "kysely";
+import { type Database, InjectKysely } from "@unteris/server/kysely";
+import type { Deity, OverviewObject } from "@unteris/shared/types";
+import type { Kysely } from "kysely";
 
 type DeityReturn = Omit<Deity, "imageId"> & { imageUrl: string | null };
 

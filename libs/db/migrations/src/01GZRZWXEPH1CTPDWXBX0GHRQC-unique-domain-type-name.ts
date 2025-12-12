@@ -1,5 +1,4 @@
-import { Kysely } from "kysely";
-import { DB } from "./utils/db.interface";
+import type { DB } from "./utils/db.interface";
 
 const domainNameType = "domain_name_type";
 

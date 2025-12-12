@@ -3,6 +3,7 @@
 	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "libs/shared/base32/src",
 	"projectType": "library",
+	"tags": [],
 	"targets": {
 		"lint": {
 			"executor": "@unteris/plugin/rz:lint",
@@ -16,13 +17,12 @@
 			"outputs": ["{options.outputFile}"]
 		},
 		"test": {
-			"executor": "@nx/vite:test",
+			"executor": "@nx/vitest:test",
 			"outputs": ["{workspaceRoot}/coverage/libs/shared/base32"],
 			"options": {
 				"passWithNoTests": true,
 				"reportsDirectory": "../../../coverage/libs/shared/base32"
 			}
 		}
-	},
-	"tags": []
+	}
 }

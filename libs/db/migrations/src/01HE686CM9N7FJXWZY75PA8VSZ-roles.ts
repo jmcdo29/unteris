@@ -1,4 +1,4 @@
-import { DB } from "./utils/db.interface";
+import type { DB } from "./utils/db.interface";
 
 const roles = ["player", "dev", "dm", "admin"];
 

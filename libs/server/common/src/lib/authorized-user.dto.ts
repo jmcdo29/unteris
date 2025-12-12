@@ -1,13 +1,4 @@
-import {
-	Output,
-	array,
-	boolean,
-	email,
-	enumType,
-	object,
-	string,
-	ulid,
-} from "valibot";
+import { array, email, type Output, object, string, ulid } from "valibot";
 import { RoleEnumSchema } from "./role.enum";
 
 export const AuthorizedUserSchema = object({

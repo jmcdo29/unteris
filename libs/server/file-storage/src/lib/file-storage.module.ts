@@ -3,7 +3,7 @@ import {
 	ServerConfigModule,
 	ServerConfigService,
 } from "@unteris/server/config";
-import { LocalStoreConfig } from "./file-manager.interface";
+import type { LocalStoreConfig } from "./file-manager.interface";
 import {
 	FILE_LOCAL_CONFIG_TOKEN,
 	FILE_STORE_TOKEN,
@@ -18,11 +18,9 @@ import { LocalStore } from "./local.store";
 		{
 			provide: FILE_LOCAL_CONFIG_TOKEN,
 			inject: [ServerConfigService],
-			useFactory: (config: ServerConfigService): LocalStoreConfig => {
-				return {
-					path: config.get("FILE_PATH"),
-				};
-			},
+			useFactory: (config: ServerConfigService): LocalStoreConfig => ({
+				path: config.get("FILE_PATH"),
+			}),
 		},
 		{
 			provide: FILE_STORE_TOKEN,

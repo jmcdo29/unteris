@@ -13,9 +13,8 @@ const verifiedEmailStateAtom = atom(async (get) => {
 	const res = await sdk.verifyEmail(token);
 	if (res.success) {
 		return true;
-	} else {
-		return false;
 	}
+	return false;
 });
 
 const Header = () => {
@@ -34,7 +33,7 @@ const Body = () => {
 			) : (
 				<div>
 					We could not verify your email at this time. Please double check your
-					email, and submit a request for a new verification token on the{" "}
+					email, and submit a request for a new verification token on the
 					<Link href="/me">Users</Link> page.
 				</div>
 			)}

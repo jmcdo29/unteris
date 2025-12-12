@@ -1,4 +1,4 @@
-import { Output, nullable, object, optional, string, ulid } from "valibot";
+import { type Output, object, optional, string, ulid } from "valibot";
 import { LocationTypeSchema } from "./location-type";
 
 export const LocationCreationSchema = object({

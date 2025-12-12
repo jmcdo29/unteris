@@ -10,7 +10,7 @@
 			"outputs": ["{options.outputFile}"]
 		},
 		"test": {
-			"executor": "@nx/vite:test",
+			"executor": "@nx/vitest:test",
 			"outputs": ["coverage/libs/ui/location"],
 			"options": {
 				"passWithNoTests": true,

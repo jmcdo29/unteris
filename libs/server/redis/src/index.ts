@@ -1,6 +1,6 @@
-export * from "./lib/redis.module";
 export {
-	InjectRedisInstance,
 	getInstanceToken,
 	getOptionsToken,
+	InjectRedisInstance,
 } from "./lib/redis.constants";
+export * from "./lib/redis.module";

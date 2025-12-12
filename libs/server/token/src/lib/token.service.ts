@@ -1,4 +1,4 @@
-import { generateKey } from "crypto";
+import { generateKey } from "node:crypto";
 import { Injectable } from "@nestjs/common";
 
 @Injectable()
