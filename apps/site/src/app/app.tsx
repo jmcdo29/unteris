@@ -1,17 +1,15 @@
 import CssBaseline from "@mui/material/CssBaseline";
-import { LinkProps } from "@mui/material/Link";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
+import type { LinkProps } from "@mui/material/Link";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { themeAtom } from "@unteris/ui/atoms";
+import { sdk } from "@unteris/ui/components";
 import { useAtom } from "jotai";
 import { forwardRef, useMemo } from "react";
 import {
 	Link as RouterLink,
-	LinkProps as RouterLinkProps,
+	type LinkProps as RouterLinkProps,
 	RouterProvider,
 } from "react-router-dom";
-
-import { sdk } from "@unteris/ui/components";
 import { router } from "./router";
 
 export const App = () => {

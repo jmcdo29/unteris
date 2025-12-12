@@ -3,6 +3,7 @@
 	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "libs/server/redis/src",
 	"projectType": "library",
+	"tags": [],
 	"targets": {
 		"lint": {
 			"executor": "@unteris/plugin/rz:lint",
@@ -22,6 +23,5 @@
 				"jestConfig": "libs/server/redis/jest.config.ts"
 			}
 		}
-	},
-	"tags": []
+	}
 }

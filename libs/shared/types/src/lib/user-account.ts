@@ -1,12 +1,12 @@
 import {
-	url,
-	Output,
 	boolean,
 	email,
+	type Output,
 	object,
 	optional,
 	string,
 	ulid,
+	url,
 } from "valibot";
 
 export const UserAccountSchema = object({

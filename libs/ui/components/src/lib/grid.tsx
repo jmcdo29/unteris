@@ -1,6 +1,6 @@
-import { SxProps } from "@mui/material";
+import type { SxProps } from "@mui/material";
 import Box from "@mui/material/Box";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 export interface GridProps {
 	columns?: number;

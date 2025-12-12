@@ -1,16 +1,11 @@
-/// <reference types="vitest" />
+import { nxViteTsPaths } from "@nx/vite/plugins/nx-tsconfig-paths.plugin";
+/// <reference types="vitest/config" />
 import { defineConfig } from "vite";
-
-import viteTsConfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
 	cacheDir: "../../../node_modules/.vite/ui-atoms",
 
-	plugins: [
-		viteTsConfigPaths({
-			root: "../../../",
-		}),
-	],
+	plugins: [nxViteTsPaths()],
 
 	// Uncomment this if you are using workers.
 	// worker: {

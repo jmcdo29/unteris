@@ -55,7 +55,7 @@
 			"dependsOn": ["build"]
 		},
 		"test": {
-			"executor": "@nx/vite:test",
+			"executor": "@nx/vitest:test",
 			"outputs": ["{workspaceRoot}/coverage/apps/site"],
 			"options": {
 				"passWithNoTests": true,

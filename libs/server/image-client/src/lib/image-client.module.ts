@@ -14,8 +14,8 @@ import { ServerImageClientService } from "./image-client.service";
 		{
 			provide: "IMAGE_SERVER_CLIENT",
 			inject: [ServerConfigService],
-			useFactory: (config: ServerConfigService) => {
-				return ClientProxyFactory.create({
+			useFactory: (config: ServerConfigService) =>
+				ClientProxyFactory.create({
 					transport: Transport.RMQ,
 					options: {
 						urls: [
@@ -28,8 +28,7 @@ import { ServerImageClientService } from "./image-client.service";
 							durable: true,
 						},
 					},
-				});
-			},
+				}),
 		},
 	],
 	controllers: [ImageClientController],

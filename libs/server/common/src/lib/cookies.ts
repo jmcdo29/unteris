@@ -1,4 +1,4 @@
-import { Output, object, optional, passthrough, string } from "valibot";
+import { type Output, object, optional, passthrough, string } from "valibot";
 
 const CookiesSchema = passthrough(
 	object({

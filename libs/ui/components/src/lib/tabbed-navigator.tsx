@@ -1,6 +1,6 @@
-import { OverviewObject } from "@unteris/shared/types";
-import { Atom, WritableAtom, useAtom, useAtomValue } from "jotai";
-import { Suspense, SyntheticEvent } from "react";
+import type { OverviewObject } from "@unteris/shared/types";
+import { type Atom, useAtom, useAtomValue, type WritableAtom } from "jotai";
+import { Suspense, type SyntheticEvent } from "react";
 import { TabsWithPanel } from "./tabs-with-panel";
 
 interface TabbedNavigatorProps {

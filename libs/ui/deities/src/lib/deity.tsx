@@ -1,12 +1,11 @@
 import { useMediaQuery } from "@mui/material";
 import Box from "@mui/material/Box";
-import { Deity as IDeity } from "@unteris/shared/types";
+import type { Deity as IDeity } from "@unteris/shared/types";
 import { useAtomValue } from "jotai";
-import { DeityEditor } from "./deity-editor";
-import { DeityViewer } from "./deity-viewer";
-
 import { Suspense } from "react";
 import { deityAtom, editingAtom } from "./atoms";
+import { DeityEditor } from "./deity-editor";
+import { DeityViewer } from "./deity-viewer";
 
 export const Deity = (): JSX.Element => {
 	const isWideEnough = useMediaQuery("(min-width:600px)");

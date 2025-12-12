@@ -1,4 +1,4 @@
-import { Output, email, object, string } from "valibot";
+import { email, type Output, object, string } from "valibot";
 
 export const PasswordResetRequestSchema = object({
 	email: string([email()]),

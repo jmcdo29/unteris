@@ -3,6 +3,7 @@
 	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "libs/server/session/src",
 	"projectType": "library",
+	"tags": ["server", "security"],
 	"targets": {
 		"lint": {
 			"executor": "@unteris/plugin/rz:lint",
@@ -22,6 +23,5 @@
 				"jestConfig": "libs/server/session/jest.config.ts"
 			}
 		}
-	},
-	"tags": ["server", "security"]
+	}
 }

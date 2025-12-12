@@ -1,7 +1,6 @@
 import { Controller, Get, Param } from "@nestjs/common";
 import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
-import { OverviewObjectDto } from "@unteris/server/common";
-import { IdParamDto } from "@unteris/server/common";
+import { IdParamDto, OverviewObjectDto } from "@unteris/server/common";
 import { SkipSessionCheck } from "@unteris/server/session";
 import { deitiesRoute } from "@unteris/shared/types";
 import { CategoryParamDto } from "./models/category-param.dto";

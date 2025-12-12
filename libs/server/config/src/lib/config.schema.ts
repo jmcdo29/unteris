@@ -1,4 +1,4 @@
-import { join } from "path";
+import { join } from "node:path";
 import {
 	email,
 	enumType,
@@ -38,7 +38,7 @@ const devConfig = object({
 const dbConfig = object({
 	DATABASE_USER: string(),
 	DATABASE_PASSWORD: string(),
-	DATABASE_PORT: transform(string(), (val) => Number.parseInt(val)),
+	DATABASE_PORT: transform(string(), (val) => Number.parseInt(val, 10)),
 	DATABASE_HOST: string(),
 	DATABASE_NAME: string(),
 });

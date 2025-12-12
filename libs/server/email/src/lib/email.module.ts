@@ -3,7 +3,7 @@ import {
 	ServerConfigModule,
 	ServerConfigService,
 } from "@unteris/server/config";
-import { TransportOptions, createTransport } from "nodemailer";
+import { createTransport, type TransportOptions } from "nodemailer";
 import {
 	EMAIL_CONFIG_TOKEN,
 	EMAIL_INSTANCE_TOKEN,

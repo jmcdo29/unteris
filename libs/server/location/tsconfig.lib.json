@@ -5,8 +5,7 @@
 		"declaration": true,
 		"lib": ["ESNext"],
 		"types": ["node"],
-		"target": "ESNext",
-		"module": "ESNext"
+		"target": "ESNext"
 	},
 	"include": ["src/**/*.ts"],
 	"exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]

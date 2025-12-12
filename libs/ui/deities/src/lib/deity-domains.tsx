@@ -1,18 +1,17 @@
 import { useTheme } from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { Deity } from "@unteris/shared/types";
+import type { Deity } from "@unteris/shared/types";
 
 type DomainType = Exclude<Deity["domain"], undefined>[number];
 
 const filterDomains = (
 	deity: Omit<Deity, "imageId">,
 	domainType: DomainType["type"],
-): Omit<DomainType, "type">[] => {
-	return (deity.domain ?? [])
+): Omit<DomainType, "type">[] =>
+	(deity.domain ?? [])
 		.filter((d) => d.type === domainType)
 		.map((dom) => ({ id: dom.id, name: dom.name }));
-};
 
 const titles: Record<DomainType["type"], string> = {
 	cleric: "Cleric Domains",

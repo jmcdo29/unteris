@@ -3,6 +3,7 @@
 	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "libs/rz/src",
 	"projectType": "library",
+	"tags": ["utility", "plugin", "docker"],
 	"targets": {
 		"build": {
 			"executor": "@nx/js:tsc",
@@ -50,6 +51,5 @@
 				"jestConfig": "libs/rz/jest.config.ts"
 			}
 		}
-	},
-	"tags": ["utility", "plugin", "docker"]
+	}
 }

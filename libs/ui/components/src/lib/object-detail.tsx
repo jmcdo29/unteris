@@ -35,7 +35,7 @@ export function ObjectDetail<T>(props: ObjectDetailProps<T>) {
 	const Icon = editing ? ClearIcon : EditIcon;
 	const iconLabel = editing ? `Cancel edit: ${name}` : `Edit: ${name}`;
 	return (
-		<Grid container columns={columns ?? 12} justifyContent={"center"}>
+		<Grid container columns={columns ?? 12} justifyContent="center">
 			{userCanEdit ? (
 				<Grid xs={12} container marginRight="1em">
 					<Grid flexGrow={1} />
@@ -57,7 +57,7 @@ export function ObjectDetail<T>(props: ObjectDetailProps<T>) {
 			<DisplayedComponent
 				details={data}
 				setEditing={setEditing}
-				setDetail={props.setDetail}
+				setDetail={setDetail}
 				{...rest}
 			/>
 		</Grid>

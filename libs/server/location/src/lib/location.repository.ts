@@ -1,12 +1,11 @@
 import { Injectable } from "@nestjs/common";
-import { File } from "@unteris/server/common";
-import { Database, InjectKysely } from "@unteris/server/kysely";
-import {
+import { type Database, InjectKysely } from "@unteris/server/kysely";
+import type {
 	Location,
 	LocationWithImage,
 	OverviewObject,
 } from "@unteris/shared/types";
-import { Insertable, Kysely, Updateable } from "kysely";
+import type { Insertable, Kysely, Updateable } from "kysely";
 
 @Injectable()
 export class LocationRepository {
@@ -32,7 +31,7 @@ export class LocationRepository {
 		location: Insertable<Database["location"]>,
 		file?: string,
 	): Promise<Location> {
-		let fileId;
+		let fileId: string | undefined;
 		if (file) {
 			const result = await this.db
 				.insertInto("image")
@@ -72,7 +71,7 @@ export class LocationRepository {
 		location: Updateable<Database["location"]>,
 		file?: string,
 	) {
-		let fileId;
+		let fileId: string | undefined;
 		if (file) {
 			const result = await this.db
 				.insertInto("image")

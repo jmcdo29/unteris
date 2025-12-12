@@ -1,4 +1,4 @@
-import { Output, enumType, object, string, ulid } from "valibot";
+import { type Output, object, string, ulid } from "valibot";
 import { RoleEnum } from "./role.enum";
 
 export const RoleSchema = object({

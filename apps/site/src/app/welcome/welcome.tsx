@@ -1,7 +1,7 @@
-import { Theme, Typography, useTheme } from "@mui/material";
+import { type Theme, Typography, useTheme } from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 const Descriptor = ({
 	theme,
@@ -9,20 +9,18 @@ const Descriptor = ({
 }: {
 	theme: Theme;
 	children: ReactNode;
-}): JSX.Element => {
-	return (
-		<Grid xs={12} md={4}>
-			<Box
-				padding={`${theme.spacing()} ${theme.spacing(2)}`}
-				border={`2px solid ${theme.palette.primary[theme.palette.mode]}`}
-				borderRadius={theme.shape.borderRadius}
-				sx={{ minHeight: "4em" }}
-			>
-				{children}
-			</Box>
-		</Grid>
-	);
-};
+}): JSX.Element => (
+	<Grid xs={12} md={4}>
+		<Box
+			padding={`${theme.spacing()} ${theme.spacing(2)}`}
+			border={`2px solid ${theme.palette.primary[theme.palette.mode]}`}
+			borderRadius={theme.shape.borderRadius}
+			sx={{ minHeight: "4em" }}
+		>
+			{children}
+		</Box>
+	</Grid>
+);
 
 export const Welcome = (): JSX.Element => {
 	const theme = useTheme();

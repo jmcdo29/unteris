@@ -2,7 +2,7 @@ import { ForbiddenException, Injectable } from "@nestjs/common";
 import { InjectRedisInstance } from "@unteris/server/redis";
 import { ServerSessionService } from "@unteris/server/session";
 import { ServerTokenService } from "@unteris/server/token";
-import { RedisClientType } from "redis";
+import type { RedisClientType } from "redis";
 
 @Injectable()
 export class ServerCsrfService {

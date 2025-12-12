@@ -1,7 +1,7 @@
-import { Database, InjectKysely } from "@unteris/server/kysely";
+import { type Database, InjectKysely } from "@unteris/server/kysely";
 import { ServerLocationService } from "@unteris/server/location";
-import { Location } from "@unteris/shared/types";
-import { Kysely } from "kysely";
+import type { Location } from "@unteris/shared/types";
+import type { Kysely } from "kysely";
 import { ChoicesFor, Question, QuestionSet, WhenFor } from "nest-commander";
 
 @QuestionSet({

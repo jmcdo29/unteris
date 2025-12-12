@@ -1,20 +1,20 @@
 import {
-	Location,
-	LocationCreation,
-	LocationUpdate,
-	LoginBody,
-	PasswordReset,
-	PasswordResetRequest,
-	SignupUser,
 	authRoute,
 	csrfHeader,
 	csrfRoute,
 	deitiesRoute,
+	type Location,
+	type LocationCreation,
+	type LocationUpdate,
+	type LoginBody,
 	locationRoute,
+	type PasswordReset,
+	type PasswordResetRequest,
 	raceRoute,
+	type SignupUser,
 	sessionRoute,
 } from "@unteris/shared/types";
-import { RouteToType, SdkGeneric, method } from "./routes-with-types";
+import type { method, RouteToType, SdkGeneric } from "./routes-with-types";
 
 export class FetchError extends Error {
 	data: Response;
@@ -127,12 +127,10 @@ export class Sdk extends SdkBase {
 		try {
 			return await super.request(config);
 		} catch (e) {
-			if (e instanceof FetchError) {
-				if (e.data.status === 403) {
-					const csrf = await this.getCsrfToken();
-					this.setCsrfToken(csrf.csrfToken);
-					return await this.request(config);
-				}
+			if (e instanceof FetchError && e.data.status === 403) {
+				const csrf = await this.getCsrfToken();
+				this.setCsrfToken(csrf.csrfToken);
+				return await this.request(config);
 			}
 			throw e;
 		}

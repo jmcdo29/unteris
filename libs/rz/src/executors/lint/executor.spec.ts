@@ -1,5 +1,5 @@
 import executor from "./executor";
-import { LintExecutorSchema } from "./schema";
+import type { LintExecutorSchema } from "./schema";
 
 const options: LintExecutorSchema = {};
 

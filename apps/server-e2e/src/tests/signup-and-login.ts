@@ -1,9 +1,9 @@
-import { randomUUID } from "crypto";
+import { randomUUID } from "node:crypto";
 import { spec } from "pactum";
 import { describe, expect, test, vi } from "vitest";
 import { loginStep, signup } from "../auth";
-import { csrfSpec, sessionStoreToken } from "../csrf";
-import { TestContext } from "../interfaces/test-context.interface";
+import { sessionStoreToken } from "../csrf";
+import type { TestContext } from "../interfaces/test-context.interface";
 
 export const signUpAndLoginTests = () => {
 	return describe("SignUp and Login", () => {
@@ -26,7 +26,7 @@ export const signUpAndLoginTests = () => {
 
 			await loginStep({ email, name, password: testPass });
 
-			let emailResult = undefined;
+			let emailResult = "";
 			for await (const result of emailSpy.mock.results) {
 				const json = JSON.parse(result.value.message);
 				if (json.subject === "Email verification") {

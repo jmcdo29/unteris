@@ -1,7 +1,11 @@
 {
 	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-	"organizeImports": {
-		"enabled": true
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": "on"
+			}
+		}
 	},
 	"files": {
 		"ignoreUnknown": true
@@ -13,17 +17,25 @@
 	},
 	"linter": {
 		"enabled": true,
+		"domains": {
+			"react": "none"
+		},
 		"rules": {
 			"recommended": true,
 			"complexity": {
 				"noStaticOnlyClass": "off"
 			},
+			"correctness": {
+				"noVoidTypeReturn": "off"
+			},
 			"suspicious": {
-				"noConsoleLog": "error"
+				"noConsole": "error"
 			},
 			"nursery": {
-				"all": true,
-				"noConfusingVoidType": "off"
+				"noUnresolvedImports": "off"
+			},
+			"style": {
+				"useImportType": "off"
 			}
 		}
 	},
@@ -39,5 +51,15 @@
 		"parser": {
 			"allowComments": true
 		}
-	}
+	},
+	"overrides": [
+		{
+			"includes": ["apps/site/**/*.tsx", "libs/ui/**/*.tsx"],
+			"linter": {
+				"domains": {
+					"react": "recommended"
+				}
+			}
+		}
+	]
 }

@@ -1,7 +1,7 @@
 import { useTheme } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Unstable_Grid2";
-import { RaceWithAbilities } from "@unteris/shared/types";
+import type { RaceWithAbilities } from "@unteris/shared/types";
 
 interface RaceViewerProps {
 	race: RaceWithAbilities;
@@ -12,20 +12,18 @@ interface RaceDetailProps {
 	detail: string;
 }
 
-const RaceDetail = ({ name, detail }: RaceDetailProps): JSX.Element => {
-	return (
-		<Grid>
-			<Typography variant="body2" fontSize="1.5em">
-				{name}
+const RaceDetail = ({ name, detail }: RaceDetailProps): JSX.Element => (
+	<Grid>
+		<Typography variant="body2" fontSize="1.5em">
+			{name}
+		</Typography>
+		{detail.split("\\n").map((d) => (
+			<Typography variant="body1" key={d}>
+				{d}
 			</Typography>
-			{detail.split("\\n").map((d) => (
-				<Typography variant="body1" key={d}>
-					{d}
-				</Typography>
-			))}
-		</Grid>
-	);
-};
+		))}
+	</Grid>
+);
 
 export const RaceViewer = ({ race }: RaceViewerProps): JSX.Element => {
 	const theme = useTheme();

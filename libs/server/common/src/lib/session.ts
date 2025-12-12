@@ -1,8 +1,6 @@
 import {
-	Output,
-	array,
 	email,
-	merge,
+	type Output,
 	object,
 	optional,
 	passthrough,

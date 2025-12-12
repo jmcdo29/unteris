@@ -1,6 +1,6 @@
-import Button, { ButtonProps } from "@mui/material/Button";
-import Link, { LinkProps } from "@mui/material/Link";
-import Typography, { TypographyProps } from "@mui/material/Typography";
+import Button, { type ButtonProps } from "@mui/material/Button";
+import Link, { type LinkProps } from "@mui/material/Link";
+import Typography, { type TypographyProps } from "@mui/material/Typography";
 
 const StyledButtonOrLinkInner = ({ children, ...props }: TypographyProps) => (
 	<Typography variant="body2" {...props}>
@@ -13,21 +13,17 @@ export const StyledButton = ({
 	href,
 	onClick,
 	...props
-}: Omit<ButtonProps, keyof TypographyProps> & TypographyProps) => {
-	return (
-		<Button href={href} onClick={onClick}>
-			<StyledButtonOrLinkInner {...props}>{children}</StyledButtonOrLinkInner>
-		</Button>
-	);
-};
+}: Omit<ButtonProps, keyof TypographyProps> & TypographyProps) => (
+	<Button href={href} onClick={onClick}>
+		<StyledButtonOrLinkInner {...props}>{children}</StyledButtonOrLinkInner>
+	</Button>
+);
 
 export const StyledLink = ({
 	children,
 	...props
-}: LinkProps & TypographyProps) => {
-	return (
-		<Link {...props}>
-			<StyledButtonOrLinkInner {...props}>{children}</StyledButtonOrLinkInner>
-		</Link>
-	);
-};
+}: LinkProps & TypographyProps) => (
+	<Link {...props}>
+		<StyledButtonOrLinkInner {...props}>{children}</StyledButtonOrLinkInner>
+	</Link>
+);

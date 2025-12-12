@@ -13,11 +13,11 @@ import { CacheSkip } from "@unteris/server/cache";
 import { UnterisCookies, UnterisSession } from "@unteris/server/common";
 import { CsrfGuard } from "@unteris/server/csrf";
 import { SkipSessionCheck } from "@unteris/server/session";
-import { Success, UserAccount, authRoute } from "@unteris/shared/types";
+import { authRoute, type Success, UserAccount } from "@unteris/shared/types";
 import { Cookies } from "nest-cookies";
 import { LoginBodyDto, SignupBodyDto } from "./models";
-import { PasswordResetRequestDto } from "./models/password-reset-request.dto";
 import { PasswordResetDto } from "./models/password-reset.dto";
+import { PasswordResetRequestDto } from "./models/password-reset-request.dto";
 import { TokenVerificationData } from "./models/token-verification-query.dto";
 import { ServerSecurityService } from "./security.service";
 

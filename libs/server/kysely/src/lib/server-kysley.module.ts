@@ -1,8 +1,8 @@
 import { Inject, Module } from "@nestjs/common";
 import {
-	OgmaModule,
-	OgmaService,
 	createProviderToken,
+	OgmaModule,
+	type OgmaService,
 } from "@ogma/nestjs-module";
 import { style } from "@ogma/styler";
 import {
@@ -12,8 +12,8 @@ import {
 import {
 	CamelCasePlugin,
 	Kysely,
-	KyselyConfig,
-	LogEvent,
+	type KyselyConfig,
+	type LogEvent,
 	PostgresDialect,
 } from "kysely";
 import { Pool } from "pg";
@@ -89,9 +89,7 @@ import {
 		},
 		{
 			provide: getKyselyInstanceToken(),
-			useFactory: (config: KyselyConfig) => {
-				return new Kysely(config);
-			},
+			useFactory: (config: KyselyConfig) => new Kysely(config),
 			inject: [getKyselyConfigToken()],
 		},
 	],

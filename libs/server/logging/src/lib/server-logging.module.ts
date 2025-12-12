@@ -1,5 +1,5 @@
-import { DynamicModule, Module } from "@nestjs/common";
-import { OgmaOptions } from "@ogma/logger";
+import { type DynamicModule, Module } from "@nestjs/common";
+import type { OgmaOptions } from "@ogma/logger";
 import { OgmaModule } from "@ogma/nestjs-module";
 import { ExpressParser } from "@ogma/platform-express";
 import {
@@ -18,7 +18,7 @@ export class ServerLoggingModule {
 			imports: [
 				OgmaModule.forRootAsync({
 					imports: [ServerConfigModule],
-					useFactory: (config: ServerConfigService) => ({
+					useFactory: (_config: ServerConfigService) => ({
 						application: app,
 						logLevel: logLevel,
 					}),

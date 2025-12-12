@@ -4,7 +4,7 @@ import { OgmaService } from "@ogma/nestjs-module";
 import { ServerConfigService } from "@unteris/server/config";
 import { RootModule } from "@unteris/server/root";
 
-async function bootstrap() {
+async function bootstrap(): Promise<void> {
 	const app = await NestFactory.create(RootModule, { bufferLogs: true });
 	const globalPrefix = "api";
 	app.setGlobalPrefix(globalPrefix);
@@ -34,4 +34,4 @@ async function bootstrap() {
 	});
 }
 
-bootstrap();
+void bootstrap();

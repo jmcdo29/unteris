@@ -1,5 +1,5 @@
 import { Reflector } from "@nestjs/core";
-import { Action } from "./action.enum";
-import { Subject } from "./subject.enum";
+import type { Action } from "./action.enum";
+import type { Subject } from "./subject.enum";
 
 export const Castle = Reflector.createDecorator<[Action, Subject]>();

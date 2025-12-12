@@ -5,10 +5,8 @@ interface HeadingProps {
 	text: string;
 }
 
-export const Heading = (props: HeadingProps) => {
-	return (
-		<Typography variant="h2" fontSize={props.fontSize ?? "2em"}>
-			{props.text}
-		</Typography>
-	);
-};
+export const Heading = (props: HeadingProps) => (
+	<Typography variant="h2" fontSize={props.fontSize ?? "2em"}>
+		{props.text}
+	</Typography>
+);

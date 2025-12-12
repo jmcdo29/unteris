@@ -1,4 +1,4 @@
-import {
+import type {
 	Deity,
 	DeityCategory,
 	DeityDomain,
@@ -14,7 +14,7 @@ import {
 	UserPermission,
 	VerificationToken,
 } from "@unteris/shared/types";
-import { Generated } from "kysely";
+import type { Generated } from "kysely";
 
 type GeneratedId<T> = Omit<T, "id"> & { id: Generated<string> };
 

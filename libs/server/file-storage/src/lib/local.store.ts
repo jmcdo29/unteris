@@ -1,7 +1,7 @@
-import { join } from "path";
+import { readFile, writeFile } from "node:fs/promises";
+import { join } from "node:path";
 import { Inject, Injectable } from "@nestjs/common";
-import { readFile, writeFile } from "fs/promises";
-import { FileManager, LocalStoreConfig } from "./file-manager.interface";
+import type { FileManager, LocalStoreConfig } from "./file-manager.interface";
 import { FILE_LOCAL_CONFIG_TOKEN } from "./file-storage.constants";
 
 @Injectable()
@@ -17,7 +17,7 @@ export class LocalStore implements FileManager {
 	write(path: string, data: string | Buffer) {
 		return writeFile(
 			join(this.config.path, path.replace("./images/", "./")),
-			data,
+			data.toString(),
 		);
 	}
 }

@@ -1,4 +1,4 @@
-import { INestApplication } from "@nestjs/common";
+import type { INestApplication } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { OgmaService } from "@ogma/nestjs-module";
 import { getEmailInstanceToken } from "@unteris/server/email";
@@ -6,9 +6,9 @@ import { getKyselyInstanceToken } from "@unteris/server/kysely";
 import { getInstanceToken } from "@unteris/server/redis";
 import { RootModule } from "@unteris/server/root";
 import { request } from "pactum";
-import { RedisClientType } from "redis";
+import type { RedisClientType } from "redis";
 import { beforeAll, beforeEach, describe } from "vitest";
-import { TestContext } from "./interfaces/test-context.interface";
+import type { TestContext } from "./interfaces/test-context.interface";
 import { csrfTest } from "./tests/csrf";
 import { locationTest } from "./tests/location";
 import { resetPasswordTest } from "./tests/reset-password";
