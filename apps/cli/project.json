@@ -119,6 +119,28 @@
 				}
 			]
 		},
+		"migration": {
+			"executor": "@nx/js:node",
+			"options": {
+				"buildTarget": "cli:build",
+				"args": ["migration"],
+				"watch": false
+			},
+			"configurations": {
+				"development": {
+					"buildTarget": "cli:build:development"
+				},
+				"production": {
+					"buildTarget": "cli:build:production"
+				}
+			},
+			"dependsOn": [
+				{
+					"target": "build",
+					"dependencies": true
+				}
+			]
+		},
 		"lint": {
 			"executor": "@unteris/plugin/rz:lint",
 			"outputs": ["{options.outputFile}"],

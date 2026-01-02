@@ -1,14 +1,22 @@
-import { ForbiddenException, Injectable } from "@nestjs/common";
+import {
+	BadRequestException,
+	ForbiddenException,
+	Injectable,
+} from "@nestjs/common";
 import type {
 	RefreshSessionData,
+	ReqMetaType,
 	SavedSessionData,
 	SessionData,
 } from "@unteris/server/common";
 import { ServerConfigService } from "@unteris/server/config";
+import { Database } from "@unteris/server/kysely";
 import { InjectRedisInstance } from "@unteris/server/redis";
 import { ServerTokenService } from "@unteris/server/token";
 import type { Cookie } from "nest-cookies";
 import type { RedisClientType } from "redis";
+import * as v from "valibot";
+import { SessionRepository } from "./session.repository";
 
 @Injectable()
 export class ServerSessionService {
@@ -17,6 +25,7 @@ export class ServerSessionService {
 		private readonly tokenService: ServerTokenService,
 		@InjectRedisInstance() private readonly redis: RedisClientType,
 		private readonly config: ServerConfigService,
+		private readonly repo: SessionRepository,
 	) {
 		this.domain = new URL(config.get("CORS")).hostname;
 	}
@@ -30,7 +39,7 @@ export class ServerSessionService {
 	}
 
 	async createFullSession(
-		sessionData: SessionData = { user: {}, csrf: "" },
+		sessionData: Omit<Database["userSession"], "id">,
 	): Promise<{ id: string; refreshId: string }> {
 		const sessionToken = await this.createSessionId();
 		const refreshToken = await this.createRefreshId();
@@ -46,23 +55,33 @@ export class ServerSessionService {
 	}
 
 	async createSession(
-		sessionData: SessionData = { user: {}, csrf: "" },
+		sessionData: Omit<Database["userSession"], "id">,
 		sessionId?: string,
 	): Promise<{ id: string }> {
 		let id = sessionId;
 		if (!id) {
 			id = await this.createSessionId();
 		}
-		await this.redis.set(id, JSON.stringify(sessionData), {
-			EX: this.config.get("SESSION_EXPIRES_IN"),
-		});
+		await this.repo.createOne({ ...sessionData, id });
 		return { id };
 	}
 
-	async getSession<T extends "session" | "refresh" = "session">(
-		sessionId: string,
-	): Promise<T extends "session" ? SessionData : RefreshSessionData> {
-		return JSON.parse((await this.redis.get(sessionId)) ?? "{}");
+	async getSession(sessionId: string): Promise<SessionData> {
+		const session = await this.repo.getById(sessionId);
+		await this.repo.setLastUsedTime(sessionId);
+		return session;
+	}
+
+	async getRefreshData(refreshId: string): Promise<RefreshSessionData> {
+		const rawData = await this.redis.get(refreshId);
+		if (!rawData) {
+			throw new Error(`Invalid refreshId`);
+		}
+		const refreshData = JSON.parse(rawData);
+		if (!("sessionId" in refreshData)) {
+			throw new Error("Invalid refreshId");
+		}
+		return refreshData;
 	}
 
 	async updateSession<T extends "session" | "refresh" = "session">(
@@ -81,6 +100,50 @@ export class ServerSessionService {
 		);
 	}
 
+	async refreshSession(
+		oldRefreshId: string,
+		meta: ReqMetaType,
+	): Promise<{ refreshId: string; sessionId: string }> {
+		const rawRefreshData = await this.redis.get(oldRefreshId);
+		if (rawRefreshData === null) {
+			throw new BadRequestException("Invalid refresh id");
+		}
+		const refreshData = v.parse(
+			v.object({ sessionId: v.string() }),
+			JSON.parse(rawRefreshData),
+		);
+
+		const previousSessionData = await this.repo.getFullById(
+			refreshData.sessionId,
+		);
+
+		const matches = [
+			previousSessionData.browserType === meta.userAgent,
+			previousSessionData.ipAddress === meta.ip,
+			previousSessionData.operatingSystem === meta.operatingSystem,
+		].filter((val) => !!val);
+
+		if (matches.length < 2) {
+			throw new ForbiddenException("Please log in to continue");
+		}
+
+		const res = await this.createFullSession({
+			userId: previousSessionData.userId,
+			browserType: meta.userAgent,
+			operatingSystem: meta.operatingSystem,
+			ipAddress: meta.ip,
+		});
+
+		await this.repo.deleteOne(previousSessionData.id);
+		await this.redis.del(oldRefreshId);
+
+		return { refreshId: res.refreshId, sessionId: res.id };
+	}
+
+	async destroySession(sessionId: string): Promise<boolean> {
+		return await this.repo.deleteOne(sessionId);
+	}
+
 	private isSavedSession<T extends object = SavedSessionData>(
 		sessionObject: T | object,
 	): sessionObject is T {
@@ -90,7 +153,7 @@ export class ServerSessionService {
 	isSession(
 		sessionData: SavedSessionData | object,
 	): sessionData is SessionData {
-		return "user" in sessionData && "csrf" in sessionData;
+		return "user" in sessionData;
 	}
 
 	isRefreshData(

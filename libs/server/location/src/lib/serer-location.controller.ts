@@ -16,7 +16,7 @@ import {
 	IdParamDto,
 	OverviewObjectDto,
 } from "@unteris/server/common";
-import { SkipSessionCheck } from "@unteris/server/session";
+import { SkipLoggedInCheck } from "@unteris/server/session";
 import { locationRoute } from "@unteris/shared/types";
 import {
 	ByTypeQueryDto,
@@ -28,7 +28,7 @@ import { ServerLocationService } from "./server-location.service";
 
 @ApiTags("Location")
 @Controller(locationRoute)
-@SkipSessionCheck()
+@SkipLoggedInCheck()
 export class ServerLocationController {
 	constructor(private readonly service: ServerLocationService) {}
 	@ApiOkResponse({ type: [OverviewObjectDto] })
@@ -49,7 +49,7 @@ export class ServerLocationController {
 	}
 
 	@FileUpload("image", LocationCreationDto)
-	@SkipSessionCheck(false)
+	@SkipLoggedInCheck(false)
 	@UseGuards(CastleGuard)
 	@Castle([Action.Create, Subject.Location])
 	@Post("new")
@@ -58,7 +58,7 @@ export class ServerLocationController {
 	}
 
 	@FileUpload("image", LocationUpdateDto)
-	@SkipSessionCheck(false)
+	@SkipLoggedInCheck(false)
 	@UseGuards(CastleGuard)
 	@Castle([Action.Update, Subject.Location])
 	@Patch("/update/:id")

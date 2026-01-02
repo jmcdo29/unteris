@@ -17,10 +17,9 @@ export const SessionDataSchema = object({
 			id: optional(string([ulid()])),
 		}),
 	),
-	csrf: string(),
 });
 
-export type SessionData = Omit<Output<typeof SessionDataSchema>, "id">;
+export type SessionData = Output<typeof SessionDataSchema>;
 
 const RefreshSessionDataSchema = object({
 	id: string(),

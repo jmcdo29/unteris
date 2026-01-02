@@ -1,7 +1,7 @@
 import { Controller, Get, Param } from "@nestjs/common";
 import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { IdParamDto, OverviewObjectDto } from "@unteris/server/common";
-import { SkipSessionCheck } from "@unteris/server/session";
+import { SkipLoggedInCheck } from "@unteris/server/session";
 import { deitiesRoute } from "@unteris/shared/types";
 import { CategoryParamDto } from "./models/category-param.dto";
 import { LocationParamDto } from "./models/location-param.dto";
@@ -9,7 +9,7 @@ import { ServerDeitiesService } from "./server-deities.service";
 
 @ApiTags("Deity")
 @Controller(deitiesRoute)
-@SkipSessionCheck()
+@SkipLoggedInCheck()
 export class ServerDeitiesController {
 	constructor(private serverDeitiesService: ServerDeitiesService) {}
 

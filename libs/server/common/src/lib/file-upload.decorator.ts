@@ -17,6 +17,7 @@ import {
  * rather large metadata object passed to `@ApiBody()`. Rather than re-create
  * this several times over, it was easier to make a simple, easily maintainable
  * abstraction that handles this.
+ *
  * ---
  * @param fileProperty the property of the request that should contain the file
  * @param bodyDto The Body type of the request for swagger documentation

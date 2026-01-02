@@ -6,15 +6,13 @@ import {
 	Query,
 	Req,
 	Session,
-	UseGuards,
 } from "@nestjs/common";
-import { ApiConsumes, ApiTags } from "@nestjs/swagger";
+import { ApiTags } from "@nestjs/swagger";
 import { CacheSkip } from "@unteris/server/cache";
-import { UnterisCookies, UnterisSession } from "@unteris/server/common";
-import { CsrfGuard } from "@unteris/server/csrf";
-import { SkipSessionCheck } from "@unteris/server/session";
+import { ReqMeta, ReqMetaDto, UnterisSession } from "@unteris/server/common";
+import { SkipLoggedInCheck } from "@unteris/server/session";
 import { authRoute, type Success, UserAccount } from "@unteris/shared/types";
-import { Cookies } from "nest-cookies";
+import { type Cookie, Cookies, NewCookies } from "nest-cookies";
 import { LoginBodyDto, SignupBodyDto } from "./models";
 import { PasswordResetDto } from "./models/password-reset.dto";
 import { PasswordResetRequestDto } from "./models/password-reset-request.dto";
@@ -22,35 +20,48 @@ import { TokenVerificationData } from "./models/token-verification-query.dto";
 import { ServerSecurityService } from "./security.service";
 
 @ApiTags("Security")
-@UseGuards(CsrfGuard)
 @Controller(authRoute)
-@SkipSessionCheck()
+@SkipLoggedInCheck()
 export class ServerSecurityController {
 	constructor(private serverSecurityService: ServerSecurityService) {}
 
-	@ApiConsumes("multipart/form-data")
+	// @ApiConsumes("multipart/form-data")
 	@Post("signup")
 	async signup(
 		@Body() body: SignupBodyDto,
-		@Session() session: UnterisSession,
+		@NewCookies() newCookies: Cookie[],
+		@ReqMeta() meta: ReqMetaDto,
 	) {
-		return this.serverSecurityService.signUpLocal(body.data, session.id);
+		return this.serverSecurityService.signUpLocal(
+			body.data,
+			newCookies,
+			meta.data,
+		);
 	}
 
 	@Post("login")
-	async login(@Body() body: LoginBodyDto, @Session() session: UnterisSession) {
-		return this.serverSecurityService.logUserIn(body.data, session.id);
+	async login(
+		@Body() body: LoginBodyDto,
+		@NewCookies() newCookies: Cookie[],
+		@ReqMeta() meta: ReqMetaDto,
+	) {
+		return this.serverSecurityService.logUserIn(
+			body.data,
+			newCookies,
+			meta.data,
+		);
 	}
 
 	@Post("logout")
-	async logout(@Cookies() cookies: UnterisCookies) {
-		const { sessionId } = cookies;
+	@SkipLoggedInCheck(false)
+	async logout(@Session() session: UnterisSession) {
+		const { id: sessionId } = session;
 		await this.serverSecurityService.logout(sessionId);
 		return { success: true };
 	}
 
 	@Get("verify-email")
-	@SkipSessionCheck(false)
+	@SkipLoggedInCheck(false)
 	async verifyEmailByToken(
 		@Query() query: TokenVerificationData,
 	): Promise<Success> {
@@ -77,8 +88,22 @@ export class ServerSecurityController {
 
 	@Get("me")
 	@CacheSkip()
-	@SkipSessionCheck(false)
+	@SkipLoggedInCheck(false)
 	async getMe(@Req() { user }: { user: UserAccount }) {
 		return user;
+	}
+
+	@Get("refresh")
+	@CacheSkip()
+	async refreshSession(
+		@Cookies() { refreshId }: Record<string, string>,
+		@ReqMeta() meta: ReqMetaDto,
+		@NewCookies() newCookies: Cookie[],
+	) {
+		return await this.serverSecurityService.refreshSession(
+			refreshId,
+			meta.data,
+			newCookies,
+		);
 	}
 }

@@ -23,7 +23,6 @@
 			"@unteris/server/castle": ["libs/server/castle/src/index.ts"],
 			"@unteris/server/common": ["libs/server/common/src/index.ts"],
 			"@unteris/server/config": ["libs/server/config/src/index.ts"],
-			"@unteris/server/csrf": ["libs/server/csrf/src/index.ts"],
 			"@unteris/server/deities": ["libs/server/deities/src/index.ts"],
 			"@unteris/server/email": ["libs/server/email/src/index.ts"],
 			"@unteris/server/file-storage": ["libs/server/file-storage/src/index.ts"],
@@ -51,7 +50,8 @@
 			"@unteris/ui/deities": ["libs/ui/deities/src/index.ts"],
 			"@unteris/ui/history": ["libs/ui/history/src/index.ts"],
 			"@unteris/ui/location": ["libs/ui/location/src/index.ts"],
-			"@unteris/ui/race": ["libs/ui/race/src/index.ts"]
+			"@unteris/ui/race": ["libs/ui/race/src/index.ts"],
+			"@unteris/server/crypt": ["libs/server/crypt/src/index.ts"]
 		}
 	},
 	"exclude": ["node_modules", "tmp"]

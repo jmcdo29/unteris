@@ -32,6 +32,7 @@ export const Register = (): JSX.Element => {
 				displayName: newUser.name,
 				roles: ["player"],
 			});
+			sessionStorage.setItem("sessionId", res.sessionId);
 			setNewUser({
 				email: "",
 				password: "",

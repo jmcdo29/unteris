@@ -6,6 +6,7 @@ const LoginResponseSchema = object({
 	displayName: string(),
 	success: boolean(),
 	roles: array(RoleEnum),
+	sessionId: string(),
 });
 
 export type LoginResponse = Output<typeof LoginResponseSchema>;

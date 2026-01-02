@@ -22,6 +22,8 @@ const prodConfig = object({
 	SMTP_PASS: string(),
 	SMTP_HOST: string(),
 	FILE_PATH: fallback(string(), join(process.cwd(), "images")),
+	ENCRYPTION_KEY: string(),
+	ENCRYPTION_IV: string(),
 });
 
 const devConfig = object({
@@ -33,6 +35,8 @@ const devConfig = object({
 		string(),
 		join(process.cwd(), "apps", "site", "public", "images"),
 	),
+	ENCRYPTION_KEY: fallback(string(), "replace-this"),
+	ENCRYPTION_IV: fallback(string(), "replace-this"),
 });
 
 const dbConfig = object({

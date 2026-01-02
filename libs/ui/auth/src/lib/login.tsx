@@ -30,6 +30,7 @@ export const Login = (): JSX.Element => {
 				displayName: res.displayName,
 				roles: res.roles,
 			});
+			sessionStorage.setItem("sessionId", res.sessionId);
 			setLoginUser({ email: "", password: "", name: "" });
 			navigate("/");
 		} catch (e) {
