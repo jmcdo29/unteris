@@ -1,10 +1,10 @@
 import CssBaseline from "@mui/material/CssBaseline";
 import type { LinkProps } from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { themeAtom } from "@unteris/ui/atoms";
+import { themeAtom, userAtom } from "@unteris/ui/atoms";
 import { sdk } from "@unteris/ui/components";
 import { useAtom } from "jotai";
-import { forwardRef, useMemo } from "react";
+import { forwardRef, useEffect, useMemo } from "react";
 import {
 	Link as RouterLink,
 	type LinkProps as RouterLinkProps,
@@ -14,7 +14,7 @@ import { router } from "./router";
 
 export const App = () => {
 	const [chosenTheme] = useAtom(themeAtom);
-	sdk.getCsrfToken().then((data) => sdk.setCsrfToken(data.csrfToken));
+	const [user, setUser] = useAtom(userAtom);
 	const LinkBehavior = forwardRef<
 		HTMLAnchorElement,
 		Omit<RouterLinkProps, "to"> & { href: RouterLinkProps["to"] }
@@ -61,6 +61,20 @@ export const App = () => {
 			}),
 		[chosenTheme, LinkBehavior],
 	);
+	useEffect(() => {
+		if (!user.id && sessionStorage.getItem("sessionId")) {
+			const signIn = async () => {
+				const res = await sdk.getUser();
+				setUser({
+					id: res.id,
+					email: res.email,
+					displayName: res.name,
+					roles: [],
+				});
+			};
+			signIn();
+		}
+	}, [user, setUser]);
 	return (
 		<ThemeProvider theme={theme}>
 			<CssBaseline />

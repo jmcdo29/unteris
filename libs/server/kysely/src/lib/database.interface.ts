@@ -15,6 +15,7 @@ import type {
 	VerificationToken,
 } from "@unteris/shared/types";
 import type { Generated } from "kysely";
+import type { UserSession } from "./tables";
 
 type GeneratedId<T> = Omit<T, "id"> & { id: Generated<string> };
 
@@ -35,4 +36,5 @@ export interface Database {
 		expiresAt: Generated<Date>;
 	};
 	image: GeneratedId<Image>;
+	userSession: UserSession;
 }

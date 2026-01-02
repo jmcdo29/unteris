@@ -19,6 +19,7 @@ erDiagram
     Verification_Token ||--|| User_Account : "relates to"
     Role ||--|{ User_Permission : "relates_to"
     User_Account ||--|| Image : "has an avatar"
+    User_account ||--|{ User_Session : "can have"
     Deity ||--|| Image : "has a portrait"
     Location ||--|| Location : "can be in"
     Location ||--||Image : "has an image"
@@ -110,6 +111,14 @@ erDiagram
         string small_url
         string medium_url
         string large_url
+    }
+    User_Session {
+        string id
+        ulid user_id
+        string operating_system
+        string ip_address
+        string browser_type
+        string last_used
     }
 
 ```

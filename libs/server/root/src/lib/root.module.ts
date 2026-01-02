@@ -4,7 +4,6 @@ import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from "@nestjs/core";
 import { OgmaInterceptor } from "@ogma/nestjs-module";
 import { CacheInterceptor, ServerCacheModule } from "@unteris/server/cache";
 import { ServerConfigModule } from "@unteris/server/config";
-import { ServerCsrfModule } from "@unteris/server/csrf";
 import { ServerDeitiesModule } from "@unteris/server/deities";
 import { ServerEmailModule } from "@unteris/server/email";
 import { ServerLocationModule } from "@unteris/server/location";
@@ -14,10 +13,7 @@ import {
 	IsLoggedInGuard,
 	ServerSecurityModule,
 } from "@unteris/server/security";
-import {
-	ServerSessionModule,
-	SessionExistsGuard,
-} from "@unteris/server/session";
+import { ServerSessionModule } from "@unteris/server/session";
 import { CookieModule, CookiesInterceptor } from "nest-cookies";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
@@ -30,7 +26,6 @@ import { BaseFilter } from "./catch-all.filter";
 		ServerDeitiesModule,
 		ServerLocationModule,
 		ServerLoggingModule.forApplication("Unteris Server", "DEBUG"),
-		ServerCsrfModule,
 		ServerSessionModule,
 		ServerConfigModule,
 		ServerRaceModule,
@@ -42,11 +37,7 @@ import { BaseFilter } from "./catch-all.filter";
 		AppService,
 		{
 			provide: APP_GUARD,
-			useClass: SessionExistsGuard,
-		},
-		{
-			provide: APP_GUARD,
-			useClass: IsLoggedInGuard,
+			useExisting: IsLoggedInGuard,
 		},
 		{
 			provide: APP_INTERCEPTOR,

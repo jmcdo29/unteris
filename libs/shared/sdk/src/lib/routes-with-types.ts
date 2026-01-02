@@ -1,7 +1,5 @@
 import {
 	type authRoute,
-	type CsrfReturn,
-	csrfRoute,
 	type Deity,
 	type deitiesRoute,
 	type Location,
@@ -16,7 +14,6 @@ import {
 	raceRoute,
 	type SignupUser,
 	type Success,
-	type sessionRoute,
 	type UserAccount,
 } from "@unteris/shared/types";
 
@@ -48,14 +45,12 @@ type SecurityRoutes = {
 		[key: `${typeof authRoute}/verify-email?verificationToken=${string}`]: [
 			Success,
 		];
-		[csrfRoute]: [CsrfReturn];
 	} & Record<`${typeof authRoute}/me`, [UserAccount]> &
-		Record<`${typeof sessionRoute}/refresh`, [Success]>;
-	post: Record<`${typeof csrfRoute}/verify`, [Success]> &
-		Record<
-			`${typeof authRoute}/signup`,
-			[Success & { id: UserAccount["id"] }, SignupUser]
-		> &
+		Record<`${typeof authRoute}/refresh`, [{ sessionId: string }]>;
+	post: Record<
+		`${typeof authRoute}/signup`,
+		[Success & { id: UserAccount["id"]; sessionId: string }, SignupUser]
+	> &
 		Record<`${typeof authRoute}/login`, [LoginResponse, LoginBody]> &
 		Record<`${typeof authRoute}/logout`, [Success]> &
 		Record<

@@ -6,6 +6,7 @@ import { ServerLocationModule } from "@unteris/server/location";
 import { ServerLoggingModule } from "@unteris/server/logging";
 
 import { KyselyCliCommand } from "./kysely.command";
+import { MigrationCommand } from "./migration.command";
 import { ReplCommand } from "./repl.command";
 import { SeedCommand } from "./seed.command";
 import { DeityQuestions } from "./seeds/deity.questions";
@@ -20,11 +21,17 @@ import { SeedTypeQuestions } from "./seeds/seed-type.questions";
 	imports: [
 		KyselyModule,
 		ServerLoggingModule.forApplication("CLI", "DEBUG"),
-		OgmaModule.forFeatures([KyselyCliCommand, SeedCommand, ReplCommand]),
+		OgmaModule.forFeatures([
+			KyselyCliCommand,
+			SeedCommand,
+			ReplCommand,
+			MigrationCommand,
+		]),
 		ServerDeitiesModule,
 		ServerLocationModule,
 	],
 	providers: [
+		MigrationCommand,
 		KyselyCliCommand,
 		SeedCommand,
 		DeityQuestions,

@@ -1,10 +1,10 @@
 import { Controller, Get, Param } from "@nestjs/common";
 import { IdParamDto } from "@unteris/server/common";
-import { SkipSessionCheck } from "@unteris/server/session";
+import { SkipLoggedInCheck } from "@unteris/server/session";
 import { ServerImageClientService } from "./image-client.service";
 
 @Controller("image-client")
-@SkipSessionCheck()
+@SkipLoggedInCheck()
 export class ImageClientController {
 	constructor(private readonly service: ServerImageClientService) {}
 

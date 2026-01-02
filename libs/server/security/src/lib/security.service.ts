@@ -4,20 +4,23 @@ import {
 	UnauthorizedException,
 } from "@nestjs/common";
 import { OgmaLogger, OgmaService } from "@ogma/nestjs-module";
-import type { RoleEnum } from "@unteris/server/common";
+import type { ReqMetaType, RoleEnum } from "@unteris/server/common";
+import { ServerCryptService } from "@unteris/server/crypt";
 import { ServerEmailService } from "@unteris/server/email";
 import { ServerHashService } from "@unteris/server/hash";
 import { ServerSessionService } from "@unteris/server/session";
 import { ServerTokenService } from "@unteris/server/token";
-import type {
-	LoginBody,
-	LoginResponse,
-	PasswordReset,
-	PasswordResetRequest,
-	SignupUser,
-	Success,
-	UserAccount,
+import {
+	authRoute,
+	type LoginBody,
+	type LoginResponse,
+	type PasswordReset,
+	type PasswordResetRequest,
+	type SignupUser,
+	type Success,
+	type UserAccount,
 } from "@unteris/shared/types";
+import { Cookie } from "nest-cookies";
 import { SecurityRepo } from "./security.repository";
 
 @Injectable()
@@ -29,12 +32,14 @@ export class ServerSecurityService {
 		private readonly tokenService: ServerTokenService,
 		@OgmaLogger(ServerSecurityService) private readonly logger: OgmaService,
 		private readonly securityRepo: SecurityRepo,
+		private readonly crypt: ServerCryptService,
 	) {}
 
 	async signUpLocal(
 		newUser: SignupUser,
-		sessionId: string,
-	): Promise<Success & { id: UserAccount["id"] }> {
+		newCookies: Cookie[],
+		meta: ReqMetaType,
+	): Promise<Success & { id: UserAccount["id"]; sessionId: string }> {
 		const existingAccount = await this.securityRepo.findUserByEmail(
 			newUser.email,
 		);
@@ -55,15 +60,28 @@ export class ServerSecurityService {
 			await this.hashService.hash(newUser.password),
 			loginMethod.id,
 		);
-		this.sessionService.updateSession(sessionId, {
-			user: { email: newUser.email, id: createdUser.id },
+		const sessionData = await this.sessionService.createFullSession({
+			userId: createdUser.id,
+			operatingSystem: meta.operatingSystem,
+			browserType: meta.userAgent,
+			ipAddress: meta.ip,
 		});
+		const refreshCookie = this.sessionService.createCookie({
+			name: "refresh",
+			value: sessionData.refreshId,
+			options: { path: `/api/${authRoute}/refresh` },
+		});
+		newCookies.push(refreshCookie);
 		await this.sendEmailVerification({
 			id: createdUser.id,
 			name: newUser.name,
 			email: newUser.email,
 		});
-		return { success: true, id: createdUser.id };
+		return {
+			success: true,
+			id: createdUser.id,
+			sessionId: this.crypt.encrypt(sessionData.id),
+		};
 	}
 
 	private async sendEmailVerification(
@@ -91,7 +109,8 @@ export class ServerSecurityService {
 
 	async logUserIn(
 		userLogin: LoginBody,
-		sessionId: string,
+		newCookies: Cookie[],
+		meta: ReqMetaType,
 	): Promise<LoginResponse> {
 		const users = await this.securityRepo.findUserWithLocalLogin(
 			userLogin.email,
@@ -123,20 +142,30 @@ export class ServerSecurityService {
 		for (const u of userRecords) {
 			user.roles.push(u.roles as RoleEnum);
 		}
-		await this.sessionService.updateSession(sessionId, {
-			user: { email: user.email, id: user.id },
+		const sessionData = await this.sessionService.createFullSession({
+			userId: user.id,
+			operatingSystem: meta.operatingSystem,
+			browserType: meta.userAgent,
+			ipAddress: meta.ip,
 		});
+		const refreshCookie = this.sessionService.createCookie({
+			name: "refresh",
+			value: sessionData.refreshId,
+			options: { path: `/api/${authRoute}/refresh` },
+		});
+		newCookies.push(refreshCookie);
 		await this.securityRepo.clearLoginAttemptsByLocalLoginId(user.localLoginId);
 		return {
 			success: true,
 			displayName: user.name,
 			id: user.id,
 			roles: user.roles,
+			sessionId: this.crypt.encrypt(sessionData.id),
 		};
 	}
 
 	async logout(sessionId: string): Promise<void> {
-		await this.sessionService.updateSession(sessionId, { user: {} });
+		await this.sessionService.destroySession(sessionId);
 	}
 
 	async verifyUserRecord(verificationToken: string): Promise<Success> {
@@ -185,5 +214,25 @@ export class ServerSecurityService {
 			}
 		}
 		return user;
+	}
+
+	async refreshSession(
+		oldRefreshId: string,
+		meta: ReqMetaType,
+		newCookies: Cookie[],
+	) {
+		const { refreshId, sessionId } = await this.sessionService.refreshSession(
+			oldRefreshId,
+			meta,
+		);
+		const refreshCookie = this.sessionService.createCookie({
+			name: "refresh",
+			value: this.crypt.encrypt(refreshId),
+			options: {
+				path: `/api/${authRoute}/refresh`,
+			},
+		});
+		newCookies.push(refreshCookie);
+		return { sessionId: this.crypt.encrypt(sessionId) };
 	}
 }

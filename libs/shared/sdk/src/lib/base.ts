@@ -1,7 +1,5 @@
 import {
 	authRoute,
-	csrfHeader,
-	csrfRoute,
 	deitiesRoute,
 	type Location,
 	type LocationCreation,
@@ -12,7 +10,6 @@ import {
 	type PasswordResetRequest,
 	raceRoute,
 	type SignupUser,
-	sessionRoute,
 } from "@unteris/shared/types";
 import type { method, RouteToType, SdkGeneric } from "./routes-with-types";
 
@@ -25,11 +22,11 @@ export class FetchError extends Error {
 }
 
 abstract class SdkBase<T extends SdkGeneric = RouteToType> {
-	private csrfToken = "";
+	private sessionId = "";
 	constructor(private readonly baseUrl: string) {}
 
-	setCsrfToken(token: string): SdkBase<T> {
-		this.csrfToken = token;
+	setSessionId(token: string): SdkBase<T> {
+		this.sessionId = token;
 		return this;
 	}
 
@@ -42,7 +39,7 @@ abstract class SdkBase<T extends SdkGeneric = RouteToType> {
 		const reqConfig: RequestInit = {
 			method: config.method.toString().toUpperCase(),
 			headers: {
-				[csrfHeader]: this.csrfToken,
+				Authorization: `Bearer ${this.sessionId}`,
 				...config.headers,
 			},
 			credentials: "include",
@@ -128,16 +125,15 @@ export class Sdk extends SdkBase {
 			return await super.request(config);
 		} catch (e) {
 			if (e instanceof FetchError && e.data.status === 403) {
-				const csrf = await this.getCsrfToken();
-				this.setCsrfToken(csrf.csrfToken);
-				return await this.request(config);
+				const res = await this.getSessionRefresh();
+				if (res.success) {
+					return await this.request(config);
+				}
+			} else {
+				throw e;
 			}
 			throw e;
 		}
-	}
-
-	async getCsrfToken() {
-		return this.get(csrfRoute, {});
 	}
 
 	async getUser() {
@@ -157,7 +153,9 @@ export class Sdk extends SdkBase {
 	}
 
 	async getSessionRefresh() {
-		return this.get(`${sessionRoute}/refresh`, {});
+		const res = await this.get(`${authRoute}/refresh`, {});
+		this.setSessionId(res.sessionId);
+		return { success: true };
 	}
 
 	async getDeitiesByCategory(id: string) {
@@ -209,10 +207,6 @@ export class Sdk extends SdkBase {
 			form.append("image", image);
 		}
 		return this.patch(`location/update/${id}`, form);
-	}
-
-	async verifyCsrf() {
-		return this.post(`${csrfRoute}/verify`, undefined);
 	}
 
 	async signup(body: SignupUser) {
