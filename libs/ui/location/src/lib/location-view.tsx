@@ -12,13 +12,20 @@ export const LocationView = ({
 	titleSize = "3.75em",
 	details: locationDetail,
 }: LocationViewProps) => {
+	const descripParts = locationDetail?.description
+		?.split("\r\n")
+		.filter((val) => !!val);
 	return (
 		<>
 			<Grid container justifyContent="center" columns={1} xs={1}>
 				<Heading fontSize={titleSize} text={locationDetail.name} />
 			</Grid>
-			{locationDetail.description ? (
-				<Typography>{locationDetail.description}</Typography>
+			{descripParts?.length ? (
+				descripParts.map((part) => (
+					<Typography paddingBottom={"0.5em"} key={part}>
+						{part}
+					</Typography>
+				))
 			) : (
 				<Lorem />
 			)}

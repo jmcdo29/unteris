@@ -1,20 +1,7 @@
-import {
-	Body,
-	Controller,
-	Get,
-	Post,
-	Query,
-	Req,
-	Session,
-} from "@nestjs/common";
+import { Body, Controller, Get, Post, Query, Req } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { CacheSkip } from "@unteris/server/cache";
-import {
-	AuthorizedRequest,
-	ReqMeta,
-	ReqMetaDto,
-	UnterisSession,
-} from "@unteris/server/common";
+import { AuthorizedRequest, ReqMeta, ReqMetaDto } from "@unteris/server/common";
 import { SkipLoggedInCheck } from "@unteris/server/session";
 import { authRoute, type Success, UserAccount } from "@unteris/shared/types";
 import { type Cookie, Cookies, NewCookies } from "nest-cookies";
