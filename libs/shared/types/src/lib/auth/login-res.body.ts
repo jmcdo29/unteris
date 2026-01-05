@@ -1,12 +1,13 @@
-import { array, boolean, type Output, object, string, ulid } from "valibot";
+import * as v from "valibot";
+
 import { RoleEnum } from "../role";
 
-const LoginResponseSchema = object({
-	id: string([ulid()]),
-	displayName: string(),
-	success: boolean(),
-	roles: array(RoleEnum),
-	sessionId: string(),
+const LoginResponseSchema = v.object({
+	id: v.pipe(v.string(), v.ulid()),
+	displayName: v.string(),
+	success: v.boolean(),
+	roles: v.array(RoleEnum),
+	sessionId: v.string(),
 });
 
-export type LoginResponse = Output<typeof LoginResponseSchema>;
+export type LoginResponse = v.InferOutput<typeof LoginResponseSchema>;

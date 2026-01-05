@@ -38,7 +38,6 @@ erDiagram
     Domain {
         string name
         ulid id
-        string description
         string type
     }
     Deity_Domain {

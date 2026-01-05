@@ -1,7 +1,7 @@
-import { type Output, object, string, ulid } from "valibot";
+import * as v from "valibot";
 
-export const IdParamSchema = object({
-	id: string([ulid()]),
+export const IdParamSchema = v.object({
+	id: v.pipe(v.string(), v.ulid()),
 });
 
-export type IdParam = Output<typeof IdParamSchema>;
+export type IdParam = v.InferOutput<typeof IdParamSchema>;

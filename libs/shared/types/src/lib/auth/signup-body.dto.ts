@@ -1,9 +1,9 @@
-import { email, minLength, type Output, object, string } from "valibot";
+import * as v from "valibot";
 
-export const SignupSchema = object({
-	email: string([email()]),
-	password: string([minLength(12)]),
-	name: string([minLength(3)]),
+export const SignupSchema = v.object({
+	email: v.pipe(v.string(), v.email()),
+	password: v.pipe(v.string(), v.minLength(12)),
+	name: v.pipe(v.string(), v.minLength(3)),
 });
 
-export type SignupUser = Output<typeof SignupSchema>;
+export type SignupUser = v.InferOutput<typeof SignupSchema>;

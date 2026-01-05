@@ -1,72 +1,66 @@
 import { join } from "node:path";
-import {
-	email,
-	enumType,
-	fallback,
-	intersection,
-	merge,
-	number,
-	object,
-	optional,
-	string,
-	transform,
-	union,
-} from "valibot";
+import * as v from "valibot";
 
 const hourInSeconds = 60 * 60;
 const dayInSeconds = hourInSeconds * 24;
 
-const prodConfig = object({
-	NODE_ENV: enumType(["production"]),
-	NOREPLY_EMAIL: string([email()]),
-	SMTP_PASS: string(),
-	SMTP_HOST: string(),
-	FILE_PATH: fallback(string(), join(process.cwd(), "images")),
-	ENCRYPTION_KEY: string(),
-	ENCRYPTION_IV: string(),
+const prodConfig = v.object({
+	NODE_ENV: v.picklist(["production"]),
+	NOREPLY_EMAIL: v.pipe(v.string(), v.email()),
+	SMTP_PASS: v.string(),
+	SMTP_HOST: v.string(),
+	FILE_PATH: v.fallback(v.string(), join(process.cwd(), "images")),
+	ENCRYPTION_KEY: v.string(),
+	ENCRYPTION_IV: v.string(),
 });
 
-const devConfig = object({
-	NODE_ENV: enumType(["development", "test"]),
-	NOREPLY_EMAIL: optional(string([email()])),
-	SMTP_PASS: optional(string()),
-	SMTP_HOST: optional(string()),
-	FILE_PATH: fallback(
-		string(),
+const devConfig = v.object({
+	NODE_ENV: v.picklist(["development", "test"]),
+	NOREPLY_EMAIL: v.optional(v.pipe(v.string(), v.email())),
+	SMTP_PASS: v.optional(v.string()),
+	SMTP_HOST: v.optional(v.string()),
+	FILE_PATH: v.fallback(
+		v.string(),
 		join(process.cwd(), "apps", "site", "public", "images"),
 	),
-	ENCRYPTION_KEY: fallback(string(), "replace-this"),
-	ENCRYPTION_IV: fallback(string(), "replace-this"),
+	ENCRYPTION_KEY: v.fallback(v.string(), "replace-this"),
+	ENCRYPTION_IV: v.fallback(v.string(), "replace-this"),
 });
 
-const dbConfig = object({
-	DATABASE_USER: string(),
-	DATABASE_PASSWORD: string(),
-	DATABASE_PORT: transform(string(), (val) => Number.parseInt(val, 10)),
-	DATABASE_HOST: string(),
-	DATABASE_NAME: string(),
-});
-
-const rabbitConfig = object({
-	RABBIT_USER: string(),
-	RABBIT_PASSWORD: string(),
-	RABBIT_HOST: string(),
-	RABBIT_PORT: string(),
-});
-
-const commonConfig = object({
-	PORT: transform(fallback(string(), "3333"), (val: string) =>
-		Number.parseInt(val, 10),
+const dbConfig = v.object({
+	DATABASE_USER: v.string(),
+	DATABASE_PASSWORD: v.string(),
+	DATABASE_PORT: v.pipe(
+		v.string(),
+		v.transform((val) => Number.parseInt(val, 10)),
 	),
-	CORS: fallback(string(), "http://localhost:4200"),
-	REDIS_URL: string(),
-	SESSION_EXPIRES_IN: fallback(number(), hourInSeconds),
-	REFRESH_EXPIRES_IN: fallback(number(), 7 * dayInSeconds),
+	DATABASE_HOST: v.string(),
+	DATABASE_NAME: v.string(),
 });
 
-const envConfig = union([devConfig, prodConfig]);
+const rabbitConfig = v.object({
+	RABBIT_USER: v.string(),
+	RABBIT_PASSWORD: v.string(),
+	RABBIT_HOST: v.string(),
+	RABBIT_PORT: v.string(),
+});
 
-export const Config = intersection([
+const commonConfig = v.object({
+	PORT: v.pipe(
+		v.fallback(v.string(), "3333"),
+		v.transform((val: string) => Number.parseInt(val, 10)),
+	),
+	CORS: v.fallback(v.string(), "http://localhost:4200"),
+	REDIS_URL: v.string(),
+	SESSION_EXPIRES_IN: v.fallback(v.number(), hourInSeconds),
+	REFRESH_EXPIRES_IN: v.fallback(v.number(), 7 * dayInSeconds),
+});
+
+const envConfig = v.union([devConfig, prodConfig]);
+
+export const Config = v.intersect([
 	envConfig,
-	merge([commonConfig, dbConfig, rabbitConfig]),
+	commonConfig,
+	dbConfig,
+	rabbitConfig,
 ]);

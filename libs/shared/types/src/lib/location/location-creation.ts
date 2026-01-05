@@ -1,11 +1,12 @@
-import { type Output, object, optional, string, ulid } from "valibot";
+import * as v from "valibot";
+
 import { LocationTypeSchema } from "./location-type";
 
-export const LocationCreationSchema = object({
-	name: string(),
-	description: optional(string()),
+export const LocationCreationSchema = v.object({
+	name: v.string(),
+	description: v.optional(v.string()),
 	type: LocationTypeSchema,
-	parentId: optional(string([ulid()])),
+	parentId: v.optional(v.pipe(v.string(), v.ulid())),
 });
 
-export type LocationCreation = Output<typeof LocationCreationSchema>;
+export type LocationCreation = v.InferOutput<typeof LocationCreationSchema>;

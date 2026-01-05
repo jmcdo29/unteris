@@ -1,7 +1,7 @@
-import { boolean, type Output, object } from "valibot";
+import * as v from "valibot";
 
-export const SuccessSchema = object({
-	success: boolean(),
+export const SuccessSchema = v.object({
+	success: v.boolean(),
 });
 
-export type Success = Output<typeof SuccessSchema>;
+export type Success = v.InferOutput<typeof SuccessSchema>;

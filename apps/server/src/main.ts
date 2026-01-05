@@ -23,7 +23,7 @@ async function bootstrap(): Promise<void> {
 		.setTitle("Unteris API")
 		.setDescription("The API for the Unteris.com website.")
 		.setVersion("1.0.0")
-		.addCookieAuth("sessionId")
+		.addBearerAuth()
 		.addTag("Deity", "Information about the deities of the world")
 		.addTag("Location", "How to find out more about the places in Unteris")
 		.addTag("Race", "Custom races that exist amongst the land")

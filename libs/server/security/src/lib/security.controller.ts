@@ -1,13 +1,14 @@
 import { Body, Controller, Get, Post, Query, Req } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiCreatedResponse, ApiTags } from "@nestjs/swagger";
 import { CacheSkip } from "@unteris/server/cache";
 import { AuthorizedRequest, ReqMeta, ReqMetaDto } from "@unteris/server/common";
 import { SkipLoggedInCheck } from "@unteris/server/session";
-import { authRoute, type Success, UserAccount } from "@unteris/shared/types";
+import { authRoute, type Success } from "@unteris/shared/types";
 import { type Cookie, Cookies, NewCookies } from "nest-cookies";
 import { LoginBodyDto, SignupBodyDto } from "./models";
 import { PasswordResetDto } from "./models/password-reset.dto";
 import { PasswordResetRequestDto } from "./models/password-reset-request.dto";
+import { SignUpLocalResponseDtp } from "./models/signup-local-response.dto";
 import { TokenVerificationData } from "./models/token-verification-query.dto";
 import { ServerSecurityService } from "./security.service";
 
@@ -18,6 +19,7 @@ export class ServerSecurityController {
 	constructor(private serverSecurityService: ServerSecurityService) {}
 
 	// @ApiConsumes("multipart/form-data")
+	@ApiCreatedResponse({ type: SignUpLocalResponseDtp })
 	@Post("signup")
 	async signup(
 		@Body() body: SignupBodyDto,
@@ -81,7 +83,7 @@ export class ServerSecurityController {
 	@Get("me")
 	@CacheSkip()
 	@SkipLoggedInCheck(false)
-	async getMe(@Req() { user }: { user: UserAccount }) {
+	async getMe(@Req() { user }: { user: Record<string, unknown> }) {
 		return user;
 	}
 

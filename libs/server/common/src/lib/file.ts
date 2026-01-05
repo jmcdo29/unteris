@@ -1,14 +1,15 @@
-import { instance, number, type Output, object, string } from "valibot";
+import * as v from "valibot";
+
 import { ValibotDto } from "./valibot.dto";
 
-export const FileSchema = object({
-	fieldname: string(),
-	originalname: string(),
-	mimetype: string(),
-	size: number(),
-	buffer: instance(Buffer),
+export const FileSchema = v.object({
+	fieldname: v.string(),
+	originalname: v.string(),
+	mimetype: v.string(),
+	size: v.number(),
+	buffer: v.instance(Buffer),
 });
 
-export type File = Output<typeof FileSchema>;
+export type File = v.InferOutput<typeof FileSchema>;
 
 export class FileDto extends ValibotDto(FileSchema) {}

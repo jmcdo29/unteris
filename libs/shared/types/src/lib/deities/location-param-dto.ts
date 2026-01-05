@@ -1,7 +1,7 @@
-import { type Output, object, string, ulid } from "valibot";
+import * as v from "valibot";
 
-export const LocationParamSchema = object({
-	location: string([ulid()]),
+export const LocationParamSchema = v.object({
+	location: v.pipe(v.string(), v.ulid()),
 });
 
-export type LocationParam = Output<typeof LocationParamSchema>;
+export type LocationParam = v.InferOutput<typeof LocationParamSchema>;

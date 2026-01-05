@@ -1,8 +1,8 @@
 import { ValibotDto } from "@unteris/server/common";
-import { length, object, string } from "valibot";
+import * as v from "valibot";
 
-const tokenVerificationSchema = object({
-	verificationToken: string([length(32)]),
+const tokenVerificationSchema = v.object({
+	verificationToken: v.pipe(v.string(), v.length(32)),
 });
 
 export class TokenVerificationData extends ValibotDto(

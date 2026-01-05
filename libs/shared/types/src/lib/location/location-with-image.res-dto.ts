@@ -1,13 +1,14 @@
-import { nullable, type Output, object, string, ulid } from "valibot";
+import * as v from "valibot";
+
 import { LocationTypeSchema } from "./location-type";
 
-export const LocationWithImageSchema = object({
-	name: string(),
-	id: string([ulid()]),
-	description: nullable(string()),
+export const LocationWithImageSchema = v.object({
+	name: v.string(),
+	id: v.pipe(v.string(), v.ulid()),
+	description: v.nullable(v.string()),
 	type: LocationTypeSchema,
-	parentId: nullable(string([ulid()])),
-	imageUrl: nullable(string()),
+	parentId: v.nullable(v.pipe(v.string(), v.ulid())),
+	imageUrl: v.nullable(v.string()),
 });
 
-export type LocationWithImage = Output<typeof LocationWithImageSchema>;
+export type LocationWithImage = v.InferOutput<typeof LocationWithImageSchema>;

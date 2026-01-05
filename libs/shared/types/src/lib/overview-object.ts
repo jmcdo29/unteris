@@ -1,8 +1,8 @@
-import { type Output, object, string, ulid } from "valibot";
+import * as v from "valibot";
 
-export const OverviewObjectSchema = object({
-	id: string([ulid()]),
-	name: string(),
+export const OverviewObjectSchema = v.object({
+	id: v.pipe(v.string(), v.ulid()),
+	name: v.string(),
 });
 
-export type OverviewObject = Output<typeof OverviewObjectSchema>;
+export type OverviewObject = v.InferOutput<typeof OverviewObjectSchema>;

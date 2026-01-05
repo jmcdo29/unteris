@@ -1,5 +1,4 @@
 export * from "./authorized-user.dto";
-export * from "./cookies";
 export * from "./file";
 export * from "./file-upload.decorator";
 export * from "./id-param.dto";

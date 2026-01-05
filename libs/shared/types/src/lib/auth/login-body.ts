@@ -1,8 +1,8 @@
-import { email, minLength, type Output, object, string } from "valibot";
+import * as v from "valibot";
 
-export const LoginBodySchema = object({
-	email: string([email()]),
-	password: string([minLength(12)]),
+export const LoginBodySchema = v.object({
+	email: v.pipe(v.string(), v.email()),
+	password: v.pipe(v.string(), v.minLength(12)),
 });
 
-export type LoginBody = Output<typeof LoginBodySchema>;
+export type LoginBody = v.InferOutput<typeof LoginBodySchema>;
