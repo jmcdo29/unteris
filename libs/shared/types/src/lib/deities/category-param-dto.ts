@@ -1,7 +1,7 @@
-import { type Output, object, string, ulid } from "valibot";
+import * as v from "valibot";
 
-export const CategoryParamSchema = object({
-	category: string([ulid()]),
+export const CategoryParamSchema = v.object({
+	category: v.pipe(v.string(), v.ulid()),
 });
 
-export type CategoryParam = Output<typeof CategoryParamSchema>;
+export type CategoryParam = v.InferOutput<typeof CategoryParamSchema>;

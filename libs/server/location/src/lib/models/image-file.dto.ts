@@ -1,4 +1,4 @@
 import { FileSchema, ValibotDto } from "@unteris/server/common";
-import { optional } from "valibot";
+import * as v from "valibot";
 
-export class ImageFile extends ValibotDto(optional(FileSchema)) {}
+export class ImageFile extends ValibotDto(v.optional(FileSchema)) {}

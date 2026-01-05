@@ -1,9 +1,8 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { type Database, InjectKysely } from "@unteris/server/kysely";
-import type { Deity, OverviewObject } from "@unteris/shared/types";
+import type { OverviewObject } from "@unteris/shared/types";
 import type { Kysely } from "kysely";
-
-type DeityReturn = Omit<Deity, "imageId"> & { imageUrl: string | null };
+import { DeityResponse } from "./models/get-by-id-response.dto";
 
 @Injectable()
 export class ServerDeitiesService {
@@ -18,7 +17,7 @@ export class ServerDeitiesService {
 			.execute();
 	}
 
-	async getDeityById(id: string): Promise<DeityReturn> {
+	async getDeityById(id: string): Promise<DeityResponse> {
 		const deityRecords = await this.db
 			.selectFrom("deity")
 			.leftJoin("deityDomain", "deity.id", "deityDomain.deityId")
@@ -38,7 +37,7 @@ export class ServerDeitiesService {
 		if (deityRecords.length === 0) {
 			throw new BadRequestException(`No deity found with Id ${id}`);
 		}
-		const deity: DeityReturn = {
+		const deity: DeityResponse = {
 			name: deityRecords[0].name,
 			id,
 			description: deityRecords[0].description,

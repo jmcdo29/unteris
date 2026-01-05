@@ -1,7 +1,9 @@
-import { email, type Output, object, string } from "valibot";
+import * as v from "valibot";
 
-export const PasswordResetRequestSchema = object({
-	email: string([email()]),
+export const PasswordResetRequestSchema = v.object({
+	email: v.pipe(v.string(), v.email()),
 });
 
-export type PasswordResetRequest = Output<typeof PasswordResetRequestSchema>;
+export type PasswordResetRequest = v.InferOutput<
+	typeof PasswordResetRequestSchema
+>;

@@ -2,6 +2,7 @@ import { IncomingMessage } from "node:http";
 import { createParamDecorator, ExecutionContext } from "@nestjs/common";
 import { parse } from "useragent-ng";
 import * as v from "valibot";
+
 import { ValibotDto } from "./valibot.dto";
 
 const ReqMetaSchema = v.object({
@@ -10,7 +11,7 @@ const ReqMetaSchema = v.object({
 	ip: v.string(),
 });
 
-export type ReqMetaType = v.Output<typeof ReqMetaSchema>;
+export type ReqMetaType = v.InferOutput<typeof ReqMetaSchema>;
 
 export class ReqMetaDto extends ValibotDto(ReqMetaSchema) {}
 

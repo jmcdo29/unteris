@@ -3,6 +3,7 @@ import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { IdParamDto, OverviewObjectDto } from "@unteris/server/common";
 import { SkipLoggedInCheck } from "@unteris/server/session";
 import { raceRoute } from "@unteris/shared/types";
+import { GetRaceByIdResponseDto } from "./models/get-by-id-response.dto";
 import { ServerRaceService } from "./race.service";
 
 @ApiTags("Race")
@@ -17,6 +18,7 @@ export class ServerRaceController {
 		return this.serverRaceService.getRaces();
 	}
 
+	@ApiOkResponse({ type: GetRaceByIdResponseDto })
 	@Get(":id")
 	async getRaceWithAbilities(@Param() param: IdParamDto) {
 		return this.serverRaceService.getRaceWithAbilities(param.data.id);

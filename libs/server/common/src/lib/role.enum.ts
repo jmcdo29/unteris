@@ -1,5 +1,5 @@
-import { enumType, type Output } from "valibot";
+import * as v from "valibot";
 
-export const RoleEnumSchema = enumType(["player", "dev", "dm", "admin"]);
+export const RoleEnumSchema = v.picklist(["player", "dev", "dm", "admin"]);
 
-export type RoleEnum = Output<typeof RoleEnumSchema>;
+export type RoleEnum = v.InferOutput<typeof RoleEnumSchema>;

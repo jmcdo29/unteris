@@ -1,7 +1,8 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { type Database, InjectKysely } from "@unteris/server/kysely";
-import type { OverviewObject, RaceWithAbilities } from "@unteris/shared/types";
+import type { OverviewObject } from "@unteris/shared/types";
 import type { Kysely } from "kysely";
+import { RaceWithAbilities } from "./models/get-by-id-response.dto";
 
 @Injectable()
 export class ServerRaceService {

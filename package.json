@@ -19,7 +19,7 @@
 	"dependencies": {
 		"@casl/ability": "^6.7.3",
 		"@commitlint/config-conventional": "^17.8.1",
-		"@nest-lab/typeschema": "^0.2.1",
+		"@nest-lab/typeschema": "^1.1.0",
 		"@nestjs/cache-manager": "^2.3.0",
 		"@nestjs/common": "^11.0.0",
 		"@nestjs/core": "^11.0.0",
@@ -52,7 +52,7 @@
 		"sharp": "^0.32.6",
 		"tslib": "^2.8.1",
 		"useragent-ng": "^2.4.5",
-		"valibot": "^0.19.0"
+		"valibot": "^1.2.0"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.28.5",

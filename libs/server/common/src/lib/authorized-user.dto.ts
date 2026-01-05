@@ -1,10 +1,11 @@
-import { array, email, type Output, object, string, ulid } from "valibot";
+import * as v from "valibot";
+
 import { RoleEnumSchema } from "./role.enum";
 
-export const AuthorizedUserSchema = object({
-	id: string([ulid()]),
-	email: string([email()]),
-	roles: array(RoleEnumSchema),
+export const AuthorizedUserSchema = v.object({
+	id: v.pipe(v.string(), v.ulid()),
+	email: v.pipe(v.string(), v.email()),
+	roles: v.array(RoleEnumSchema),
 });
 
-export type AuthorizedUser = Output<typeof AuthorizedUserSchema>;
+export type AuthorizedUser = v.InferOutput<typeof AuthorizedUserSchema>;

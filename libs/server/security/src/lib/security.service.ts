@@ -4,7 +4,11 @@ import {
 	UnauthorizedException,
 } from "@nestjs/common";
 import { OgmaLogger, OgmaService } from "@ogma/nestjs-module";
-import type { ReqMetaType, RoleEnum } from "@unteris/server/common";
+import type {
+	AuthorizedUser,
+	ReqMetaType,
+	RoleEnum,
+} from "@unteris/server/common";
 import { ServerCryptService } from "@unteris/server/crypt";
 import { ServerEmailService } from "@unteris/server/email";
 import { ServerHashService } from "@unteris/server/hash";
@@ -18,9 +22,9 @@ import {
 	type PasswordResetRequest,
 	type SignupUser,
 	type Success,
-	type UserAccount,
 } from "@unteris/shared/types";
 import { Cookie } from "nest-cookies";
+import { SignUpLocalResponse } from "./models/signup-local-response.dto";
 import { SecurityRepo } from "./security.repository";
 
 @Injectable()
@@ -39,7 +43,7 @@ export class ServerSecurityService {
 		newUser: SignupUser,
 		newCookies: Cookie[],
 		meta: ReqMetaType,
-	): Promise<Success & { id: UserAccount["id"]; sessionId: string }> {
+	): Promise<SignUpLocalResponse> {
 		const existingAccount = await this.securityRepo.findUserByEmail(
 			newUser.email,
 		);
@@ -84,9 +88,11 @@ export class ServerSecurityService {
 		};
 	}
 
-	private async sendEmailVerification(
-		user: Pick<UserAccount, "id" | "email" | "name">,
-	): Promise<void> {
+	private async sendEmailVerification(user: {
+		id: string;
+		name: string;
+		email: string;
+	}): Promise<void> {
 		try {
 			const verificationToken = await this.tokenService.generateToken(192);
 			await this.securityRepo.createUserVerificationRecord(
@@ -201,11 +207,7 @@ export class ServerSecurityService {
 		);
 	}
 
-	async getUserById(
-		id: string,
-	): Promise<
-		Omit<UserAccount, "imageId" | "isVerified"> & { roles: RoleEnum[] }
-	> {
+	async getUserById(id: string): Promise<AuthorizedUser> {
 		const users = await this.securityRepo.findUserById(id);
 		const user = { ...users[0], roles: [users[0].roles] };
 		for (const u of users) {

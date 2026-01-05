@@ -4,6 +4,7 @@ import { IdParamDto, OverviewObjectDto } from "@unteris/server/common";
 import { SkipLoggedInCheck } from "@unteris/server/session";
 import { deitiesRoute } from "@unteris/shared/types";
 import { CategoryParamDto } from "./models/category-param.dto";
+import { GetDeityByIdResponseDto } from "./models/get-by-id-response.dto";
 import { LocationParamDto } from "./models/location-param.dto";
 import { ServerDeitiesService } from "./server-deities.service";
 
@@ -19,6 +20,7 @@ export class ServerDeitiesController {
 		return this.serverDeitiesService.findDeitiesOfCategory(param.data.category);
 	}
 
+	@ApiOkResponse({ type: GetDeityByIdResponseDto })
 	@Get("id/:id")
 	async getDeityById(@Param() param: IdParamDto) {
 		return this.serverDeitiesService.getDeityById(param.data.id);

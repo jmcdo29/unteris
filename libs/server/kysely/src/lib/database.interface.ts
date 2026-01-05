@@ -1,21 +1,21 @@
+import type { Generated } from "kysely";
 import type {
 	Deity,
 	DeityCategory,
 	DeityDomain,
 	Domain,
-	Image,
 	LocalLogin,
 	Location,
 	LoginMethod,
 	Race,
 	RacialAbility,
 	Role,
+	SavedImage,
 	UserAccount,
 	UserPermission,
+	UserSession,
 	VerificationToken,
-} from "@unteris/shared/types";
-import type { Generated } from "kysely";
-import type { UserSession } from "./tables";
+} from "./tables";
 
 type GeneratedId<T> = Omit<T, "id"> & { id: Generated<string> };
 
@@ -35,6 +35,6 @@ export interface Database {
 	verificationToken: Omit<GeneratedId<VerificationToken>, "expiresAt"> & {
 		expiresAt: Generated<Date>;
 	};
-	image: GeneratedId<Image>;
+	image: GeneratedId<SavedImage>;
 	userSession: UserSession;
 }

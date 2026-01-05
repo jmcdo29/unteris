@@ -1,6 +1,6 @@
-import { enumType, type Output } from "valibot";
+import * as v from "valibot";
 
-export const LocationTypeSchema = enumType([
+export const LocationTypeSchema = v.picklist([
 	"plane",
 	"region",
 	"city",
@@ -11,4 +11,4 @@ export const LocationTypeSchema = enumType([
 	"wilderness",
 ]);
 
-export type LocationType = Output<typeof LocationTypeSchema>;
+export type LocationType = v.InferOutput<typeof LocationTypeSchema>;

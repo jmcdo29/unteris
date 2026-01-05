@@ -1,10 +1,13 @@
 import * as v from "valibot";
 
-import { RoleEnum } from "./role.enum";
-
 export const RoleSchema = v.object({
 	id: v.pipe(v.string(), v.ulid()),
-	name: RoleEnum,
+	name: v.union([
+		v.literal("player"),
+		v.literal("dm"),
+		v.literal("dev"),
+		v.literal("admin"),
+	]),
 });
 
 export type Role = v.InferOutput<typeof RoleSchema>;

@@ -1,16 +1,17 @@
-import { type Output, object, omit, string } from "valibot";
+import * as v from "valibot";
+
 import { AuthorizedUserSchema } from "./authorized-user.dto";
 import { SessionDataSchema } from "./session";
 
-const RefreshRequestSchema = object({
-	oldSession: omit(SessionDataSchema, ["id"]),
+const RefreshRequestSchema = v.object({
+	oldSession: v.omit(SessionDataSchema, ["id"]),
 });
 
-export type RefreshRequest = Output<typeof RefreshRequestSchema>;
+export type RefreshRequest = v.InferOutput<typeof RefreshRequestSchema>;
 
-const AuthorizedRequestSchema = object({
+const AuthorizedRequestSchema = v.object({
 	user: AuthorizedUserSchema,
-	sessionId: string(),
+	sessionId: v.string(),
 });
 
-export type AuthorizedRequest = Output<typeof AuthorizedRequestSchema>;
+export type AuthorizedRequest = v.InferOutput<typeof AuthorizedRequestSchema>;

@@ -1,12 +1,13 @@
 import { Injectable } from "@nestjs/common";
 import type { RoleEnum } from "@unteris/server/common";
-import { type Database, InjectKysely } from "@unteris/server/kysely";
-import type {
+import {
+	type Database,
+	InjectKysely,
 	LocalLogin,
 	LoginMethod,
-	SignupUser,
 	UserAccount,
-} from "@unteris/shared/types";
+} from "@unteris/server/kysely";
+import type { SignupUser } from "@unteris/shared/types";
 import { type Kysely, sql } from "kysely";
 
 @Injectable()
@@ -133,6 +134,7 @@ export class SecurityRepo {
 				password,
 				loginMethodId,
 				attempts: 0,
+				lastUsed: new Date(),
 			})
 			.execute();
 	}

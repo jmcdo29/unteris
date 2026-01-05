@@ -1,40 +1,29 @@
-import {
-	email,
-	type Output,
-	object,
-	optional,
-	passthrough,
-	string,
-	ulid,
-	union,
-} from "valibot";
+import * as v from "valibot";
 
-export const SessionDataSchema = object({
-	id: string(),
-	user: passthrough(
-		object({
-			email: optional(string([email()])),
-			id: optional(string([ulid()])),
-		}),
-	),
+export const SessionDataSchema = v.object({
+	id: v.string(),
+	user: v.looseObject({
+		email: v.optional(v.pipe(v.string(), v.email())),
+		id: v.optional(v.pipe(v.string(), v.ulid())),
+	}),
 });
 
-export type SessionData = Output<typeof SessionDataSchema>;
+export type SessionData = v.InferOutput<typeof SessionDataSchema>;
 
-const RefreshSessionDataSchema = object({
-	id: string(),
-	sessionId: string(),
+const RefreshSessionDataSchema = v.object({
+	id: v.string(),
+	sessionId: v.string(),
 });
 
 export type RefreshSessionData = Omit<
-	Output<typeof RefreshSessionDataSchema>,
+	v.InferOutput<typeof RefreshSessionDataSchema>,
 	"id"
 >;
 
-const SavedSessionDataSchema = union([
+const SavedSessionDataSchema = v.union([
 	SessionDataSchema,
 	RefreshSessionDataSchema,
 ]);
 
-export type UnterisSession = Output<typeof SavedSessionDataSchema>;
+export type UnterisSession = v.InferOutput<typeof SavedSessionDataSchema>;
 export type SavedSessionData = Omit<UnterisSession, "id">;

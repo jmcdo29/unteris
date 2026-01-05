@@ -1,13 +1,16 @@
 import { Injectable } from "@nestjs/common";
-import { type Database, InjectKysely } from "@unteris/server/kysely";
-import type { Image } from "@unteris/shared/types";
+import {
+	type Database,
+	InjectKysely,
+	SavedImage,
+} from "@unteris/server/kysely";
 import type { Kysely } from "kysely";
 
 @Injectable()
 export class ImageRepo {
 	constructor(@InjectKysely() private readonly db: Kysely<Database>) {}
 
-	async getImageById(id: string): Promise<Image | undefined> {
+	async getImageById(id: string): Promise<SavedImage | undefined> {
 		return this.db
 			.selectFrom("image")
 			.selectAll()
