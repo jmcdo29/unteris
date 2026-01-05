@@ -54,13 +54,19 @@ export class LocationRepository {
 		return this.db
 			.selectFrom("location as l")
 			.leftJoin("image as i", "i.id", "l.imageId")
-			.select([
+			.select((eb) => [
 				"l.id",
 				"l.name",
 				"l.description",
 				"l.parentId",
 				"l.type",
-				"i.mediumUrl as imageUrl",
+				eb
+					.case()
+					.when(eb.ref("i.mediumUrl"), "is not", null)
+					.then(eb.ref("i.mediumUrl"))
+					.else(eb.ref("i.originalUrl"))
+					.end()
+					.as("imageUrl"),
 			])
 			.where("l.id", "=", id)
 			.executeTakeFirstOrThrow();
