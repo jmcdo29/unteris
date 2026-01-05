@@ -1,9 +1,9 @@
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import SaveIcon from "@mui/icons-material/Save";
-import { Button, IconButton, Tooltip, styled } from "@mui/material";
+import { Button, IconButton, styled, Tooltip } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { LocationWithImage } from "@unteris/shared/types";
-import { Image, TextInput, memoAtom, sdk } from "@unteris/ui/components";
+import { Image, memoAtom, sdk, TextInput } from "@unteris/ui/components";
 import { useAtom } from "jotai";
 import { newRegionAtom } from "./atoms";
 

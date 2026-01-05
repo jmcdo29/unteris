@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { LocationWithImage } from "@unteris/shared/types";
 import { ObjectDetail } from "@unteris/ui/components";
 import { LocationEdit } from "./location-edit";
@@ -23,6 +23,6 @@ export const LocationDetail = (props: LocationDetailProps) => {
 			setDetail={props.setDetail}
 		/>
 	) : (
-		<Box />
+		<Box sx={{ width: "100rem" }} />
 	);
 };

@@ -1,10 +1,10 @@
-import { IncomingMessage } from "node:http";
 import {
 	type CanActivate,
 	type ExecutionContext,
 	Injectable,
 } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
+import { AuthorizedRequest } from "@unteris/server/common";
 import { ServerCryptService } from "@unteris/server/crypt";
 import {
 	ServerSessionService,
@@ -31,7 +31,7 @@ export class IsLoggedInGuard implements CanActivate {
 		}
 		const req = context
 			.switchToHttp()
-			.getRequest<IncomingMessage & { user?: Record<string, unknown> }>();
+			.getRequest<AuthorizedRequest & { headers: Record<string, string> }>();
 		const { authorization } = req.headers;
 		if (!authorization) {
 			return false;
@@ -45,6 +45,7 @@ export class IsLoggedInGuard implements CanActivate {
 		if (!session.user.id) {
 			return false;
 		}
+		req.sessionId = sessionId;
 		const user = await this.securityService.getUserById(session.user.id);
 		req.user = user;
 		return true;

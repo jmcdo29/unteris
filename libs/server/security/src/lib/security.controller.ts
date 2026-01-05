@@ -9,7 +9,12 @@ import {
 } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { CacheSkip } from "@unteris/server/cache";
-import { ReqMeta, ReqMetaDto, UnterisSession } from "@unteris/server/common";
+import {
+	AuthorizedRequest,
+	ReqMeta,
+	ReqMetaDto,
+	UnterisSession,
+} from "@unteris/server/common";
 import { SkipLoggedInCheck } from "@unteris/server/session";
 import { authRoute, type Success, UserAccount } from "@unteris/shared/types";
 import { type Cookie, Cookies, NewCookies } from "nest-cookies";
@@ -54,8 +59,8 @@ export class ServerSecurityController {
 
 	@Post("logout")
 	@SkipLoggedInCheck(false)
-	async logout(@Session() session: UnterisSession) {
-		const { id: sessionId } = session;
+	async logout(@Req() req: AuthorizedRequest) {
+		const { sessionId } = req;
 		await this.serverSecurityService.logout(sessionId);
 		return { success: true };
 	}
