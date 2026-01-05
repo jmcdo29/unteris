@@ -1,4 +1,4 @@
-import { useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { ShrinkButton, useMinWidth } from "@unteris/ui/components";
 import { useAtom } from "jotai";
@@ -12,12 +12,12 @@ interface RegionChildDetailProps {
 
 export const RegionChildDetail = ({ parentShrunk }: RegionChildDetailProps) => {
 	const [regionChild, setRegionChild] = useAtom(regionChildAtom);
-	if (!regionChild) {
-		return <div />;
-	}
 	const isWideEnough = useMinWidth();
 	const theme = useTheme();
 	const [shrunk, setShrunk] = useState(false);
+	// if (!regionChild) {
+	// 	return <div />;
+	// }
 	const columns = parentShrunk ? (isWideEnough ? 12 : 1) : 1;
 	const halfWidth = Math.round(columns / 2);
 	return (
@@ -28,18 +28,24 @@ export const RegionChildDetail = ({ parentShrunk }: RegionChildDetailProps) => {
 				xs={!shrunk ? halfWidth : 1}
 				rowGap={theme.spacing(2)}
 			>
-				<ShrinkButton
-					shrunk={shrunk}
-					setShrunk={setShrunk}
-					regionType={regionChild.type}
-					hide={!isWideEnough || !parentShrunk}
-				/>
-				<LocationDetail
-					locationDetail={regionChild}
-					shrunk={shrunk}
-					titleSize={parentShrunk ? undefined : "2rem"}
-					setDetail={setRegionChild}
-				/>
+				{!regionChild ? (
+					<Box width={"100rem"} />
+				) : (
+					<>
+						<ShrinkButton
+							shrunk={shrunk}
+							setShrunk={setShrunk}
+							regionType={regionChild.type}
+							hide={!isWideEnough || !parentShrunk}
+						/>
+						<LocationDetail
+							locationDetail={regionChild}
+							shrunk={shrunk}
+							titleSize={parentShrunk ? undefined : "2rem"}
+							setDetail={setRegionChild}
+						/>
+					</>
+				)}
 			</Grid>
 		</Grid>
 	);

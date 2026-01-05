@@ -1,4 +1,4 @@
-import { type Output, object, omit, required } from "valibot";
+import { type Output, object, omit, string } from "valibot";
 import { AuthorizedUserSchema } from "./authorized-user.dto";
 import { SessionDataSchema } from "./session";
 
@@ -10,7 +10,7 @@ export type RefreshRequest = Output<typeof RefreshRequestSchema>;
 
 const AuthorizedRequestSchema = object({
 	user: AuthorizedUserSchema,
-	session: required(SessionDataSchema),
+	sessionId: string(),
 });
 
 export type AuthorizedRequest = Output<typeof AuthorizedRequestSchema>;

@@ -210,11 +210,15 @@ export class Sdk extends SdkBase {
 	}
 
 	async signup(body: SignupUser) {
-		return this.post(`${authRoute}/signup`, body);
+		const res = await this.post(`${authRoute}/signup`, body);
+		this.setSessionId(res.sessionId);
+		return res;
 	}
 
 	async login(body: LoginBody) {
-		return this.post(`${authRoute}/login`, body);
+		const res = await this.post(`${authRoute}/login`, body);
+		this.setSessionId(res.sessionId);
+		return res;
 	}
 
 	async logout() {
