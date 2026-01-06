@@ -1,6 +1,6 @@
 import { Controller } from "@nestjs/common";
 import { EventPattern, Payload } from "@nestjs/microservices";
-import { IdParam, PROCESS_IMAGE_EVENT } from "@unteris/shared/types";
+import { IdParam, PROCESS_IMAGE_EVENT } from "@unteris/server/common";
 import { ServerImageProcessingService } from "./image-processing.service";
 
 @Controller()

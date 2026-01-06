@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
+import { OverviewObject } from "@unteris/server/common";
 import { type Database, InjectKysely } from "@unteris/server/kysely";
-import type { OverviewObject } from "@unteris/shared/types";
 import type { Kysely } from "kysely";
 import { DeityResponse } from "./models/get-by-id-response.dto";
 

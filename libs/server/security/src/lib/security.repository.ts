@@ -7,8 +7,8 @@ import {
 	LoginMethod,
 	UserAccount,
 } from "@unteris/server/kysely";
-import type { SignupUser } from "@unteris/shared/types";
 import { type Kysely, sql } from "kysely";
+import { SignupUser } from "./models";
 
 @Injectable()
 export class SecurityRepo {

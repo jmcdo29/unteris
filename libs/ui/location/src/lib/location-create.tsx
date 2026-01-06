@@ -2,13 +2,13 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import SaveIcon from "@mui/icons-material/Save";
 import { Button, IconButton, styled, Tooltip } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
-import { LocationWithImage } from "@unteris/shared/types";
-import { Image, memoAtom, sdk, TextInput } from "@unteris/ui/components";
+import { sdk, type types } from "@unteris/shared/sdk";
+import { client, Image, memoAtom, TextInput } from "@unteris/ui/components";
 import { useAtom } from "jotai";
 import { newRegionAtom } from "./atoms";
 
 interface LocationCreateProps {
-	parentLocation?: LocationWithImage;
+	parentLocation?: types.GetLocationByIdResponseDto;
 }
 
 const VisuallyHiddenInput = styled("input")({
@@ -33,7 +33,10 @@ export const LocationCreate = (props: LocationCreateProps) => {
 	const fileReader = new FileReader();
 
 	const save = async () => {
-		await sdk.createLocation(newLocation, imageData);
+		await sdk.serverLocationControllerCreate({
+			client,
+			body: { ...newLocation, image: imageData },
+		});
 	};
 	return (
 		<>

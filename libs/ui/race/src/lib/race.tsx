@@ -1,6 +1,5 @@
 import { useMediaQuery } from "@mui/material";
 import Box from "@mui/material/Box";
-import type { Race as IRace } from "@unteris/shared/types";
 import { useAtomValue } from "jotai";
 
 import { Suspense } from "react";
@@ -13,7 +12,7 @@ export const Race = (): JSX.Element => {
 	const race = useAtomValue(raceAtom);
 	const isEditing = useAtomValue(editingAtom);
 
-	const updateRace = (_race: IRace) => {
+	const updateRace = (_race: unknown) => {
 		/* this is where I'll call back to the server to save */
 	};
 

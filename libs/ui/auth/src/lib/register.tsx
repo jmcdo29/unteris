@@ -1,11 +1,11 @@
-import type { SignupUser } from "@unteris/shared/types";
+import { sdk, type types } from "@unteris/shared/sdk";
 import { userAtom } from "@unteris/ui/atoms";
 import {
 	ActionButton,
+	client,
 	convertUnknownErrorToDisplayError,
 	Heading,
 	PasswordInput,
-	sdk,
 	TextInput,
 } from "@unteris/ui/components";
 import { useAtom, useSetAtom } from "jotai";
@@ -19,13 +19,19 @@ export const Register = (): JSX.Element => {
 	const [newUser, setNewUser] = useAtom(authUserAtom);
 	const navigate = useNavigate();
 	const updateField =
-		(field: keyof SignupUser) =>
+		(field: keyof types.SignupBodyDto) =>
 		(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 			setNewUser({ ...newUser, [field]: e.target.value });
 		};
 	const submit = async () => {
 		try {
-			const res = await sdk.signup(newUser);
+			const { error, data: res } = await sdk.serverSecurityControllerSignup({
+				client,
+				body: newUser,
+			});
+			if (error || !res) {
+				throw new Error(error as unknown as string);
+			}
 			setUser({
 				id: res.id,
 				email: newUser.email,

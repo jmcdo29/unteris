@@ -1,8 +1,9 @@
 import CssBaseline from "@mui/material/CssBaseline";
 import type { LinkProps } from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { sdk } from "@unteris/shared/sdk";
 import { themeAtom, userAtom } from "@unteris/ui/atoms";
-import { sdk } from "@unteris/ui/components";
+import { client } from "@unteris/ui/components";
 import { useAtom } from "jotai";
 import { forwardRef, useEffect, useMemo } from "react";
 import {
@@ -64,11 +65,16 @@ export const App = () => {
 	useEffect(() => {
 		if (!user.id && sessionStorage.getItem("sessionId")) {
 			const signIn = async () => {
-				const res = await sdk.getUser();
+				const res = await sdk
+					.serverSecurityControllerGetMe({ client })
+					.then((res) => res.data);
+				if (!res) {
+					throw new Error();
+				}
 				setUser({
 					id: res.id,
 					email: res.email,
-					displayName: res.name,
+					displayName: res.displayName,
 					roles: [],
 				});
 			};

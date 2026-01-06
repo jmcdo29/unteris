@@ -1,4 +1,11 @@
 import { ValibotDto } from "@unteris/server/common";
-import { PasswordResetSchema } from "@unteris/shared/types";
+import * as v from "valibot";
+
+export const PasswordResetSchema = v.object({
+	resetToken: v.pipe(v.string(), v.length(43)),
+	password: v.string(),
+});
+
+export type PasswordReset = v.InferOutput<typeof PasswordResetSchema>;
 
 export class PasswordResetDto extends ValibotDto(PasswordResetSchema) {}

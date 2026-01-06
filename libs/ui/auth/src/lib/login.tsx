@@ -1,10 +1,11 @@
+import { sdk } from "@unteris/shared/sdk";
 import { userAtom } from "@unteris/ui/atoms";
 import {
 	ActionButton,
+	client,
 	convertUnknownErrorToDisplayError,
 	Heading,
 	PasswordInput,
-	sdk,
 	TextInput,
 } from "@unteris/ui/components";
 import { useAtom, useSetAtom } from "jotai";
@@ -20,10 +21,18 @@ export const Login = (): JSX.Element => {
 
 	const login = async () => {
 		try {
-			const res = await sdk.login({
-				email: loginUser.email,
-				password: loginUser.password,
-			});
+			const res = await sdk
+				.serverSecurityControllerLogin({
+					client,
+					body: {
+						email: loginUser.email,
+						password: loginUser.password,
+					},
+				})
+				.then((res) => res.data);
+			if (!res) {
+				throw new Error();
+			}
 			setUser({
 				id: res.id,
 				email: loginUser.email,

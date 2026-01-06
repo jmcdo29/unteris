@@ -1,5 +1,5 @@
-import type { OverviewObject, RaceWithAbilities } from "@unteris/shared/types";
-import { sdk } from "@unteris/ui/components";
+import { sdk } from "@unteris/shared/sdk";
+import { client } from "@unteris/ui/components";
 import { atom } from "jotai";
 
 export const editingAtom = atom<boolean>(false);
@@ -15,17 +15,20 @@ export const raceIdAtom = atom<Promise<string>>(async (get) => {
 	return races[raceIndex].id;
 });
 
-export const racesAtom = atom<Promise<OverviewObject[]>>(async () =>
-	sdk.getRaces(),
+export const racesAtom = atom(async () =>
+	sdk.serverRaceControllerGetAllRaces({ client }).then((res) => res.data ?? []),
 );
 
-export const raceAtom = atom<Promise<RaceWithAbilities | undefined>>(
-	async (get) => {
-		const raceId = await get(raceIdAtom);
-		if (!raceId) {
-			return;
-		}
-		const data = await sdk.getRaceById(raceId);
-		return data;
-	},
-);
+export const raceAtom = atom(async (get) => {
+	const raceId = await get(raceIdAtom);
+	if (!raceId) {
+		return;
+	}
+	const data = await sdk
+		.serverRaceControllerGetRaceWithAbilities({
+			client,
+			path: { id: raceId },
+		})
+		.then((res) => res.data);
+	return data;
+});

@@ -1,3 +1,5 @@
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { NestFactory } from "@nestjs/core";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
@@ -30,7 +32,11 @@ async function bootstrap(): Promise<void> {
 		.addTag("Security", "This should be self explanatory")
 		.build();
 	const document = SwaggerModule.createDocument(app, openApiConfig);
-	SwaggerModule.setup("open-api", app, document);
+	SwaggerModule.setup("open-api", app, document, {
+		customCss: (
+			await readFile(join(__dirname, "assets", "swagger-dark-ui.css"))
+		).toString(),
+	});
 	app
 		.getHttpAdapter()
 		.getInstance()

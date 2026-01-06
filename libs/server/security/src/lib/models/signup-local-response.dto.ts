@@ -1,10 +1,11 @@
-import { ValibotDto } from "@unteris/server/common";
-import { SuccessSchema } from "@unteris/shared/types";
+import { RoleEnumSchema, ValibotDto } from "@unteris/server/common";
 import * as v from "valibot";
 
 const SignUpLocalResponseSchema = v.object({
-	...SuccessSchema.entries,
 	id: v.pipe(v.string(), v.ulid()),
+	displayName: v.string(),
+	success: v.boolean(),
+	roles: v.array(RoleEnumSchema),
 	sessionId: v.string(),
 });
 
@@ -12,6 +13,6 @@ export type SignUpLocalResponse = v.InferOutput<
 	typeof SignUpLocalResponseSchema
 >;
 
-export class SignUpLocalResponseDtp extends ValibotDto(
+export class SignUpLocalResponseDto extends ValibotDto(
 	SignUpLocalResponseSchema,
 ) {}

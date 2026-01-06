@@ -1,15 +1,16 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import type { File } from "@unteris/server/common";
+import type { File, OverviewObject } from "@unteris/server/common";
 import { ServerFileStorageService } from "@unteris/server/file-storage";
 import { ServerImageClientService } from "@unteris/server/image-client";
-import type { Database } from "@unteris/server/kysely";
-import type {
-	Location,
-	LocationWithImage,
-	OverviewObject,
-} from "@unteris/shared/types";
-import type { Insertable, Updateable } from "kysely";
 import { LocationRepository } from "./location.repository";
+import {
+	GetLocationByIdResponse,
+	LocationByTypeQuery,
+	LocationCreateResponse,
+	LocationCreation,
+	LocationUpdate,
+	LocationUpdateResponse,
+} from "./models";
 
 @Injectable()
 export class ServerLocationService {
@@ -19,7 +20,7 @@ export class ServerLocationService {
 		private readonly fileService: ServerFileStorageService,
 	) {}
 
-	async getByType(type: Location["type"]): Promise<OverviewObject[]> {
+	async getByType({ type }: LocationByTypeQuery): Promise<OverviewObject[]> {
 		return this.locationRepo.getByType(type);
 	}
 
@@ -27,14 +28,14 @@ export class ServerLocationService {
 		return this.locationRepo.getByParentId(id);
 	}
 
-	async getById(id: string): Promise<LocationWithImage> {
+	async getById(id: string): Promise<GetLocationByIdResponse> {
 		return this.locationRepo.getById(id);
 	}
 
 	async createLocation(
-		location: Insertable<Database["location"]>,
+		location: LocationCreation,
 		file?: File,
-	): Promise<Location> {
+	): Promise<LocationCreateResponse> {
 		const filePath = await this.saveFile(file);
 		const result = await this.locationRepo.createLocation(location, filePath);
 		if (result.imageId) {
@@ -45,9 +46,9 @@ export class ServerLocationService {
 
 	async updateLocation(
 		id: string,
-		location: Updateable<Database["location"]>,
+		location: LocationUpdate,
 		file?: File,
-	) {
+	): Promise<LocationUpdateResponse> {
 		if (!(await this.getById(id))) {
 			throw new NotFoundException(`Location with the id ${id} not found`);
 		}

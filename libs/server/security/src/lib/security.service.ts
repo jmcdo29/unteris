@@ -4,27 +4,27 @@ import {
 	UnauthorizedException,
 } from "@nestjs/common";
 import { OgmaLogger, OgmaService } from "@ogma/nestjs-module";
-import type {
+import {
 	AuthorizedUser,
+	authRoute,
 	ReqMetaType,
 	RoleEnum,
+	Success,
 } from "@unteris/server/common";
 import { ServerCryptService } from "@unteris/server/crypt";
 import { ServerEmailService } from "@unteris/server/email";
 import { ServerHashService } from "@unteris/server/hash";
 import { ServerSessionService } from "@unteris/server/session";
 import { ServerTokenService } from "@unteris/server/token";
-import {
-	authRoute,
-	type LoginBody,
-	type LoginResponse,
-	type PasswordReset,
-	type PasswordResetRequest,
-	type SignupUser,
-	type Success,
-} from "@unteris/shared/types";
 import { Cookie } from "nest-cookies";
-import { SignUpLocalResponse } from "./models/signup-local-response.dto";
+import {
+	LoginBody,
+	LoginResponse,
+	PasswordReset,
+	PasswordResetRequest,
+	SignUpLocalResponse,
+	SignupUser,
+} from "./models";
 import { SecurityRepo } from "./security.repository";
 
 @Injectable()
@@ -85,6 +85,8 @@ export class ServerSecurityService {
 			success: true,
 			id: createdUser.id,
 			sessionId: this.crypt.encrypt(sessionData.id),
+			roles: ["player"],
+			displayName: newUser.name,
 		};
 	}
 
@@ -215,7 +217,7 @@ export class ServerSecurityService {
 				user.roles.push(u.roles);
 			}
 		}
-		return user;
+		return { ...user, displayName: user.name };
 	}
 
 	async refreshSession(

@@ -19,6 +19,9 @@ export const RegionDetail = () => {
 	const columns = isWideEnough ? 24 : 1;
 	const [shrunk, setShrunk] = useState(false);
 	const halfWidth = Math.round(columns / 2);
+	if (!regionDetail) {
+		return;
+	}
 	return (
 		<Grid container columns={columns} paddingX={theme.spacing(4)}>
 			<Grid
