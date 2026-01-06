@@ -1,8 +1,9 @@
+import { sdk } from "@unteris/shared/sdk";
 import {
 	ActionButton,
+	client,
 	convertUnknownErrorToDisplayError,
 	Heading,
-	sdk,
 	TextInput,
 } from "@unteris/ui/components";
 import { useAtom, useSetAtom } from "jotai";
@@ -14,7 +15,13 @@ export const ForgotPassword = (): JSX.Element => {
 	const setDisplayError = useSetAtom(displayErrorAtom);
 	const sendResetRequest = async () => {
 		try {
-			const _res = await sdk.passwordResetRequest({ email: loginUser.email });
+			const _res = await sdk.serverSecurityControllerStartUserPasswordReset({
+				client,
+				body: { email: loginUser.email },
+			});
+			if (_res.error) {
+				throw new Error();
+			}
 		} catch (e) {
 			setAuthError(
 				convertUnknownErrorToDisplayError(e, "Reset Password Error"),

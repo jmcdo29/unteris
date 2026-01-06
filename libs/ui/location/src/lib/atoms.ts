@@ -1,11 +1,16 @@
-import { LocationCreation, LocationWithImage } from "@unteris/shared/types";
-import { sdk } from "@unteris/ui/components";
+import { sdk, type types } from "@unteris/shared/sdk";
+import { client } from "@unteris/ui/components";
 import { atom } from "jotai";
 
 export const editingAtom = atom(false);
 
 export const regionsAtom = atom(async () => {
-	return sdk.getLocationsByType("region");
+	return sdk
+		.serverLocationControllerGetAllByType({
+			client,
+			query: { type: "region" },
+		})
+		.then((res) => res.data ?? []);
 });
 
 export const regionIndexAtom = atom(0);
@@ -19,7 +24,9 @@ export const regionIdAtom = atom(async (get) => {
 	return regions[regionIndex].id;
 });
 
-const regionValueAtom = atom<LocationWithImage | undefined>(undefined);
+const regionValueAtom = atom<types.GetLocationByIdResponseDto | undefined>(
+	undefined,
+);
 
 export const regionAtom = atom(
 	async (get) => {
@@ -28,9 +35,14 @@ export const regionAtom = atom(
 		if (region && region.id === regionId) {
 			return region;
 		}
-		return sdk.getLocationById(regionId);
+		return sdk
+			.serverLocationControllerGetById({
+				client,
+				path: { id: regionId },
+			})
+			.then((res) => res.data);
 	},
-	(get, set, update: LocationWithImage) => {
+	(get, set, update: types.GetLocationByIdResponseDto) => {
 		set(regionValueAtom, (prev) => ({ ...prev, ...update }));
 	},
 );
@@ -40,7 +52,12 @@ export const regionChildrenAtom = atom(async (get) => {
 	if (!regionId) {
 		return [];
 	}
-	return sdk.getLocationByParentId(regionId);
+	return sdk
+		.serverLocationControllerGetAllByParentId({
+			client,
+			path: { id: regionId },
+		})
+		.then((res) => res.data ?? []);
 });
 
 export const regionChildIndexAtom = atom(0);
@@ -54,7 +71,9 @@ export const regionChildIdAtom = atom(async (get) => {
 	return regionChildren[regionChildIndex].id;
 });
 
-const regionChildValueAtom = atom<LocationWithImage | undefined>(undefined);
+const regionChildValueAtom = atom<types.GetLocationByIdResponseDto | undefined>(
+	undefined,
+);
 
 export const regionChildAtom = atom(
 	async (get) => {
@@ -66,14 +85,19 @@ export const regionChildAtom = atom(
 		if (regionChild && regionChild.id === regionChildId) {
 			return regionChild;
 		}
-		return sdk.getLocationById(regionChildId);
+		return sdk
+			.serverLocationControllerGetById({
+				client,
+				path: { id: regionChildId },
+			})
+			.then((res) => res.data);
 	},
-	(get, set, update: LocationWithImage) => {
+	(get, set, update: types.GetLocationByIdResponseDto) => {
 		set(regionChildValueAtom, update);
 	},
 );
 
-export const newRegionAtom = atom<LocationCreation>({
+export const newRegionAtom = atom<types.LocationCreationDto>({
 	// @ts-expect-error giving incorrect string for initial state
 	name: "",
 	type: "region",

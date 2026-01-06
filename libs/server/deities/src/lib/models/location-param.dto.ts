@@ -1,4 +1,10 @@
 import { ValibotDto } from "@unteris/server/common";
-import { LocationParamSchema } from "@unteris/shared/types";
+import * as v from "valibot";
+
+const LocationParamSchema = v.object({
+	location: v.pipe(v.string(), v.ulid()),
+});
+
+export type LocationParam = v.InferOutput<typeof LocationParamSchema>;
 
 export class LocationParamDto extends ValibotDto(LocationParamSchema) {}

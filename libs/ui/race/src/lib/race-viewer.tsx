@@ -1,10 +1,10 @@
 import { useTheme } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Unstable_Grid2";
-import type { RaceWithAbilities } from "@unteris/shared/types";
+import type { types } from "@unteris/shared/sdk";
 
 interface RaceViewerProps {
-	race: RaceWithAbilities;
+	race: types.GetRaceByIdResponseDto;
 }
 
 interface RaceDetailProps {
@@ -60,8 +60,8 @@ export const RaceViewer = ({ race }: RaceViewerProps): JSX.Element => {
 				{race.racialAbilities.map((ability) => (
 					<RaceDetail
 						key={ability.name}
-						name={ability.name}
-						detail={ability.description}
+						name={ability.name ?? ""}
+						detail={ability.description ?? ""}
 					/>
 				))}
 			</Grid>

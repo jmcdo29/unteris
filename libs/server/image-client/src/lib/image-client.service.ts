@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
 import type { ClientRMQ } from "@nestjs/microservices";
-import { PROCESS_IMAGE_EVENT } from "@unteris/shared/types";
+import { PROCESS_IMAGE_EVENT } from "@unteris/server/common";
 
 @Injectable()
 export class ServerImageClientService {

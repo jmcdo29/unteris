@@ -1,10 +1,10 @@
 import { Typography } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
-import { LocationWithImage } from "@unteris/shared/types";
+import { types } from "@unteris/shared/sdk";
 import { Heading, Image, Lorem } from "@unteris/ui/components";
 
 interface LocationViewProps {
-	details: LocationWithImage;
+	details: types.GetLocationByIdResponseDto;
 	titleSize?: string;
 }
 

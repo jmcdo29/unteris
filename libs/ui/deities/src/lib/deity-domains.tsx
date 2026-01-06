@@ -1,9 +1,10 @@
 import { useTheme } from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import type { Deity } from "@unteris/shared/types";
+import type { types } from "@unteris/shared/sdk";
 
-type DomainType = Exclude<Deity["domain"], undefined>[number];
+type Deity = types.GetDeityByIdResponseDto;
+type DomainType = Required<Deity["domain"][number]>;
 
 const filterDomains = (
 	deity: Omit<Deity, "imageId">,
@@ -11,7 +12,7 @@ const filterDomains = (
 ): Omit<DomainType, "type">[] =>
 	(deity.domain ?? [])
 		.filter((d) => d.type === domainType)
-		.map((dom) => ({ id: dom.id, name: dom.name }));
+		.map((dom) => ({ id: dom.id ?? "", name: dom.name ?? "" }));
 
 const titles: Record<DomainType["type"], string> = {
 	cleric: "Cleric Domains",
@@ -28,7 +29,7 @@ const Domain = ({
 }) => {
 	const theme = useTheme();
 	if (domains.length === 0) {
-		return <></>;
+		return;
 	}
 	return (
 		<Box margin={theme.spacing(1, 0)}>

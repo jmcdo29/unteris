@@ -1,8 +1,11 @@
 import { Controller, Get, Param } from "@nestjs/common";
 import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
-import { IdParamDto, OverviewObjectDto } from "@unteris/server/common";
+import {
+	IdParamDto,
+	OverviewObjectDto,
+	raceRoute,
+} from "@unteris/server/common";
 import { SkipLoggedInCheck } from "@unteris/server/session";
-import { raceRoute } from "@unteris/shared/types";
 import { GetRaceByIdResponseDto } from "./models/get-by-id-response.dto";
 import { ServerRaceService } from "./race.service";
 

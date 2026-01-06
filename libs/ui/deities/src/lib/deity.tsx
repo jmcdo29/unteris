@@ -1,6 +1,6 @@
 import { useMediaQuery } from "@mui/material";
 import Box from "@mui/material/Box";
-import type { Deity as IDeity } from "@unteris/shared/types";
+import type { types } from "@unteris/shared/sdk";
 import { useAtomValue } from "jotai";
 import { Suspense } from "react";
 import { deityAtom, editingAtom } from "./atoms";
@@ -12,9 +12,7 @@ export const Deity = (): JSX.Element => {
 	const deity = useAtomValue(deityAtom);
 	const isEditing = useAtomValue(editingAtom);
 
-	const updateDeity = (
-		_deity: Omit<IDeity, "imageId"> & { imageUrl: string },
-	) => {
+	const updateDeity = (_deity: types.GetDeityByIdResponseDto) => {
 		/* this is where I'll call back to the server to save */
 	};
 

@@ -2,14 +2,14 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import SaveIcon from "@mui/icons-material/Save";
 import { Button, IconButton, styled, Tooltip } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
-import { LocationWithImage } from "@unteris/shared/types";
-import { Image, memoAtom, sdk, TextInput } from "@unteris/ui/components";
+import { sdk, type types } from "@unteris/shared/sdk";
+import { client, Image, memoAtom, TextInput } from "@unteris/ui/components";
 
 interface LocationEditProps {
-	details: LocationWithImage;
+	details: types.GetLocationByIdResponseDto;
 	titleSize?: string;
 	setEditing: (editing: boolean) => void;
-	setDetail: (detail: LocationWithImage) => void;
+	setDetail: (detail: types.GetLocationByIdResponseDto) => void;
 }
 
 const VisuallyHiddenInput = styled("input")({
@@ -46,11 +46,15 @@ export const LocationEdit = ({
 	);
 
 	const saveLocation = async () => {
-		await sdk.updateLocation(
-			locationDetail.id,
-			{ name, description: description ?? "" },
-			imageData,
-		);
+		await sdk.serverLocationControllerUpdate({
+			client,
+			path: { id: locationDetail.id },
+			body: {
+				name,
+				description: description ?? "",
+				image: imageData,
+			},
+		});
 		setEditing(false);
 		setDetail({
 			...locationDetail,
@@ -97,7 +101,7 @@ export const LocationEdit = ({
 						setImageData(e.target.files[0]);
 
 						fileReader.onload = (e) => {
-							setImageUrl(e.target?.result?.toString() ?? null);
+							setImageUrl(e.target?.result?.toString() ?? undefined);
 						};
 						fileReader.readAsDataURL(e.target.files[0]);
 					}}

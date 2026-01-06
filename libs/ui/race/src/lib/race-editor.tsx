@@ -1,8 +1,8 @@
-import type { RaceWithAbilities } from "@unteris/shared/types";
+import type { types } from "@unteris/shared/sdk";
 
 interface RaceEditorProps {
-	race: RaceWithAbilities;
-	setRace: (race: RaceWithAbilities) => void;
+	race: types.GetRaceByIdResponseDto;
+	setRace: (race: types.GetRaceByIdResponseDto) => void;
 }
 
 export const RaceEditor = (_props: RaceEditorProps): JSX.Element => <div />;

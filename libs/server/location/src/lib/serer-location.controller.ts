@@ -9,20 +9,28 @@ import {
 	UploadedFile,
 	UseGuards,
 } from "@nestjs/common";
-import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
+import {
+	ApiBearerAuth,
+	ApiCreatedResponse,
+	ApiOkResponse,
+	ApiTags,
+} from "@nestjs/swagger";
 import { Action, Castle, CastleGuard, Subject } from "@unteris/server/castle";
 import {
 	FileUpload,
 	IdParamDto,
+	locationRoute,
 	OverviewObjectDto,
 } from "@unteris/server/common";
 import { SkipLoggedInCheck } from "@unteris/server/session";
-import { locationRoute } from "@unteris/shared/types";
 import {
 	ByTypeQueryDto,
+	GetLocationByIdResponseDto,
 	ImageFile,
+	LocationCreateResponseDto,
 	LocationCreationDto,
 	LocationUpdateDto,
+	LocationUpdateResponseDto,
 } from "./models";
 import { ServerLocationService } from "./server-location.service";
 
@@ -34,7 +42,7 @@ export class ServerLocationController {
 	@ApiOkResponse({ type: [OverviewObjectDto] })
 	@Get()
 	getAllByType(@Query() query: ByTypeQueryDto) {
-		return this.service.getByType(query.data.type);
+		return this.service.getByType(query.data);
 	}
 
 	@ApiOkResponse({ type: [OverviewObjectDto] })
@@ -43,11 +51,14 @@ export class ServerLocationController {
 		return this.service.getByParentId(params.data.id);
 	}
 
+	@ApiOkResponse({ type: GetLocationByIdResponseDto })
 	@Get("/id/:id")
 	getById(@Param() param: IdParamDto) {
 		return this.service.getById(param.data.id);
 	}
 
+	@ApiBearerAuth()
+	@ApiCreatedResponse({ type: LocationCreateResponseDto })
 	@FileUpload("image", LocationCreationDto)
 	@SkipLoggedInCheck(false)
 	@UseGuards(CastleGuard)
@@ -57,6 +68,8 @@ export class ServerLocationController {
 		return this.service.createLocation(body.data, file?.data);
 	}
 
+	@ApiBearerAuth()
+	@ApiOkResponse({ type: LocationUpdateResponseDto })
 	@FileUpload("image", LocationUpdateDto)
 	@SkipLoggedInCheck(false)
 	@UseGuards(CastleGuard)

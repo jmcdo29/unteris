@@ -4,11 +4,11 @@ import Box from "@mui/material/Box";
 // import EditIcon from '@mui/icons-material/Edit';
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Unstable_Grid2";
-import type { Deity } from "@unteris/shared/types";
+import type { types } from "@unteris/shared/sdk";
 import { Image } from "@unteris/ui/components";
 import { DeityDomains } from "./deity-domains";
 
-type DeityReturn = Omit<Deity, "imageId"> & { imageUrl: string };
+type DeityReturn = types.GetDeityByIdResponseDto;
 
 interface DeityViewerProps {
 	deity: DeityReturn;

@@ -60,6 +60,10 @@
 					"react": "recommended"
 				}
 			}
+		},
+		{
+			"includes": ["libs/shared/sdk/**/*.ts"],
+			"linter": { "enabled": false }
 		}
 	]
 }

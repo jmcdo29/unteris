@@ -1,14 +1,14 @@
 import { Box } from "@mui/material";
-import { LocationWithImage } from "@unteris/shared/types";
+import { type types } from "@unteris/shared/sdk";
 import { ObjectDetail } from "@unteris/ui/components";
 import { LocationEdit } from "./location-edit";
 import { LocationView } from "./location-view";
 
 interface LocationDetailProps {
 	shrunk: boolean;
-	locationDetail: LocationWithImage;
+	locationDetail: types.GetLocationByIdResponseDto;
 	titleSize?: string;
-	setDetail: (val: LocationWithImage) => void;
+	setDetail: (val: types.GetLocationByIdResponseDto) => void;
 }
 
 export const LocationDetail = (props: LocationDetailProps) => {

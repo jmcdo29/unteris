@@ -1,11 +1,11 @@
-import type { RoleEnum } from "@unteris/shared/types";
+import type { types } from "@unteris/shared/sdk";
 import { atom } from "jotai";
 
 export const userAtom = atom<{
 	id: string;
 	email: string;
 	displayName: string;
-	roles: RoleEnum[];
+	roles: types.GetMeResponseDto["roles"];
 }>({
 	id: "",
 	email: "",

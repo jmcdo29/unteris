@@ -1,17 +1,15 @@
 import { Injectable } from "@nestjs/common";
+import { OverviewObject } from "@unteris/server/common";
 import { type Database, InjectKysely } from "@unteris/server/kysely";
-import type {
-	Location,
-	LocationWithImage,
-	OverviewObject,
-} from "@unteris/shared/types";
 import type { Insertable, Kysely, Updateable } from "kysely";
 
 @Injectable()
 export class LocationRepository {
 	constructor(@InjectKysely() private readonly db: Kysely<Database>) {}
 
-	async getByType(type: Location["type"]): Promise<OverviewObject[]> {
+	async getByType(
+		type: Database["location"]["type"],
+	): Promise<OverviewObject[]> {
 		return this.db
 			.selectFrom("location")
 			.select(["id", "name"])
@@ -30,7 +28,7 @@ export class LocationRepository {
 	async createLocation(
 		location: Insertable<Database["location"]>,
 		file?: string,
-	): Promise<Location> {
+	) {
 		let fileId: string | undefined;
 		if (file) {
 			const result = await this.db
@@ -50,7 +48,7 @@ export class LocationRepository {
 			.executeTakeFirstOrThrow();
 	}
 
-	async getById(id: string): Promise<LocationWithImage> {
+	async getById(id: string) {
 		return this.db
 			.selectFrom("location as l")
 			.leftJoin("image as i", "i.id", "l.imageId")

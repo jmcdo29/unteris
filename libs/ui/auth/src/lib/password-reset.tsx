@@ -1,17 +1,17 @@
-import type { PasswordReset as PasswordResetBody } from "@unteris/shared/types";
+import { sdk, type types } from "@unteris/shared/sdk";
 import {
 	ActionButton,
+	client,
 	Grid,
 	Heading,
 	PasswordInput,
-	sdk,
 } from "@unteris/ui/components";
 import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 const tokenAtom = atom<string | null>(null);
 const passwordAtom = atom<string>("");
-const passwordResetAtom = atom<PasswordResetBody>((get) => ({
+const passwordResetAtom = atom<types.PasswordResetDto>((get) => ({
 	password: get(passwordAtom),
 	resetToken: get(tokenAtom) ?? "",
 }));
@@ -25,7 +25,13 @@ export const PasswordReset = (): JSX.Element => {
 
 	setToken(queryParams.get("resetToken"));
 	const submit = async () => {
-		const _res = await sdk.passwordReset(passwordResetBody);
+		const _res = await sdk.serverSecurityControllerResetUserPasswordFromToken({
+			client,
+			body: passwordResetBody,
+		});
+		if (_res.error) {
+			throw new Error(_res.error as unknown as string);
+		}
 		navigate("/login");
 	};
 	return (

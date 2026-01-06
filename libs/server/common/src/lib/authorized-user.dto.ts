@@ -6,6 +6,7 @@ export const AuthorizedUserSchema = v.object({
 	id: v.pipe(v.string(), v.ulid()),
 	email: v.pipe(v.string(), v.email()),
 	roles: v.array(RoleEnumSchema),
+	displayName: v.string(),
 });
 
 export type AuthorizedUser = v.InferOutput<typeof AuthorizedUserSchema>;

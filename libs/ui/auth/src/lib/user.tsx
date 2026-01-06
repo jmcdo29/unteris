@@ -1,7 +1,8 @@
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { sdk } from "@unteris/shared/sdk";
 import { userAtom } from "@unteris/ui/atoms";
-import { sdk } from "@unteris/ui/components";
+import { client } from "@unteris/ui/components";
 import { useAtom } from "jotai";
 import { useNavigate } from "react-router-dom";
 
@@ -9,7 +10,7 @@ export const User = (): JSX.Element => {
 	const nav = useNavigate();
 	const [user, setUser] = useAtom(userAtom);
 	const logout = async () => {
-		await sdk.logout();
+		await sdk.serverSecurityControllerLogout({ client });
 		setUser({ id: "", email: "", displayName: "", roles: [] });
 		nav("/");
 	};

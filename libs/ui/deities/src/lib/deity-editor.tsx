@@ -2,13 +2,13 @@ import { useTheme } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import type { Deity } from "@unteris/shared/types";
+import type { types } from "@unteris/shared/sdk";
 import { Grid } from "@unteris/ui/components";
 import { useSetAtom } from "jotai";
 import type { ChangeEvent } from "react";
 import { editingAtom } from "./atoms";
 
-type DeityReturn = Omit<Deity, "imageId"> & { imageUrl: string };
+type DeityReturn = types.GetDeityByIdResponseDto;
 
 interface DeityEditorProps {
 	deity: DeityReturn;
