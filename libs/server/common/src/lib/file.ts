@@ -6,8 +6,8 @@ export const FileSchema = v.object({
 	fieldname: v.string(),
 	originalname: v.string(),
 	mimetype: v.string(),
-	size: v.number(),
-	buffer: v.instance(Buffer),
+	// size: v.number(),
+	// buffer: v.instance(Buffer),
 });
 
 export type File = v.InferOutput<typeof FileSchema>;
