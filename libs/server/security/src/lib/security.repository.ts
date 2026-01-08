@@ -134,7 +134,7 @@ export class SecurityRepo {
 				password,
 				loginMethodId,
 				attempts: 0,
-				lastUsed: new Date(),
+				lastUsed: sql`now()`,
 			})
 			.execute();
 	}

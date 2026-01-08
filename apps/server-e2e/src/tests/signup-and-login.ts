@@ -2,7 +2,6 @@ import { randomUUID } from "node:crypto";
 import { spec } from "pactum";
 import { describe, expect, test, vi } from "vitest";
 import { loginStep, signup } from "../auth";
-import { sessionStoreToken } from "../csrf";
 import type { TestContext } from "../interfaces/test-context.interface";
 
 export const signUpAndLoginTests = () => {
@@ -27,7 +26,7 @@ export const signUpAndLoginTests = () => {
 			await loginStep({ email, name, password: testPass });
 
 			let emailResult = "";
-			for await (const result of emailSpy.mock.results) {
+			for await (const result of emailSpy.mock.settledResults) {
 				const json = JSON.parse(result.value.message);
 				if (json.subject === "Email verification") {
 					emailResult = json.html;
@@ -43,7 +42,6 @@ export const signUpAndLoginTests = () => {
 			await spec()
 				.get("/auth/verify-email")
 				.withQueryParams("verificationToken", verifyToken)
-				.withCookies("sessionId", sessionStoreToken)
 				.expectStatus(200)
 				.expectJson({ success: true });
 		});

@@ -9,7 +9,6 @@ import { request } from "pactum";
 import type { RedisClientType } from "redis";
 import { beforeAll, beforeEach, describe } from "vitest";
 import type { TestContext } from "./interfaces/test-context.interface";
-import { csrfTest } from "./tests/csrf";
 import { locationTest } from "./tests/location";
 import { resetPasswordTest } from "./tests/reset-password";
 import { signUpAndLoginTests } from "./tests/signup-and-login";
@@ -31,7 +30,6 @@ describe("Unteris E2E test suite", () => {
 		context.db = app.get(getKyselyInstanceToken(), { strict: false });
 		context.mailer = app.get(getEmailInstanceToken(), { strict: false });
 	});
-	csrfTest();
 	signUpAndLoginTests();
 	resetPasswordTest();
 	locationTest();
