@@ -62,7 +62,7 @@
 			}
 		},
 		{
-			"includes": ["libs/shared/sdk/**/*.ts"],
+			"includes": ["libs/shared/sdk/**/*.ts", "apps/server/src/assets/*.css"],
 			"linter": { "enabled": false }
 		}
 	]

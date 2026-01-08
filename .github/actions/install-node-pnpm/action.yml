@@ -4,24 +4,17 @@ description: 'Helper actiopn to install and use Node and Pnpm with a cached stor
 runs:
   using: 'composite'
   steps:
-    - name: Setup Node.js 20.x
-      uses: actions/setup-node@master
-      with:
-        node-version: 20.x
 
     - name: Install pnpm
-      shell: bash
-      run: npm i -g pnpm@^9
-
-    - name: Set pnpm store directory
-      shell: bash
-      run: pnpm config set store-dir ./tmp/store
-
-    - name: Cache pnpm store
-      uses: actions/cache@v3
+      uses: pnpm/action-setup@v4
       with:
-        path: ./tmp/store
-        key: pnpm-store-${{ hashFiles('./pnpm-lock.yaml') }}
+        version: 10
+
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 24
+        cache: "pnpm"
 
     - name: Install Dependencies
       shell: bash
