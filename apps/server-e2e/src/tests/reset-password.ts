@@ -1,9 +1,7 @@
 import { randomUUID } from "node:crypto";
-import { csrfHeader } from "@unteris/shared/types";
 import { spec } from "pactum";
 import { describe, test, vi } from "vitest";
 import { loginStep, signup } from "../auth";
-import { csrfStoreToken, sessionStoreToken } from "../csrf";
 import type { TestContext } from "../interfaces/test-context.interface";
 
 export const resetPasswordTest = () =>
@@ -19,13 +17,11 @@ export const resetPasswordTest = () =>
 			await spec()
 				.post("/auth/password-reset-request")
 				.withBody({ email })
-				.withHeaders(csrfHeader, csrfStoreToken)
-				.withCookies("sessionId", sessionStoreToken)
 				.expectStatus(201)
 				.expectJson({ success: true });
 
 			let emailResult: string = "";
-			for await (const result of emailSpy.mock.results) {
+			for await (const result of emailSpy.mock.settledResults) {
 				const json = JSON.parse(result.value.message);
 				if (json.subject === "Reset Password") {
 					emailResult = json.html;
@@ -39,15 +35,11 @@ export const resetPasswordTest = () =>
 			await spec()
 				.post("/auth/password-reset")
 				.withBody({ password: newPassword, resetToken })
-				.withHeaders(csrfHeader, csrfStoreToken)
-				.withCookies("sessionId", sessionStoreToken)
 				.expectStatus(201)
 				.expectJson({ success: true });
 			await spec()
 				.post("/auth/login")
 				.withBody({ email, password: testPass })
-				.withHeaders(csrfHeader, csrfStoreToken)
-				.withCookies("sessionId", sessionStoreToken)
 				.expectStatus(401)
 				.expectJsonLike(".type", "Authentication");
 			await loginStep({ email, name, password: newPassword });

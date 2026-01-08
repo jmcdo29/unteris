@@ -1,14 +1,21 @@
-import { createCipheriv, createDecipheriv } from "node:crypto";
+import {
+	createCipheriv,
+	createDecipheriv,
+	createSecretKey,
+	KeyObject,
+} from "node:crypto";
 import { Injectable } from "@nestjs/common";
 import { ServerConfigService } from "@unteris/server/config";
 
 @Injectable()
 export class ServerCryptService {
 	private readonly alg = "aes-256-cbc" as const;
-	private readonly key: Buffer;
+	private readonly key: KeyObject;
 	private readonly iv: Buffer;
 	constructor(config: ServerConfigService) {
-		this.key = Buffer.from(config.get("ENCRYPTION_KEY"), "hex");
+		this.key = createSecretKey(
+			Buffer.from(config.get("ENCRYPTION_KEY"), "hex"),
+		);
 		this.iv = Buffer.from(config.get("ENCRYPTION_IV"), "hex");
 	}
 

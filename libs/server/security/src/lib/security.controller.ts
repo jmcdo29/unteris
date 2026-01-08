@@ -84,7 +84,6 @@ export class ServerSecurityController {
 
 	@ApiOkResponse({ type: GetVerifyEmailResponseDto })
 	@Get("verify-email")
-	@SkipLoggedInCheck(false)
 	async verifyEmailByToken(
 		@Query() query: TokenVerificationData,
 	): Promise<GetVerifyEmailResponse> {
