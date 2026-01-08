@@ -48,13 +48,13 @@ jobs:
       - name: Node/Pnpm Install
         uses: ./.github/actions/install-node-pnpm
 
-      - name: build
-        shell: bash
-        run: pnpm nx affected build
-
       - name: lint
         shell: bash
-        run: pnpm nx affected lint
+        run: pnpm nx affected -t lint --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
+
+      - name: build
+        shell: bash
+        run: pnpm nx affected -t build --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
 
   e2e:
     name: E2E Tests
