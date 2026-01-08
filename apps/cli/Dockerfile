@@ -1,8 +1,8 @@
-FROM node:20.5-alpine3.18 AS unteris-node
+FROM node:24-alpine3.22 AS unteris-node
 
-RUN npm i -g pnpm@9 && \
+RUN npm i -g pnpm@10&& \
   apk add --no-cache \
-  dumb-init=1.2.5-r2
+  dumb-init=1.2.5-r3
 
 FROM unteris-node AS unteris-common
 
