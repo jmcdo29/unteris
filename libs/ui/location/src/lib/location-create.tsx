@@ -38,7 +38,7 @@ export const LocationCreate = (props: LocationCreateProps) => {
 			...serializers.formDataBodySerializer.bodySerializer,
 			body: { ...newLocation, image: imageData },
 			headers: {
-				"Content-Type": "multipart/form-data",
+				"Content-Type": null,
 			},
 		});
 	};
