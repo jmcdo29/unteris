@@ -67,6 +67,10 @@ jobs:
       DATABASE_HOST: localhost
       REDIS_URL: redis://localhost:26379
       NODE_ENV: development
+      RABBIT_USER: rabbit
+      RABBIT_PASSWORD: doesnotmatter
+      RABBIT_HOST: 127.0.0.7
+      RABBIT_PORT: 5672
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
