@@ -13,19 +13,48 @@ on:
   pull_request:
 
 jobs:
+  # main:
+  #   name: Nx Cloud - Main Job
+  #   uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.15.0
+  #   with:
+  #     main-branch-name: main
+  #     number-of-agents: 3
+  #     init-commands: |
+  #       pnpm exec nx-cloud start-ci-run --stop-agents-after="build" --agent-count=3
+  #     parallel-commands: |
+  #       pnpm exec nx-cloud record -- pnpm exec nx affected:lint
+  #     parallel-commands-on-agents: |
+  #       pnpm exec nx affected -t lint build --parallel=3
+  #     pnpm-version: 9.13.0
+
   main:
-    name: Nx Cloud - Main Job
-    uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.15.0
-    with:
-      main-branch-name: main
-      number-of-agents: 3
-      init-commands: |
-        pnpm exec nx-cloud start-ci-run --stop-agents-after="build" --agent-count=3
-      parallel-commands: |
-        pnpm exec nx-cloud record -- pnpm exec nx affected:lint
-      parallel-commands-on-agents: |
-        pnpm exec nx affected -t lint build --parallel=3
-      pnpm-version: 9.13.0
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          filter: tree:0
+
+      - name: Derive SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v4
+
+      - name: Set SHAs
+        shell: bash
+        run: |
+          echo "BASE: ${{ env.NX_BASE }}"
+          echo "HEAD: ${{ env.NX_HEAD }}"
+
+      - name: Node/Pnpm Install
+        uses: ./.github/actions/install-node-pnpm
+
+      - name: build
+        shell: bash
+        run: pnpm nx affected build
+
+      - name: lint
+        shell: bash
+        run: pnpm nx affected lint
 
   e2e:
     name: E2E Tests
@@ -46,9 +75,8 @@ jobs:
       - name: Setup Nx SHAs
         uses: nrwl/nx-set-shas@v3
 
-      - name: Install PNPM
-        shell: bash
-        run: npm i -g pnpm
+      - name: Node/Pnpm Install
+        uses: ./.github/actions/install-node-pnpm
 
       - name: Print node/npm/yarn versions
         id: versions
@@ -95,10 +123,3 @@ jobs:
         run: pnpm exec nx run server-e2e:e2e --configuration=ci
         continue-on-error: true
         timeout-minutes: 30
-
-  agents:
-    name: Nx Cloud - Agents
-    uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.15.0
-    with:
-      number-of-agents: 3
-      pnpm-version: 9.13.0
