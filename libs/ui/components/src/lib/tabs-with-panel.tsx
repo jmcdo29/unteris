@@ -1,7 +1,7 @@
 import PlusIcon from "@mui/icons-material/AddCircle";
 import Tabs from "@mui/material/Tabs";
 import Grid from "@mui/material/Unstable_Grid2";
-import type { OverviewObject } from "@unteris/shared/types";
+import type { types } from "@unteris/shared/sdk";
 import { editableAtom } from "@unteris/ui/atoms";
 import { useAtomValue } from "jotai";
 import { Suspense, type SyntheticEvent } from "react";
@@ -14,7 +14,7 @@ interface TabsWithPanelProps {
 	ariaLabel: string;
 	tabIndex: number;
 	handleTabChange: (_event: SyntheticEvent, newIndex: number) => void;
-	tabElements: OverviewObject[];
+	tabElements: types.OverviewObjectDto[];
 	tabPanelContent: (prop: unknown) => JSX.Element;
 	indicator?: "primary" | "secondary";
 	orientation?: "horizontal" | "vertical";

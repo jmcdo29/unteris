@@ -1,10 +1,12 @@
-import type { OverviewObject } from "@unteris/shared/types";
+import type { types } from "@unteris/shared/sdk";
 import { type Atom, useAtom, useAtomValue, type WritableAtom } from "jotai";
 import { Suspense, type SyntheticEvent } from "react";
 import { TabsWithPanel } from "./tabs-with-panel";
 
 interface TabbedNavigatorProps {
-	resourceAtom: Atom<Promise<OverviewObject[]> | OverviewObject[]>;
+	resourceAtom: Atom<
+		Promise<types.OverviewObjectDto[]> | types.OverviewObjectDto[]
+	>;
 	indexAtom: WritableAtom<number, [val: number], void>;
 	label: string;
 	tabPanelContent: () => JSX.Element;
