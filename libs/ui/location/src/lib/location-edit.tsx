@@ -2,7 +2,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import SaveIcon from "@mui/icons-material/Save";
 import { Button, IconButton, styled, Tooltip } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
-import { sdk, type types } from "@unteris/shared/sdk";
+import { sdk, serializers, type types } from "@unteris/shared/sdk";
 import { client, Image, memoAtom, TextInput } from "@unteris/ui/components";
 
 interface LocationEditProps {
@@ -48,11 +48,15 @@ export const LocationEdit = ({
 	const saveLocation = async () => {
 		await sdk.serverLocationControllerUpdate({
 			client,
+			...serializers.formDataBodySerializer,
 			path: { id: locationDetail.id },
 			body: {
 				name,
 				description: description ?? "",
 				image: imageData,
+			},
+			headers: {
+				"Content-Type": null,
 			},
 		});
 		setEditing(false);

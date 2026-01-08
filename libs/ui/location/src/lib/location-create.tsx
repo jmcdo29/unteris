@@ -2,7 +2,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import SaveIcon from "@mui/icons-material/Save";
 import { Button, IconButton, styled, Tooltip } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
-import { sdk, type types } from "@unteris/shared/sdk";
+import { sdk, serializers, type types } from "@unteris/shared/sdk";
 import { client, Image, memoAtom, TextInput } from "@unteris/ui/components";
 import { useAtom } from "jotai";
 import { newRegionAtom } from "./atoms";
@@ -35,7 +35,11 @@ export const LocationCreate = (props: LocationCreateProps) => {
 	const save = async () => {
 		await sdk.serverLocationControllerCreate({
 			client,
+			...serializers.formDataBodySerializer.bodySerializer,
 			body: { ...newLocation, image: imageData },
+			headers: {
+				"Content-Type": "multipart/form-data",
+			},
 		});
 	};
 	return (

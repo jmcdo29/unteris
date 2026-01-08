@@ -1,3 +1,4 @@
+import Stream from "node:stream";
 import { Inject, Injectable } from "@nestjs/common";
 import type { FileManager } from "./file-manager.interface";
 import { FILE_STORE_TOKEN } from "./file-storage.constants";
@@ -10,7 +11,10 @@ export class ServerFileStorageService {
 		return this.store.read(path);
 	}
 
-	async writeFileToStore(path: string, data: string | Buffer): Promise<void> {
+	async writeFileToStore(
+		path: string,
+		data: string | Buffer | Stream,
+	): Promise<void> {
 		return this.store.write(path, data);
 	}
 }

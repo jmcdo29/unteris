@@ -64,7 +64,7 @@ export class ServerLocationService {
 		let filePath: string | undefined;
 		if (file) {
 			filePath = `./images/${file.originalname}`;
-			await this.fileService.writeFileToStore(filePath, file.buffer);
+			// await this.fileService.writeFileToStore(filePath, file.buffer);
 		}
 		return filePath;
 	}

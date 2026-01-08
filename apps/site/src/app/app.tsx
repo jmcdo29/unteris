@@ -75,7 +75,7 @@ export const App = () => {
 					id: res.id,
 					email: res.email,
 					displayName: res.displayName,
-					roles: [],
+					roles: res.roles,
 				});
 			};
 			signIn();
