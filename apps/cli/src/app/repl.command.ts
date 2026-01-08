@@ -1,15 +1,15 @@
 import { OgmaLogger, type OgmaService } from "@ogma/nestjs-module";
-import { type Database, InjectKysely } from "@unteris/server/kysely";
-import { ServerLocationService } from "@unteris/server/location";
 import type {
 	Deity,
 	DeityCategory,
 	Domain,
 	Location,
-} from "@unteris/shared/types";
+} from "@unteris/server/kysely";
+import { type Database, InjectKysely } from "@unteris/server/kysely";
+import { ServerLocationService } from "@unteris/server/location";
 import type { Insertable, Kysely } from "kysely";
 import { Command, CommandRunner, InquirerService } from "nest-commander";
-import { safeParse, string, ulid } from "valibot";
+import { pipe, safeParse, string, ulid } from "valibot";
 
 @Command({ name: "repl", arguments: "[type]" })
 export class ReplCommand extends CommandRunner {
@@ -151,6 +151,6 @@ export class ReplCommand extends CommandRunner {
 	}
 
 	private idFieldIsULID(value: string): boolean {
-		return safeParse(string([ulid()]), value).success;
+		return safeParse(pipe(string(), ulid()), value).success;
 	}
 }
