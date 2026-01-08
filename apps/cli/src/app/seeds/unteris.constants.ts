@@ -1,4 +1,4 @@
-import type { Deity, Race, RacialAbility } from "@unteris/shared/types";
+import type { Deity, Race, RacialAbility } from "@unteris/server/kysely";
 import type { Insertable } from "kysely";
 
 const arboria = "Caelaum Arboria";
@@ -77,7 +77,7 @@ export const cities: Record<
 	],
 };
 export const deities: Array<
-	Omit<Insertable<Deity>, "imageId" | "id"> & {
+	Omit<Insertable<Deity>, "imageId" | "id" | "locationId" | "categoryId"> & {
 		category: string;
 		location: string;
 	}
@@ -463,7 +463,7 @@ export const races: Array<
 		name: "Kitsune",
 		description:
 			"Kitsune are a magical race of otherworldly beauty, living in the world but not entirely part of it. They live in places of ancient magic, thick labyrinth like forests. The fox-like creatures love nature and magic, art and artistry, music and poetry, trickery and the good things of the world.",
-		type: "Fey",
+		type: "fey",
 		ageDescription:
 			"Kitsune reach physical maturity at about the same age as humans and can live up to 500 years.",
 		sizeDescription: `Kitsune's Shifted Form range widely and have slender builds. Your size is Medium or Small.`,

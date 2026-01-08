@@ -1,6 +1,6 @@
+import type { Location } from "@unteris/server/kysely";
 import { type Database, InjectKysely } from "@unteris/server/kysely";
 import { ServerLocationService } from "@unteris/server/location";
-import type { Location } from "@unteris/shared/types";
 import type { Kysely } from "kysely";
 import { ChoicesFor, Question, QuestionSet, WhenFor } from "nest-commander";
 
@@ -73,7 +73,7 @@ export class DeityQuestions {
 
 	@ChoicesFor({ name: "location" })
 	async getLocationOptions() {
-		const locations = await this.locationsService.getByType("plane");
+		const locations = await this.locationsService.getByType({ type: "plane" });
 		return locations.map((location) => ({
 			name: location.name,
 			value: location.id,
