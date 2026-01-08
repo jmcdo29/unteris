@@ -26,7 +26,7 @@ import { ServerLocationService } from "./server-location.service";
 			useFactory: (fileStore: ServerFileStorageService): MulterOptions => ({
 				storage: {
 					_handleFile: (
-						req: AuthorizedRequest,
+						_req: AuthorizedRequest,
 						file: {
 							fieldname: string;
 							originalname: string;
@@ -42,8 +42,8 @@ import { ServerLocationService } from "./server-location.service";
 							.then(() => cb(null, allButStream));
 					},
 					_removeFile: (
-						req: AuthorizedRequest,
-						file: {
+						_req: AuthorizedRequest,
+						_file: {
 							fieldname: string;
 							originalname: string;
 							encoding: string;

@@ -17,7 +17,7 @@ export class ServerLocationService {
 	constructor(
 		private readonly locationRepo: LocationRepository,
 		private readonly imageService: ServerImageClientService,
-		private readonly fileService: ServerFileStorageService,
+		readonly _fileService: ServerFileStorageService,
 	) {}
 
 	async getByType({ type }: LocationByTypeQuery): Promise<OverviewObject[]> {
