@@ -22,3 +22,4 @@ RUN localedef -i en_US -f UTF-8 en_US.UTF-8
 
 COPY apps/postgres/postgresql.conf /etc/postgresql/postgresql.conf
 
+RUN mv /var/lib/postgresql/extension/ulid* /usr/share/postgresql/18/extension
