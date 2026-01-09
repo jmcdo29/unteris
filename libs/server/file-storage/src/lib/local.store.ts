@@ -1,12 +1,7 @@
-<<<<<<< HEAD
 import { createWriteStream } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import Stream from "node:stream";
-=======
-import { readFile, writeFile } from "node:fs/promises";
-import { join } from "node:path";
->>>>>>> 6631869 (chore: update code for biome rules)
 import { Inject, Injectable } from "@nestjs/common";
 import type { FileManager, LocalStoreConfig } from "./file-manager.interface";
 import { FILE_LOCAL_CONFIG_TOKEN } from "./file-storage.constants";
@@ -21,7 +16,6 @@ export class LocalStore implements FileManager {
 		return readFile(join(this.config.path, path.replace("./images/", "./")));
 	}
 
-<<<<<<< HEAD
 	write(path: string, data: string | Buffer | Stream) {
 		if (data instanceof Stream) {
 			return new Promise<void>((resolve, reject) => {
@@ -40,12 +34,5 @@ export class LocalStore implements FileManager {
 				data.toString(),
 			);
 		}
-=======
-	write(path: string, data: string | Buffer): Promise<void> {
-		return writeFile(
-			join(this.config.path, path.replace("./images/", "./")),
-			data,
-		);
->>>>>>> 6631869 (chore: update code for biome rules)
 	}
 }

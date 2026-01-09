@@ -1,9 +1,6 @@
-<<<<<<< HEAD
-=======
 import { spawn } from "node:child_process";
 import { appendFileSync, mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
->>>>>>> 6631869 (chore: update code for biome rules)
 import {
 	type ExecutorContext,
 	getPackageManagerCommand,
@@ -11,12 +8,6 @@ import {
 } from "@nx/devkit";
 import { Ogma } from "@ogma/logger";
 import { style } from "@ogma/styler";
-<<<<<<< HEAD
-import { spawn } from "child_process";
-import { appendFileSync, mkdirSync, writeFileSync } from "fs";
-import { join } from "path";
-=======
->>>>>>> 6631869 (chore: update code for biome rules)
 import type { LintExecutorSchema } from "./schema";
 
 export default async function runExecutor(

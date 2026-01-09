@@ -1,11 +1,7 @@
 import PlusIcon from "@mui/icons-material/AddCircle";
 import Tabs from "@mui/material/Tabs";
 import Grid from "@mui/material/Unstable_Grid2";
-<<<<<<< HEAD
 import type { types } from "@unteris/shared/sdk";
-=======
-import type { OverviewObject } from "@unteris/shared/types";
->>>>>>> 6631869 (chore: update code for biome rules)
 import { editableAtom } from "@unteris/ui/atoms";
 import { useAtomValue } from "jotai";
 import { Suspense, type SyntheticEvent } from "react";

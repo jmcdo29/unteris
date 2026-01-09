@@ -43,7 +43,6 @@
 			"@unteris/server/token": ["libs/server/token/src/index.ts"],
 			"@unteris/shared/base32": ["libs/shared/base32/src/index.ts"],
 			"@unteris/shared/sdk": ["libs/shared/sdk/src/index.ts"],
-			"@unteris/shared/types": ["libs/shared/types/src/index.ts"],
 			"@unteris/ui/atoms": ["libs/ui/atoms/src/index.ts"],
 			"@unteris/ui/auth": ["libs/ui/auth/src/index.ts"],
 			"@unteris/ui/components": ["libs/ui/components/src/index.ts"],

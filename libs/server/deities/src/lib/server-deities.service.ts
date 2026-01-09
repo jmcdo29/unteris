@@ -1,16 +1,8 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
-<<<<<<< HEAD
 import { OverviewObject } from "@unteris/server/common";
 import { type Database, InjectKysely } from "@unteris/server/kysely";
 import type { Kysely } from "kysely";
 import { DeityResponse } from "./models/get-by-id-response.dto";
-=======
-import { type Database, InjectKysely } from "@unteris/server/kysely";
-import type { Deity, OverviewObject } from "@unteris/shared/types";
-import type { Kysely } from "kysely";
-
-type DeityReturn = Omit<Deity, "imageId"> & { imageUrl: string | null };
->>>>>>> 6631869 (chore: update code for biome rules)
 
 @Injectable()
 export class ServerDeitiesService {

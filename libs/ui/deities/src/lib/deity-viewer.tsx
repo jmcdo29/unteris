@@ -4,11 +4,7 @@ import Box from "@mui/material/Box";
 // import EditIcon from '@mui/icons-material/Edit';
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Unstable_Grid2";
-<<<<<<< HEAD
 import type { types } from "@unteris/shared/sdk";
-=======
-import type { Deity } from "@unteris/shared/types";
->>>>>>> 6631869 (chore: update code for biome rules)
 import { Image } from "@unteris/ui/components";
 import { DeityDomains } from "./deity-domains";
 

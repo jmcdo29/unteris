@@ -1,9 +1,5 @@
 import { Injectable } from "@nestjs/common";
-<<<<<<< HEAD
 import { ServerConfigService } from "@unteris/server/config";
-=======
-import type { ServerConfigService } from "@unteris/server/config";
->>>>>>> 6631869 (chore: update code for biome rules)
 import type { Transporter } from "nodemailer";
 import { passwordResetEmail, verificationEmail } from "./email.constants";
 import { InjectEmailTransport } from "./email.decorators";

@@ -1,14 +1,9 @@
 import { Injectable } from "@nestjs/common";
-<<<<<<< HEAD
 import {
 	type Database,
 	InjectKysely,
 	SavedImage,
 } from "@unteris/server/kysely";
-=======
-import { type Database, InjectKysely } from "@unteris/server/kysely";
-import type { Image } from "@unteris/shared/types";
->>>>>>> 6631869 (chore: update code for biome rules)
 import type { Kysely } from "kysely";
 
 @Injectable()
