@@ -1,11 +1,7 @@
 import { useTheme } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Unstable_Grid2";
-<<<<<<< HEAD
 import type { types } from "@unteris/shared/sdk";
-=======
-import type { RaceWithAbilities } from "@unteris/shared/types";
->>>>>>> 6631869 (chore: update code for biome rules)
 
 interface RaceViewerProps {
 	race: types.GetRaceByIdResponseDto;

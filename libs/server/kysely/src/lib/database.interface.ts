@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 import type { Generated } from "kysely";
-=======
->>>>>>> 6631869 (chore: update code for biome rules)
 import type {
 	Deity,
 	DeityCategory,
@@ -18,12 +15,7 @@ import type {
 	UserPermission,
 	UserSession,
 	VerificationToken,
-<<<<<<< HEAD
 } from "./tables";
-=======
-} from "@unteris/shared/types";
-import type { Generated } from "kysely";
->>>>>>> 6631869 (chore: update code for biome rules)
 
 type GeneratedId<T> = Omit<T, "id"> & { id: Generated<string> };
 

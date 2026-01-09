@@ -1,10 +1,6 @@
 import Left from "@mui/icons-material/Visibility";
 import Right from "@mui/icons-material/VisibilityOff";
-<<<<<<< HEAD
 import { Box, Button, Unstable_Grid2 as Grid } from "@mui/material";
-=======
-import { Box, Button, Unstable_Grid2 as Grid, IconButton } from "@mui/material";
->>>>>>> 6631869 (chore: update code for biome rules)
 
 interface ShrinkButtonProps {
 	hide: boolean;

@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import type { Deity, Race, RacialAbility } from "@unteris/server/kysely";
-=======
-import type { Deity, Race, RacialAbility } from "@unteris/shared/types";
->>>>>>> 6631869 (chore: update code for biome rules)
 import type { Insertable } from "kysely";
 
 const arboria = "Caelaum Arboria";

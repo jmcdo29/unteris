@@ -1,16 +1,6 @@
 import { Injectable } from "@nestjs/common";
-<<<<<<< HEAD
 import { OverviewObject } from "@unteris/server/common";
 import { type Database, InjectKysely } from "@unteris/server/kysely";
-=======
-import { File } from "@unteris/server/common";
-import { type Database, InjectKysely } from "@unteris/server/kysely";
-import type {
-	Location,
-	LocationWithImage,
-	OverviewObject,
-} from "@unteris/shared/types";
->>>>>>> 6631869 (chore: update code for biome rules)
 import type { Insertable, Kysely, Updateable } from "kysely";
 
 @Injectable()
@@ -38,11 +28,7 @@ export class LocationRepository {
 	async createLocation(
 		location: Insertable<Database["location"]>,
 		file?: string,
-<<<<<<< HEAD
 	) {
-=======
-	): Promise<Location> {
->>>>>>> 6631869 (chore: update code for biome rules)
 		let fileId: string | undefined;
 		if (file) {
 			const result = await this.db
@@ -88,11 +74,7 @@ export class LocationRepository {
 		id: string,
 		location: Updateable<Database["location"]>,
 		file?: string,
-<<<<<<< HEAD
 	) {
-=======
-	): Promise<Array<Location>> {
->>>>>>> 6631869 (chore: update code for biome rules)
 		let fileId: string | undefined;
 		if (file) {
 			const result = await this.db

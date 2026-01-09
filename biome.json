@@ -32,15 +32,11 @@
 				"noConsole": "error"
 			},
 			"nursery": {
-<<<<<<< HEAD
 				"noUnresolvedImports": "off"
 			},
 			"style": {
-				"useImportType": "off"
-=======
-				"all": true,
-				"noImgElement": "off"
->>>>>>> 6631869 (chore: update code for biome rules)
+				"useImportType": "off",
+				"recommended": true
 			}
 		}
 	},

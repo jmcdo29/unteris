@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-import { Kysely } from "kysely";
->>>>>>> 6631869 (chore: update code for biome rules)
 import type { DB } from "./utils/db.interface";
 
 const domainNameType = "domain_name_type";

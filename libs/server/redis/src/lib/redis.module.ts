@@ -1,10 +1,5 @@
 import { Module, type OnModuleDestroy } from "@nestjs/common";
 import {
-<<<<<<< HEAD
-=======
-	OgmaModule,
-	type OgmaService,
->>>>>>> 6631869 (chore: update code for biome rules)
 	createProviderToken,
 	OgmaModule,
 	type OgmaService,
@@ -15,15 +10,9 @@ import {
 	ServerConfigService,
 } from "@unteris/server/config";
 import {
-<<<<<<< HEAD
 	createClient,
 	type RedisClientOptions,
 	type RedisClientType,
-=======
-	type RedisClientOptions,
-	type RedisClientType,
-	createClient,
->>>>>>> 6631869 (chore: update code for biome rules)
 } from "redis";
 
 import {

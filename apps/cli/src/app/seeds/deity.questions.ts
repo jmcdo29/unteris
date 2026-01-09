@@ -1,12 +1,6 @@
-<<<<<<< HEAD
 import type { Location } from "@unteris/server/kysely";
 import { type Database, InjectKysely } from "@unteris/server/kysely";
 import { ServerLocationService } from "@unteris/server/location";
-=======
-import { type Database, InjectKysely } from "@unteris/server/kysely";
-import type { ServerLocationService } from "@unteris/server/location";
-import type { Location } from "@unteris/shared/types";
->>>>>>> 6631869 (chore: update code for biome rules)
 import type { Kysely } from "kysely";
 import { ChoicesFor, Question, QuestionSet, WhenFor } from "nest-commander";
 
@@ -78,13 +72,8 @@ export class DeityQuestions {
 	}
 
 	@ChoicesFor({ name: "location" })
-<<<<<<< HEAD
 	async getLocationOptions() {
 		const locations = await this.locationsService.getByType({ type: "plane" });
-=======
-	async getLocationOptions(): Promise<Array<{ name: string; value: string }>> {
-		const locations = await this.locationsService.getByType("plane");
->>>>>>> 6631869 (chore: update code for biome rules)
 		return locations.map((location) => ({
 			name: location.name,
 			value: location.id,

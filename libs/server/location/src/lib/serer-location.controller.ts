@@ -18,37 +18,24 @@ import {
 import { Action, Castle, CastleGuard, Subject } from "@unteris/server/castle";
 import {
 	FileUpload,
-<<<<<<< HEAD
 	IdParamDto,
 	locationRoute,
+	OverviewObject,
 	OverviewObjectDto,
 } from "@unteris/server/common";
 import { SkipLoggedInCheck } from "@unteris/server/session";
 import {
 	ByTypeQueryDto,
+	GetLocationByIdResponse,
 	GetLocationByIdResponseDto,
 	ImageFile,
+	LocationCreateResponse,
 	LocationCreateResponseDto,
-=======
-	type IdParamDto,
-	OverviewObjectDto,
-} from "@unteris/server/common";
-import { SkipSessionCheck } from "@unteris/server/session";
-import {
-	type Location,
-	type LocationWithImage,
-	type OverviewObject,
-	locationRoute,
-} from "@unteris/shared/types";
-import {
-	type ByTypeQueryDto,
-	type ImageFile,
->>>>>>> 6631869 (chore: update code for biome rules)
 	LocationCreationDto,
 	LocationUpdateDto,
 	LocationUpdateResponseDto,
 } from "./models";
-import type { ServerLocationService } from "./server-location.service";
+import { ServerLocationService } from "./server-location.service";
 
 @ApiTags("Location")
 @Controller(locationRoute)
@@ -57,13 +44,8 @@ export class ServerLocationController {
 	constructor(private readonly service: ServerLocationService) {}
 	@ApiOkResponse({ type: [OverviewObjectDto] })
 	@Get()
-<<<<<<< HEAD
 	getAllByType(@Query() query: ByTypeQueryDto) {
 		return this.service.getByType(query.data);
-=======
-	getAllByType(@Query() query: ByTypeQueryDto): Promise<OverviewObject[]> {
-		return this.service.getByType(query.data.type);
->>>>>>> 6631869 (chore: update code for biome rules)
 	}
 
 	@ApiOkResponse({ type: [OverviewObjectDto] })
@@ -74,7 +56,7 @@ export class ServerLocationController {
 
 	@ApiOkResponse({ type: GetLocationByIdResponseDto })
 	@Get("/id/:id")
-	getById(@Param() param: IdParamDto): Promise<LocationWithImage> {
+	getById(@Param() param: IdParamDto): Promise<GetLocationByIdResponse> {
 		return this.service.getById(param.data.id);
 	}
 
@@ -88,7 +70,7 @@ export class ServerLocationController {
 	create(
 		@Body() body: LocationCreationDto,
 		@UploadedFile() file?: ImageFile,
-	): Promise<Location> {
+	): Promise<LocationCreateResponse> {
 		return this.service.createLocation(body.data, file?.data);
 	}
 

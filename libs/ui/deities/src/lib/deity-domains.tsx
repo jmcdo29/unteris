@@ -1,11 +1,7 @@
 import { useTheme } from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-<<<<<<< HEAD
 import type { types } from "@unteris/shared/sdk";
-=======
-import type { Deity } from "@unteris/shared/types";
->>>>>>> 6631869 (chore: update code for biome rules)
 
 type Deity = types.GetDeityByIdResponseDto;
 type DomainType = Required<Deity["domain"][number]>;

@@ -1,5 +1,4 @@
 import {
-<<<<<<< HEAD
 	BadRequestException,
 	ForbiddenException,
 	Injectable,
@@ -19,18 +18,6 @@ import type { RedisClientType } from "redis";
 import * as v from "valibot";
 
 import { SessionRepository } from "./session.repository";
-=======
-	type RefreshSessionData,
-	type SavedSessionData,
-	type SessionData,
-	UnterisSession,
-} from "@unteris/server/common";
-import type { ServerConfigService } from "@unteris/server/config";
-import { InjectRedisInstance } from "@unteris/server/redis";
-import type { ServerTokenService } from "@unteris/server/token";
-import type { Cookie } from "nest-cookies";
-import type { RedisClientType } from "redis";
->>>>>>> 6631869 (chore: update code for biome rules)
 
 @Injectable()
 export class ServerSessionService {

@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 import type { types } from "@unteris/shared/sdk";
 import { type Atom, useAtom, useAtomValue, type WritableAtom } from "jotai";
-=======
-import type { OverviewObject } from "@unteris/shared/types";
-import { type Atom, type WritableAtom, useAtom, useAtomValue } from "jotai";
->>>>>>> 6631869 (chore: update code for biome rules)
 import { Suspense, type SyntheticEvent } from "react";
 import { TabsWithPanel } from "./tabs-with-panel";
 
