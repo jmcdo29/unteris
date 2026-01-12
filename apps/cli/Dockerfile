@@ -16,6 +16,7 @@ COPY package.json \
   tsconfig* \
   nx.json \
   pnpm-lock.yaml \
+  pnpm-workspace.yaml \
   ./
 ENV CYPRESS_INSTALL_BINARY=0
 RUN pnpm i
@@ -33,6 +34,7 @@ USER node
 WORKDIR /src
 COPY --from=migrations-build --chown=node:node /src/dist ./dist
 RUN cp ./dist/apps/cli/package.json ./package.json
+COPY pnpm-workspace.yaml ./
 ENV NODE_ENV=production
 RUN pnpm i
 CMD ["dumb-init", "node", "dist/apps/cli/main", "migrate"]

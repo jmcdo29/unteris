@@ -17,6 +17,7 @@ COPY package.json \
   tsconfig* \
   nx.json \
   pnpm-lock.yaml \
+  pnpm-workspace.yaml \
   ./
 ENV CYPRESS_INSTALL_BINARY=0
 RUN pnpm i
@@ -32,6 +33,7 @@ LABEL description="The image processing serve code for the Unteris website. It r
 USER node
 WORKDIR /src
 COPY --from=image-server-build --chown=node:node /src/dist/apps/image-server ./
+COPY pnpm-workspace.yaml ./
 ENV NODE_ENV=production
 RUN pnpm i
 CMD ["dumb-init", "node", "main.js"]

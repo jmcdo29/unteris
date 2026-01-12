@@ -6,6 +6,7 @@ onlyBuiltDependencies:
   - argon2
   - cypress
   - esbuild
+  - less
   - nx
   - sharp
   - unrs-resolver

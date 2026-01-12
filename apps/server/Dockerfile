@@ -17,6 +17,7 @@ COPY package.json \
   tsconfig* \
   nx.json \
   pnpm-lock.yaml \
+  pnpm-workspace.yaml \
   ./
 ENV CYPRESS_INSTALL_BINARY=0
 RUN pnpm i
@@ -32,6 +33,7 @@ LABEL description="The server side code for the Unteris website. It runs a NestJ
 USER node
 WORKDIR /src
 COPY --from=server-build --chown=node:node /src/dist/apps/server ./
+COPY pnpm-workspace.yaml ./
 ENV NODE_ENV=production
 RUN pnpm i
 CMD ["dumb-init", "node", "main.js"]
