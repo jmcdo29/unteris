@@ -29,7 +29,7 @@ COPY libs/ui ./libs/ui
 COPY libs/shared ./libs/shared/
 RUN VITE_SERVER_URL=$SERVER_URL pnpm nx run site:build:production
 
-FROM caddy:2.6.4-alpine AS site-prod
+FROM caddy:2.11-alpine AS site-prod
 LABEL description="The Unteris website image, ran via a Caddy reverse proxy"
 WORKDIR /src
 COPY apps/site/robots.txt ./dist/apps/site/robots.txt
