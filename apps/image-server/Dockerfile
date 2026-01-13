@@ -1,4 +1,4 @@
-FROM node:20.5-alpine3.18 AS unteris-node
+FROM node:24-alpine3.22 AS unteris-node
 
 
 RUN npm i -g pnpm@9 && \
