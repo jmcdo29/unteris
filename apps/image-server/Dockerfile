@@ -1,7 +1,7 @@
 FROM node:24-alpine3.22 AS unteris-node
 
 
-RUN npm i -g pnpm@10&& \
+RUN npm i -gs pnpm@10&& \
   apk add --no-cache \
   dumb-init=1.2.5-r3
 
@@ -20,7 +20,7 @@ COPY package.json \
   pnpm-workspace.yaml \
   ./
 ENV CYPRESS_INSTALL_BINARY=0
-RUN pnpm i
+RUN pnpm i -s
 
 FROM unteris-common AS image-server-build
 COPY apps/image-server ./apps/image-server/
@@ -35,5 +35,5 @@ WORKDIR /src
 COPY --from=image-server-build --chown=node:node /src/dist/apps/image-server ./
 COPY pnpm-workspace.yaml ./
 ENV NODE_ENV=production
-RUN pnpm i
+RUN pnpm i -s
 CMD ["dumb-init", "node", "main.js"]
