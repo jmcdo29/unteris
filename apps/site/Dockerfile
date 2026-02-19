@@ -1,7 +1,7 @@
 FROM node:24-alpine3.22 AS unteris-node
 
 
-RUN npm i -g pnpm@10 && \
+RUN npm i -gs pnpm@10 && \
   apk add --no-cache \
   dumb-init=1.2.5-r3
 
@@ -19,7 +19,7 @@ COPY package.json \
   pnpm-lock.yaml \
   ./
 ENV CYPRESS_INSTALL_BINARY=0
-RUN pnpm i
+RUN pnpm i -s
 
 FROM unteris-common AS site-build
 ARG SERVER_URL=https://api.unteris.com

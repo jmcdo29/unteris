@@ -56,7 +56,7 @@ export default async function runExecutor(
 				.map((t) => `-t ${t}`)
 				.join(
 					" ",
-				)} --cache-from type=local,src=${cachePath} --cache-to type=local,dest=${cachePath} --target=${target} --builder=${builder} --platform linux/arm64/v8,linux/amd64 ${
+				)} --cache-from type=local,src=${cachePath} --cache-to type=local,dest=${cachePath} --target=${target} --builder=${builder} --platform linux/amd64 ${
 				publish ? "--push" : ""
 			} .`;
 			const [docker, ...args] = commandString.split(" ").filter((arg) => !!arg);
