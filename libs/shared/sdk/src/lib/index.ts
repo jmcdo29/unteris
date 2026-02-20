@@ -22,7 +22,7 @@ export {
 	serverSecurityControllerSignup,
 	serverSecurityControllerStartUserPasswordReset,
 	serverSecurityControllerVerifyEmailByToken,
-} from "./sdk.gen";
+} from "./sdk.gen.js";
 export type {
 	AppControllerGetDataData,
 	AppControllerGetDataResponses,
@@ -103,4 +103,4 @@ export type {
 	ServerSecurityControllerVerifyEmailByTokenResponses,
 	SignUpLocalResponseDto,
 	SignupBodyDto,
-} from "./types.gen";
+} from "./types.gen.js";

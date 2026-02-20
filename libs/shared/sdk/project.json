@@ -4,6 +4,12 @@
 	"sourceRoot": "libs/shared/sdk/src",
 	"projectType": "library",
 	"targets": {
+		"gen": {
+			"executor": "nx:run-commands",
+			"options": {
+				"commands": ["pnpm openapi-ts", "pnpm nx run shared-sdk:lint"]
+			}
+		},
 		"lint": {
 			"executor": "@unteris/plugin/rz:lint",
 			"outputs": ["{options.outputFile}"],

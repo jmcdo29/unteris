@@ -64,6 +64,7 @@
 		"@decs/typeschema": "^0.11.7",
 		"@emotion/react": "11.14.0",
 		"@emotion/styled": "11.14.1",
+		"@hey-api/openapi-ts": "0.92.4",
 		"@mui/base": "5.0.0-alpha.121",
 		"@mui/icons-material": "^5.18.0",
 		"@mui/material": "^5.18.0",
