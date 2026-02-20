@@ -8,11 +8,11 @@ onlyBuiltDependencies:
   - esbuild
   - less
   - nx
-#  - sharp
+  - sharp
   - unrs-resolver
   - useragent-ng
-ignoredBuiltDependencies:
-  - sharp
+# ignoredBuiltDependencies:
+#  - sharp
 supportedArchitectures:
   os:
   - linux
