@@ -21,6 +21,7 @@ COPY package.json \
   ./
 ENV CYPRESS_INSTALL_BINARY=0
 RUN pnpm i -s
+RUN pnpm i --libc=musl sharp
 
 FROM unteris-common AS image-server-build
 COPY apps/image-server ./apps/image-server/
@@ -36,4 +37,5 @@ COPY --from=image-server-build --chown=node:node /src/dist/apps/image-server ./
 COPY pnpm-workspace.yaml ./
 ENV NODE_ENV=production
 RUN pnpm i -s
+RUN pnpm i --libc=musl sharp
 CMD ["dumb-init", "node", "main.js"]
